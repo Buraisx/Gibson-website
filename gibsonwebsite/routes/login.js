@@ -8,10 +8,10 @@ module.exports = function(passport){
 router.get('/login', function(req,res,next){
 
 	res.render('login', { title: 'Login'});
-	
+
 });
 
-//login 
+//login
 router.post('/login',  passport.authenticate('local-login', {
 	successRedirect: '/index',		// Redirect to main page when login complete
 	failureRedirect: '/login',	// Return to login when fail, and flash error
@@ -26,5 +26,16 @@ router.post('/logout', function(req,res,next){
 	res.redirect('/');
 
 });
+
 	return router;
 };
+
+// Checks if user is logged in, redirects otherwise.
+function isLoggedIn (req, res, next){
+	if (request.isAuthenticated()){
+		return next();
+	}
+	else{
+		res.redirect('/login');
+	}
+}
