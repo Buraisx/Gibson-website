@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>hello</title> <!--is just a variable-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, intial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+	<div class="row text-center centermid">
+		<h1>Login</h1>
+		<form action="/login" method="POST" class="form-horizontal" role="form">
+		<!--Username input-->
+		<div class="form-group">
+			<label for="Username" class="col-sm-5 control-label">Username:</label>
+			<div class="col-sm-2">
+			    <input type="Username" class="form-control" id="Username" name="Username">
+			</div>
+		</div>
+		<!--Password input-->
+		<div class="form-group">
+			<label for="password" class="col-sm-5 control-label">Password:</label>
+			<div class="col-sm-2">
+			    <input type="password" class="form-control" id="password" name="password">
+			</div>
+		</div>
+		<!--Submit Button-->
+		<div class="form-group">
+			<div class="col-sm-12">
+				<button type="submit" id="login" name="login" class="btn btn-primary">Login</button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
