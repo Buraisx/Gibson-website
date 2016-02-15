@@ -12,7 +12,7 @@ router.get('/', function(req,res,next){
 });
 
 //create new user
-router.post('/',  passport.authenticate('signup-local', {
+router.post('/',  passport.authenticate('local-signup', {
 	successRedirect: '/index',		// Redirect to main page when login complete
 	failureRedirect: '/lol',	// Return to login when fail, and flash error
 	failureFlash: true
