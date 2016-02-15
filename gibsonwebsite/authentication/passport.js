@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
 	password : 'Sabad@th!s1234567'
 });
 
-//connection.query('USE gibson');
+//connection.query();
 
 connection.connect(function(err){
   if(err){
@@ -39,7 +39,7 @@ module.exports = function(passport){
 		});
     });
 
-    passport.use('local-signup', new LocalStrategy({
+    passport.use('signup-local', new LocalStrategy({
     
         usernameField : 'username',
         passwordField : 'password',

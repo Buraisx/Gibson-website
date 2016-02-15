@@ -7,10 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash    = require('connect-flash');
 var expressSession = require('express-session');
-
 var routes = require('./routes/index');
 //var users = require('./routes/users');
-
+require('./authentication/passport')(passport);
 
 var app = express();
 var port = process.env.PORT || 3000;
