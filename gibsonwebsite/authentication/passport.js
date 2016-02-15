@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
+var bcrypt = require('bcrypt-nodejs');
 
 var connection = mysql.createConnection({
 			
@@ -74,7 +75,7 @@ module.exports = function(passport){
 
                 //initialize newUser values
                 newUser.username = req.body.username;
-                newUser.password = req.body.password;
+                newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync((Math.floor(Math.random()* 32) + 1)), null);
                 newUser.lname = req.body.lname;
                 newUser.fname = req.body.fname;
                 newUser.birth_date = req.body.birth_date;
@@ -110,6 +111,42 @@ module.exports = function(passport){
             }
         });
     }));
+
+//=============LOGIN strategy=======================//
+
+    passport.use('local-login', new LocalStrategy({
+
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true //pass back the entire request from our form
+        
+        }, function(req, username, password, done){
+
+            var sql = "SELECT * FROM ?? WHERE ?? = ?;";
+            var inserts = ['gibson.user', 'username', req.body.username];
+            sql = mysql.format(sql, inserts);
+
+            connection.query(sql, function(err, results){
+                console.log(results);
+                if(err){//login error
+                    console.log("Login Error");
+                    return done(err);
+                }
+                if(!results.length){//user does not exist
+                    console.log('The user does not exist');
+                    return done(null, false, req.flash('loginMessage', 'User does not exist!'));
+                }
+                if(!bcrypt.compareSync(password, results[0].password)){//incorrect password
+                    console.log("Wrong password");
+                    return done(null, false, req.flash('loginMessage', 'Incorrect Password.'));
+                }
+
+                //user exist and return and authenticates user
+                return done(null, results[0]);
+
+            });   
+        }
+    ));
         return passport;
 
 };
