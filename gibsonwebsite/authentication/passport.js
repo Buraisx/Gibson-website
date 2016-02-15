@@ -3,9 +3,9 @@ var mysql = require('node-mysql');
 
 var connection = mysql.createConnection({
 			
-	host: '192.168.2.22',
+	host: '192.168.1.33',
 	user: 'root',
-	password : 'makiforlife'
+	password : 'Sabad@th!s1234567'
 });
 
 //connection.query('USE gibson');
