@@ -11,11 +11,12 @@ router.get('/', function(req,res,next){
 });
 
 //create new user
-router.post('/',  passport.authenticate('login-signup', {
-	successRedirect: '/',		// Redirect to main page when login complete
-	failureRedirect: '/',	// Return to login when fail, and flash error
+router.post('/',  passport.authenticate('signup-local', {
+	successRedirect: '/index',		// Redirect to main page when login complete
+	failureRedirect: '/index',	// Return to login when fail, and flash error
 	failureFlash: true
-}));
+	})
+);
 
 	return router;
 };

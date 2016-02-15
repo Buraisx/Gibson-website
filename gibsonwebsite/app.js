@@ -6,10 +6,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash    = require('connect-flash');
+var expressSession = require('express-session');
 
 var routes = require('./routes/index');
 //var users = require('./routes/users');
-var signup = require('./routes/signup')(passport);
+
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -27,10 +28,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
-//app.use(session({ secret: 'gibson' })); // session secret
+app.use(expressSession({ secret: 'gibson' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+var signup = require('./routes/signup')(passport);
 
 app.use('/', routes);
 //app.use('/users', users);

@@ -23,6 +23,7 @@ module.exports = function(passport){
     	var sql = "SELECT * FROM ?? WHERE ?? = ?";
     	var inserts = ['user', 'username', id];
     	sql = mysql.format(sql, inserts);
+    	console.log(sql);
 
 	    //query to look for the user with serialized username
 		connection.query(sql,function(err, results){	
@@ -95,5 +96,5 @@ module.exports = function(passport){
 	
 	}));
 
-    return router;
+    return passport;
 };
