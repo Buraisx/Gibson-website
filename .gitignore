@@ -36,3 +36,6 @@ node_modules
 
 #Failure
 Don'tBankOnIt
+
+#Super safe
+notsecret.txt
