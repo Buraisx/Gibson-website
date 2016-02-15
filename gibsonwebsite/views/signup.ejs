@@ -1,117 +1,137 @@
-<!DOCTYPE HTML>
-<HTML>
-	<HEAD><title> <%= title %> </title>
-	<!-- Latest compiled and minified CSS -->
+<!DOCTYPE html>
+<html lang="en">
+
+<HEAD><title> <%= title %> </title>
+<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="/stylesheets/style.css">
 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!--JavaScript to check is password matches-->
+<script type="text/javascript">
+function val() {
+
+if(frm.passwordhashed.value != frm.password.value)
+{
+	alert("Passwords does not match");
+	return false;
+}
+return true;
+}</script>
+
 </HEAD>
 	<BODY>
 		<div class = "container">
-			
 				<h2>Part A: Your Information</h2>
-		
-			
-			<form action = "/signup" method = "post" role = "form">
+			<form name="frm" action = "/signup" method = "post" role = "form">
 
-
+				<!--Input first, last name and date-->
 				<div class = "row">
-					<div class = "form-group col-sm-2">
+					<div class = "form-group col-sm-3">
 						<label> Last Name: </label>
-						<input type = "text" class = "form-control" name = "lname" id = "lname">
+						<input type = "text" class = "form-control" name = "lname" id = "lname" required>
 					</div>
-					<div class = "form-group col-sm-2">
+					<div class = "form-group col-sm-3">
 						<label> First Name: </label>
-						<input type = "text" class = "form-control" name = "fname" id = "fname">
+						<input type = "text" class = "form-control" name = "fname" id = "fname" required>
 					</div>
 					<div class = "form-group col-sm-2">
-						<label> Birth Date(MM/DD/YYY):</label>
-						<input type = "date" class = "form-control" name ="birth_date" id = "birth_date">
+						<label> Birth Date:</label>
+						<input type = "date" class = "form-control" name ="birth_date" id = "birth_date" min="1000-01-01" max="3000-12-31"required>
 					</div>
 				</div>
 				
+				<!--Input Gender, Address and Postal Code-->
 				<div class = "row">
 					<div class = "form-group col-sm-2">
 						<label class = "control-label"> Gender: </label>
-						<select class = "form-control" name = "gender" id = "gender">
+						<select class = "form-control" name = "gender" id = "gender" required>
 							<option value = "Male">Male</option>
 							<option value = "Female">Female</option>
 							<option value = "Unknown">Unspecified</option>
 						</select>
 					</div>
-					<div class = "form-group col-sm-2">
+					<div class = "form-group col-sm-4">
 						<label class = "control-label"> Address: </label>
-						<input type = "text" class = "form-control" name = "address" id = "address">
+						<input type = "text" class = "form-control" name = "address" id = "address" required>
 					</div>
 					<div class = "form-group col-sm-2">
 						<label class = "control-label"> Postal Code: </label>
-						<input type = "text" class = "form-control" name = "postal_code" id="postal_code">
+						<input type = "text" class = "form-control" name = "postal_code" id="postal_code" maxlength="6" placeholder="eg.A1A1A1" required>
 					</div>
 				</div>
 				
-
+				<!--Input Unit#, City and Province-->
 				<div class = "row">
 					<div class = "form-group col-sm-2">
 						<label class = "control-label"> Apt/Unit#: </label>
-						<input type = "text" class = "form-control" name = "apt" id = "apt">
+						<input type = "number" class = "form-control" name = "apt" id = "apt">
 					</div>
-					<div class = "form-group col-sm-2">
+					<div class = "form-group col-sm-4">
 						<label class = "control-label"> City: </label>
-						<input type = "text" class = "form-control" name = "city" id = "city">
+						<input type = "text" class = "form-control" name = "city" id = "city" required>
 					</div>
 					<div class = "form-group col-sm-2">
 						<label class = "control-label"> Province: </label>
-						<input type = "text" class = "form-control" name = "province" id = "province">
+						<input type = "text" class = "form-control" name = "province" id = "province" required>
 					</div>
 				</div>
 				
-
+				<!--Input Phone Number-->
 				<div class = "row">
-					<div class = "form-group col-sm-3">
+					<div class = "form-group col-sm-4">
 						<label class = "control-label"> Phone(Primary/Cell): </label>
-						<input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone">
+						<input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16">
 					</div>
-					<div class = "form-group col-sm-3">
+					<div class = "form-group col-sm-4">
 						<label class = "control-label"> Phone(Home/Business): </label>
-						<input class = "form-control"type = "text" name = "secondary_phone" id = "secondary_phone">
+						<input class = "form-control"type = "text" name = "secondary_phone" id = "secondary_phone" maxlength="16">
 					</div>
 				</div>
 				
-
+				<!--Input Email-->
 				<div class = "row">
-  					<div class="form-group col-sm-6">
+  					<div class="form-group col-sm-8">
   						
     					<label class="control-label">Email:</label>
-      					<input  class = "form-control" type="email" name = "email" id="email" placeholder="Enter email">
+      					<input  class = "form-control" type="email" name = "email" id="email" placeholder="Enter email" required>
       				
   					</div>
   				</div>
 
+  				<!--Input Username-->
   				<div class = "row">
-  					<div class="form-group col-sm-6">
+  					<div class="form-group col-sm-8">
     					<label class="control-label">Username:</label>
-      					<input class = "form-control" type="text" name ="username" id="username">
+      					<input class = "form-control" type="text" name ="username" id="username" required>
   					</div>
   				</div>
 
+  				<!--Input Password-->
 				<div class = "row">
-  					<div class="form-group col-sm-3">
+  					<div class="form-group col-sm-4">
     					<label class="control-label">Password:</label>
-      					<input type="text" class = "form-control" name = "password" id="password">
+      					<input type="password" class = "form-control" name = "password" id="password" placeholder="Enter Password" minlength= "6" required>
   					</div>
-  					<div class="form-group col-sm-3">
+  					<div class="form-group col-sm-4">
     					<label class="control-label">Confirm Password:</label>
-      					<input type="text" class = "form-control" name = "passwordhashed" id="passwordhashed">
+      					<input type="password" class = "form-control" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" required>
   					</div>
   				</div>
+  				<p>Password must have a minimum 6 characters</p>
+  				<br/>
 
-				<br></br>
-				<button type = "submit" class = "btn btn-default">Submit</button>
+  				<!--Checkbox for notifications-->
+  				<div class= "row">
+  					<label><input type="checkbox" id="send_notifications" value="1" checked>Would you like some notifications</label>
+  				</div>
+				<button type = "submit" class = "btn btn-default" onclick="return val()">Submit</button>
 			</form>
 			</div>
 	</BODY>
-</HTML>
+</html>
