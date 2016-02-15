@@ -1,5 +1,5 @@
 var LocalStrategy = require('passport-local').Strategy;
-var mysql = require('node-mysql');
+var mysql = require('mysql');
 
 var connection = mysql.createConnection({
 			
@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 });
 
 //connection.query();
-
+/*
 connection.connect(function(err){
   if(err){
     console.log('Error connecting to Db');
@@ -17,6 +17,7 @@ connection.connect(function(err){
   }
   console.log('Connection established');
 });
+*/
 
 module.exports = function(passport){
 
@@ -46,7 +47,7 @@ module.exports = function(passport){
         passReqToCallback : true // allows us to pass back the entire request to the callback
     }, function(req, username, password, done){
 
-    	var sql = "SELECT * FROM ?? WHERE ?? = ?";
+    	var sql = "SELECT * FROM ?? WHERE ?? = ?;";
     	var inserts = ['user', 'username', req.body.username];
     	sql = mysql.format(sql, inserts);
 
@@ -86,10 +87,9 @@ module.exports = function(passport){
                 newUser.student = 1;
 
     			// creating query 
-    			var createUser =  'INSERT INTO ?? (??, ??, ??, ??, ??, ??, ??, ??, ??, ??, ??, ??, ??, ??, ??) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    			var values = ['gibson.user', 'username', 'password', 'lname', 'fname', 'birth_date', 'gender', 'address', 'unit_no', 'city', 'province', 'postal_code'
-    						  'primary_phone', 'secondary_phone', 'email', 'send_notification','student', newUser.username, newUser.password, newUser.lname, newUser.fname,
-    						  newUser.birthdate, newUser.gender, newUser.address, newUser.unit_no, newUser.city, newUser.province, newUser.postal_code,
+    			var createUser =  'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, province, postal_code, primary_phone, secondary_phone, email, send_notification, student) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+    			var values = [newUser.username, newUser.password, newUser.lname, newUser.fname,
+    						  newUser.birth_date, newUser.gender, newUser.address, newUser.unit_no, newUser.city, newUser.province, newUser.postal_code,
     						  newUser.primary_phone, newUser.secondary_phone, newUser.email, newUser.send_notification, newUser.student];
 
     			createUser = mysql.format(createUser, values);
@@ -98,12 +98,9 @@ module.exports = function(passport){
     			connection.query(createUser, function(err, results){
     				return done(null, newUser);
     			});
-    		}
-    	});
-    
-    	}
-	
-	}));
+            }
+        });
+    }));
 
     return passport;
 };
