@@ -8,28 +8,50 @@
     <!-- Portfolio Grid Section -->
     <section>
         <div class = "container">
-                <br/><br/>
                 <h2>Part A: Your Information</h2>
                     <form name="frm" action = "/signup" method = "post" role = "form">
 
-                    <!--Input first, last name and date-->
+                    <!--Input first, last name-->
                     <div class = "row">
-                        <div class = "form-group col-sm-3">
+                        <div class = "form-group col-sm-4">
                             <label> Last Name: </label>
                             <input type = "text" class = "form-control" name = "lname" id = "lname" required>
                         </div>
-                        <div class = "form-group col-sm-3">
+                        <div class = "form-group col-sm-4">
                             <label> First Name: </label>
                             <input type = "text" class = "form-control" name = "fname" id = "fname" required>
                         </div>
-                        <div class = "form-group col-sm-2">
-                            <label> Birth Date:</label>
-                            <input type = "date" class = "form-control" name ="birth_date" id = "birth_date" min="1000-01-01" max="3000-12-31"required>
-                        </div>
                     </div>
-                    
-                    <!--Input Gender, Address and Postal Code-->
+
+                    <!--Input date, Gender-->
                     <div class = "row">
+                        <div class = "form-group col-sm-2">
+                            <label>Birth Year:</label>
+                            <select class = "form-control" name="birth_year" id="birth_year">
+                                <option>YEAR</option>
+                                <% for(var i=2016; i>1920; i--) {%>
+                                       <option value="<%= i%>"><%= i%></option> 
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Birth Month:</label>
+                            <select class = "form-control" name="birth_month" id="birth_month">
+                                <option>MONTH</option>
+                                <% for(var i=1; i<13; i++) {%>
+                                       <option value="<%= i%>"><%= i%></option> 
+                                <% } %>     
+                            </select>
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Birth Day:</label>
+                            <select class = "form-control" name="birth_day" id="birth_day">
+                                <option>DAY</option>
+                                <% for(var i=1; i<32; i++) {%>
+                                       <option value="<%= i%>"><%= i%></option> 
+                                <% } %>     
+                            </select>
+                        </div>
                         <div class = "form-group col-sm-2">
                             <label class = "control-label"> Gender: </label>
                             <select class = "form-control" name = "gender" id = "gender" required>
@@ -38,7 +60,11 @@
                                 <option value = "Unknown">Unspecified</option>
                             </select>
                         </div>
-                        <div class = "form-group col-sm-4">
+                    </div>
+
+                    <!--Input Address and Postal Code-->
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
                             <label class = "control-label"> Address: </label>
                             <input type = "text" class = "form-control" name = "address" id = "address" required>
                         </div>
@@ -90,7 +116,7 @@
                     <div class = "row">
                         <div class="form-group col-sm-8">
                             <label class="control-label">Username:</label>
-                            <input class = "form-control" type="text" name ="username" id="username" required>
+                            <input class = "form-control" type="text" name ="username" id="username" required pattern="\w+">
                         </div>
                     </div>
 
@@ -98,11 +124,11 @@
                     <div class = "row">
                         <div class="form-group col-sm-4">
                             <label class="control-label">Password:</label>
-                            <input type="password" class = "form-control" name = "password" id="password" placeholder="Enter Password" minlength= "6" required>
+                            <input type="password" class = "form-control" name = "password" id="password" placeholder="Enter Password" minlength= "6" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="form.pwd2.pattern = this.value;">
                         </div>
                         <div class="form-group col-sm-4">
                             <label class="control-label">Confirm Password:</label>
-                            <input type="password" class = "form-control" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" required>
+                            <input type="password" class = "form-control" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
                         </div>
                     </div>
                     <p>Password must have a minimum 6 characters</p>
