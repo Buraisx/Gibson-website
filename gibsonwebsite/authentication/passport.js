@@ -3,7 +3,7 @@ var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 
 var connection = mysql.createConnection({
-			
+
 	host: '192.168.1.33',
 	user: 'root',
 	password : 'Sabad@th!s1234567'
@@ -15,9 +15,9 @@ connection.connect(function(err){
     if(err){
         console.log('Error connecting to Db');
     }
-    
+
     console.log('Connection established');
-    return
+    return;
 });
 
 module.exports = function(passport){
@@ -30,14 +30,14 @@ module.exports = function(passport){
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
- 
+
         var sql = "SELECT * FROM gibson.user WHERE username = ?";
         var inserts = [id];
         sql = mysql.format(sql, inserts);
         console.log(sql);
 
         //query to look for the user with serialized username
-        connection.query(sql,function(err, results){    
+        connection.query(sql,function(err, results){
             done(err, results[0]);
         });
     });
@@ -46,7 +46,7 @@ module.exports = function(passport){
     // LOCAL SIGNUP ============================================================
     // =========================================================================
     passport.use('local-signup', new LocalStrategy({
-    
+
         usernameField : 'username',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
@@ -78,7 +78,7 @@ module.exports = function(passport){
                 newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync((Math.floor(Math.random()* 32) + 1)), null);
                 newUser.lname = req.body.lname;
                 newUser.fname = req.body.fname;
-                newUser.birth_date = req.body.birth_date;
+                newUser.birth_date = req.body.birth_year +'-' +req.body.birth_month +'-' +req.body.birth_day;
                 newUser.gender = req.body.gender;
                 newUser.address = req.body.address;
                 newUser.unit_no = req.body.apt;
@@ -91,7 +91,7 @@ module.exports = function(passport){
                 newUser.send_notification = 1;
                 newUser.student = 1;
 
-                // creating query 
+                // creating query
                 var createUser =  'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, province, postal_code, primary_phone, secondary_phone, email, send_notification, student) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
                 var values = [newUser.username, newUser.password, newUser.lname, newUser.fname,
                               newUser.birth_date, newUser.gender, newUser.address, newUser.unit_no, newUser.city, newUser.province, newUser.postal_code,
@@ -119,7 +119,7 @@ module.exports = function(passport){
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true //pass back the entire request from our form
-        
+
         }, function(req, username, password, done){
 
             var sql = "SELECT * FROM ?? WHERE ?? = ?;";
@@ -144,7 +144,7 @@ module.exports = function(passport){
                 //user exist and return and authenticates user
                 return done(null, results[0]);
 
-            });   
+            });
         }
     ));
         return passport;
