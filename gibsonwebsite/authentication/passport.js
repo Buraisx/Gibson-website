@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
 
 	host: '127.0.0.1',
 	user: 'root',
-	password : 'local123'
+	password : 'makiforlife'
 });
 
 //connection.query();
@@ -65,7 +65,7 @@ module.exports = function(passport){
                 return done(err);
             }
 
-            if(results.length){
+            if(results.length > 0){
                 //user exist in this case
                 console.log('User already exist with that username or email');
                 return done(null, false, req.flash('signupMessage', 'User already exist with that email'));
@@ -135,7 +135,7 @@ module.exports = function(passport){
                     console.log("Login Error");
                     return done(err);
                 }
-                if(!results.length){//user does not exist
+                if(!results.length > 0){//user does not exist
                     console.log('The user does not exist');
                     return done(null, false, req.flash('loginMessage', 'User does not exist!'));
                 }
