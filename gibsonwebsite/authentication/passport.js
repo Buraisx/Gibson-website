@@ -2,9 +2,10 @@ var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 
+//MAKE SURE TO CHANGE THIS TO CONNECT TO THE RIGHT DATABASE
 var connection = mysql.createConnection({
 
-	host: '192.168.1.33',
+	host: '127.0.0.1',
 	user: 'root',
 	password : 'Sabad@th!s1234567'
 });
@@ -16,7 +17,8 @@ connection.connect(function(err){
         console.log('Error connecting to Db');
     }
 
-    console.log('Connection established');
+    else
+        console.log('Connection established');
     return;
 });
 
