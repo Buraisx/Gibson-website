@@ -1,11 +1,12 @@
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
+var sanitizer = require('sanitizer');
 
 //MAKE SURE TO CHANGE THIS TO CONNECT TO THE RIGHT DATABASE
 var connection = mysql.createConnection({
 
-	host: '127.0.0.1',
+	host: '192.168.2.22',
 	user: 'root',
 	password : 'makiforlife'
 });
@@ -56,6 +57,10 @@ module.exports = function(passport){
         var sql = "SELECT * FROM ?? WHERE ?? = ?;";
         var inserts = ['gibson.user', 'username', req.body.username];
         sql = mysql.format(sql, inserts);
+
+        for(var i in req.body){
+            req.body[i] = sanitizer.sanitize(req.body[i]);
+        }
 
         connection.query(sql, function(err, results){
 
@@ -128,6 +133,10 @@ module.exports = function(passport){
             var sql = "SELECT * FROM ?? WHERE ?? = ?;";
             var inserts = ['gibson.user', 'username', req.body.username];
             sql = mysql.format(sql, inserts);
+
+            for(var i in req.body){
+            req.body[i] = sanitizer.sanitize(req.body[i]);
+            }
 
             connection.query(sql, function(err, results){
                 console.log(results);
