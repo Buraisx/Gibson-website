@@ -67,6 +67,7 @@ module.exports = function(passport){
 
             if(results.length){
                 //user exist in this case
+                console.log('User already exist with that username or email');
                 return done(null, false, req.flash('signupMessage', 'User already exist with that email'));
 
             }
