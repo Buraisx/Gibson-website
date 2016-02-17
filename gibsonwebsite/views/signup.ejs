@@ -3,6 +3,11 @@
 
 <%- include standardnavbar.ejs %>
 
+<head>
+    <!-- CSS for the datepicker calendar -->
+    <link href="css/datepicker.css" rel="stylesheet">
+</head>
+
 <body id="page-top" class="index">
 
     <!-- Portfolio Grid Section -->
@@ -11,47 +16,28 @@
                 <h2>Part A: Your Information</h2>
                     <form name="frm" action = "/signup" method = "post" role = "form">
 
-                    <!--Input first, last name-->
+                    <!--Input first name, last name, date, gender-->
                     <div class = "row">
-                        <div class = "form-group col-sm-4">
+                        <div class = "form-group col-sm-2">
                             <label> Last Name: </label>                            
                             <input type = "text" class = "form-control" name = "lname" id = "lname" placeholder="eg.Bob"required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                         </div>
-                        <div class = "form-group col-sm-4">
+                        <div class = "form-group col-sm-2">
                             <label> First Name: </label>
                             <input type = "text" class = "form-control" name = "fname" id = "fname" placeholder="eg.Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                         </div>
-                    </div>
-
-                    <!--Input date, Gender-->
-                    <div class = "row">
                         <div class = "form-group col-sm-2">
-                            <label>Birth Year:</label>
-                            <select class = "form-control" name="birth_year" id="birth_year">
-                                <option>YEAR</option>
-                                <% for(var i=2016; i>1920; i--) {%>
-                                       <option value="<%= i%>"><%= i%></option> 
-                                <% } %>
-                            </select>
+                            <label>Birthdate:</label>
+                            <input type="text" class = "form-control" id="datepicker" placeholder="mm/dd/yyyy" required>
                         </div>
-                        <div class = "form-group col-sm-2">
-                            <label>Birth Month:</label>
-                            <select class = "form-control" name="birth_month" id="birth_month">
-                                <option>MONTH</option>
-                                <% for(var i=1; i<13; i++) {%>
-                                       <option value="<%= i%>"><%= i%></option> 
-                                <% } %>     
-                            </select>
-                        </div>
-                        <div class = "form-group col-sm-2">
-                            <label>Birth Day:</label>
-                            <select class = "form-control" name="birth_day" id="birth_day">
-                                <option>DAY</option>
-                                <% for(var i=1; i<32; i++) {%>
-                                       <option value="<%= i%>"><%= i%></option> 
-                                <% } %>     
-                            </select>
-                        </div>
+                        <script src="js/jquery.js"></script>
+                        <script src="js/bootstrap-datepicker.js"></script>
+                        <script>
+                        $(function() {
+                            $('#datepicker').datepicker({
+                            });
+                        });
+                        </script>
                         <div class = "form-group col-sm-2">
                             <label class = "control-label"> Gender: </label>
                             <select class = "form-control" name = "gender" id = "gender" required>
@@ -154,7 +140,7 @@
     </div>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <!-- <script src="js/jquery.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
