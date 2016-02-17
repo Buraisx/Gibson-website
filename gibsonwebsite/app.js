@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var flash    = require('connect-flash');
 var expressSession = require('express-session');
 var routes = require('./routes/index');
+var helmet = require('helmet');
 //var users = require('./routes/users');
 require('./authentication/passport')(passport);
 
@@ -18,6 +19,8 @@ var port = process.env.PORT || 3000;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(helmet());
+
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'logo.png')));
 app.use(logger('dev'));
@@ -27,7 +30,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
-app.use(expressSession({ secret: 'gibson' })); // session secret
+app.use(expressSession({
+  secret: 'gibson', // session secret
+  cookie: { secure: true,
+            httpOnly: true
+          }
+}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
