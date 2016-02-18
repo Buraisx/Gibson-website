@@ -19,7 +19,17 @@ var port = process.env.PORT || 3000;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Security
 app.use(helmet());
+app.use(helmet.csp({
+  defaultSrc: ["'self'"],
+  scriptSrc: ['/public/js/*'],
+  styleSrc: ['/pubic/css/*'],
+  imgSrc: [],
+  connectSrc: ["'none'"],
+  fontSrc: ['/public/font-awesome/css/*'],
+  objectSrc: [],
+}));
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'logo.png')));

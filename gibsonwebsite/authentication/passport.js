@@ -58,6 +58,7 @@ module.exports = function(passport){
         var inserts = ['gibson.user', 'username', req.body.username];
         sql = mysql.format(sql, inserts);
 
+				// Sanitize input
         for(var i in req.body){
             req.body[i] = sanitizer.sanitize(req.body[i]);
         }
@@ -86,7 +87,7 @@ module.exports = function(passport){
                 newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync((Math.floor(Math.random()* 32) + 1)), null);
                 newUser.lname = req.body.lname;
                 newUser.fname = req.body.fname;
-                newUser.birth_date = req.body.birth_year +'-' +req.body.birth_month +'-' +req.body.birth_day;
+                newUser.birth_date = req.body.birth_date;
                 newUser.gender = req.body.gender;
                 newUser.address = req.body.address;
                 newUser.unit_no = req.body.apt;
@@ -134,6 +135,7 @@ module.exports = function(passport){
             var inserts = ['gibson.user', 'username', req.body.username];
             sql = mysql.format(sql, inserts);
 
+						// Sanitizing input
             for(var i in req.body){
             req.body[i] = sanitizer.sanitize(req.body[i]);
             }
