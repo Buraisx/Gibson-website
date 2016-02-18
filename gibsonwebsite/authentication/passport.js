@@ -54,14 +54,17 @@ module.exports = function(passport){
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     }, function(req, username, password, done){
+
+
+        // Sanitize input
+        for(var i in req.body){
+            req.body[i] = sanitizer.sanitize(req.body[i]);
+        }
+
         var sql = "SELECT * FROM ?? WHERE ?? = ?;";
         var inserts = ['gibson.user', 'username', req.body.username];
         sql = mysql.format(sql, inserts);
 
-				// Sanitize input
-        for(var i in req.body){
-            req.body[i] = sanitizer.sanitize(req.body[i]);
-        }
 
         connection.query(sql, function(err, results){
 
@@ -71,7 +74,7 @@ module.exports = function(passport){
                 return done(err);
             }
 
-            if(results.length > 0){
+            if(results.length){
                 //user exist in this case
                 console.log('User already exist with that username or email');
                 return done(null, false, req.flash('signupMessage', 'User already exist with that email'));
@@ -131,14 +134,14 @@ module.exports = function(passport){
 
         }, function(req, username, password, done){
 
-            var sql = "SELECT * FROM ?? WHERE ?? = ?;";
-            var inserts = ['gibson.user', 'username', req.body.username];
-            sql = mysql.format(sql, inserts);
-
-						// Sanitizing input
+            // Sanitizing input
             for(var i in req.body){
             req.body[i] = sanitizer.sanitize(req.body[i]);
             }
+
+            var sql = "SELECT * FROM ?? WHERE ?? = ?;";
+            var inserts = ['gibson.user', 'username', req.body.username];
+            sql = mysql.format(sql, inserts);
 
             connection.query(sql, function(err, results){
                 console.log(results);
@@ -146,7 +149,7 @@ module.exports = function(passport){
                     console.log("Login Error");
                     return done(err);
                 }
-                if(!results.length > 0){//user does not exist
+                if(!results.length){//user does not exist
                     console.log('The user does not exist');
                     return done(null, false, req.flash('loginMessage', 'User does not exist!'));
                 }
