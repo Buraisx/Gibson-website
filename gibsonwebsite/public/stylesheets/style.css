@@ -6,16 +6,15 @@ body {
 a {
   color: #00B7FF;
 }
-.circlular
-{
-	width:700px;
-	height:700px;
-	border-radius:50%;
-	border: 20px solid orange;
-	font-size:50px;
-	line-height:500px;
-	text-align:center;
-	background:#FFFF99;
-	margin-bottom: -550px;
-	margin-left: 235px;
+
+.dropdown:hover > .dropdown-menu{
+	display: block;
+
+}
+#student_info {
+  display:none;
+}
+
+#student_info-show {
+  display:block;
 }
