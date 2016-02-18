@@ -13,11 +13,17 @@ router.get('/signup', function(req,res,next){
 
 //create new user
 router.post('/signup',  passport.authenticate('local-signup', {
-	successRedirect: '/index',		// Redirect to main page when login complete
+	successRedirect: '/signup/success',		// Redirect to main page when login complete
 	failureRedirect: '/lol',	// Return to login when fail, and flash error
 	failureFlash: true
 	})
 );
+
+//show signup success page
+router.get('/signup/success', function(req,res){
+	res.render('SuccessSignup', {title: 'Success Sign Up!'});
+});
+
 	return router;
 };
 
