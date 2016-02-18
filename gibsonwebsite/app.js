@@ -27,7 +27,6 @@ app.use(helmet.csp({
               'https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js',  // SuccessSignup.ejs
               'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', // SuccessSignup.ejs
               'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js',  // SuccessSignup.ejs
-
              ],
   styleSrc: ['http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',  // SuccessSignup.ejs
              'http://fonts.googleapis.com/css?family=Montserrat:400,700',  // standardnavbar.ejs
