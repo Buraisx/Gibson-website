@@ -114,7 +114,8 @@ module.exports = function(passport){
 
                   // creating query
                   var createUser  = 'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, ';
-                      createUser +=                          'province, postal_code, primary_phone, secondary_phone, email, send_notification, student) ';
+                      createUser +=                          'province, postal_code, primary_phone, secondary_phone, email, send_notification, ';
+                      createUser +=                          'student) ';
                       createUser += 'VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
                   var values = [newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.birth_date, newUser.gender,
                                 newUser.address, newUser.unit_no, newUser.city, newUser.province, newUser.postal_code, newUser.primary_phone,
@@ -135,6 +136,8 @@ module.exports = function(passport){
             });
         });
     }));
+
+
 
 //=============LOGIN strategy=======================//
 
@@ -161,7 +164,7 @@ module.exports = function(passport){
             {
                 con.query(sql, function(err, results){
                     console.log(results);
-                    con.release();  //RELEASE CONNECTION
+                    //con.release();  //RELEASE CONNECTION
 
                     if(err){//login error
                         console.log("Login Error");
@@ -178,8 +181,20 @@ module.exports = function(passport){
                         return done(null, false, req.flash('loginMessage', 'Incorrect Password.'));
                     }
 
-                    //user exist and return and authenticates user
-                    return done(null, results[0]);
+                    var updateLastLogin = 'UPDATE gibson.user SET last_login_time = current_timestamp WHERE username = ?;';
+                    updateLastLogin = mysql.format(updateLastLogin, req.body.username);
+
+                    // Updating last_login_time as user logins
+                    con.query(updateLastLogin, function (err, results){
+                      if (err){
+                        console.log('Error updating last_login_time');
+                      }
+                      else{
+                        //user exist and return and authenticates user
+                        return done(null, results[0]);
+                      }
+                      con.release(); // RELEASING CONNECTION
+                    });
                 });
             });
         }
