@@ -135,7 +135,7 @@ module.exports = function(passport){
             var inserts = ['gibson.user', 'username', req.body.username];
             sql = mysql.format(sql, inserts);
 
-						// Sanitizing input
+			// Sanitizing input
             for(var i in req.body){
             req.body[i] = sanitizer.sanitize(req.body[i]);
             }
