@@ -9,6 +9,7 @@ var flash    = require('connect-flash');
 var expressSession = require('express-session');
 var routes = require('./routes/index');
 var helmet = require('helmet');
+var dnsPrefetchControl = require('dns-prefetch-control');
 //var users = require('./routes/users');
 require('./authentication/passport')(passport);
 
@@ -21,6 +22,7 @@ app.set('view engine', 'ejs');
 
 // Security
 app.use(helmet());
+app.use(dnsPrefetchControl({ allow: false }));
 app.use(helmet.csp({
   defaultSrc: ['self'],
   scriptSrc: ['http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js',  // signup.ejs, SuccessSignup.ejs, login.ejs
