@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 var sanitizer = require('sanitizer');
 
 //MAKE SURE TO CHANGE THIS TO CONNECT TO THE RIGHT DATABASE
+/*
 var connection = mysql.createConnection({
 
 	host: '192.168.2.22',
@@ -20,6 +21,35 @@ connection.connect(function(err){
 
     else
         console.log('Connection established');
+    return;
+});
+*/
+
+//MAKE SURE TO CHANGE THIS TO CONNECT TO THE RIGHT DATABASE
+var db_config = {
+    host:'192.168.2.22',
+    user:'root',
+    password:'makiforlife',
+    database:'gibson',
+    port:3306
+};
+
+//SETUP POOLING CONNECTION
+var connection = mysql.createPool(db_config);
+
+//CHECK POOLING CONNECTION
+connection.getConnection(function(err, con)
+{
+    if(err)
+    {
+        console.log('Error connecting to Db');
+    }
+
+    else
+    {
+        console.log('Connection established');
+    }
+
     return;
 });
 
@@ -40,8 +70,13 @@ module.exports = function(passport){
         console.log(sql);
 
         //query to look for the user with serialized username
-        connection.query(sql,function(err, results){
-            done(err, results[0]);
+        connection.getConnection(function(err, con)
+        {
+            con.query(sql,function(err, results)
+            {
+                con.release();
+                done(err, results[0]);    
+            });
         });
     });
 
@@ -65,62 +100,69 @@ module.exports = function(passport){
         var inserts = ['gibson.user', 'username', req.body.username];
         sql = mysql.format(sql, inserts);
 
+        //GET POOLING CONNECTION
+        connection.getConnection(function(err, con)
+        {
+            con.query(sql, function(err, results){
 
-        connection.query(sql, function(err, results){
+             if(err){
+                 //check for error
+                 con.release();
+                 console.log('error');
+                 return done(err);
+                }
 
-            if(err){
-                //check for error
-                console.log('error');
-                return done(err);
-            }
+                if(results.length){
+                 //user exist in this case
+                 con.release();
+                 console.log('User already exist with that username or email');
+                 return done(null, false, req.flash('signupMessage', 'User already exist with that email'));
 
-            if(results.length){
-                //user exist in this case
-                console.log('User already exist with that username or email');
-                return done(null, false, req.flash('signupMessage', 'User already exist with that email'));
+                }
+                else{
 
-            }
-            else{
+                    var newUser = {username:null, password:null, lname:null, fname:null, birth_date:null, gender:null, address:null, unit_no:null,
+                                   city:null, province:null, postal_code:null, primary_phone:null, secondary_phone:null, email:null, send_notification:null, student:null};
 
-                var newUser = {username:null, password:null, lname:null, fname:null, birth_date:null, gender:null, address:null, unit_no:null,
-                               city:null, province:null, postal_code:null, primary_phone:null, secondary_phone:null, email:null, send_notification:null, student:null};
+                    //initialize newUser values
+                    newUser.username = req.body.username;
+                    newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync((Math.floor(Math.random()* 32) + 1)), null);
+                    newUser.lname = req.body.lname;
+                    newUser.fname = req.body.fname;
+                    newUser.birth_date = req.body.birth_date;
+                    newUser.gender = req.body.gender;
+                    newUser.address = req.body.address;
+                    newUser.unit_no = req.body.apt;
+                    newUser.city = req.body.city;
+                    newUser.province = req.body.province;
+                    newUser.postal_code = req.body.postal_code;
+                    newUser.primary_phone = req.body.primary_phone;
+                    newUser.secondary_phone = req.body.secondary_phone;
+                    newUser.email = req.body.email;
+                    newUser.send_notification = 1;
+                    newUser.student = 1;
 
-                //initialize newUser values
-                newUser.username = req.body.username;
-                newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync((Math.floor(Math.random()* 32) + 1)), null);
-                newUser.lname = req.body.lname;
-                newUser.fname = req.body.fname;
-                newUser.birth_date = req.body.birth_date;
-                newUser.gender = req.body.gender;
-                newUser.address = req.body.address;
-                newUser.unit_no = req.body.apt;
-                newUser.city = req.body.city;
-                newUser.province = req.body.province;
-                newUser.postal_code = req.body.postal_code;
-                newUser.primary_phone = req.body.primary_phone;
-                newUser.secondary_phone = req.body.secondary_phone;
-                newUser.email = req.body.email;
-                newUser.send_notification = 1;
-                newUser.student = 1;
+                    // creating query
+                    var createUser =  'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, province, postal_code, primary_phone, secondary_phone, email, send_notification, student) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+                    var values = [newUser.username, newUser.password, newUser.lname, newUser.fname,
+                                newUser.birth_date, newUser.gender, newUser.address, newUser.unit_no, newUser.city, newUser.province, newUser.postal_code,
+                                newUser.primary_phone, newUser.secondary_phone, newUser.email, newUser.send_notification, newUser.student];
 
-                // creating query
-                var createUser =  'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, province, postal_code, primary_phone, secondary_phone, email, send_notification, student) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-                var values = [newUser.username, newUser.password, newUser.lname, newUser.fname,
-                              newUser.birth_date, newUser.gender, newUser.address, newUser.unit_no, newUser.city, newUser.province, newUser.postal_code,
-                              newUser.primary_phone, newUser.secondary_phone, newUser.email, newUser.send_notification, newUser.student];
+                    createUser = mysql.format(createUser, values);
 
-                createUser = mysql.format(createUser, values);
-
-                // querying the database
-                connection.query(createUser, function(err, results){
-                    if(err)
-                    {
-                        console.log('INSERT ERROR');
-                    }
-                    console.log(createUser);
-                    return done(null, newUser);
-                });
-            }
+                    // querying the database
+                    con.query(createUser, function(err, results){
+                        con.release();
+                        if(err)
+                        {
+                            console.log('INSERT ERROR');
+                        }
+                        console.log(createUser);
+                        return done(null, newUser);
+                    });
+                }
+            
+            });
         });
     }));
 
@@ -144,27 +186,33 @@ module.exports = function(passport){
             var inserts = ['gibson.user', 'username', req.body.username];
             sql = mysql.format(sql, inserts);
 
-            connection.query(sql, function(err, results){
-                console.log(results);
-                if(err){//login error
-                    console.log("Login Error");
-                    return done(err);
-                }
-                if(!results.length){//user does not exist
-                    console.log('The user does not exist');
-                    return done(null, false, req.flash('loginMessage', 'User does not exist!'));
-                }
-                if(!bcrypt.compareSync(password, results[0].password)){//incorrect password
-                    console.log("Wrong password");
-                    return done(null, false, req.flash('loginMessage', 'Incorrect Password.'));
-                }
+            //GET POOLING CONNECTION
+            connection.getConnection(function(err, con)
+            {
+                con.query(sql, function(err, results){
+                    console.log(results);
+                    con.release();  //RELEASE CONNECTION
+                
+                    if(err){//login error
+                        console.log("Login Error");
+                        return done(err);
+                    }
+                
+                    if(!results.length){//user does not exist
+                        console.log('The user does not exist');
+                        return done(null, false, req.flash('loginMessage', 'User does not exist!'));
+                    }
+                
+                    if(!bcrypt.compareSync(password, results[0].password)){//incorrect password
+                        console.log("Wrong password");
+                        return done(null, false, req.flash('loginMessage', 'Incorrect Password.'));
+                    }
 
-                //user exist and return and authenticates user
-                return done(null, results[0]);
-
+                    //user exist and return and authenticates user
+                    return done(null, results[0]);
+                });
             });
         }
     ));
         return passport;
-
 };
