@@ -1,19 +1,11 @@
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
+var database = require('./database.js');
 var bcrypt = require('bcrypt-nodejs');
 var sanitizer = require('sanitizer');
 
-//MAKE SURE TO CHANGE THIS TO CONNECT TO THE RIGHT DATABASE
-var db_config = {
-    host:'localhost',
-    user:'root',
-    password:'local123',
-    database:'gibson',
-    port:3306
-};
-
 //SETUP POOLING CONNECTION
-var connection = mysql.createPool(db_config);
+var connection = mysql.createPool(database.db_config);
 
 //CHECK POOLING CONNECTION
 connection.getConnection(function(err, con){
@@ -29,10 +21,14 @@ connection.getConnection(function(err, con){
 
 module.exports = function(passport){
 
+ // SINCE WE USING TOKENS, PASSPORT NO LONGER CALLS THE SERIALIZE FUNCTIONS.
+ // *MOVED OUTSIDE OF passport.js*
  // used to serialize the user for the session
+ /*
     passport.serializeUser(function(user, done) {
         done(null, user.username);
     });
+*/
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
@@ -141,63 +137,69 @@ module.exports = function(passport){
 
 //=============LOGIN strategy=======================//
 
-    passport.use('local-login', new LocalStrategy({
+//=========================================================
+// TOKENED LOGIN ==========================================
+//=========================================================
+  passport.use('local-login', new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: true //pass back the entire request from our form
+  },
+  function (req, username, password, done){
 
-        usernameField: 'username',
-        passwordField: 'password',
-        passReqToCallback: true //pass back the entire request from our form
+    // SANITIZING USER INPUT FROM LOGIN PAGE
+    for(var i in req.body){
+    req.body[i] = sanitizer.sanitize(req.body[i]);
+    }
 
-        }, function(req, username, password, done){
+    // SETTING UP QUERY TO LOOK FOR USERNAME IN DATABASE
+    var sql = "SELECT * FROM ?? WHERE ?? = ?;";
+    var inserts = ['gibson.user', 'username', req.body.username];
+    sql = mysql.format(sql, inserts);
 
-            // Sanitizing input
+    //GET POOLING CONNECTION
+    connection.getConnection(function(err, con){
 
-            for(var i in req.body){
-            req.body[i] = sanitizer.sanitize(req.body[i]);
-            }
+      // QUERYING DB
+      con.query(sql, function(err, results){
 
-            var sql = "SELECT * FROM ?? WHERE ?? = ?;";
-            var inserts = ['gibson.user', 'username', req.body.username];
-            sql = mysql.format(sql, inserts);
-
-            //GET POOLING CONNECTION
-            connection.getConnection(function(err, con)
-            {
-                con.query(sql, function(err, results){
-                    console.log(results);
-                    //con.release();  //RELEASE CONNECTION
-
-                    if(err){//login error
-                        console.log("Login Error");
-                        return done(err);
-                    }
-
-                    if(!results.length){//user does not exist
-                        console.log('The user does not exist');
-                        return done(null, false, req.flash('loginMessage', 'User does not exist!'));
-                    }
-
-                    if(!bcrypt.compareSync(password, results[0].password)){//incorrect password
-                        console.log("Wrong password");
-                        return done(null, false, req.flash('loginMessage', 'Incorrect Password.'));
-                    }
-
-                    var updateLastLogin = 'UPDATE gibson.user SET last_login_time = current_timestamp WHERE username = ?;';
-                    updateLastLogin = mysql.format(updateLastLogin, req.body.username);
-
-                    // Updating last_login_time as user logins
-                    con.query(updateLastLogin, function (err, results){
-                      if (err){
-                        console.log('Error updating last_login_time');
-                      }
-                      else{
-                        //user exist and return and authenticates user
-                        return done(null, results[0]);
-                      }
-                      con.release(); // RELEASING CONNECTION
-                    });
-                });
-            });
+        // ERROR QUERYING THE DB
+        if (err){
+          console.log ('Error while quering the database. (local-login)');
+          return done (err);
         }
-    ));
+        // USER DOES NOT EXIST
+        if(!results.length){
+          console.log (req.body.username +' not found in the database.');
+          return done (null, false, req.flash('loginMessage', 'Invalid Username.'));
+        }
+        // USER EXISTS, BUT INVALID PASSWORD ENTERED
+        if (!bcrypt.compareSync(password, results[0].password)){
+          console.log ('Wrong password for ' +req.body.username);
+          return done (null, false, req.flash('loginMessage', 'Incorrect Password.'));
+        }
+
+        // USER EXISTS AND CORRECT PASSWORD ENTERED
+
+        //UPDATING THE LAST LOGIN TIME IN THE DATABASE
+        var lastLogIn = results[0].last_login_time; // The value before the login time is replaced to CURRENT_TIMESTAMP
+        var updateLastLogin = 'UPDATE gibson.user SET last_login_time = CURRENT_TIMESTAMP WHERE username = ?;';
+        updateLastLogin = mysql.format (updateLastLogin, req.body.username);
+
+        con.query (updateLastLogin, function (err, updateResults){
+          con.release();  // RELEASING CONNECTION
+
+          if (err){
+            console.log ('Error updating last_login_time');
+          }
+
+          results[0].last_login_time = lastLogIn;
+          return done (null, results[0]);
+
+        });
+      });
+    });
+  }));
+
   return passport;
 };
