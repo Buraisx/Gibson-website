@@ -1,5 +1,6 @@
 var express = require('express');
 var http = require('http');
+var config = require('../server_config');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
 
@@ -36,7 +37,7 @@ function generateToken(req, res, next) {
     user: req.user.username,
 		lastLoggedIn: req.user.last_login_time
   },
-	'server secret', {
+	config.jwt_secret.secret, {
     expiresIn: 24*60*60 // 1 day
   });
 	//updateLastLogin(req.user.user_id);
@@ -45,10 +46,10 @@ function generateToken(req, res, next) {
 
 // SENDING TOKEN TO USER
 function respond(req, res) {
-  res.status(200).json({
-    user: req.user,
-    token: req.token
-  });
+	res.status(200).json({
+	  user: req.user,
+	  token: req.token
+	});
 }
 
 //login
@@ -58,8 +59,6 @@ router.post('/login', passport.authenticate('local-login', {
 	failureRedirect: '/login',	// Return to login when fail, and flash error
 	failureFlash: true
 }), generateToken, serialize, respond);
-
-
 
 
 

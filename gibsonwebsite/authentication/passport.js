@@ -1,11 +1,11 @@
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
-var database = require('./database.js');
+var config = require('../server_config.js');
 var bcrypt = require('bcrypt-nodejs');
 var sanitizer = require('sanitizer');
 
 //SETUP POOLING CONNECTION
-var connection = mysql.createPool(database.db_config);
+var connection = mysql.createPool(config.db_config);
 
 //CHECK POOLING CONNECTION
 connection.getConnection(function(err, con){
