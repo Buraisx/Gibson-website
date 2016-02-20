@@ -10,6 +10,7 @@ var expressSession = require('express-session');
 var routes = require('./routes/index');
 var helmet = require('helmet');
 var dnsPrefetchControl = require('dns-prefetch-control');
+var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
@@ -54,25 +55,28 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
+// app.use(expressSession({
+//   secret: 'session secret',
+// }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-// USED TO GET TOKEN FROM THE COOKIE
-// app.use(expressJwt({
-//   secret: config.jwt_secret.secret,
-//   getToken: function fromCookie(req) {
-//     if(req.cookies && req.cookies.access_token) {
-//       console.log(req.cookies.access_token);
-//       return req.cookies.access_token;
-//     }
-//     return null;
-//   }
-// }).unless({path: ['/', '/signup', '/login', '/index']}));
-
 var signup = require('./routes/signup')(passport);
 var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
+
+// USED TO GET TOKEN FROM THE COOKIE
+app.use('/', expressJwt({
+  secret: config.jwt_secret.secret,
+  issuer: 'https://www.105gibson.com',
+  getToken: function fromCookie(req) {
+    console.log(req.cookies.access_token);
+    return req.cookies.access_token;
+  }
+}).unless({path: ['/', '/signup', '/login', '/index']}));
+
+
 
 app.use('/', routes);
 app.use('/', test_profile);

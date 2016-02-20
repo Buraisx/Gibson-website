@@ -47,8 +47,9 @@ function generateToken(req, res, next) {
 
 // SENDING TOKEN TO USER
 function respond(req, res) {
+	res.clearCookie('access_token');
 	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 24*60*60});
-	res.render('index', { title: 'Gibson'});
+	res.redirect('/');
 }
 
 //login

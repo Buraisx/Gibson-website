@@ -7,7 +7,8 @@ var db_config = {
 };
 
 var jwt_secret = {
-  secret : 'g1b50n secret'
+  secret: 'g1b50n secret',
+  issuer: 'https://www.105gibson.com'
 };
 
 module.exports.db_config = db_config;
