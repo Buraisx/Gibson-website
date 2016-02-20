@@ -47,9 +47,10 @@ function generateToken(req, res, next) {
 
 // SENDING TOKEN TO USER
 function respond(req, res) {
-	res.clearCookie('access_token');
-	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 24*60*60});
-	res.redirect('/');
+	//res.status(200).json({token: req.token});
+	res.render('SuccessSignup', {title: 'Gibson', token: req.token});
+	//res.redirect();
+	//res.redirect('/');
 }
 
 //login
@@ -70,13 +71,3 @@ router.post('/logout', function(req,res,next){
 
 	return router;
 };
-
-// Checks if user is logged in, redirects otherwise.
-function isLoggedIn (req, res, next){
-	if (req.isAuthenticated()){
-		return next();
-	}
-	else{
-		res.redirect('/login');
-	}
-}
