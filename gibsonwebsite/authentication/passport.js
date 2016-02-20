@@ -88,7 +88,7 @@ module.exports = function(passport){
               }
               else{ // user DNE, -> make new user.
                   var newUser = {username:null, password:null, lname:null, fname:null, birth_date:null, gender:null, address:null, unit_no:null, city:null,
-                                province:null, postal_code:null, primary_phone:null, secondary_phone:null, email:null, send_notification:null, student:null};
+                                province_id:null, postal_code:null, primary_phone:null, secondary_phone:null, email:null, send_notification:null, student:null};
 
                   //initialize newUser values
                   newUser.username = req.body.username;
@@ -100,7 +100,7 @@ module.exports = function(passport){
                   newUser.address = req.body.address;
                   newUser.unit_no = req.body.apt;
                   newUser.city = req.body.city;
-                  newUser.province = req.body.province;
+                  newUser.province_id = req.body.province_id;
                   newUser.postal_code = req.body.postal_code.replace(/ /g,''); //Deletes the white space in postal code.
                   newUser.primary_phone = req.body.primary_phone;
                   newUser.secondary_phone = req.body.secondary_phone;
@@ -114,7 +114,7 @@ module.exports = function(passport){
                       createUser +=                          'student) ';
                       createUser += 'VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
                   var values = [newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.birth_date, newUser.gender,
-                                newUser.address, newUser.unit_no, newUser.city, newUser.province, newUser.postal_code, newUser.primary_phone,
+                                newUser.address, newUser.unit_no, newUser.city, newUser.province_id, newUser.postal_code, newUser.primary_phone,
                                 newUser.secondary_phone, newUser.email, newUser.send_notification, newUser.student];
 
                   createUser = mysql.format(createUser, values);
