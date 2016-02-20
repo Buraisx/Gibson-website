@@ -7,8 +7,8 @@ var db_config = {
 };
 
 var jwt_secret = {
-  secret : 'super g1b50n secret'
+  secret : 'g1b50n secret'
 };
 
 module.exports.db_config = db_config;
-module.exports.jwt_secret = jwt_secret; 
+module.exports.jwt_secret = jwt_secret;

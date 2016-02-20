@@ -10,6 +10,8 @@ var expressSession = require('express-session');
 var routes = require('./routes/index');
 var helmet = require('helmet');
 var dnsPrefetchControl = require('dns-prefetch-control');
+var expressJwt = require('express-jwt');
+var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
 
 //HTTPS AND READ FILE SYNC
@@ -21,7 +23,7 @@ require('./authentication/passport')(passport);
 var cred = {
   key: fs.readFileSync('./cert/my_key.key', 'utf8'),
   cert: fs.readFileSync('./cert/my_cert.crt', 'utf8')
-}
+};
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -52,15 +54,22 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
-app.use(expressSession({
-  secret: 'gibson', // session secret
-  cookie: { secure: true,
-            httpOnly: true
-          }
-}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+// USED TO GET TOKEN FROM THE COOKIE
+// app.use(expressJwt({
+//   secret: config.jwt_secret.secret,
+//   getToken: function fromCookie(req) {
+//     if(req.cookies && req.cookies.access_token) {
+//       console.log(req.cookies.access_token);
+//       return req.cookies.access_token;
+//     }
+//     return null;
+//   }
+// }).unless({path: ['/', '/signup', '/login', '/index']}));
+
 var signup = require('./routes/signup')(passport);
 var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
