@@ -12,7 +12,7 @@ router.get('/signup', function(req,res,next){
 	var connection = mysql.createPool(config.db_config);
 
 	// MAKING THE QUERY STRING
-	var sql = "SELECT * FROM gibson.province;";
+	var sql = "SELECT province_id, province_name FROM gibson.province;";
 
 	//query to look for the user with serialized username
 	connection.getConnection(function(err, con)
@@ -21,7 +21,8 @@ router.get('/signup', function(req,res,next){
 			{
 					con.release();
 					console.log(JSON.stringify(results));
-					res.render('signup', { title: 'Sign Up', province_list: JSON.stringify(results)});
+					console.log(results);
+					res.render('signup', { title: 'Sign Up', province_list: results});
 			});
 	});
 });
