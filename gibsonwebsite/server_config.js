@@ -1,7 +1,7 @@
 var db_config = {
     host:'localhost',
     user:'root',
-    password:'local123',
+    password:'321321408',
     database:'gibson',
     port:3306
 };
