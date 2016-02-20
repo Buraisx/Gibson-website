@@ -11,8 +11,17 @@ var routes = require('./routes/index');
 var helmet = require('helmet');
 var dnsPrefetchControl = require('dns-prefetch-control');
 var whitelist = require('./public_res/whitelist');
+
+//HTTPS AND READ FILE SYNC
+var https = require('https');
+var fs = require('fs');
 //var users = require('./routes/users');
 require('./authentication/passport')(passport);
+
+var cred = {
+  key: fs.readFileSync('./cert/my_key.key', 'utf8'),
+  cert: fs.readFileSync('./cert/my_cert.crt', 'utf8')
+}
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -93,7 +102,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 module.exports = app;
-app.listen(port);
+
+var httpsServer = https.createServer(cred, app);
+
+httpsServer.listen(port);
 console.log('Server running on LOCALHOST ' + port);
