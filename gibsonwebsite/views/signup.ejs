@@ -102,11 +102,11 @@
                 <!--Input Phone Number-->
                 <div class = "row">
                     <div class = "form-group col-sm-4">
-                        <label class = "control-label">Phone(Primary/Cell):</label>
+                        <label class = "control-label">Phone (Primary/Cell):</label>
                         <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="\w+"><!--Character restrictions-->
                     </div>
                     <div class = "form-group col-sm-4">
-                        <label class = "control-label">Phone(Home/Business):</label>
+                        <label class = "control-label">Phone (Home/Business):</label>
                         <input class = "form-control" type = "text" name = "secondary_phone" id = "secondary_phone" maxlength="16" pattern="\w+"><!--Character restrictions-->
                     </div>
                 </div>
@@ -119,41 +119,125 @@
                     </div>
                 </div>
 
+                <!--Emergency Contacts-->
+                <div>
+                    <br>
+                    <label>Emergency Contacts <span style = "font-weight:normal;">*Minimum 1, maximum 3</span></label>
+                </div>
+                <div>
+                    <br>
+                    <label>Emergency Contact 1:</label>
+                </div>
+                <div class="row">
+                    <div class = "form-group col-sm-2">
+                        <label><span style="color:red">*</span>First Name:</label>
+                        <input type = "text" class = "form-control" name = "emergencyfname" id = "emergencyfname" placeholder="eg. Alice" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                    </div>
+                    <div class = "form-group col-sm-2">
+                        <label><span style="color:red">*</span>Last Name:</label>                            
+                        <input type = "text" class = "form-control" name = "emergencylname" id = "emergencylname" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                    </div>
+                    <div class = "form-group col-sm-2">
+                        <label><span style="color:red">*</span>Relationship:</label>
+                        <input type = "text" class = "form-control" name = "relationship" id = "relationship" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                    </div>
+
+                    <div class = "form-group col-sm-2">
+                        <label><span style="color:red">*</span>Phone:</label>
+                        <input type = "text" class = "form-control" name = "EPhone" id = "EPhone1" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class = "form-group col-sm-2">
+                        <button type = "button" class= "btn btn-default col-sm-0" id = "add1">Add another contact</button>
+                    </div>
+                </div>
+                <div id='second_contact' style="display:none;">
+                    <div>
+                        <label>Emergency Contact 2:</label>
+                    </div>
+                    <div class="row">
+                        <div class = "form-group col-sm-2">
+                            <label>First Name:</label>
+                            <input type = "text" class = "form-control" name = "emergencyfname" id = "emergencyfname2" placeholder="eg. Bob" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Last Name:</label>                            
+                            <input type = "text" class = "form-control" name = "emergencylname" id = "emergencylname2" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Relationship:</label>
+                            <input type = "text" class = "form-control" name = "relationship" id = "relationship2" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Phone:</label>
+                            <input type = "text" class = "form-control" name = "EPhone" id = "EPhone2" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class = "form-group col-sm-2">
+                            <button type = "button" class= "btn btn-default col-sm-0" id = "add2">Add another contact</button>
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <button type = "button" class= "btn btn-default col-sm-0" id = "remove2">Remove a contact</button>
+                        </div>
+                    </div>
+                </div>
+                <div id='third_contact' style="display:none;">
+                    <div>
+                        <label>Emergency Contact 3:</label>
+                    </div>
+                    <div class="row">
+                        <div class = "form-group col-sm-2">
+                            <label>First Name:</label>
+                            <input type = "text" class = "form-control" name = "emergencyfname" id = "emergencyfname3" placeholder="eg. Charlie" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Last Name:</label>                            
+                            <input type = "text" class = "form-control" name = "emergencylname" id = "emergencylname3" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Relationship:</label>
+                            <input type = "text" class = "form-control" name = "relationship" id = "relationship3" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label>Phone:</label>
+                            <input type = "text" class = "form-control" name = "EPhone" id = "EPhone3" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class = "form-group col-sm-2">
+                            <button type = "button" class= "btn btn-default col-sm-0" id = "remove3">Remove a contact</button>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!--Check if user is a student-->
                 <div class = "row">
                     <div class="form-group col-sm-12">
                         <div>
                             <div> 
-                                <label for='student'><input type="checkbox" id="student" value="1">Are you a student.</label>
+                                <label for='student'><input type="checkbox" id="student" value="1"> I am a student</label>
                             </div>
                             <div id='student_info'>
-                                <div>
-                                    <br>
-                                    <label>Emergency Contact:</label>
-                                </div>
                                 <div class="row">
-                                    <div class = "form-group col-sm-3">
-                                        <label>First Name:</label>
-                                        <input type = "text" class = "form-control" name = "emergencyfname" id = "emergencyfname" placeholder="eg. Bob" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                    <div class = "form-group col-sm-2">
+                                        <label>School Name:</label>
+                                        <input type = "text" class = "form-control" name = "schoolname" id = "schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
-                                    <div class = "form-group col-sm-3">
-                                        <label>Last Name:</label>                            
-                                        <input type = "text" class = "form-control" name = "emergencylname" id = "emergencylname" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                    <div class = "form-group col-sm-1">
+                                        <label>Grade/Year:</label>                            
+                                        <input type = "text" class = "form-control" name = "grade" id = "grade" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
                                     <div class = "form-group col-sm-2">
-                                        <label>Relationship:</label>
-                                        <input type = "text" class = "form-control" name = "relationship" id = "relationship" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                        <label>Major:</label>
+                                        <input type = "text" class = "form-control" name = "major" id = "major" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class = "form-group col-sm-5">
-                                        <label>Emergency Contact:</label>
-                                        <input type = "text" class = "form-control" name = "EContact" id = "EContact" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                    <div class = "form-group col-sm-3">
+                                        <label>ESL Level (if applicable):</label>
+                                        <input type = "text" class = "form-control" name = "esl" id = "esl" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
-                                    <div>
-                                        <label>Add more Contacts:</label>
-                                    </div>
-                                    <button type = "button" class= "btn btn-deflault col-sm-1" >Add</button>
                                 </div>
                             </div>
                         </div>
