@@ -11,6 +11,11 @@ a {
 	display: block;
 
 }
+
+.footer-above 
+{
+	max-width: 100%;
+}
 #student_info {
   display:none;
 }

@@ -19,7 +19,7 @@
 				<div class="form-group">
 					<label for="Username" class="col-sm-3 control-label">Username:</label>
 					<div class="col-sm-7">
-			   			<input type="Username" class="form-control" id="username" name="username" value="return escapeHtml(value)"placeholder ="Username" required><!--tried xss protection here need testing-->
+			   			<input type="Username" class="form-control" id="username" name="username" placeholder ="Username" required><!--tried xss protection here need testing-->
 					</div>
 				</div>
 
@@ -43,14 +43,16 @@
 				<!--Submit Button-->
 				<div class="form-group">
 					<div class="col-sm-7 col-sm-offset-3">
-						<button type="submit" id="login" name="login" class="btn  btn-block btn-primary">Login</button>
+						<button onclick="escapeHtml()" type="submit" id="login" name="login" class="btn  btn-block btn-primary">Login</button>
 					</div>
 				</div>
-                   
+
+
 				</form>
 			</div> <!--Panel body end-->
 
 			<!--Not registered-->
+
 			<div class= "panel-footer">
 				Not registered? <a href= "http://localhost:3000/signup">Register here</a>
 			</div>
@@ -59,7 +61,6 @@
 	</div>
 </div>
 
- <%- include standardfooter %>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll visible-xs visible-sm">
@@ -86,4 +87,5 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/freelancer.js"></script>
 </body>
+<%- include standardfooter %>
 </html>
