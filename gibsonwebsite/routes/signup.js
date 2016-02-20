@@ -1,14 +1,29 @@
 var express = require('express');
 var router = express.Router();
+var mysql = require('mysql');
+var config = require('../server_config');
 
 
 module.exports = function(passport){
 
 //load sign up page
 router.get('/signup', function(req,res,next){
+	// CREATING CONNECTION
+	var connection = mysql.createPool(config.db_config);
 
-	res.render('signup', { title: 'Sign Up'});
-	
+	// MAKING THE QUERY STRING
+	var sql = "SELECT * FROM gibson.province;";
+
+	//query to look for the user with serialized username
+	connection.getConnection(function(err, con)
+	{
+			con.query(sql,function(err, results)
+			{
+					con.release();
+					console.log(JSON.stringify(results));
+					res.render('signup', { title: 'Sign Up', province_list: JSON.stringify(results)});
+			});
+	});
 });
 
 //create new user
@@ -21,11 +36,8 @@ router.post('/signup',  passport.authenticate('local-signup', {
 
 //show signup success page
 router.get('/signup/success', function(req,res){
-	res.render('SuccessSignup', {title: 'Success Sign Up!'});
+	res.render('SuccessSignup', {title: 'Success Sign Up!', token:'ckveriovkxjfiekdjikcvjdifkxkj'});
 });
 
 	return router;
 };
-
-
-
