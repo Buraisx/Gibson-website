@@ -126,11 +126,11 @@
                 <!--Emergency Contacts-->
                 <div>
                     <br>
-                    <label>Emergency Contacts <span style = "font-weight:normal;">(Minimum 1, maximum 3)</span></label>
+                    <label>Emergency Contacts <span style = "font-weight:normal;">(Minimum 1, maximum 3.)</span></label>
                 </div>
 
                 <% for(var i=1; i <= 3; i++) { %>
-                <div id = <%= "contact" + i %> <% if (i != 1) { %> style="display:none;" <% } %> >
+                <div id = <%= "contact" + i %> <% if (i != 1) { %> class = "hidden" <% } %> >
                     <div>
                         <br>
                         <label>Emergency Contact <%= i %>:</label>
@@ -156,7 +156,8 @@
                 </div>
                 <% } %>
                 <button type = "button" class= "btn btn-default col-sm-0" onclick="addcontact()" id = "add">Add another contact</button>
-                <button hidden type = "button" class= "btn btn-default col-sm-0" onclick="removecontact()" id = "remove" style="display: none;" >Remove a contact</button>
+                <button type = "button" class= "btn btn-default col-sm-0 hidden" onclick="removecontact()" id = "remove" class = "hidden" >Remove a contact</button>
+                <br><br>
 
                 <!--Check if user is a student-->
                 <div class = "row">
@@ -165,7 +166,7 @@
                             <div> 
                                 <label for='student'><input type="checkbox" id="student" value="1"> I am a student</label>
                             </div>
-                            <div id='student_info'>
+                            <div id='student_info' class='hidden'>
                                 <div class="row">
                                     <div class = "form-group col-sm-4">
                                         <label>School Name:</label>

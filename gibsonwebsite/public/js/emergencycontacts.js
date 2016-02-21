@@ -9,7 +9,7 @@ function addcontact() {
   // Prevents adding beyond the max (protects against people messing with HTML)
   if (i <= MAX) {
     // Shows next contact
-    $("#contact" + i).show();
+    $("#contact" + i).removeClass("hidden").hide().slideDown();
     document.getElementById("emergencyfname" + i).required = true;
     document.getElementById("emergencylname" + i).required = true;
     document.getElementById("relationship" + i).required = true;
@@ -17,12 +17,11 @@ function addcontact() {
   }
   // If after this there is the maximum number of contacts, hide the add button
   if (i >= MAX) {
-    $("#add").hide();
+    $("#add").addClass("hidden");
   }
   // Reveals the show button
-  $("#remove").show();
+  $("#remove").removeClass("hidden");
 }
-
 
 function removecontact() {
   var i = 1;
@@ -35,7 +34,7 @@ function removecontact() {
   // Disables removing the first contact (protects against people messing with HTML)
   if (i !== 1) {
     // Hides previous contact
-    $("#contact" + i).hide();
+    $("#contact" + i).slideUp();
     var emergencyfname = document.getElementById("emergencyfname" + i);
     emergencyfname.required = false;
     emergencyfname.value = "";
@@ -50,11 +49,11 @@ function removecontact() {
     ephone.value = "";
     // If we were at the maximum number of contacts and now we are not, show the hidden add button
     if (i == MAX) {
-          $("#add").show();
+          $("#add").removeClass("hidden");
     }
     // If we are now at the minimum number of contacts, hide the remove button
     else if (i == 2) {
-          $("#remove").hide();
+          $("#remove").addClass("hidden");
     }
   }
 }

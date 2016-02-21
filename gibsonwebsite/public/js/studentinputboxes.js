@@ -4,12 +4,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //show the students input boxes
 function reactToCheckbox() {
-   if(student.checked) {
-        var element = document.getElementById("student_info").id = 'student_info-show';           
-        return false;
-   }
-   else {
-      var element = document.getElementById("student_info-show").id = 'student_info';             
-      return false;
-   }
+	if(student.checked) {
+
+   	$("#student_info").removeClass("hidden").hide().slideDown();
+   	/*
+	    var element = document.getElementById("student_info").id = 'student_info-show';           
+        return false;*/
+	}
+	else {
+		$("#student_info").slideUp();
+	}
 }
