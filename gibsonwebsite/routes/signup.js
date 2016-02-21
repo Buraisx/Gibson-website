@@ -20,8 +20,6 @@ router.get('/signup', function(req,res,next){
 			con.query(sql,function(err, results)
 			{
 					con.release();
-					console.log(JSON.stringify(results));
-					console.log(results);
 					res.render('signup', { title: 'Sign Up', province_list: results});
 			});
 	});
@@ -37,7 +35,7 @@ router.post('/signup',  passport.authenticate('local-signup', {
 
 //show signup success page
 router.get('/signup/success', function(req,res){
-	res.render('SuccessSignup', {title: 'Success Sign Up!', token:'ckveriovkxjfiekdjikcvjdifkxkj'});
+	res.render('SuccessSignup', {title: 'Success Sign Up!'});
 });
 
 	return router;

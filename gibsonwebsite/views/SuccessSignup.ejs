@@ -22,55 +22,11 @@
 	<div style = "margin-top:100px;" class="row text-center centermid">
 		<h1 class="jumbotron">You Have Successfully Signed Up</h1>
 		<div id="result">
-
-			<script>
-					//access token and store in localStorage
-					var tokenStr = <%-JSON.stringify(token)%>
-					// Store
-					localStorage.setItem("access_token", tokenStr);
-					//localStorage.clear();
-					document.getElementById("result").value = localStorage.getItem("access_token");
-					alert(localStorage.getItem("access_token"));
-
-/*
-					if (localStorage.getItem('cookietoken')) {
-  					$.ajaxSetup({
-    					headers: {
-      					'x-access-token': localStorage.getItem('cookietoken')
-    					}
-  					});
-						//alert(localStorage.getItem('cookietoken'));
-
-					}
-					*/
-					// 	var request = new XMLHttpRequest();
-					//
-					// request.open('POST', '/test_profile', false);  // `false` makes the request synchronous
-					// //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-					// request.setRequestHeader("x-access-token", localStorage.getItem('cookietoken'));
-					// request.send();
-
-
-					// if (request.status === 200) {
-	  			// 		console.log(request.responseText);
-					// 		window.location.replace('/test_profile');
-					// 	}
-					//window.location.replace('/test_profile');
-
-				//	alert(document.getElementById("result").value );
-				//	alert(localStorage.getItem("cookietoken"));
-					// Retrieve
-
-			</script>
-
-
-
 </div>
 		<p><a href="/">Click Here</a> to redirect to the home page.</p>
 	</div>
 
 </div>
-<p> token= <%= token%> </p>
  <%- include standardfooter %>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->

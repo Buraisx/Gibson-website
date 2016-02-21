@@ -14,7 +14,7 @@ router.get('/login', function(req,res,next){
 
 
 
-// SERLIALIZE/DESERIALIZE MOVED HERE BECAUSE session: false
+// SERLIALIZE MOVED HERE BECAUSE session: false
 /*
 function serialize (req, res, next) {
 	updateOrCreate (req.user, function(err, user){
@@ -47,10 +47,9 @@ function generateToken(req, res, next) {
 
 // SENDING TOKEN TO USER
 function respond(req, res) {
-	//res.status(200).json({token: req.token});
-	res.render('SuccessSignup', {title: 'Gibson', token: req.token});
-	//res.redirect();
-	//res.redirect('/test_profile');
+	res.clearCookie('access_token');
+	res.cookie('access_token', req.token, {secure: true, httpOnly: true});
+	res.redirect('/');
 }
 
 //login
@@ -63,10 +62,9 @@ router.post('/login', passport.authenticate('local-login', {
 
 //logout of account
 router.post('/logout', function(req,res,next){
-
+	res.clearCookie('access_token');
 	req.logout();
 	res.redirect('/');
-
 });
 
 	return router;

@@ -11,7 +11,6 @@ var routes = require('./routes/index');
 var helmet = require('helmet');
 var dnsPrefetchControl = require('dns-prefetch-control');
 var jwt = require('jsonwebtoken');
-//var expressJwt = require('express-jwt');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
 
@@ -66,40 +65,11 @@ var signup = require('./routes/signup')(passport);
 var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 
-// USED TO GET TOKEN FROM THE COOKIE
-// app.all('*', expressJwt({
-//   secret: config.jwt_secret.secret,
-//   issuer: 'https://www.105gibson.com',
-//   getToken: function fromCookie(req) {
-//     console.log(req.cookies.access_token);
-//     return req.cookies.access_token;
-//   }
-// }).unless({path: ['/', '/signup', '/login', '/index']}));
-
 app.use('/', routes);
 app.use('/', test_profile);
 //app.use('/users', users);
 app.use('/', signup);
 app.use('/', login);
-
-// app.use('/test_profile', function isLoggedIn (req, res, next){
-// 	if (req.cookies.access_token){
-//     try{
-//       var decoded = jwt.decode(req.cookies.access_token, config.jwt_secret.secret);
-//       console.log(req.token);
-//     }
-//     catch(err){
-//       res.redirect('/login');
-//     }
-//   }
-//   else{
-//     res.redirect('/error');
-//   }
-// });
-
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
