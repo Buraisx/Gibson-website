@@ -10,6 +10,7 @@
     <script src = "js/serializecontacts.js"></script>
     <script src = "js/passwordvalidation.js"></script>
     <script src = "js/studentinputboxes.js"></script>
+    <script src = "js/emergencycontacts.js"></script>
     <script src = "js/submitbutton.js"></script>
 </head>
 
@@ -46,7 +47,7 @@
                         <!--Character restrictions-->
                     </div>
                 </div>
-                <span>Password contain at least a letter and a number and must have a minimum 6 characters. *No SPECIAL CHARACTERS</span>
+                <span>(Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.)</span>
                 <br/><br/>
 
                 <!--Input first name, last name, date, gender-->
@@ -125,65 +126,37 @@
                 <!--Emergency Contacts-->
                 <div>
                     <br>
-                    <label>Emergency Contacts <span style = "font-weight:normal;">*Minimum 1, maximum 3</span></label>
+                    <label>Emergency Contacts <span style = "font-weight:normal;">(Minimum 1, maximum 3)</span></label>
                 </div>
 
-
-<% MAX = 5;  %>
-<p>MAX CONTACTS: <%= MAX %></p>
-<% for(var i=1; i <= MAX; i++) { %>
-    
-
-<div>
-    <br>
-    <label>Emergency Contact <%= i %>:</label>
-</div>
-
-
-<div class="row">
-    <div class = "form-group col-sm-2">
-        <label><span style="color:red">*</span>First Name:</label>
-        <input type = "text" class = "form-control" name = <%= "emergencyfname" + i %> <%= id = "emergencyfname" + i %>   placeholder= "eg. Alice" pattern= <% "[a-zA-Z0-9. ]+" %> oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" required><!--Character restrictions-->
-    </div>
-    <div class = "form-group col-sm-2">
-        <label><span style="color:red">*</span>Last Name:</label>                            
-        <input type = "text" class = "form-control" name = "emergencylname" id = "emergencylname1" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" required><!--Character restrictions-->
-    </div>
-    <div class = "form-group col-sm-2">
-        <label><span style="color:red">*</span>Relationship:</label>
-        <input type = "text" class = "form-control" name = "relationship" id = "relationship1" pattern="[a-zA-Z0-9. ]+" required><!--Character restrictions-->
-    </div>
-
-    <div class = "form-group col-sm-2">
-        <label><span style="color:red">*</span>Phone:</label>
-        <input type = "text" class = "form-control" name = "EPhone" id = "EPhone1" maxlength="16" pattern="\w+" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}" required><!--Character restrictions-->
-    </div>
-    <span id="result1" ></span>
-</div>
-
-
-
-<% } %>
-
-
-    
-        <br><br><br><br><br><br><br>
-
-
-
-
-
-
-
-
-                
-                
-                
-
-
-
-
-
+                <% for(var i=1; i <= 3; i++) { %>
+                <div id = <%= "contact" + i %> <% if (i != 1) { %> style="display:none;" <% } %> >
+                    <div>
+                        <br>
+                        <label>Emergency Contact <%= i %>:</label>
+                    </div>
+                    <div class="row">
+                        <div class = "form-group col-sm-2">
+                            <label><span style="color:red">*</span>First Name:</label>
+                            <input type = "text" class = "form-control" name = <%= "emergencyfname" + i %> id = <%= "emergencyfname" + i %> placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" required><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label><span style="color:red">*</span>Last Name:</label>                            
+                            <input type = "text" class = "form-control" name = <%= "emergencylname" + i %> id = <%= "emergencylname" + i %> placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" required><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label><span style="color:red">*</span>Relationship:</label>
+                            <input type = "text" class = "form-control" name = <%= "relationship" + i %> id = <%= "relationship" + i %> pattern="[a-zA-Z0-9. ]+" required><!--Character restrictions-->
+                        </div>
+                        <div class = "form-group col-sm-2">
+                            <label><span style="color:red">*</span>Phone:</label>
+                            <input type = "text" class = "form-control" name = <%= "ephone" + i %> id = <%= "ephone" + i %> maxlength="16" pattern="\w+" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}" required><!--Character restrictions-->
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                <button type = "button" class= "btn btn-default col-sm-0" onclick="addcontact()" id = "add">Add another contact</button>
+                <button hidden type = "button" class= "btn btn-default col-sm-0" onclick="removecontact()" id = "remove" style="display: none;" >Remove a contact</button>
 
                 <!--Check if user is a student-->
                 <div class = "row">
@@ -194,19 +167,21 @@
                             </div>
                             <div id='student_info'>
                                 <div class="row">
-                                    <div class = "form-group col-sm-2">
+                                    <div class = "form-group col-sm-4">
                                         <label>School Name:</label>
                                         <input type = "text" class = "form-control" name = "schoolname" id = "schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
-                                    <div class = "form-group col-sm-1">
+                                    <div class = "form-group col-sm-4">
                                         <label>Grade/Year:</label>
                                         <input type = "text" class = "form-control" name = "grade" id = "grade" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
-                                    <div class = "form-group col-sm-2">
+                                </div>
+                                <div class="row">
+                                    <div class = "form-group col-sm-4">
                                         <label>Major:</label>
                                         <input type = "text" class = "form-control" name = "major" id = "major" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
-                                    <div class = "form-group col-sm-3">
+                                    <div class = "form-group col-sm-4">
                                         <label>ESL Level (if applicable):</label>
                                         <input type = "text" class = "form-control" name = "esl" id = "esl" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
