@@ -140,6 +140,8 @@ header .intro-text .skills {
 
     .navbar-fixed-top.navbar-shrink {
         padding: 10px 0;
+        background-color: #2c3e50;
+        opacity:1;
     }
 
     .navbar-fixed-top.navbar-shrink .navbar-brand {
@@ -168,6 +170,28 @@ header .intro-text .skills {
 .navbar-default,
 .navbar-inverse {
     border: 0;
+}
+
+.navbar-custum{
+    background-color: #2c3e50;
+    opacity:0.8;
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color: white;
+}
+
+.overlay {
+   background:transparent; 
+   position:relative; 
+   width:1680px;
+   height:810px; /* your iframe height */
+   top:810px;  /* your iframe height */
+   margin-top:-800px;  /* your iframe height */
+}
+
+#map{
+    
 }
 
 section {
