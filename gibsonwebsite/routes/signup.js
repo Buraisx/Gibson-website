@@ -14,7 +14,7 @@ router.get('/signup', function(req,res,next){
 	// MAKING THE QUERY STRING
 	var sql = "SELECT province_id, province_name FROM gibson.province;";
 
-	//query to look for the user with serialized username
+	//query to look for the province names and the their respective province ids
 	connection.getConnection(function(err, con)
 	{
 			con.query(sql,function(err, results)

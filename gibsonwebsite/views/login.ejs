@@ -7,6 +7,20 @@
 <div class="container">
 	<div style = "margin-top:100px;" class="row text-center centermid">
 
+
+<div id="result"></div>
+
+<script>
+// Check browser support
+if (typeof(Storage) !== "undefined") {
+    // Store
+    localStorage.setItem("cookietoken", token);
+    // Retrieve
+    document.getElementById("result").innerHTML = localStorage.getItem("cookietoken");
+} else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+</script>
 	<div class = "col-sm-offset-3 col-sm-6">
 		<div class = "panel panel-default"><!--PanelStart-->
 			<div class = "panel-heading">
