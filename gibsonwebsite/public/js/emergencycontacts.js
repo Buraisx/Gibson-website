@@ -36,10 +36,18 @@ function removecontact() {
   if (i !== 1) {
     // Hides previous contact
     $("#contact" + i).hide();
-    document.getElementById("emergencyfname" + i).required = false;
-    document.getElementById("emergencylname" + i).required = false;
-    document.getElementById("relationship" + i).required = false;
-    document.getElementById("ephone" + i).required = false;
+    var emergencyfname = document.getElementById("emergencyfname" + i);
+    emergencyfname.required = false;
+    emergencyfname.value = "";
+    var emergencylname = document.getElementById("emergencylname" + i);
+    emergencylname.required = false;
+    emergencylname.value = "";
+    var relationship = document.getElementById("relationship" + i);
+    relationship.required = false;
+    relationship.value = "";
+    var ephone = document.getElementById("ephone" + i);
+    ephone.required = false;
+    ephone.value = "";
     // If we were at the maximum number of contacts and now we are not, show the hidden add button
     if (i == MAX) {
           $("#add").show();
