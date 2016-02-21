@@ -2,6 +2,13 @@
 <html>
 	<head>
 		<title> <%= title %> </title>
+
+		<script = "text/javascript">
+			if (localStorage.getItem("access_token"))
+				var myRequest = new XMLHttpRequest();
+				client.setRequestHeader('x-access-token', localStorage.getItem('cookietoken'));
+		</script>
+
 	</head>
 
 	<body>

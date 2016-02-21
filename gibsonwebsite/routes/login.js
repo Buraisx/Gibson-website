@@ -50,7 +50,7 @@ function respond(req, res) {
 	//res.status(200).json({token: req.token});
 	res.render('SuccessSignup', {title: 'Gibson', token: req.token});
 	//res.redirect();
-	//res.redirect('/');
+	//res.redirect('/test_profile');
 }
 
 //login

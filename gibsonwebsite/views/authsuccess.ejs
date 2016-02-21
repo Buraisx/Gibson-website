@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+  </head>
+  <body>
+
+    <p id="result">HI</p>
+    <script type="text/javascript">
+
+        // CHECKING BROWSER COMPATABILITY
+        if (window["localStorage"]) {
+          localstorage.setItem("access_token", <%= token %>);
+          var value=localstorage.getItem("access_token");
+          alert(value);
+        }
+
+    </script>
+  </body>
+</html>

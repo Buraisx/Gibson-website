@@ -83,7 +83,8 @@ module.exports = function(passport){
               if(results.length){ //user exist in this case
                  con.release();
                  console.log('User already exist with that username or email');
-                 return done(null, false, req.flash('signupMessage', 'User already exist with that email'));
+                 return done(null, false );
+                 //req.flash('signupMessage', 'User already exist with that email')
 
               }
               else{ // user DNE, -> make new user.
@@ -171,12 +172,12 @@ module.exports = function(passport){
         // USER DOES NOT EXIST
         if(!results.length){
           console.log (req.body.username +' not found in the database.');
-          return done (null, false, req.flash('loginMessage', 'Invalid Username.'));
+          return done (null, false); //, req.flash('loginMessage', 'Invalid Username.')
         }
         // USER EXISTS, BUT INVALID PASSWORD ENTERED
         if (!bcrypt.compareSync(password, results[0].password)){
           console.log ('Wrong password for ' +req.body.username);
-          return done (null, false, req.flash('loginMessage', 'Incorrect Password.'));
+          return done (null, false); //, req.flash('loginMessage', 'Incorrect Password.')
         }
 
         // USER EXISTS AND CORRECT PASSWORD ENTERED

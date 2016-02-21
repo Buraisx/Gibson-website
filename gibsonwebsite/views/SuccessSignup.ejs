@@ -10,6 +10,10 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<!-- Plugin JavaScript -->
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+   <script src="js/classie.js"></script>
+   <script src="js/cbpAnimatedHeader.js"></script>
 </head>
 <%- include standardnavbar.ejs %>
 
@@ -17,8 +21,54 @@
 <div class="container">
 	<div style = "margin-top:100px;" class="row text-center centermid">
 		<h1 class="jumbotron">You Have Successfully Signed Up</h1>
-		<p><a href="/">Click Here</a> to go back to the home page.</p>
+		<div id="result">
+
+			<script>
+					//access token and store in localStorage
+					var tokenStr = <%-JSON.stringify(token)%>
+					// Store
+					localStorage.setItem("access_token", tokenStr);
+					//localStorage.clear();
+					document.getElementById("result").value = localStorage.getItem("access_token");
+					alert(localStorage.getItem("access_token"));
+
+/*
+					if (localStorage.getItem('cookietoken')) {
+  					$.ajaxSetup({
+    					headers: {
+      					'x-access-token': localStorage.getItem('cookietoken')
+    					}
+  					});
+						//alert(localStorage.getItem('cookietoken'));
+
+					}
+					*/
+					// 	var request = new XMLHttpRequest();
+					//
+					// request.open('POST', '/test_profile', false);  // `false` makes the request synchronous
+					// //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					// request.setRequestHeader("x-access-token", localStorage.getItem('cookietoken'));
+					// request.send();
+
+
+					// if (request.status === 200) {
+	  			// 		console.log(request.responseText);
+					// 		window.location.replace('/test_profile');
+					// 	}
+					//window.location.replace('/test_profile');
+
+				//	alert(document.getElementById("result").value );
+				//	alert(localStorage.getItem("cookietoken"));
+					// Retrieve
+
+			</script>
+
+
+
+</div>
+		<p><a href="/">Click Here</a> to redirect to the home page.</p>
 	</div>
+
 </div>
 <p> token= <%= token%> </p>
  <%- include standardfooter %>

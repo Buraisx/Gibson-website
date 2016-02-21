@@ -6,25 +6,11 @@
 <body>
 <div class="container">
 	<div style = "margin-top:100px;" class="row text-center centermid">
-
-
-<div id="result"></div>
-
-<script>
-// Check browser support
-if (typeof(Storage) !== "undefined") {
-    // Store
-    localStorage.setItem("cookietoken", token);
-    // Retrieve
-    document.getElementById("result").innerHTML = localStorage.getItem("cookietoken");
-} else {
-    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-}
-</script>
+		
 	<div class = "col-sm-offset-3 col-sm-6">
 		<div class = "panel panel-default"><!--PanelStart-->
 			<div class = "panel-heading">
-				<h1><span class = "glyphicon glyphicon-lock"></span> Login</h1>	
+				<h1><span class = "glyphicon glyphicon-lock"></span> Login</h1>
 			</div>
 			<div class = "panel-body">
 				<form action="/login" method="POST" class="form-horizontal" role="form">
@@ -45,7 +31,7 @@ if (typeof(Storage) !== "undefined") {
 					</div>
 				</div>
 
-				<!--Remember me Checkbox-->	
+				<!--Remember me Checkbox-->
 				<div class = "form-group">
 					<div class = "col-sm-offset-1 col-sm-8">
 						<div class="checkbox">
