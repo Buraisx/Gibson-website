@@ -20,7 +20,8 @@ router.get('/signup', function(req,res,next){
 			con.query(sql,function(err, results)
 			{
 					con.release();
-					res.render('signup', { title: 'Sign Up', province_list: results});
+					//Sends Sign up Title, List of Canada Provinces, Max emergency contact
+					res.render('signup', { title: 'Sign Up', province_list: results,  MAX: 3});
 			});
 	});
 });

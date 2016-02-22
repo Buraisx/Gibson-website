@@ -66,7 +66,8 @@
                     </div>
                     <div class = "form-group col-sm-2">
                         <label class = "control-label"><span style="color:red">*</span>Gender:</label>
-                        <select class = "form-control" name = "gender" id = "gender" required>
+                        <select class = "form-control" name = "gender" id = "gender" placeholder="Gender" required>
+                        	<option value="" disabled selected>Please Select</option>
                             <option value = "Male">Male</option>
                             <option value = "Female">Female</option>
                             <option value = "Unknown">Unspecified</option>
@@ -99,7 +100,16 @@
                     </div>
                     <div class = "form-group col-sm-2">
                         <label class = "control-label"><span style="color:red">*</span>Province:</label>
-                        <input type = "text" class = "form-control" name = "province" id = "province" required pattern="[a-zA-Z. ]+"><!--Character restrictions-->
+                        <select class = "form-control" name = "province" id = "province" placeholder="Province" required>
+                        	<option value="" disabled selected>Please Select</option>
+                       		<% for(var i=0; i<province_list.length; i++) { %>
+        						<li>
+        							<option value = <%= province_list[i].province_id %>>
+        								<%= province_list[i].province_name %>
+        							</option>
+						        </li>
+    						<% } %>
+                        </select>
                     </div>
                 </div>
 
@@ -126,10 +136,10 @@
                 <!--Emergency Contacts-->
                 <div>
                     <br>
-                    <label>Emergency Contacts <span style = "font-weight:normal;">(Minimum 1, maximum 3.)</span></label>
+                    <label>Emergency Contacts <span style = "font-weight:normal;">(Minimum 1)</span></label>
                 </div>
 
-                <% for(var i=1; i <= 3; i++) { %>
+                <% for(var i=1; i <= MAX; i++) { %>
                 <div id = <%= "contact" + i %> <% if (i != 1) { %> class = "hidden" <% } %> >
                     <div>
                         <br>
@@ -164,7 +174,7 @@
                     <div class="form-group col-sm-12">
                         <div>
                             <div> 
-                                <label for='student'><input type="checkbox" id="student" value="1"> I am a student</label>
+                                <label for='student'><input type="checkbox" id="student" name = "student" value="1"> I am a student</label>
                             </div>
                             <div id='student_info' class='hidden'>
                                 <div class="row">
@@ -196,7 +206,7 @@
                 <!--Checkbox for notifications-->
                 <div class = "row">
                     <div class="form-group col-sm-4">
-                        <label><input type="checkbox" id="send_notifications" value="0" checked> Would you like some notifications</label>
+                        <label><input type="checkbox" id="send_notifications" name = "send_notifications" value="1"> Would you like us to send notifications</label>
                     </div>
                 </div>
                 

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `gibson` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `gibson`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
 -- Host: localhost    Database: gibson
@@ -42,4 +40,4 @@ CREATE TABLE `payment_period` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-16 21:50:20
+-- Dump completed on 2016-02-21 23:08:21

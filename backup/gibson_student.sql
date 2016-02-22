@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `gibson` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `gibson`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
 -- Host: localhost    Database: gibson
@@ -26,14 +24,14 @@ DROP TABLE IF EXISTS `student`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student` (
   `user_id` int(10) unsigned NOT NULL,
-  `school_name` varchar(128) NOT NULL COMMENT 'Name of school currently attending',
-  `grade` varchar(45) NOT NULL COMMENT 'Grade/Year of student, if not in post-secondary',
-  `major` varchar(45) DEFAULT NULL COMMENT 'Name of major, if applicable',
-  `esl_level` varchar(45) DEFAULT NULL COMMENT 'ESL program level',
+  `school_name` varchar(128) NOT NULL,
+  `grade` varchar(45) NOT NULL,
+  `major` varchar(128) DEFAULT NULL,
+  `esl_level` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
-  CONSTRAINT `user_student` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Additional user info if student=true';
+  CONSTRAINT `student_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -45,4 +43,4 @@ CREATE TABLE `student` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-16 21:50:21
+-- Dump completed on 2016-02-21 23:08:21

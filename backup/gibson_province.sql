@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `gibson` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `gibson`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
 -- Host: localhost    Database: gibson
@@ -25,11 +23,11 @@ DROP TABLE IF EXISTS `province`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `province` (
-  `province_id` int(13) NOT NULL AUTO_INCREMENT,
+  `province_id` int(13) unsigned NOT NULL AUTO_INCREMENT,
   `province_name` varchar(45) NOT NULL,
+  `prov_abb` varchar(2) NOT NULL,
   PRIMARY KEY (`province_id`),
-  UNIQUE KEY `province_id_UNIQUE` (`province_id`),
-  UNIQUE KEY `name_UNIQUE` (`province_name`)
+  UNIQUE KEY `province_id_UNIQUE` (`province_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='List of provinces in Canada (accurate as of February 15th, 2016)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -42,4 +40,4 @@ CREATE TABLE `province` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-16 21:50:20
+-- Dump completed on 2016-02-21 23:08:21

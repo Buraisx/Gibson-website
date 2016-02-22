@@ -72,6 +72,9 @@ module.exports = function(passport){
         //GET POOLING CONNECTION
         connection.getConnection(function(err, con){
 
+            //===================================
+            //QUERY FOR ALREADY EXISTING USERNAME
+            //===================================
             con.query(sql, function(err, results){
 
              if(err){//check for error
@@ -87,10 +90,17 @@ module.exports = function(passport){
                  //req.flash('signupMessage', 'User already exist with that email')
 
               }
+
+              //===================================
+              //INSERT NEW USER TO DATABASE
+              //===================================
               else{ // user DNE, -> make new user.
                   var newUser = {username:null, password:null, lname:null, fname:null, birth_date:null, gender:null, address:null, unit_no:null, city:null,
                                 province_id:null, postal_code:null, primary_phone:null, secondary_phone:null, email:null, send_notification:null, student:null};
 
+                  //===================================
+                  //INSERT NEW USER TO USER DATABASE
+                  //===================================
                   //initialize newUser values
                   newUser.username = req.body.username;
                   newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(Math.floor(3*Math.random())+10));
@@ -101,17 +111,17 @@ module.exports = function(passport){
                   newUser.address = req.body.address;
                   newUser.unit_no = req.body.apt;
                   newUser.city = req.body.city;
-                  newUser.province_id = req.body.province_id;
+                  newUser.province_id = req.body.province;
                   newUser.postal_code = req.body.postal_code.replace(/ /g,''); //Deletes the white space in postal code.
                   newUser.primary_phone = req.body.primary_phone;
                   newUser.secondary_phone = req.body.secondary_phone;
                   newUser.email = req.body.email;
-                  newUser.send_notification = 1;
-                  newUser.student = 1;
+                  newUser.send_notification = (req.body.send_notifications == null)? 0:req.body.notification;
+                  newUser.student = (req.body.student == null)? 0:req.body.student;
 
                   // creating query
                   var createUser  = 'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, ';
-                      createUser +=                          'province, postal_code, primary_phone, secondary_phone, email, send_notification, ';
+                      createUser +=                          'province_id, postal_code, primary_phone, secondary_phone, email, send_notification, ';
                       createUser +=                          'student) ';
                       createUser += 'VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
                   var values = [newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.birth_date, newUser.gender,
@@ -120,14 +130,72 @@ module.exports = function(passport){
 
                   createUser = mysql.format(createUser, values);
 
-                  // querying the database
+                  // Insert into the database
                   con.query(createUser, function(err, results){
-                      con.release();
                         if(err){
+                          con.release();
                           console.log('INSERT ERROR');
+                          return done(err);
                         }
                         console.log(createUser);
-                        return done(null, newUser);
+
+                        //Query for user_id
+                        var query_id = mysql.format('SELECT user_id FROM gibson.user WHERE username = ?', newUser.username);
+                        var userId;
+
+                        // query user_id from db
+                        con.query(query_id, function(err, results){
+                            if(err){
+                                con.release();
+                                console.log('INDEX FIND ERROR');
+                                return done(err);
+                            }
+                            userId = results[0].user_id;
+                            console.log(results);
+
+                            //===========================================================
+                            //INSERT NEW EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE
+                            //===========================================================  
+                            //emergency contacts
+                            var emContacts = [];
+                            var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null}
+                            var i = 1;
+
+                            //push emergency to emContacts
+                            while(true){
+                                if(req.body['ephone' + i] == null || req.body['ephone' + i] ==''){
+                                  break;
+                                }
+
+                                contact.fname = req.body['emergencyfname' + i];
+                                contact.lname = req.body['emergencylname' + i];
+                                contact.relationship = req.body['relationship' + i];
+                                contact.contact_phone = req.body['ephone' + i];
+                    
+                                emContacts.push(contact);
+                                i += 1;
+                            }
+
+                            console.log(emContacts);
+
+
+                            //===========================================================
+                            //INSERT STUDENT INFO TO STUDENT DATABASE
+                            //===========================================================
+                            //student info
+                            if(newUser.student == 1){
+                                var studentInfo = {user_id:userId, school_name:null, grade:null, major:null, esl_level:null};
+
+                                studentInfo.school_name = req.body.schoolname;
+                                studentInfo.grade = req.body.grade;
+                                studentInfo.major = req.body.major;
+                                studentInfo.esl_level = req.body.esl;
+
+                                console.log(studentInfo);
+                            }
+
+                            return done(null, newUser);
+                        });       
                   });
                 }
             });

@@ -16,19 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `province`
+-- Table structure for table `temp_user`
 --
 
-DROP TABLE IF EXISTS `province`;
+DROP TABLE IF EXISTS `temp_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `province` (
-  `province_id` int(13) unsigned NOT NULL AUTO_INCREMENT,
-  `province_name` varchar(45) NOT NULL,
-  `prov_abb` varchar(2) NOT NULL,
-  PRIMARY KEY (`province_id`),
-  UNIQUE KEY `province_id_UNIQUE` (`province_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='List of provinces in Canada (accurate as of February 15th, 2016)';
+CREATE TABLE `temp_user` (
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rank_id` int(10) unsigned NOT NULL,
+  `username` varchar(32) NOT NULL,
+  `password` varchar(60) NOT NULL,
+  `lname` varchar(128) NOT NULL,
+  `fname` varchar(128) NOT NULL,
+  `birth_date` date NOT NULL,
+  `gender` varchar(64) NOT NULL,
+  `address` varchar(128) NOT NULL,
+  `unit_no` varchar(8) DEFAULT NULL,
+  `city` varchar(64) NOT NULL,
+  `province_id` int(13) unsigned NOT NULL,
+  `postal_code` varchar(6) NOT NULL,
+  `primary_phone` varchar(16) DEFAULT NULL,
+  `secondary_phone` varchar(16) DEFAULT NULL,
+  `email` varchar(128) NOT NULL,
+  `send_notification` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `student` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  KEY `province_id` (`province_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -40,4 +58,4 @@ CREATE TABLE `province` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-21  1:55:14
+-- Dump completed on 2016-02-21 23:08:21

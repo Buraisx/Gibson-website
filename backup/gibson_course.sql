@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `gibson` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `gibson`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
 -- Host: localhost    Database: gibson
@@ -28,7 +26,7 @@ CREATE TABLE `course` (
   `course_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `course_code` varchar(32) NOT NULL,
   `course_name` varchar(64) NOT NULL,
-  `default_fee` decimal(16,2) unsigned zerofill NOT NULL COMMENT 'Discounts TBD by other ppl',
+  `default_fee` decimal(16,2) NOT NULL COMMENT 'Discounts TBD by other ppl',
   `payment_period_id` int(10) unsigned NOT NULL COMMENT 'foreign key to another table called payment period which ids each payment type',
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
@@ -53,4 +51,4 @@ CREATE TABLE `course` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-16 21:50:21
+-- Dump completed on 2016-02-21 23:08:21

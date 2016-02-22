@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `gibson` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `gibson`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
 -- Host: localhost    Database: gibson
@@ -26,12 +24,12 @@ DROP TABLE IF EXISTS `emergency_contact`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `emergency_contact` (
   `contact_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
   `lname` varchar(64) NOT NULL,
   `fname` varchar(64) NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
   `relationship` varchar(64) NOT NULL,
   `contact_phone` varchar(16) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`contact_id`),
   UNIQUE KEY `contact_id_UNIQUE` (`contact_id`),
   KEY `user_id` (`user_id`),
@@ -48,4 +46,4 @@ CREATE TABLE `emergency_contact` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-16 21:50:20
+-- Dump completed on 2016-02-21 23:08:21
