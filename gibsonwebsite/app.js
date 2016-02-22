@@ -84,7 +84,6 @@ app.use(function(req, res, next){
     try { // GOOD TOKEN, AUTHENTICATION SUCCESSFUL -> GO TO REQUESTED PAGE
       var decoded = jwt.verify(token, config.jwt_secret.secret);
       req.decoded = decoded;
-      console.log(req.decoded);
     }
     // BAD TOKEN -> REDIRECTS TO LOGIN TO GET NEW TOKEN
     catch(err) {return res.redirect('/login');}
