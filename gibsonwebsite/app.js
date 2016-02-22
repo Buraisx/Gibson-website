@@ -66,10 +66,38 @@ var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 
 app.use('/', routes);
-app.use('/', test_profile);
 //app.use('/users', users);
 app.use('/', signup);
 app.use('/', login);
+// ================================================
+// ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
+// ================================================
+
+// AUTHENTICATION FUNCTION - CHECKS THE TOKEN IN COOKIE
+app.use(function(req, res, next){
+
+  // LOOKING FOR TOKEN IN COOKIES
+  var token = req.cookies.access_token;
+
+  // TOKEN FOUND, TRYING TO VALIDATE
+  if (token) {
+    try { // GOOD TOKEN, AUTHENTICATION SUCCESSFUL -> GO TO REQUESTED PAGE
+      var decoded = jwt.verify(token, config.jwt_secret.secret);
+      req.decoded = decoded;
+    }
+    // BAD TOKEN -> REDIRECTS TO LOGIN TO GET NEW TOKEN
+    catch(err) {return res.redirect('/login');}
+  }
+  // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
+  else {return res.redirect('/login');}
+
+  next();
+});
+// =============================================
+// ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
+// =============================================
+app.use('/', test_profile);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

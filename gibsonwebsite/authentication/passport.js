@@ -13,7 +13,7 @@ connection.getConnection(function(err, con){
         console.log('Error connecting to Db');
     }
     else{
-        console.log('Connection established');
+      console.log('Connection established');
     }
 
     return;
@@ -116,8 +116,8 @@ module.exports = function(passport){
                   newUser.primary_phone = req.body.primary_phone;
                   newUser.secondary_phone = req.body.secondary_phone;
                   newUser.email = req.body.email;
-                  newUser.send_notification = (req.body.send_notifications == null)? 0:req.body.notification;
-                  newUser.student = (req.body.student == null)? 0:req.body.student;
+                  newUser.send_notification = (req.body.send_notifications === null)? 0:req.body.notification;
+                  newUser.student = (req.body.student === null)? 0:req.body.student;
 
                   // creating query
                   var createUser  = 'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, ';
@@ -155,15 +155,15 @@ module.exports = function(passport){
 
                             //===========================================================
                             //INSERT NEW EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE
-                            //===========================================================  
+                            //===========================================================
                             //emergency contacts
                             var emContacts = [];
-                            var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null}
+                            var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null};
                             var i = 1;
 
                             //push emergency to emContacts
                             while(true){
-                                if(req.body['ephone' + i] == null || req.body['ephone' + i] ==''){
+                                if(req.body['ephone' + i] === null || req.body['ephone' + i] ===''){
                                   break;
                                 }
 
@@ -171,7 +171,7 @@ module.exports = function(passport){
                                 contact.lname = req.body['emergencylname' + i];
                                 contact.relationship = req.body['relationship' + i];
                                 contact.contact_phone = req.body['ephone' + i];
-                    
+
                                 emContacts.push(contact);
                                 i += 1;
                             }
@@ -195,7 +195,7 @@ module.exports = function(passport){
                             }
 
                             return done(null, newUser);
-                        });       
+                        });
                   });
                 }
             });
