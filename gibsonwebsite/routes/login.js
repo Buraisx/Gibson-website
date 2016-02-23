@@ -2,6 +2,7 @@ var express = require('express');
 var config = require('../server_config');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
+var token = require('../authentication/token');
 
 module.exports = function(passport){
 
@@ -11,8 +12,6 @@ router.get('/login', function(req,res,next){
 	res.render('login', { title: 'Login'});
 
 });
-
-
 
 // SERLIALIZE MOVED HERE BECAUSE session: false
 /*
@@ -31,26 +30,6 @@ function updateOrCreate (user, cb){
 }
 */ // DISABLED FOR NOW
 
-// GENERATING JSON WEB TOKEN
-function generateToken(req, res, next) {
-  req.token = jwt.sign({
-		iss: 'https://www.105gibson.com',
-		id: req.user.user_id,
-    user: req.user.username,
-		lastLoggedIn: req.user.last_login_time
-  },
-	config.jwt_secret.secret, {
-    expiresIn: 24*60*60 // 1 day
-  });
-  next();
-}
-
-// SENDING TOKEN TO USER
-function respond(req, res) {
-	res.clearCookie('access_token');
-	res.cookie('access_token', req.token, {secure: true, httpOnly: true});
-	res.redirect('/');
-}
 
 //login
 router.post('/login', passport.authenticate('local-login', {
@@ -58,12 +37,11 @@ router.post('/login', passport.authenticate('local-login', {
 	//successRedirect: '/index',		// Redirect to main page when login complete
 	failureRedirect: '/login',	// Return to login when fail, and flash error
 	failureFlash: true
-}), generateToken, respond);
+}), token.generateToken, token.respond);
 
 //logout of account
 router.post('/logout', function(req,res,next){
 	res.clearCookie('access_token');
-	req.logout();
 	res.redirect('/');
 });
 

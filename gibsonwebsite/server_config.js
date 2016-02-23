@@ -6,10 +6,10 @@ var db_config = {
     port:3306
 };
 
-var jwt_secret = {
+var jwt = {
   secret: 'g1b50n secret',
   issuer: 'https://www.105gibson.com'
 };
 
 module.exports.db_config = db_config;
-module.exports.jwt_secret = jwt_secret;
+module.exports.jwt = jwt;

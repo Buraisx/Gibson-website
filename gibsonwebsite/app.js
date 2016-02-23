@@ -82,7 +82,7 @@ app.use(function(req, res, next){
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token) {
     try { // GOOD TOKEN, AUTHENTICATION SUCCESSFUL -> GO TO REQUESTED PAGE
-      var decoded = jwt.verify(token, config.jwt_secret.secret);
+      var decoded = jwt.verify(token, config.jwt.secret);
       req.decoded = decoded;
     }
     // BAD TOKEN -> REDIRECTS TO LOGIN TO GET NEW TOKEN

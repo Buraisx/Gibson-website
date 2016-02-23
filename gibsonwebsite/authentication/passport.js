@@ -132,70 +132,70 @@ module.exports = function(passport){
 
                   // Insert into the database
                   con.query(createUser, function(err, results){
+                    if(err){
+                      con.release();
+                      console.log('INSERT ERROR');
+                      return done(err);
+                    }
+                    console.log(createUser);
+
+                    //Query for user_id
+                    var query_id = mysql.format('SELECT user_id FROM gibson.user WHERE username = ?', newUser.username);
+                    var userId;
+
+                    // query user_id from db
+                    con.query(query_id, function(err, results){
                         if(err){
-                          con.release();
-                          console.log('INSERT ERROR');
-                          return done(err);
+                            con.release();
+                            console.log('INDEX FIND ERROR');
+                            return done(err);
                         }
-                        console.log(createUser);
+                        userId = results[0].user_id;
+                        console.log(results);
 
-                        //Query for user_id
-                        var query_id = mysql.format('SELECT user_id FROM gibson.user WHERE username = ?', newUser.username);
-                        var userId;
+                        //===========================================================
+                        //INSERT NEW EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE
+                        //===========================================================
+                        //emergency contacts
+                        var emContacts = [];
+                        var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null};
+                        var i = 1;
 
-                        // query user_id from db
-                        con.query(query_id, function(err, results){
-                            if(err){
-                                con.release();
-                                console.log('INDEX FIND ERROR');
-                                return done(err);
-                            }
-                            userId = results[0].user_id;
-                            console.log(results);
+                        //push emergency to emContacts
+                        while(true){
+                          if(req.body['ephone' + i] === null || req.body['ephone' + i] ===''){
+                            break;
+                          }
 
-                            //===========================================================
-                            //INSERT NEW EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE
-                            //===========================================================
-                            //emergency contacts
-                            var emContacts = [];
-                            var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null};
-                            var i = 1;
+                          contact.fname = req.body['emergencyfname' + i];
+                          contact.lname = req.body['emergencylname' + i];
+                          contact.relationship = req.body['relationship' + i];
+                          contact.contact_phone = req.body['ephone' + i];
 
-                            //push emergency to emContacts
-                            while(true){
-                                if(req.body['ephone' + i] === null || req.body['ephone' + i] ===''){
-                                  break;
-                                }
+                          emContacts.push(contact);
+                          i += 1;
+                        }
 
-                                contact.fname = req.body['emergencyfname' + i];
-                                contact.lname = req.body['emergencylname' + i];
-                                contact.relationship = req.body['relationship' + i];
-                                contact.contact_phone = req.body['ephone' + i];
-
-                                emContacts.push(contact);
-                                i += 1;
-                            }
-
-                            console.log(emContacts);
+                        console.log(emContacts);
 
 
-                            //===========================================================
-                            //INSERT STUDENT INFO TO STUDENT DATABASE
-                            //===========================================================
-                            //student info
-                            if(newUser.student == 1){
-                                var studentInfo = {user_id:userId, school_name:null, grade:null, major:null, esl_level:null};
+                        //===========================================================
+                        //INSERT STUDENT INFO TO STUDENT DATABASE
+                        //===========================================================
+                        //student info
+                        if(newUser.student == 1){
+                            var studentInfo = {user_id:userId, school_name:null, grade:null, major:null, esl_level:null};
 
-                                studentInfo.school_name = req.body.schoolname;
-                                studentInfo.grade = req.body.grade;
-                                studentInfo.major = req.body.major;
-                                studentInfo.esl_level = req.body.esl;
+                            studentInfo.school_name = req.body.schoolname;
+                            studentInfo.grade = req.body.grade;
+                            studentInfo.major = req.body.major;
+                            studentInfo.esl_level = req.body.esl;
 
-                                console.log(studentInfo);
-                            }
+                            console.log(studentInfo);
+                        }
 
-                            return done(null, newUser);
-                        });
+                        return done(null, newUser);
+                    });
                   });
                 }
             });
