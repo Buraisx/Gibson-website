@@ -211,29 +211,13 @@
                         <label><input type="checkbox" id="send_notifications" name = "send_notifications" value="1"> Would you like us to send notifications</label>
                     </div>
                 </div>
-                
 
 
-   
-
-    <!-- the captcha messes up the submit button
-    <form action="?" method="POST">
-      <div id="html_element"></div>
-    </form>
-    
-    <div class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0"></div>
-    <br>
-    -->
-
-    <!--script src="https://www.google.com/recaptcha/api.js?"
-        async defer>
-    </script-->
-
-
-
-
-
-                <button type = "submit" class = "btn btn-default" onclick="return submitbutton()" id = "submit2">Submit</button>
+                <!--temporarily disabled until the POST request is implemented:     form action="?" method="POST"-->
+                    <div class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0"></div>
+                    <br/>
+                    <button type = "submit" class = "btn btn-default" onclick="return submitbutton()" id = "submit">Submit</button>
+                <!--/form-->
 
                 </form>
             </div>
