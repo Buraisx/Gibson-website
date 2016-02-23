@@ -79,7 +79,7 @@ module.exports = function(passport){
         // USER WITH THAT USERNAME FOUND
         if(results.length){
           con.release();
-          console.log('User already exist with that username or email');
+          console.log('User already exist with that username or email.');
           return done(null, false );
           //req.flash('signupMessage', 'User already exist with that email')
         }
@@ -130,7 +130,6 @@ module.exports = function(passport){
           con.query(createUser, function(err, results){
             if(err){
               con.release();
-              console.log(createUser);
               console.log('passport.js: Error while inserting new user into the database.');
               return done(err);
             }

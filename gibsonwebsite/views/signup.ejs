@@ -22,7 +22,6 @@
     <section>
         <div class = "container">
             <h2>Part A: Your Information </h2>
-            <p> <%= province_list[0].province_name %> </p>
                 <form name="frm" action = "/signup" method = "post" role = "form">
 
                 <!--Input Username-->
@@ -59,7 +58,7 @@
                         <input type = "text" class = "form-control" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                     </div>
                     <div class = "form-group col-sm-2">
-                        <label><span style="color:red">*</span>Last Name:</label>                            
+                        <label><span style="color:red">*</span>Last Name:</label>
                         <input type = "text" class = "form-control" name = "lname" id = "lname" placeholder="eg. Smith"required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                     </div>
                     <div class = "form-group col-sm-2">
@@ -88,7 +87,7 @@
                         <input type = "text" class = "form-control" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity('Invalid postal code.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
                     </div>
                 </div>
-                
+
                 <!--Input Unit#, City and Province-->
                 <div class = "row">
                     <div class = "form-group col-sm-2">
@@ -153,7 +152,7 @@
                             <input type = "text" class = "form-control" name = <%= "emergencyfname" + i %> id = <%= "emergencyfname" + i %> placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %> ><!--Character restrictions-->
                         </div>
                         <div class = "form-group col-sm-2">
-                            <label><span style="color:red">*</span>Last Name:</label>                            
+                            <label><span style="color:red">*</span>Last Name:</label>
                             <input type = "text" class = "form-control" name = <%= "emergencylname" + i %> id = <%= "emergencylname" + i %> placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
                         </div>
                         <div class = "form-group col-sm-2">
@@ -175,7 +174,7 @@
                 <div class = "row">
                     <div class="form-group col-sm-12">
                         <div>
-                            <div> 
+                            <div>
                                 <label for='student'><input type="checkbox" id="student" name = "student" value="1"> I am a student</label>
                             </div>
                             <div id='student_info' class='hidden'>
@@ -223,7 +222,7 @@
             </div>
     </section>
 
-    
+
 
     <%- include standardfooter %>
 
