@@ -12,6 +12,8 @@
     <script src = "js/studentinputboxes.js"></script>
     <script src = "js/emergencycontacts.js"></script>
     <script src = "js/submitbutton.js"></script>
+    <script src = 'https://www.google.com/recaptcha/api.js'></script>
+    <!--script src = "js/captcha.js"></script-->
 </head>
 
 <body id="page-top" class="index">
@@ -67,7 +69,7 @@
                     <div class = "form-group col-sm-2">
                         <label class = "control-label"><span style="color:red">*</span>Gender:</label>
                         <select class = "form-control" name = "gender" id = "gender" placeholder="Gender" required>
-                        	<option value="" disabled selected>Please Select</option>
+                            <option value="" disabled selected>Please Select</option>
                             <option value = "Male">Male</option>
                             <option value = "Female">Female</option>
                             <option value = "Unknown">Unspecified</option>
@@ -101,14 +103,14 @@
                     <div class = "form-group col-sm-2">
                         <label class = "control-label"><span style="color:red">*</span>Province:</label>
                         <select class = "form-control" name = "province" id = "province" placeholder="Province" required>
-                        	<option value="" disabled selected>Please Select</option>
-                       		<% for(var i=0; i<province_list.length; i++) { %>
-        						<li>
-        							<option value = <%= province_list[i].province_id %>>
-        								<%= province_list[i].province_name %>
-        							</option>
-						        </li>
-    						<% } %>
+                            <option value="" disabled selected>Please Select</option>
+                            <% for(var i=0; i<province_list.length; i++) { %>
+                                <li>
+                                    <option value = <%= province_list[i].province_id %>>
+                                        <%= province_list[i].province_name %>
+                                    </option>
+                                </li>
+                            <% } %>
                         </select>
                     </div>
                 </div>
@@ -212,7 +214,26 @@
                 
 
 
-                <button type = "submit" class = "btn btn-default" onclick="return submitbutton()" id = "submit">Submit</button>
+   
+
+    <!-- the captcha messes up the submit button
+    <form action="?" method="POST">
+      <div id="html_element"></div>
+    </form>
+    
+    <div class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0"></div>
+    <br>
+    -->
+
+    <!--script src="https://www.google.com/recaptcha/api.js?"
+        async defer>
+    </script-->
+
+
+
+
+
+                <button type = "submit" class = "btn btn-default" onclick="return submitbutton()" id = "submit2">Submit</button>
 
                 </form>
             </div>
