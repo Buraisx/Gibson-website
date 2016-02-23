@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
 //show the students input boxes
 function reactToCheckbox() {
 	if(student.checked) {
-
-   	$("#student_info").removeClass("hidden").hide().slideDown();
-   	/*
-	    var element = document.getElementById("student_info").id = 'student_info-show';           
-        return false;*/
+	   	$("#student_info").removeClass("hidden").hide().slideDown();
+	   	document.getElementById("schoolname").required = true;
+	    document.getElementById("grade").required = true;
 	}
 	else {
 		$("#student_info").slideUp();
+		document.getElementById("schoolname").required = false;
+	    document.getElementById("grade").required = false;
 	}
 }
