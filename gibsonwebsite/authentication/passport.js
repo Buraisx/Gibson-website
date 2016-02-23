@@ -21,14 +21,10 @@ connection.getConnection(function(err, con){
 
 module.exports = function(passport){
 
- // SINCE WE USING TOKENS, PASSPORT NO LONGER CALLS THE SERIALIZE FUNCTIONS.
- // *MOVED OUTSIDE OF passport.js*
  // used to serialize the user for the session
- /*
     passport.serializeUser(function(user, done) {
         done(null, user.username);
     });
-*/
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
@@ -116,8 +112,8 @@ module.exports = function(passport){
                   newUser.primary_phone = req.body.primary_phone;
                   newUser.secondary_phone = req.body.secondary_phone;
                   newUser.email = req.body.email;
-                  newUser.send_notification = (req.body.send_notifications == null)? 0:req.body.send_notifications;
-                  newUser.student = (req.body.student == null)? 0:req.body.student;
+                  newUser.send_notification = (!req.body.send_notifications)? 0:req.body.send_notifications;
+                  newUser.student = (!req.body.student)? 0:req.body.student;
 
                   // creating query
                   var createUser  = 'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, ';
@@ -163,7 +159,7 @@ module.exports = function(passport){
 
                         //push emergency to emContacts
                         while(true){
-                          if(req.body['ephone' + i] == null || req.body['ephone' + i] == ''){
+                          if(!req.body['ephone' + i]){
                             break;
                           }
                           var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null};
@@ -185,7 +181,7 @@ module.exports = function(passport){
                         var createEContacts = 'INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone)';
                         createEContacts += 'VALUES (?,?,?,?,?);';
 
-                        
+
                         for(emc = 0; emc < emContacts.length; emc++)
                         {
                           var econtact_values = [emContacts[emc].user_id, emContacts[emc].fname, emContacts[emc].lname, emContacts[emc].relationship, emContacts[emc].contact_phone];
@@ -198,7 +194,6 @@ module.exports = function(passport){
                                 console.log('INSERT EMERGENCY CONTACT ERROR');
                                 return done(err);
                             }
-                              
                           });
                         }
 
@@ -226,11 +221,10 @@ module.exports = function(passport){
                                 console.log('INSERT STUDENT INFO ERROR');
                                 return done(err);
                             }
-
-                            console.log(studentInsert);   
+                            console.log(studentInsert);
+                          
                           });
                         }
-
                         //DONE
                         return done(null, newUser);
                     });
