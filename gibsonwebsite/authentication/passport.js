@@ -222,11 +222,15 @@ module.exports = function(passport){
                                 return done(err);
                             }
                             console.log(studentInsert);
-                          
+
+                            //DONE
+                            return done(null, newUser);
                           });
                         }
-                        //DONE
-                        return done(null, newUser);
+                        else{
+                          //DONE
+                          return done(null, newUser);
+                        }
                     });
                   });
                 }
