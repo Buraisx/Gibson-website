@@ -179,26 +179,28 @@ module.exports = function(passport){
                           i += 1;
                         }
 
+                        console.log(emContacts);  //double check emergency contacts
+
                         //create econtacts
                         var createEContacts = 'INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone)';
                         createEContacts += 'VALUES (?,?,?,?,?);';
 
-                        /*
-                        for(var emc = 0; emc < emContacts.length; emc++)
+                        
+                        for(emc = 0; emc < emContacts.length; emc++)
                         {
                           var econtact_values = [emContacts[emc].user_id, emContacts[emc].fname, emContacts[emc].lname, emContacts[emc].relationship, emContacts[emc].contact_phone];
                           var contactInsert = mysql.format(createEContacts, econtact_values);
 
-                          // query user_id from db
+                          // Insert contact into db
                           con.query(contactInsert, function(err, results){
                             if(err){
                                 con.release();
                                 console.log('INSERT EMERGENCY CONTACT ERROR');
                                 return done(err);
                             }
-                            console.log(contactInsert);  
+                              
                           });
-                        }*/
+                        }
 
                         //===========================================================
                         //INSERT STUDENT INFO TO STUDENT DATABASE
@@ -212,9 +214,24 @@ module.exports = function(passport){
                             studentInfo.major = req.body.major;
                             studentInfo.esl_level = req.body.esl;
 
-                            console.log(studentInfo);
+                            var createStudent = 'INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level)';
+                            createStudent += 'VALUES (?,?,?,?,?);';
+                            var student_values = [studentInfo.user_id, studentInfo.school_name, studentInfo.grade, studentInfo.major, studentInfo.esl_level];
+
+                            var studentInsert = mysql.format(createStudent, student_values);
+
+                            con.query(studentInsert, function(err, results){
+                            if(err){
+                                con.release();
+                                console.log('INSERT STUDENT INFO ERROR');
+                                return done(err);
+                            }
+
+                            console.log(studentInsert);   
+                          });
                         }
 
+                        //DONE
                         return done(null, newUser);
                     });
                   });
