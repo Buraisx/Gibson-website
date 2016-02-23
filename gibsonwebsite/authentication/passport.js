@@ -116,8 +116,8 @@ module.exports = function(passport){
                   newUser.primary_phone = req.body.primary_phone;
                   newUser.secondary_phone = req.body.secondary_phone;
                   newUser.email = req.body.email;
-                  newUser.send_notification = (req.body.send_notifications === null)? 0:req.body.notification;
-                  newUser.student = (req.body.student === null)? 0:req.body.student;
+                  newUser.send_notification = (req.body.send_notifications == null)? 0:req.body.send_notifications;
+                  newUser.student = (req.body.student == null)? 0:req.body.student;
 
                   // creating query
                   var createUser  = 'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, ';
@@ -134,6 +134,7 @@ module.exports = function(passport){
                   con.query(createUser, function(err, results){
                     if(err){
                       con.release();
+                      console.log(createUser);
                       console.log('INSERT ERROR');
                       return done(err);
                     }
