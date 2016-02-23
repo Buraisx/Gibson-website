@@ -141,7 +141,7 @@ module.exports = function(passport){
                     console.log(createUser);
 
                     //Query for user_id
-                    var query_id = mysql.format('SELECT user_id FROM gibson.user WHERE username = ?', newUser.username);
+                    var query_id = mysql.format('SELECT user_id FROM gibson.user WHERE username = ?;', newUser.username);
                     var userId;
 
                     // query user_id from db
@@ -164,21 +164,45 @@ module.exports = function(passport){
 
                         //push emergency to emContacts
                         while(true){
-                          if(req.body['ephone' + i] === null || req.body['ephone' + i] ===''){
+                          if(req.body['ephone' + i] == null || req.body['ephone' + i] == ''){
                             break;
                           }
 
                           contact.fname = req.body['emergencyfname' + i];
-                          contact.lname = req.body['emergencylname' + i];
+                          contact = req.body['emergencylname' + i];
                           contact.relationship = req.body['relationship' + i];
                           contact.contact_phone = req.body['ephone' + i];
 
-                          emContacts.push(contact);
+                          //asyncronous behaviour
+                          (function(contact){
+                            emContacts.push(function(){
+                              return contact;
+                            });
+                          })(contact);
+
                           i += 1;
                         }
 
-                        console.log(emContacts);
+                        //create econtacts
+                        var createEContacts = 'INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone)';
+                        createEContacts += 'VALUES (?,?,?,?,?);';
 
+                        /*
+                        for(var emc = 0; emc < emContacts.length; emc++)
+                        {
+                          var econtact_values = [emContacts[emc].user_id, emContacts[emc].fname, emContacts[emc].lname, emContacts[emc].relationship, emContacts[emc].contact_phone];
+                          var contactInsert = mysql.format(createEContacts, econtact_values);
+
+                          // query user_id from db
+                          con.query(contactInsert, function(err, results){
+                            if(err){
+                                con.release();
+                                console.log('INSERT EMERGENCY CONTACT ERROR');
+                                return done(err);
+                            }
+                            console.log(contactInsert);  
+                          });
+                        }*/
 
                         //===========================================================
                         //INSERT STUDENT INFO TO STUDENT DATABASE
