@@ -66,14 +66,10 @@ var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 
 
-
 app.use('/', routes);
 //app.use('/users', users);
 app.use('/', signup);
 app.use('/', login);
-// ================================================
-// ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
-// ================================================
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -91,6 +87,9 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+// ================================================
+// ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
+// ================================================
 
 // AUTHENTICATION FUNCTION - CHECKS THE TOKEN IN COOKIE
 app.use(function(req, res, next){
