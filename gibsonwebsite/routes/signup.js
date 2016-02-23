@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var config = require('../server_config');
+var token = require('../authentication/token');
 
 
 module.exports = function(passport){
@@ -29,11 +30,10 @@ router.get('/signup', function(req,res,next){
 //create new user
 router.post('/signup',  passport.authenticate('local-signup', {
 	session: false,
-	successRedirect: '/signup/success',		// Redirect to main page when login complete
+	//successRedirect: '/signup/success',		// Redirect to main page when login complete
 	failureRedirect: '/lol',	// Return to login when fail, and flash error
 	failureFlash: true
-	})
-);
+}), token.generateToken, token.respond);
 
 //show signup success page
 router.get('/signup/success', function(req,res){
