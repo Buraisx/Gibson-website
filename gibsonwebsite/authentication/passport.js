@@ -159,7 +159,6 @@ module.exports = function(passport){
                         //===========================================================
                         //emergency contacts
                         var emContacts = [];
-                        var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null};
                         var i = 1;
 
                         //push emergency to emContacts
@@ -167,18 +166,15 @@ module.exports = function(passport){
                           if(req.body['ephone' + i] == null || req.body['ephone' + i] == ''){
                             break;
                           }
+                          var contact = {user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null};
 
                           contact.fname = req.body['emergencyfname' + i];
-                          contact = req.body['emergencylname' + i];
+                          contact.lname = req.body['emergencylname' + i];
                           contact.relationship = req.body['relationship' + i];
                           contact.contact_phone = req.body['ephone' + i];
 
                           //asyncronous behaviour
-                          (function(contact){
-                            emContacts.push(function(){
-                              return contact;
-                            });
-                          })(contact);
+                          emContacts.push(contact);
 
                           i += 1;
                         }
