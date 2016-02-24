@@ -14,7 +14,6 @@
     "ejs": "~2.3.4",
     "express": "~4.13.3",
     "express-favicon": "^1.0.1",
-    "express-jwt": "^3.3.0",
     "express-session": "~1.0.0",
     "helmet": "^1.1.0",
     "https": "^1.0.0",
