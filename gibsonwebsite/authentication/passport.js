@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
-var config = require('../server_config.js');
+var config = require('../server_config');
 var bcrypt = require('bcrypt-nodejs');
 var sanitizer = require('sanitizer');
 
