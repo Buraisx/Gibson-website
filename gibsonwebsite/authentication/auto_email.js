@@ -1,11 +1,14 @@
 var nodemailer = require('nodemailer');
-var transport = require('../mailer.js').transport;
+var smtpTransport = require('nodemailer-smtp-transport');
+var config = require('../server_config');
 
+// SETTING UP TRANSPORTER
+var transport = nodemailer.createTransport(smtpTransport(config.transport));
 
 // CONFIGURING E-MAIL
 var mailOptions = {
   from: '"105 Gibson" <nansagad@gmail.com>',
-  to: 'Benjamin.zhao1995@hotmail.com',
+  to: 'kevinxu_95@hotmail.com',
   subject: '105 Gibson Automated E-Mail.',
   text: 'Hardcoded for now.',
 };
