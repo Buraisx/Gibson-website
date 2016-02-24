@@ -3,6 +3,7 @@ var config = require('../server_config');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
 var token = require('../authentication/token');
+var email = require('../authentication/auto_email');
 
 module.exports = function(passport){
 
@@ -37,7 +38,7 @@ router.post('/login', passport.authenticate('local-login', {
 	//successRedirect: '/index',		// Redirect to main page when login complete
 	failureRedirect: '/login',	// Return to login when fail, and flash error
 	failureFlash: true
-}), token.generateToken, token.respond);
+}), token.generateToken, email.signupConfirm, token.respond);
 
 //logout of account
 router.post('/logout', function(req,res,next){

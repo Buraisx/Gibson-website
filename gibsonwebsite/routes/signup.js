@@ -3,6 +3,7 @@ var router = express.Router();
 var mysql = require('mysql');
 var config = require('../server_config');
 var token = require('../authentication/token');
+var email = require('../authentication/auto_email');
 
 
 module.exports = function(passport){
