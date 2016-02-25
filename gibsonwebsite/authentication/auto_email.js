@@ -9,8 +9,8 @@ var transport = nodemailer.createTransport(smtpTransport(config.transport));
 var mailOptions = {
   from: '"105 Gibson" <nansagad@gmail.com>',
   to: 'kevinxu_95@hotmail.com',
-  subject: '105 Gibson Automated E-Mail.',
-  text: 'Hardcoded for now.',
+  subject: '105 Gibson Automated E-Mail',
+  text: 'Click some link, confirm the your email.',
 };
 
 
