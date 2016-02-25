@@ -17,7 +17,7 @@ function addcontact() {
   }
   // If after this there is the maximum number of contacts, hide the add button
   if (i >= MAX) {
-    $("#add").addClass("hidden");
+     $('#add').prop('disabled', true);
   }
   // Reveals the show button
   $("#remove").removeClass("hidden");
@@ -45,7 +45,7 @@ function removecontact() {
     document.getElementById("ephone" + i).value == "";
     // If we were at the maximum number of contacts and now we are not, show the hidden add button
     if (i == MAX) {
-          $("#add").removeClass("hidden");
+          $('#add').prop('disabled', false);
     }
     // If we are now at the minimum number of contacts, hide the remove button
     else if (i == 2) {
