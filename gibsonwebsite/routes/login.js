@@ -31,14 +31,18 @@ function updateOrCreate (user, cb){
 }
 */ // DISABLED FOR NOW
 
-
 //login
 router.post('/login', passport.authenticate('local-login', {
 	session: false,
 	//successRedirect: '/index',		// Redirect to main page when login complete
 	failureRedirect: '/login',	// Return to login when fail, and flash error
 	failureFlash: true
-}), token.generateToken, token.respond);
+}), token.generateToken, token.respond, redirect);
+
+// REDIRECT FOR LOGIN
+function redirect(req, res){
+	res.redirect('/');
+}
 
 //logout of account
 router.post('/logout', function(req,res,next){

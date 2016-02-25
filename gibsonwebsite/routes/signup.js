@@ -33,7 +33,7 @@ router.get('/signup', function(req,res,next){
 
 //create new user
 router.post('/signup', function(req, res, next) {
-	recaptcha.verify(req, function(err){	
+	recaptcha.verify(req, function(err){
 		if (!err){
 			console.log('GOGOGO');
 			next();
@@ -48,7 +48,12 @@ router.post('/signup', function(req, res, next) {
 	//successRedirect: '/signup/success',		// Redirect to main page when login complete
 	failureRedirect: '/lol',	// Return to login when fail, and flash error
 	failureFlash: true
-}), token.generateToken, token.respond);
+}), token.generateToken, token.respond, redirect);
+
+// REDIRECT FOR SIGNUP PAGE
+function redirect(req, res){
+	res.redirect('/signup/success');
+}
 
 //show signup success page
 router.get('/signup/success', function(req,res){

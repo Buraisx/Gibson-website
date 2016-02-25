@@ -83,7 +83,7 @@ function generateToken(req, res, next) {
 }
 
 // PLACING THE TOKEN IN A COOKIE
-function respond(req, res) {
+function respond(req, res, next) {
 	res.clearCookie('access_token');
 	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 14*24*60*60});
 
@@ -93,7 +93,8 @@ function respond(req, res) {
     res.cookie('priviledge', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60});
   }
 
-	res.redirect('/');
+  next();
+	//res.redirect('/');
 }
 
 module.exports.generateToken = generateToken;
