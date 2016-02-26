@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include standardnavbar.ejs %>
+
+<head>
+    <!--link rel="stylesheet" type="text/css" href="css/normalize.css" /-->
+    <!-- link rel="stylesheet" type="text/css" href="css/demo.css" /-->
+    <link rel="stylesheet" type="text/css" href="css/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="css/tabstyles.css" />
+    <script src = "js/passwordvalidation.js"></script>
+    <script src = "js/changepassword.js"></script>
+</head>
+
+<body>
+
+<span class = "glyphicon glyphicon-th-list"></span> <!-- *good glyphicon for courses, but glyphicons are janky with this template; do this later-->
+
+
+    <section>
+        <div class="tabs tabs-style-linemove">
+            <nav>
+                <ul>
+                    <li><a href="#profile" class="icon icon-home"><span>Profile</span></a></li>
+                    <li><a href="#courses" class="icon icon-box"><span>Courses</span></a></li>
+                    <li><a href="#schedule" class="icon icon-display"><span>Schedule</span></a></li>
+                    <li><a href="#rental" class="icon icon-upload"><span>Rental View</span></a></li>
+                    <li><a href="#receipt" class="icon icon-tools"><span>Receipt View</span></a></li>
+                </ul>
+            </nav>
+            <div class="content-wrap">
+                <section id="profile">
+
+                    <h3>Basic Information</h3>
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
+                            <p>First Name: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>Last Name: </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
+                            <p>Username: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>Email: </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
+                            <p>Phone (Home): </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>Phone (Cell): </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
+                            <p>Gender: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>Date of Birth: </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
+                            <p>Address: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>Student Info: </p>
+                        </div>
+                    </div>
+                    <h3>Emergency Contacts</h3>
+                    <p>[*insert ejs code here]</p>
+
+
+
+                    *these buttons should be more right<br>
+
+                    <div class="row form-group">
+                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcontact">Add Emergency Contact</button>
+                    </div>
+                    <div class="row form-group">
+                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "editinfo">Edit Information</button></div>
+                    <div class="row form-group">
+                        <button type = "button" class= "btn btn-default col-sm-2" onclick="togglepassworddropdown()" id = "changepassbutton">Change Password</button>
+                    </div>
+
+
+
+
+
+                    <div id='change_password' class='hidden'> <!-- ** input-append?-->
+                        <div class = "row">
+                            
+
+                            <form class="form-inline"> 
+
+                            <div class = "form-group col-sm-4">
+                                <label>Current Password:</label>
+                                <input type = "password" class = "form-control" name = "currentpass" id = "currentpass" placeholder="Enter Current Password" required pattern="\w+"><!--Character restrictions-->
+                            </div>
+                            <div class = "form-group col-sm-4">
+                                <label>New Password:</label>
+                                <input type = "password" class = "form-control" name = "newpass" id = "newpass" placeholder="Enter New Password" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
+                            </div>
+                            <div class = "form-group col-sm-4">                                
+                                <label>Confirm New Password:</label>
+                                <input type = "password" class = "form-control" name = "confirmnewpass" id = "confirmnewpass" placeholder="Confirm New Password" onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
+                            </div>
+
+
+                        </form>
+                        
+                        <button type = "submit" class = "btn btn-default " onclick="" id = "submit">Change</button>
+
+
+                        </div>
+                      
+                            *super janky i'll fix it later
+
+                    </div>
+
+
+<!-- *
+<div class="input-group">
+   <input type="text" class="form-control">
+   <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+   </span>
+</div>
+      <div class = "form-group col-sm-3">
+</div
+-->
+
+
+
+
+
+
+                </section>
+                <section id="courses">
+
+                    <!-- row template -->
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
+                            <p>: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>: </p>
+                        </div>
+                    </div>
+
+                </section>
+                <section id="schedule">Schedule</section>
+                <section id="rental">Rental</section>
+                <section id="receipt">Receipt</section>
+            </div><!-- /content -->
+        </div><!-- /tabs -->
+    </section>
+            
+
+    </div><!-- /container -->
+
+
+    <!-- Tabs JavaScript -->
+    <script src="js/tabs.js"></script>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visible-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/freelancer.js"></script>
+
+</body>
+
+<%- include standardfooter %>
+
+</html>
