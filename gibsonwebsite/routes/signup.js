@@ -48,7 +48,7 @@ router.post('/signup', function(req, res, next) {
 	//successRedirect: '/signup/success',		// Redirect to main page when login complete
 	failureRedirect: '/lol',	// Return to login when fail, and flash error
 	failureFlash: true
-}), redirect);
+}),token.generateOneUse, email.signupConfEmail , redirect);
 
 // REDIRECT FOR SIGNUP PAGE
 function redirect(req, res){

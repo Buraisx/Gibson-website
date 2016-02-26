@@ -5,6 +5,53 @@ var jwt = require('jsonwebtoken');
 // SETUP POOLING CONNECTION
 var connection = mysql.createPool(config.db_config);
 
+// ONE-TIME TOKEN
+function generateOneUse(req, res, next){
+
+  // SETTING UP CONNECTION TO THE DATABASE
+  connection.getConnection(function(err, con){
+    if (err){
+      console.log('token.js: Error connecting to the database.');
+      return;
+    }
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    var query =  'INSERT INTO gibson.active_tokens (user_id, username, expiry_date, \`desc\`)';
+        query += 'VALUES (?, ?, ?, ?);';
+    var inserts = [req.user.user_id, req.user.username, tomorrow.toISOString().slice(0, 19).replace('T', ' '), 'signup confirmation'];
+    query = mysql.format(query, inserts);
+
+    // INSERTING A NEW TOKEN INTO
+    con.query(query, function(err, results){
+      con.release();
+
+      if (err){
+        console.log('token.js: Error inserting one use token');
+        res.redirect ('/');
+        return;
+      }
+
+      // MAKE TOKEN AND STORE IN req.oneUseToken
+      req.oneUseToken = jwt.sign({
+        token_id: results.insertId,
+        iss: config.jwt.issuer,
+        user: req.user.username,
+        type: 'signup confirmation'
+      },
+      config.jwt.oneUseSecret, {
+        expiresIn: 24*60*60
+      });
+
+      next();
+    });
+  });
+}
+
+
+
+
 // GENERATING JSON WEB TOKEN
 function generateToken(req, res, next) {
 
@@ -97,5 +144,6 @@ function respond(req, res, next) {
 	//res.redirect('/');
 }
 
+module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
 module.exports.respond = respond;
