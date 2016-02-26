@@ -276,12 +276,33 @@ module.exports = function(passport){
         // ERROR QUERYING THE DB
         if (err){
           console.log ('passport.js: Error while querying database for username; local-login');
+          con.release();
           return done (err);
         }
         // USER DOES NOT EXIST
         if(!results.length){
-          console.log (req.body.username +' not found in the database.');
-          return done (null, false); //, req.flash('loginMessage', 'Invalid Username.')
+          console.log (req.body.username +' not found in user table.');
+
+          // CHECKING IF THE USER IS IN TEMPORARY TABLE
+          con.query('SELECT * FROM gibson.temp_user WHERE username = ?;', [req.body.username], function (err, results){
+            con.release();
+
+            if (err){
+              console.log('passport.js: Error while querying database for username; local-login');
+              return done(err);
+            }
+
+            // USER IS NOT IN EITHER gibson.user OR gibson.temp_user
+            if (!results.length){
+              console.log (req.body.username +' not found in the database.');
+              return done (null, false); //, req.flash('loginMessage', 'Invalid Username.')
+            }
+            // USER IS FOUND IN temp_user -> NEEDS TO AUTHENTICATE EMAIL
+            else{
+              console.log(req.body.username +' needs to confirm their email.');
+              return done(null, false, {message: 'confirm email'});
+            }
+          });
         }
         // USER EXISTS, BUT INVALID PASSWORD ENTERED
         if (!bcrypt.compareSync(password, results[0].password)){
