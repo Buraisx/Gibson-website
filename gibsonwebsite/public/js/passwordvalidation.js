@@ -20,16 +20,21 @@ function checkPass()
     var greenColor = "#85FF89";
     var redColor = "#FF6262";
     //Compare the values in the password field 
-    //and the confirmation field
-    if(pass1.value == pass2.value){
-        //The passwords match. 
-        pass2.style.backgroundColor = greenColor;
-        message.style.color = greenColor;
-        message.innerHTML = "Passwords Match!"
-    }else{
-        //The passwords do not match.
-        pass2.style.backgroundColor = redColor;
-        message.style.color = redColor;
-        message.innerHTML = "Passwords Do Not Match!"
+    //and the confirmation field when
+    // 1. pass2's been changed to non-empty or
+    // 2. the message's been changed (i.e., pass2's been
+    // changed before)
+    if(pass2.value != '' || message.innerHTML != '') {
+        if(pass1.value == pass2.value) {
+            //The passwords match. 
+            pass2.style.backgroundColor = greenColor;
+            message.style.color = greenColor;
+            message.innerHTML = "Passwords Match!"
+        } else {
+            //The passwords do not match.
+            pass2.style.backgroundColor = redColor;
+            message.style.color = redColor;
+            message.innerHTML = "Passwords Do Not Match!"
+        }
     }
-}  
+}
