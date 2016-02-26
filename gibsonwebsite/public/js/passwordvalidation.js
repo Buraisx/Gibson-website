@@ -8,9 +8,6 @@ function val() {
     return true;
 }
 
-var password = document.getElementById("password"),
-confirm_password = document.getElementById("passwordhashed");
-
 //Javascript to check passwords matches
 function checkPass()
 {
