@@ -34,39 +34,39 @@
                             <p>First Name: <%= user_info[0].fname %> // Placeholder for actual user </p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Last Name: </p>
+                            <p>Last Name: <%= user_info[0].lname %> </p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Username: </p>
+                            <p>Username: <%= user_info[0].username %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Email: </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p>Phone (Home): </p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p>Phone (Cell): </p>
+                            <p>Email: <%= user_info[0].email %></p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Gender: </p>
+                            <p>Phone (Home): <%= user_info[0].primary_phone %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Date of Birth: </p>
+                            <p>Phone (Cell): <%= user_info[0].secondary_phone %> </p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Address: </p>
+                            <p>Gender: <%= user_info[0].gender %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Student Info: </p>
+                            <p>Date of Birth: <%= user_info[0].birth_date %> </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p>Address: <%= user_info[0].address %> </p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p>Student Info:  </p>
                         </div>
                     </div>
                     <h3>Emergency Contacts</h3>
