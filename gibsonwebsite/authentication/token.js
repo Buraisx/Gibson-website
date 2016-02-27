@@ -28,6 +28,7 @@ function generateOneUse(req, res, next){
       con.release();
 
       if (err){
+        console.log(query);
         console.log('token.js: Error inserting one use token');
         res.redirect ('/');
         return;
