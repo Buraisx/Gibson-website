@@ -12,13 +12,12 @@
     <title>Freelancer - Start Bootstrap Theme</title>
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-    <link rel="stylesheet" type="text/css" href="css/component.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Custom CSS -->
     <link href="css/freelancerhome.css" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/stylehome.css">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -31,7 +30,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src= "js/mypagescroll.js"></script>  
+    
 </head>
 
 <body id="page-top" class="index">
@@ -40,7 +43,7 @@
     <nav class="navbar navbar-custum navbar-fixed-top">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
+            <div class="navbar-header scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -56,17 +59,17 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
+                    <li class="scroll">
+                        <a href="#portfolio" class = "scroll">Portfolio</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
+                    <li class="scroll">
+                        <a href="#about" class = "scroll">About</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
+                    <li class="scroll">
+                        <a href="#contact" class = "scroll">Contact</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#map">Location</a>
+                    <li class="scroll">
+                        <a href="#map" class = "scroll">Location</a>
                     </li>
                 </ul>
             </div>
@@ -125,7 +128,7 @@
                 <div class="col-lg-12 text-center">
                     <div class="cl-effect-1">
                         <h1><a href="#">About Us</a></h1>
-                        <hr class="star-primary">
+                        <hr class="star-green">
                     </div>
                 </div>
             </div>
@@ -184,7 +187,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Get Involved</h2>
-                    <hr class="star-primary">
+                    <hr class="star-blue">
                 </div>
             </div>
             <div class="row">
@@ -192,6 +195,16 @@
                     <div class="row">
                         <div class="center">
                             <p>We need people like you to support our work here at 105 Gibson! There are numerous ways for you to get involved, click to see some of the things you can do online and offline to contribute and be a part of the community!</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <form action="/login">
+                                <button type = "submit" class= "btn btn-default col-sm-2" >Login</button>
+                            </form>
+                            <form action="/signup">
+                                <button type = "submit" class= "btn btn-default col-sm-2" >Sign Up</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -258,7 +271,7 @@
     <script src="js/contact_me.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="js/freelancer.js"></script>
+ <!--   <script src="js/freelancer.js"></script>--> 
 
 </body>
 
