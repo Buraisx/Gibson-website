@@ -8,10 +8,43 @@ var connection = mysql.createPool(config.db_config);
 
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
-
+	console.log("funkemessage");
 	var decode = jwt.decode(req.cookies.access_token);
 	console.log(decode);
-	res.send("hello maki chan");
+
+	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
+	var inserts = decode.id;
+	sql = mysql.format(sql, inserts);
+	console.log(sql);
+
+	connection.getConnection(function(err, con){
+		if(err){
+			con.release();
+			console.log("cannot get connection");
+			return done(err);
+		}
+		console.log("DRIVE CHECK");
+		con.query(sql, function(err, results){
+
+			if(err){
+
+				con.release();
+				console.log("Query error for finding user info");
+				return done(err);
+			}
+
+			//check if there is a user with the info
+			if(!results.length){
+				con.release();
+				console.log("There is no user with this info");
+				return done(new Error('EXCALIBURRR'));
+			}
+
+			//send info back to user
+			console.log("GET HEAL TRIGGER");
+			res.render('userProfile', {title: "Profile", user_info: results});
+		});
+	});
   
 
 });

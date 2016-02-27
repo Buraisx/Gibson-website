@@ -19,54 +19,54 @@
         <div class="tabs tabs-style-linemove">
             <nav>
                 <ul>
-                    <li><a href="#profile" class="icon icon-home"><span>Profile</span></a></li>
-                    <li><a href="#courses" class="glyphicon glyphicon-th-list"><span>Courses</span></a></li>
-                    <li><a href="#schedule" class="glyphicon glyphicon-time"><span>Schedule</span></a></li>
-                    <li><a href="#rental" class="icon icon-upload"><span>Rental View</span></a></li>
-                    <li><a href="#receipt" class="icon icon-tools"><span>Receipt View</span></a></li>
+                    <li><a href="#profile"><i class="fa fa-user"></i><span> Profile</span></a></li>
+                    <li><a href="#courses"><i class="fa fa-list"></i><span> Courses</span></a></li>
+                    <li><a href="#schedule"><i class="fa fa-calendar"></i><span> Schedule</span></a></li>
+                    <li><a href="#rental"><i class="fa fa-question "></i><span> Rental View</span></a></li>
+                    <li><a href="#receipt"><i class="fa fa-question "></i><span> Receipt View</span></a></li>
                 </ul>
             </nav>
             <div class="content-wrap">
                 <section id="profile">
                     <h3>Basic Information</h3>
                     <div class = "row">
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>First Name: <%= user_info[0].fname %> // Placeholder for actual user </p>
                         </div>
-                        <div class = "form-group col-sm-6">
-                            <p>Last Name: </p>
+                        <div class = "col-sm-6">
+                            <p>Last Name: <%= user_info[0].lname %> </p>
                         </div>
                     </div>
                     <div class = "row">
-                        <div class = "form-group col-sm-6">
-                            <p>Username: </p>
+                        <div class = "col-sm-6">
+                            <p>Username: <%= user_info[0].username %></p>
                         </div>
-                        <div class = "form-group col-sm-6">
-                            <p>Email: </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-6">
-                            <p>Phone (Home): </p>
-                        </div>
-                        <div class = "form-group col-sm-6">
-                            <p>Phone (Cell): </p>
+                        <div class = "col-sm-6">
+                            <p>Email: <%= user_info[0].email %></p>
                         </div>
                     </div>
                     <div class = "row">
-                        <div class = "form-group col-sm-6">
-                            <p>Gender: </p>
+                        <div class = "col-sm-6">
+                            <p>Phone (Home): <%= user_info[0].primary_phone %></p>
                         </div>
-                        <div class = "form-group col-sm-6">
-                            <p>Date of Birth: </p>
+                        <div class = "col-sm-6">
+                            <p>Phone (Cell): <%= user_info[0].secondary_phone %> </p>
                         </div>
                     </div>
                     <div class = "row">
-                        <div class = "form-group col-sm-6">
-                            <p>Address: </p>
+                        <div class = "col-sm-6">
+                            <p>Gender: <%= user_info[0].gender %></p>
                         </div>
-                        <div class = "form-group col-sm-6">
-                            <p>Student Info: </p>
+                        <div class = "col-sm-6">
+                            <p>Date of Birth: <%= user_info[0].birth_date %> </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p>Address: <%= user_info[0].address %> </p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p>Student Info:  </p>
                         </div>
                     </div>
                     <h3>Emergency Contacts</h3>
