@@ -42,9 +42,5 @@ router.get('/theteam', function(req, res, next) {
   res.render('Theteam', { title: 'Gibson' });
 });
 
-router.get('/userprofile', function(req, res, next) {
-  res.render('userprofile', { title: 'User Profile' });
-});
-
 
 module.exports = router;
