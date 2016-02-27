@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash    = require('connect-flash');
 var expressSession = require('express-session');
+var mysql = require ('mysql');
 var routes = require('./routes/index');
 var helmet = require('helmet');
 var dnsPrefetchControl = require('dns-prefetch-control');
@@ -81,20 +82,60 @@ app.use(function(req, res, next){
 
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
+  var decoded = jwt.decode(token);
 
   // TOKEN FOUND, TRYING TO VALIDATE
-  if (token) {
-    try { // GOOD TOKEN, AUTHENTICATION SUCCESSFUL -> GO TO REQUESTED PAGE
-      var decoded = jwt.verify(token, config.jwt.secret);
-      req.decoded = decoded;
-    }
-    // BAD TOKEN -> REDIRECTS TO LOGIN TO GET NEW TOKEN
-    catch(err) {return res.redirect('/login');}
+  if (token){
+    // CREATING CONNECTION
+    var connection = mysql.createPool(config.db_config);
+    connection.getConnection(function(err, con){
+  		if (err){
+        console.log('app.js: Error connecting to the DB.');
+        return res.redirect('/login');
+      }
+
+      // SETTING UP QUERIES NEEDED
+      var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?;';
+      secretQuery = mysql.format(secretQuery, decoded.rank_id);
+      var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
+      passwordQuery = mysql.format(passwordQuery, decoded.user_id);
+
+      // QUERYING THE DATABASE FOR SECRET KEY
+      con.query(secretQuery, function(err, results){
+        if (err){
+          console.log('app.js: Error querying the Database for secret_key');
+          return res.redirect('/login');
+        }
+
+        var secretKey = results[0];
+
+        // QUERYING THE DATABASE FOR USER'S PASSWORD
+        con.query(passwordQuery, function(err, results){
+          if (err){
+            console.log('app.js: Error querying the Database for password');
+            return res.redirect('/login');
+          }
+
+          // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
+          secretKey += results[0];
+
+          // VERIFYING TOKEN
+          jwt.verify(token, secretKey, function(err, userInfo){
+            if (err){
+              console.log('app.js: Error verifying token.');
+              return res.redirect('/login');
+            }
+
+            req.decoded = userInfo;
+            next();
+          });
+        });
+      });
+  	});
   }
   // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
   else {return res.redirect('/login');}
 
-  next();
 });
 // =============================================
 // ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
