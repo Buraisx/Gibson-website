@@ -9,6 +9,8 @@ var recaptcha = require('express-recaptcha');
 
 module.exports = function(passport){
 
+
+//initiate ReCaptcha
 recaptcha.init('6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0','6LeqAhkTAAAAADZXG0cYZ6epZoa2Iluodu62wBqN');
 
 //load sign up page

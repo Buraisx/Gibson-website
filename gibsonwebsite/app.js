@@ -15,6 +15,10 @@ var jwt = require('jsonwebtoken');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
 
+//CSRF Protection
+var csrf = require('csurf');
+var csrfProtection = csrf({cookie: true});
+
 //HTTPS AND READ FILE SYNC
 var https = require('https');
 var fs = require('fs');
@@ -33,6 +37,24 @@ var port = process.env.PORT || 3000;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// uncomment after placing your favicon in /public
+app.use(favicon(path.join(__dirname, 'public', 'logo.png')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+//implement csrf
+app.use(csrfProtection);
+
+app.use(function(req, res, next)
+{
+  console.log(req.csrfToken());
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
 // Security
 app.use(helmet());
 app.use(dnsPrefetchControl({ allow: false }));
@@ -45,14 +67,6 @@ app.use(helmet.csp({
   fontSrc: ['/public/font-awesome/css/*'],
   objectSrc: []
 }));
-
-// uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'logo.png')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
 // app.use(expressSession({
