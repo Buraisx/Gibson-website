@@ -12,6 +12,8 @@
     "oneUseSecret": "WylgaodajkdOx5nP*0@AZ1z+?EC3v7v*I4^fFkjAUySJPb2CoaOkAh88LaTHvBO$4Apv1!_e7OTKhkT5owiYDlY6Uz5A0c^#4ExaG*OmOH#EKUr+QokT2nBaj-PJ&TPn"
   },
 
+  "sendEmail": false,
+
   "transport": {
     "host": "smtp.gmail.com",
     "secure": true,
