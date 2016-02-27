@@ -48,12 +48,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 //implement csrf
 app.use(csrfProtection);
 
-app.use(function(req, res, next)
+app.use(function (req, res, next)
 {
   console.log(req.csrfToken());
   res.locals.csrfToken = req.csrfToken();
   next();
 });
+app.use(function (err, req, res, next){
+  if(err.code !== 'EBADCSRFTOKEN') 
+    return next(err);
+
+  //Handle CSRF token errors
+  res.status(403);
+  console.log('Session Tampered with');
+  return done(err);
+});
+
 
 // Security
 app.use(helmet());
