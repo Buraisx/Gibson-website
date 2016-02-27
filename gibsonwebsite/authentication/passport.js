@@ -92,7 +92,7 @@ module.exports = function(passport){
             username:null, password:null, lname:null, fname:null, birth_date:null,
             gender:null, address:null, unit_no:null, city:null, province_id:null,
             postal_code:null, primary_phone:null, secondary_phone:null, email:null,
-            send_notification:null, student:null
+            send_notification:null, student:null, user_id:null
           };
 
           // INITIALIZING newUser VALUES
@@ -146,6 +146,7 @@ module.exports = function(passport){
               }
 
               userId = results[0].user_id;
+              newUser.user_id = userId;
 
               //==========================================================================
               //=== INSERT NEW USER'S EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE ===

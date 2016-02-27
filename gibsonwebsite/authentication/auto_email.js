@@ -5,24 +5,33 @@ var config = require('../server_config');
 // SETTING UP TRANSPORTER
 var transport = nodemailer.createTransport(smtpTransport(config.transport));
 
-// CONFIGURING E-MAIL
-var mailOptions = {
-  from: '"105 Gibson" <nansagad@gmail.com>',
-  to: 'kevinxu_95@hotmail.com',
-  subject: '105 Gibson Automated E-Mail',
-  text: 'Click some link, confirm the your email.',
-};
+// SENDING EMAIL
+function signupConfEmail (req, res, next){
 
-
-function signupConfirm (req, res, next){
-  transport.sendMail(mailOptions, function(error, info){
-    if(error){
-      console.log(error);
-      return;
-    }
-    console.log('Message sent: ' + info.response);
+  // IF config.sendEmail = false, DISABLE OUTGOING EMAIL
+  if (!config.sendEmail){
     next();
-  });
+  }
+  // config.sendEmail = true, DO SEND EMAIL
+  else{
+
+    // CONFIGURING E-MAIL
+    var mailOptions = {
+      from: '"105 Gibson" <nansagad@gmail.com>',
+      to: 'kevinxu_95@hotmail.com',
+      subject: '105 Gibson Center - Please Confirm Your Email Address',
+      text: "Please go to the following web address to confirm your email address: \n https://localhost:3000/confirm/token/" +req.oneUseToken,
+    };
+
+    transport.sendMail(mailOptions, function(error, info){
+      if(error){
+        console.log(error);
+        return;
+      }
+      console.log('Message sent: ' + info.response);
+      next();
+    });
+  }
 }
 
-module.exports.signupConfirm = signupConfirm;
+module.exports.signupConfEmail = signupConfEmail;
