@@ -30,3 +30,10 @@ body {
     background-size: cover;
     -o-background-size: cover;
 }
+.carousel .item {
+  height: 700px;
+}
+
+#map{
+padding-bottom: 0px;
+}
