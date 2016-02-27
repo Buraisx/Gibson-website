@@ -66,12 +66,14 @@ var signup = require('./routes/signup')(passport);
 var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
+var userprofile = require('./routes/userprofile');
 
 
 app.use('/', routes);
 app.use('/', signup);
 app.use('/', login);
 app.use('/', confirm);
+app.use('/', userprofile);
 
 // ================================================
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===

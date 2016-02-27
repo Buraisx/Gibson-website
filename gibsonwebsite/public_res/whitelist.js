@@ -3,8 +3,8 @@ var scriptSrc = [
   'http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js',  // signup.ejs, SuccessSignup.ejs, login.ejs
   'https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js',  // SuccessSignup.ejs
   'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', // SuccessSignup.ejs
-  'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'  // SuccessSignup.ejs
-  '//code.jquery.com/jquery-1.12.0.min.js'
+  'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js' , // SuccessSignup.ejs
+  '//code.jquery.com/jquery-1.12.0.min.js',
   '//code.jquery.com/jquery-migrate-1.2.1.min.js'
 ];
 
