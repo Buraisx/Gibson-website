@@ -66,12 +66,14 @@ var signup = require('./routes/signup')(passport);
 var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
+var userprofile = require('./routes/userprofile');
 
 
 app.use('/', routes);
 app.use('/', signup);
 app.use('/', login);
 app.use('/', confirm);
+app.use('/', userprofile);
 
 // ================================================
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
@@ -83,9 +85,6 @@ app.use(function(req, res, next){
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
-  console.log(decoded);
-  console.log(decoded.rank);
-
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
@@ -99,35 +98,28 @@ app.use(function(req, res, next){
 
       // SETTING UP QUERIES NEEDED
       var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?;';
-      secretQuery = mysql.format(secretQuery, decoded.rank);
+      secretQuery = mysql.format(secretQuery, decoded.rank_id);
       var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
-      passwordQuery = mysql.format(passwordQuery, decoded.id);
-
-      console.log(secretQuery);
-      console.log(passwordQuery);
+      passwordQuery = mysql.format(passwordQuery, decoded.user_id);
 
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
         if (err){
-
           console.log('app.js: Error querying the Database for secret_key');
-          return res.redirect('/');
+          return res.redirect('/login');
         }
 
-        var secretKey = results[0].secret_key;
-        console.log(secretKey);
-        console.log("MAKIFORLIFE");
+        var secretKey = results[0];
+
         // QUERYING THE DATABASE FOR USER'S PASSWORD
-        con.query(passwordQuery, function(err, password){
+        con.query(passwordQuery, function(err, results){
           if (err){
             console.log('app.js: Error querying the Database for password');
             return res.redirect('/login');
           }
 
-          console.log(password[0].password);
           // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
-          secretKey += password[0].password;
-          console.log(secretKey);
+          secretKey += results[0];
 
           // VERIFYING TOKEN
           jwt.verify(token, secretKey, function(err, userInfo){
