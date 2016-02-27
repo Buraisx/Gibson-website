@@ -17,7 +17,7 @@ var whitelist = require('./public_res/whitelist');
 //HTTPS AND READ FILE SYNC
 var https = require('https');
 var fs = require('fs');
-//var users = require('./routes/users');
+var users = require('./routes/users');
 require('./authentication/passport')(passport);
 
 var cred = {
