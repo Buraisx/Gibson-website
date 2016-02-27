@@ -17,7 +17,7 @@ var whitelist = require('./public_res/whitelist');
 //HTTPS AND READ FILE SYNC
 var https = require('https');
 var fs = require('fs');
-//var users = require('./routes/users');
+var users = require('./routes/users');
 require('./authentication/passport')(passport);
 
 var cred = {
@@ -66,11 +66,12 @@ var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
 
+
 app.use('/', routes);
-//app.use('/users', users);
 app.use('/', signup);
 app.use('/', login);
 app.use('/', confirm);
+
 // ================================================
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
 // ================================================
@@ -99,6 +100,8 @@ app.use(function(req, res, next){
 // ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // =============================================
 app.use('/', test_profile);
+app.use('/', users);
+
 
 
 // catch 404 and forward to error handler
