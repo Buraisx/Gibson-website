@@ -45,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 //implement csrf
 app.use(csrfProtection);
 
@@ -126,9 +127,6 @@ app.use(function(req, res, next){
       var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
       passwordQuery = mysql.format(passwordQuery, decoded.id);
 
-      console.log(secretQuery);
-      console.log(passwordQuery);
-
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
         if (err){
@@ -138,8 +136,7 @@ app.use(function(req, res, next){
         }
 
         var secretKey = results[0].secret_key;
-        console.log(secretKey);
-        console.log("MAKIFORLIFE");
+
         // QUERYING THE DATABASE FOR USER'S PASSWORD
         con.query(passwordQuery, function(err, password){
           if (err){
@@ -175,6 +172,7 @@ app.use(function(req, res, next){
 // =============================================
 app.use('/', test_profile);
 app.use('/', users);
+//app.use('/user', users);
 
 
 
