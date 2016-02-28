@@ -3,6 +3,7 @@ var mysql = require('mysql');
 var config = require('../server_config');
 var bcrypt = require('bcrypt-nodejs');
 var sanitizer = require('sanitizer');
+var async = require('async');
 
 // SETUP POOLING CONNECTION
 var connection = mysql.createPool(config.db_config);
@@ -271,64 +272,82 @@ module.exports = function(passport){
     //GET POOLING CONNECTION
     connection.getConnection(function(err, con){
 
-      // QUERYING DB
-      con.query(sql, function(err, results){
+    async.waterfall([
+            function (next){
+                // QUERYING DB
+                con.query(sql, function(err, results){
+                    // ERROR QUERYING THE DB
+                    if (err){
+                        console.log ('passport.js: Error while querying database for username; local-login');
+                        return next (err, null);
+                    }
 
-        // ERROR QUERYING THE DB
-        if (err){
-          console.log ('passport.js: Error while querying database for username; local-login');
-          con.release();
-          return done (err);
-        }
-        // USER DOES NOT EXIST
-        if(!results.length){
-          console.log (req.body.username +' not found in user table.');
+                    if(!results.length){
+                        console.log (req.body.username +' not found in user table.');
+                        return next('No user found', null);
+                    }
 
-          // CHECKING IF THE USER IS IN TEMPORARY TABLE
-          con.query('SELECT * FROM gibson.temp_user WHERE username = ?;', [req.body.username], function (err, results){
-            con.release();
+                    // USER EXISTS, BUT INVALID PASSWORD ENTERED
+                    if (!bcrypt.compareSync(password, results[0].password)){
+                        console.log ('Wrong password for ' +req.body.username);
+                        return next ('bad password', null); //, req.flash('loginMessage', 'Incorrect Password.')
+                    }
+                    //console.log(results);
+                    next(null, results);
+                });
+            },
 
-            if (err){
-              console.log('passport.js: Error while querying database for username; local-login');
-              return done(err);
+            function (userresults, next){
+                // UPDATING THE LAST LOGIN TIME IN THE DATABASE
+                console.log("Username exists and password matches\n"+typeof(userresults));
+                var user = userresults;
+                var lastLogIn = user[0].last_login_time; // The value before the login time is replaced to CURRENT_TIMESTAMP
+                var updateLastLogin = 'UPDATE gibson.user SET last_login_time = CURRENT_TIMESTAMP WHERE username = ?;';
+                updateLastLogin = mysql.format (updateLastLogin, req.body.username);
+
+                con.query (updateLastLogin, function (err, results){
+
+                    if (err){
+                        console.log ('passport.js: Error updating last_login_time.');
+                        return next('Error updating last login time', null);
+                    }
+                    user[0].last_login_time = lastLogIn;
+                    //console.log(user[0]);
+                    return next (null, user[0]);
+                });
             }
+        ], 
+            function(err, results){
+                //console.log(err + "\n" + JSON.stringify(results));
+                if(err)
+                {
+                    console.log('here we go!');
+                    con.query(mysql.format('SELECT * FROM gibson.temp_user WHERE username = ?;', [req.body.username]), function (err, results){
+                        con.release();
 
-            // USER IS NOT IN EITHER gibson.user OR gibson.temp_user
-            if (!results.length){
-              console.log (req.body.username +' not found in the database.');
-              return done (null, false); //, req.flash('loginMessage', 'Invalid Username.')
-            }
-            // USER IS FOUND IN temp_user -> NEEDS TO AUTHENTICATE EMAIL
-            else{
-              console.log(req.body.username +' needs to confirm their email.');
-              return done(null, false, {message: 'confirm email'});
-            }
-          });
-        }
-        // USER EXISTS, BUT INVALID PASSWORD ENTERED
-        if (!bcrypt.compareSync(password, results[0].password)){
-          console.log ('Wrong password for ' +req.body.username);
-          return done (null, false); //, req.flash('loginMessage', 'Incorrect Password.')
-        }
+                        if(err){
+                            console.log('passport.js: Error while querying database for username; local-login');
+                            return done(null,err);
+                        }
 
-        // USER EXISTS AND CORRECT PASSWORD ENTERED
+                        if (!results.length){
+                            console.log (req.body.username +' not found in the database.');
+                            return done(null,{message:'not found in database'}); //, req.flash('loginMessage', 'Invalid Username.')
+                        }
+                        // USER IS FOUND IN temp_user -> NEEDS TO AUTHENTICATE EMAIL
+                        else{
+                            console.log(req.body.username +' needs to confirm their email.');
+                            return done(null,{message:'email not confirmed'});
+                        }
+                    });
+                }
 
-        // UPDATING THE LAST LOGIN TIME IN THE DATABASE
-        var lastLogIn = results[0].last_login_time; // The value before the login time is replaced to CURRENT_TIMESTAMP
-        var updateLastLogin = 'UPDATE gibson.user SET last_login_time = CURRENT_TIMESTAMP WHERE username = ?;';
-        updateLastLogin = mysql.format (updateLastLogin, req.body.username);
-
-        con.query (updateLastLogin, function (err, updateResults){
-          con.release();  // RELEASING CONNECTION
-
-          if (err){
-            console.log ('passport.js: Error updating last_login_time.');
-          }
-
-          results[0].last_login_time = lastLogIn;
-          return done (null, results[0]);
-        });
-      });
+                else{
+                    console.log(results);
+                    con.release();
+                    return done(null, results);
+                }      
+            });
     });
   }));
 
