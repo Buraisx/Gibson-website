@@ -1,23 +1,20 @@
-* {
-  margin: 0;
-}
+
 html, body {
   height: 100%;
-  margin-top:10px;
 }
 
 /*sticky footer for short pages using page-wrap*/
 .page-wrap {
   min-height: 100%;
   /* equal to footer height */
-  margin-bottom: -375px; 
+  margin-bottom: -374px; 
 }
 .page-wrap:after {
   content: "";
   display: block;
 }
 .site-footer, .page-wrap:after {
-  height: 375px; 
+  height: 374px; 
 }
 
 /*removed line in links*/
@@ -59,9 +56,13 @@ a {
 }
 
 .logindesign {
-	margin-top:120px;
+	margin-top:80px;
 }
 
 .normalfont {
 	font-weight:normal;
+}
+
+.reducepadding{
+	padding-top: 10px;
 }
