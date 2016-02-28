@@ -124,16 +124,17 @@
                 </section>
                 <section id="courses">
                     <div class="panel-group" id="accordion">
-                          <div class="panel panel-default">
+                        <% for(var i=1; i<=3; i++) { %> <!-- max is a hardcoded 3; replace this with the # of courses later-->
+                        <div class="panel panel-default">
                             <div class="panel-heading">
                               <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                <a data-toggle="collapse" data-parent="#accordion" href= <%= "#collapse" + i %> >
                                 Course Name<br>
                                 Course ID
                                 </a>
                               </h4>
                             </div>
-                            <div id="collapse1" class="panel-collapse collapse in">
+                            <div id = <%= "collapse" + i %> class="panel-collapse collapse in">
                               <div class="panel-body">
                                 <div class = "row">
                                     <div class = "form-group col-sm-6">
@@ -176,7 +177,8 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                        </div>
+                        <% } %>
                     </div>
                 </section>
                 <section id="schedule">Schedule</section>
