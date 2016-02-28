@@ -21,7 +21,7 @@
     <!-- Portfolio Grid Section -->
     <section>
         <div class = "container">
-            <h2>Part A: Your Information </h2>
+            <h2>Part A: Your Information </h2><br>
                 <form name="frm" action = "/signup" method = "post" role = "form">
                 <!--sending csrf token-->
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -29,8 +29,8 @@
                 <!--Input Username-->
                 <div class = "row">
                     <div class="form-group col-sm-8">
-                        <label class="control-label"><span style="color:red">*</span>Username:</label>
-                        <span>*No SPECIAL CHARACTERS</span>
+                        <label class="control-label"><span class="required">*</span>Username:</label>
+                        <span>*NO SPECIAL CHARACTERS</span>
                         <input class = "form-control" type="text" name ="username" id="username" required pattern="\w+">
                         <!--Character restrictions-->
                     </div>
@@ -39,36 +39,35 @@
                 <!--Input Password-->
                 <div class = "row">
                     <div class="form-group col-sm-4">
-                        <label class="control-label"><span style="color:red">*</span>Password:</label>
+                        <label class="control-label"><span class="required">*</span>Password:</label>
                         <input type="password" class = "form-control" name = "password" id="password" placeholder="Enter Password"  onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
                         <!--Character restrictions-->
                     </div>
                     <div class="form-group col-sm-4">
-                        <label class="control-label"><span style="color:red">*</span>Confirm Password:</label>
+                        <label class="control-label"><span class="required">*</span>Confirm Password:</label>
                         <span id="confirmpass" class="confirmpass"></span>
                         <input type="password" class = "form-control" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" onkeyup="checkPass(); return false;" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
                         <!--Character restrictions-->
                     </div>
                 </div>
-                <span>(Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.)</span>
-                <br/><br/>
+                <p class="smalltext">(Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.)</p>
 
                 <!--Input first name, last name, date, gender-->
                 <div class = "row">
                     <div class = "form-group col-sm-2">
-                        <label><span style="color:red">*</span>First Name:</label>
+                        <label><span class="required">*</span>First Name:</label>
                         <input type = "text" class = "form-control" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                     </div>
                     <div class = "form-group col-sm-2">
-                        <label><span style="color:red">*</span>Last Name:</label>
+                        <label><span class="required">*</span>Last Name:</label>
                         <input type = "text" class = "form-control" name = "lname" id = "lname" placeholder="eg. Smith"required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                     </div>
                     <div class = "form-group col-sm-2">
-                        <label><span style="color:red">*</span>Birthdate:</label>
+                        <label><span class="required">*</span>Birthdate:</label>
                         <input type="text" class = "form-control" name="birth_date" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
                     </div>
                     <div class = "form-group col-sm-2">
-                        <label class = "control-label"><span style="color:red">*</span>Gender:</label>
+                        <label class = "control-label"><span class="required">*</span>Gender:</label>
                         <select class = "form-control" name = "gender" id = "gender" placeholder="Gender" required>
                             <option value="" disabled selected>Please Select</option>
                             <option value = "Male">Male</option>
@@ -81,11 +80,11 @@
                 <!--Input Address and Postal Code-->
                 <div class = "row">
                     <div class = "form-group col-sm-6">
-                        <label class = "control-label"><span style="color:red">*</span>Address:</label>
+                        <label class = "control-label"><span class="required">*</span>Address:</label>
                         <input type = "text" class = "form-control" name = "address" id = "address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity('Invalid address.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
                     </div>
                     <div class = "form-group col-sm-2">
-                        <label class = "control-label"><span style="color:red">*</span>Postal Code:</label>
+                        <label class = "control-label"><span class="required">*</span>Postal Code:</label>
                         <input type = "text" class = "form-control" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity('Invalid postal code.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
                     </div>
                 </div>
@@ -97,12 +96,12 @@
                         <input type = "number" class = "form-control" name = "apt" id = "apt" max="4">
                     </div>
                     <div class = "form-group col-sm-4">
-                        <label class = "control-label"><span style="color:red">*</span>City:</label>
+                        <label class = "control-label"><span class="required">*</span>City:</label>
                         <input type = "text" class = "form-control" name = "city" id = "city" required pattern="[a-zA-Z. ]+" oninvalid="setCustomValidity('Invalid city.')" onchange="try{setCustomValidity('')}catch(e){}">
                         <!--Character restrictions-->
                     </div>
                     <div class = "form-group col-sm-2">
-                        <label class = "control-label"><span style="color:red">*</span>Province:</label>
+                        <label class = "control-label"><span class="required">*</span>Province:</label>
                         <select class = "form-control" name = "province" id = "province" placeholder="Province" required>
                             <option value="" disabled selected>Please Select</option>
                             <% for(var i=0; i<province_list.length; i++) { %>
@@ -131,7 +130,7 @@
                 <!--Input Email-->
                 <div class = "row">
                     <div class="form-group col-sm-8">
-                        <label class="control-label"><span style="color:red">*</span>Email:</label>
+                        <label class="control-label"><span class="required">*</span>Email:</label>
                         <input class = "form-control" type="email" name = "email" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
                     </div>
                 </div>
@@ -139,7 +138,7 @@
                 <!--Emergency Contacts-->
                 <div>
                     <br>
-                    <label>Emergency Contacts <span style = "font-weight:normal;">(Minimum 1)</span></label>
+                    <label>Emergency Contacts <span class = "normalfont">(Minimum 1)</span></label>
                 </div>
 
                 <% for(var i=1; i <= MAX; i++) { %>
@@ -150,19 +149,19 @@
                     </div>
                     <div class="row">
                         <div class = "form-group col-sm-2">
-                            <label><span style="color:red">*</span>First Name:</label>
+                            <label><span class="required">*</span>First Name:</label>
                             <input type = "text" class = "form-control" name = <%= "emergencyfname" + i %> id = <%= "emergencyfname" + i %> placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %> ><!--Character restrictions-->
                         </div>
                         <div class = "form-group col-sm-2">
-                            <label><span style="color:red">*</span>Last Name:</label>
+                            <label><span class="required">*</span>Last Name:</label>
                             <input type = "text" class = "form-control" name = <%= "emergencylname" + i %> id = <%= "emergencylname" + i %> placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
                         </div>
                         <div class = "form-group col-sm-2">
-                            <label><span style="color:red">*</span>Relationship:</label>
+                            <label><span class="required">*</span>Relationship:</label>
                             <input type = "text" class = "form-control" name = <%= "relationship" + i %> id = <%= "relationship" + i %> pattern="[a-zA-Z0-9. ]+" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
                         </div>
                         <div class = "form-group col-sm-2">
-                            <label><span style="color:red">*</span>Phone:</label>
+                            <label><span class="required">*</span>Phone:</label>
                             <input type = "text" class = "form-control" name = <%= "ephone" + i %> id = <%= "ephone" + i %> maxlength="16" pattern="\w+" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
                         </div>
                     </div>
@@ -182,11 +181,11 @@
                             <div id='student_info' class='hidden'>
                                 <div class="row">
                                     <div class = "form-group col-sm-4">
-                                        <label><span style="color:red">*</span>School Name:</label>
+                                        <label><span class="required">*</span>School Name:</label>
                                         <input type = "text" class = "form-control" name = "schoolname" id = "schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
                                     <div class = "form-group col-sm-4">
-                                        <label><span style="color:red">*</span>Grade/Year:</label>
+                                        <label><span class="required">*</span>Grade/Year:</label>
                                         <input type = "text" class = "form-control" name = "grade" id = "grade" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
                                 </div>
