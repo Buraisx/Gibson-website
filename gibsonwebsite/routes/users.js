@@ -23,7 +23,7 @@ router.get('/user/profile', function(req, res, next) {
 			console.log("cannot get connection");
 			return done(err);
 		}
-		console.log("DRIVE CHECK");
+		
 		con.query(sql, function(err, results){
 
 			if(err){
@@ -37,16 +37,16 @@ router.get('/user/profile', function(req, res, next) {
 			if(!results.length){
 				con.release();
 				console.log("There is no user with this info");
-				return done(new Error('EXCALIBURRR'));
+				return done(new Error('No user with this info.'));
 			}
 
 			//send info back to user
-			console.log("GET HEAL TRIGGER");
-			res.render('userProfile', {title: "Profile", user_info: results});
+			res.render('userProfile', {title: "Sign Up", user_info: results});
 		});
 	});
   
 
 });
+
 
 module.exports = router;

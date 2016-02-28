@@ -24,7 +24,8 @@
             <h2>Part A: Your Information </h2>
                 <form name="frm" action = "/signup" method = "post" role = "form">
                 <!--sending csrf token-->
-               
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    
                 <!--Input Username-->
                 <div class = "row">
                     <div class="form-group col-sm-8">
