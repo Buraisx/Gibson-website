@@ -66,3 +66,8 @@ a {
 .reducepadding{
 	padding-top: 10px;
 }
+
+.changepassdesign {
+	font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+	text-align: center;
+}
