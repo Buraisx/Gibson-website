@@ -48,5 +48,10 @@ router.get('/user/profile', function(req, res, next) {
 
 });
 
+router.get('/user/profile/courses', function(req, res) {
+	console.log("Getting registered courses");
+	res.send({lel: 'poo'});
+});
+
 
 module.exports = router;
