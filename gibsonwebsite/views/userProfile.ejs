@@ -101,20 +101,20 @@
 
 
                     <!-- *only client can change pass -->
-                    <div id='change_password' class='hidden'>
+                    <div id='change_password' class='hidden changepassdesign'>
                         <div class = "row">
                             <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>
                             <form class="form-inline" role = "form">
                                 <div class = "form-group">
-                                    <label class="small">Current Password:</label>
+                                    <label>Current Password:</label>
                                     <input type = "password" class = "form-control" name = "currentpass" id = "currentpass" placeholder="Enter Current Password" required pattern="\w+"><!--Character restrictions-->
                                 </div>
                                 <div class = "form-group">
-                                    <label class="small">New Password:</label>
+                                    <label>New Password:</label>
                                     <input type = "password" class = "form-control" name = "newpass" id = "password" placeholder="Enter New Password" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
                                 </div>
                                 <div class = "form-group">
-                                    <label class="small">Confirm New Password:</label>
+                                    <label>Confirm New Password:</label>
                                     <input type = "password" class = "form-control" name = "confirmnewpass" id = "passwordhashed" placeholder="Confirm New Password" onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
                                     <button type = "button" class = "btn btn-default " onclick="" id = "changepassbutton">Change</button>
                                 </div>
