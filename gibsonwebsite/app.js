@@ -109,8 +109,7 @@ app.use(function(req, res, next){
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
-  console.log(decoded);
-  console.log(decoded.rank);
+
 
 
   // TOKEN FOUND, TRYING TO VALIDATE
@@ -146,10 +145,8 @@ app.use(function(req, res, next){
             return res.redirect('/login');
           }
 
-          console.log(password[0].password);
           // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
           secretKey += password[0].password;
-          console.log(secretKey);
 
           // VERIFYING TOKEN
           jwt.verify(token, secretKey, function(err, userInfo){

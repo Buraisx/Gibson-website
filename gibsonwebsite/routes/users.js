@@ -50,7 +50,7 @@ router.get('/user/profile', function(req, res, next) {
 
 router.get('/user/profile/courses', function(req, res) {
 	console.log("Getting registered courses");
-	res.send({lel: 'poo'});
+	res.json({msg: 'this is a message', pkg: [1, 2, 3 ,4 ,5]});
 });
 
 
