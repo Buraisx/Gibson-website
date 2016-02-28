@@ -101,20 +101,20 @@
 
 
                     <!-- *only client can change pass -->
-                    <div id='change_password' class='hidden'>
+                    <div id='change_password' class='hidden changepassdesign'>
                         <div class = "row">
                             <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>
                             <form class="form-inline" role = "form">
                                 <div class = "form-group">
-                                    <label class="small">Current Password:</label>
+                                    <label>Current Password:</label>
                                     <input type = "password" class = "form-control" name = "currentpass" id = "currentpass" placeholder="Enter Current Password" required pattern="\w+"><!--Character restrictions-->
                                 </div>
                                 <div class = "form-group">
-                                    <label class="small">New Password:</label>
+                                    <label>New Password:</label>
                                     <input type = "password" class = "form-control" name = "newpass" id = "password" placeholder="Enter New Password" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
                                 </div>
                                 <div class = "form-group">
-                                    <label class="small">Confirm New Password:</label>
+                                    <label>Confirm New Password:</label>
                                     <input type = "password" class = "form-control" name = "confirmnewpass" id = "passwordhashed" placeholder="Confirm New Password" onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
                                     <button type = "button" class = "btn btn-default " onclick="" id = "changepassbutton">Change</button>
                                 </div>
@@ -124,51 +124,53 @@
                 </section>
                 <section id="courses">
                     <div class="panel-group" id="accordion">
-                          <div class="panel panel-default">
+                        <% for(var i=1; i<=3; i++) { %> <!-- max is a hardcoded 3; replace this with the # of courses later-->
+                        <div class="panel panel-default">
                             <div class="panel-heading">
                               <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                Course Name<br>
-                                Course ID
+                                <a data-toggle="collapse" data-parent="#accordion" href= <%= "#collapse" + i %> >
+                                <p id = "coursename">Course Name:</p><br>
+                                <p id = "courseid">Course ID:</p>
                                 </a>
                               </h4>
                             </div>
-                            <div id="collapse1" class="panel-collapse collapse in">
+                            <div id = <%= "collapse" + i %> class="panel-collapse collapse in">
                               <div class="panel-body">
                                 <div class = "row">
                                     <div class = "form-group col-sm-6">
-                                        <p>Description: </p>
+                                        <p id = "description" value="">Description: </p>
+
                                     </div>
                                 </div>
                                 <br>
                                 <div class = "row">
                                     <div class = "form-group col-sm-6">
-                                        <p>Start Date: </p>
+                                        <p id = "coursestartdate">Start Date: </p>
                                     </div>
                                     <div class = "form-group col-sm-6">
-                                        <p>End Date: </p>
-                                    </div>
-                                </div>
-                                <div class = "row">
-                                    <div class = "form-group col-sm-6">
-                                        <p>Course Time: </p>
-                                    </div>
-                                    <div class = "form-group col-sm-6">
-                                        <p>Course Interval: </p>
+                                        <p id = "courseenddate">End Date: </p>
                                     </div>
                                 </div>
                                 <div class = "row">
                                     <div class = "form-group col-sm-6">
-                                        <p>Course Days: </p>
+                                        <p id = "coursetime">Course Time: </p>
                                     </div>
                                     <div class = "form-group col-sm-6">
-                                        <p>Course Target: </p>
+                                        <p id = "courseinterval">Course Interval: </p>
+                                    </div>
+                                </div>
+                                <div class = "row">
+                                    <div class = "form-group col-sm-6">
+                                        <p id = "coursedays">Course Days: </p>
+                                    </div>
+                                    <div class = "form-group col-sm-6">
+                                        <p id = "coursetarget">Course Target: </p>
                                     </div>
                                 </div>
                                 <br>
                                 <div class = "row">
                                     <div class = "form-group col-sm-6">
-                                        <p>Cost: </p>
+                                        <p id = "coursecost">Cost: </p>
                                     </div>
                                     <div class = "form-group col-sm-6">
                                         <button type = "submit" class = "btn btn-default " onclick="" id = "submit">Register Now</button>
@@ -176,7 +178,8 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                        </div>
+                        <% } %>
                     </div>
                 </section>
                 <section id="schedule">Schedule</section>
