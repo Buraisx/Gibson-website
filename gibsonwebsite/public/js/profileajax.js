@@ -17,7 +17,9 @@ $("a[href$='#courses']").click(function() {
 $("a[href$='#courses']").click(function() {
 
 	jQuery.getJSON("/user/profile/courses", function(data){
-	
+		
+		var $courses = $("<div></div>", {class: "panel-group", id: "accordion"});
+
 		for(i = 0; i < data.length; i++){
 			
 			document.getElementById("coursename").innerHTML = "Course Name: " + data[0].course_name;
@@ -34,10 +36,9 @@ $("a[href$='#courses']").click(function() {
 			document.getElementById("courseinterval").innerHTML = "Course Interval: " + data[0].course_interval;
 			document.getElementById("coursedays").innerHTML = "Course Days: " + data[0].course_days;
 			document.getElementById("coursetarget").innerHTML = "Course target: " + data[0].course_target;
-			document.getElementById("coursecost").innerHTML = "Course cost: " + data[0].default_fee;
-			
-		}
-				
+			document.getElementById("coursecost").innerHTML = "Course cost: " + data[0].default_fee;			
+
+		}			
 	});
 });
 
