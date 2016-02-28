@@ -16,7 +16,7 @@
 
     <!-- *glyphicons are janky with this template; fix this later-->
     <section>
-        <div class="tabs tabs-style-linemove">
+        <div class="tabs tabs-style-linemove">  
             <nav>
                 <ul>
                     <li><a href="#profile"><i class="fa fa-user"></i><span> Profile</span></a></li>
@@ -123,64 +123,7 @@
                     </div>
                 </section>
                 <section id="courses">
-                    <div class="panel-group" id="accordion">
-                        <% for(var i=1; i<=3; i++) { %> <!-- max is a hardcoded 3; replace this with the # of courses later-->
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                              <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href= <%= "#collapse" + i %> >
-                                <p id = "coursename">Course Name:</p><br>
-                                <p id = "courseid">Course ID:</p>
-                                </a>
-                              </h4>
-                            </div>
-                            <div id = <%= "collapse" + i %> class="panel-collapse collapse in">
-                              <div class="panel-body">
-                                <div class = "row">
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "description" value="">Description: </p>
-
-                                    </div>
-                                </div>
-                                <br>
-                                <div class = "row">
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "coursestartdate">Start Date: </p>
-                                    </div>
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "courseenddate">End Date: </p>
-                                    </div>
-                                </div>
-                                <div class = "row">
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "coursetime">Course Time: </p>
-                                    </div>
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "courseinterval">Course Interval: </p>
-                                    </div>
-                                </div>
-                                <div class = "row">
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "coursedays">Course Days: </p>
-                                    </div>
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "coursetarget">Course Target: </p>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class = "row">
-                                    <div class = "form-group col-sm-6">
-                                        <p id = "coursecost">Cost: </p>
-                                    </div>
-                                    <div class = "form-group col-sm-6">
-                                        <button type = "submit" class = "btn btn-default " onclick="" id = "submit">Register Now</button>
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                        <% } %>
-                    </div>
+                    <p id="4am">fdafd</p>
                 </section>
                 <section id="schedule">Schedule</section>
                 <section id="rental">Rental</section>
