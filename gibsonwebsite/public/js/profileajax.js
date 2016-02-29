@@ -15,13 +15,13 @@ $("a[href$='#courses']").click(function() {
 */
 
 $("a[href$='#courses']").click(function() {
-	console.log("asdf");
 	jQuery.getJSON("/user/profile/courses", function(data){
-		console.log("THis is a cedar tree. You know it's a cedar tree because that's the way it is");
+		
+		$('#courses').contents().remove();
+		
 		var courses = $("<div></div>", {class: "panel-group", id: "accordion"});
 
-		for(i = 0; i < 4; i++){
-			alert("jquery");
+		for(i = 0; i < data.length; i++){
 			/*
 			document.getElementById("coursename").innerHTML = "Course Name: " + data[0].course_name;
 			document.getElementById("coursename").coursename = "Course Name: " + data[0].course_name;
@@ -111,9 +111,10 @@ $("a[href$='#courses']").click(function() {
 										 		button)));			//escaping closures
 
 			
-			$('#4am').after(panel_default);
+			courses.append(panel_default);
 		}
 
+		$('#courses').append(courses);
 	});
 });
 
