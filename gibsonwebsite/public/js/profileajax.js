@@ -14,6 +14,156 @@ $("a[href$='#courses']").click(function() {
 });
 */
 
+$("a[href$='#profile']").click(function(){
+	jQuery.getJSON("/user/profile/info", function(user_info){
+
+		$('#profile').contents().remove();
+
+		//==================================
+		//==================================
+		//WRITE ALL BASIC TAGS
+		//==================================
+		//==================================
+		///Header in Profile
+		var basicInfo = $("<h3></h3>").append("Basic Information");
+
+		//Name
+		var fname = $("<div></div>", {class: "col-sm-6"}).append("<p>First Name: " + user_info[0].fname + "</p>");
+		var lname = $("<div></div>", {class: "col-sm-6"}).append("<p>Last Name: " + user_info[0].lname + "</p>");
+
+		//Identifiers
+		var username = $("<div></div>", {class: "col-sm-6"}).append("<p>Username: " + user_info[0].username + "</p>");
+		var email = $("<div></div>", {class: "col-sm-6"}).append("<p>Email: " + user_info[0].email + "</p>");
+
+		//Phone
+		var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Home): " + user_info[0].primary_phone + "</p>");
+		var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Cell): " + user_info[0].secondary_phone + "</p>");
+
+		//Birth Info
+		var gender = $("<div></div>", {class: "col-sm-6"}).append("<p>Gender: " + user_info[0].gender + "</p>");
+		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p>Date of Birth: " + user_info[0].birth_date + "</p>");
+
+		//Address
+		var address = $("<div></div>", {class: "col-sm-6"}).append("<p>Address: " + user_info[0].address + "</p>");
+
+		//Student Info
+		var student = $("<div></div>", {class: "col-sm-6"}).append("<p>Student Info: </p>");
+
+		//Emergency Contacts Header
+		var emInfo = $("<h3></h3>").append("Emergency Contacts");
+
+		//===================================
+		//Place holder for Emergency Contacts
+		//===================================
+		var eContacts = $("<p></p>").append("[*Insert EJS code here]");
+		//unnecessary html code
+		//<h4>Contact x</h4>
+        //    <div class = "row">
+        //        <div class = "form-group col-sm-6">
+        //            <p>First Name: </p>
+        //        </div>
+        //        <div class = "form-group col-sm-6">
+        //            <p>Last Name: </p>
+        //        </div>
+        //        <div class = "form-group col-sm-6">
+        //            <p>Relationship: </p>
+        //       </div>
+        //        <div class = "form-group col-sm-6">
+        //            <p>Phone: </p>
+        //        </div>
+        //    </div>
+		
+		//==================================
+
+		//Add Emergency Contacts
+		var addContacts = $("<div></div>", {class:"row form-group"}).append(
+			$("<button></button>", {type: "button", class: "btn btn-default col-sm-2", onclick: "", id: "addcontact"}).append(
+				"Add Emergency Contact"));
+
+		//Edit Info
+		var editInfo = $("<div></div>", {class:"row form-group"}).append(
+			$("<button></button>", {type: "button", class: "btn btn-default col-sm-2", onclick: "", id : "editinfo"}).append(
+				"Edit Information"));
+
+		//===============
+		//Change Password 
+		var changePassword = $("<div></div>", {class:"row form-group"}).append(
+			$("<button></button>", {type : "button", class: "btn btn-default col-sm-2", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
+				"Change Password"));
+
+		//Only client Can change Pass
+		var cpHidden = $("<div></div>", {id:'change_password', class:'hidden changepassdesign'});
+		var pText = $("<p></p>", {class: "small"}).append("Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.");
+
+		var formInline = $("<form></form>", {class:"form-inline", role : "form"});
+
+		
+		//mix in one div form-group
+		var label1 = $("<label></label>").append("Current Password:");
+		var input1 = $("<input></input>", {type:"password", class:"form-control", name:"currentpass", id:"currentpass", placeholder:"Enter Current Password", required:"",
+						pattern:'\\w+'});
+
+		//mix in one div form-group
+		var label2 = $("<label></label>").append("New Password:");
+		var input2 = $("<input></input>", {type : "password", class : "form-control", name : "newpass", id : "password", placeholder:"Enter New Password", minlength: "6", 
+										   required:"", pattern:'(?=.*\\d)(?=.*[a-zA-Z]).{6,}'});
+		
+		//mix in one div form-group
+		var label3 = $("<label></label>").append("Confirm New Password:");
+		var input3 = $("<input></input>", {type : "password", class : "form-control", name : "confirmnewpass", id : "passwordhashed",
+										   placeholder:"Confirm New Password", onkeyup:"checkPass(); return false;",
+										   minlength: "6", required:"", pattern:'(?=.*\\d)(?=.*[a-zA-Z]).{6,}'});
+		var button3 = $("<button></button>", {type : "button", class : "btn btn-default", onclick:"", id : "changepassbutton"}).append("Change");
+		//==============
+		
+
+		//==================
+		//TOP DOWN HIERARCHY
+		//==================
+		$('#profile').append(basicInfo);
+		//fname lname
+		$('#profile').append($("<div></div>", {class:"row"}).append(
+			fname, lname));
+		//username email
+		$('#profile').append($("<div></div>", {class:"row"}).append(
+			username, email));
+		//Phone (Home, Cell)
+		$('#profile').append($("<div></div>", {class:"row"}).append(
+			primaryPhone, secondaryPhone));
+		//Gender and Date of Birth
+		$('#profile').append($("<div></div>", {class:"row"}).append(
+			gender, dob));
+		//Address and Student Info
+		$('#profile').append($("<div></div>", {class:"row"}).append(
+			address, student));
+		//Emergency Contact
+		$('#profile').append(emInfo);
+		$('#profile').append(eContacts);
+		//Add E-Contacts, Edit Info
+		$('#profile').append(addContacts);
+		$('#profile').append(editInfo);
+
+		//===============
+		//Change Password
+		$('#profile').append(changePassword);
+		$('#profile').append(cpHidden);
+		cpHidden.append($("<div></div>", {class:"row"}).append(
+			pText, formInline));
+
+		//Using Closure Structure
+		formInline.append($("<div></div>", {class:"form-group"}).append(
+			label1, input1));
+
+		formInline.append($("<div></div>", {class:"form-group"}).append(
+			label2, input2));
+
+		formInline.append($("<div></div>", {class:"form-group"}).append(
+			label3, input3, button3));
+		//================
+	});
+});
+
+
 $("a[href$='#courses']").click(function() {
 	jQuery.getJSON("/user/profile/courses", function(data){
 		
@@ -22,23 +172,7 @@ $("a[href$='#courses']").click(function() {
 		var courses = $("<div></div>", {class: "panel-group", id: "accordion"});
 
 		for(i = 0; i < data.length; i++){
-			/*
-			document.getElementById("coursename").innerHTML = "Course Name: " + data[0].course_name;
-			document.getElementById("coursename").coursename = "Course Name: " + data[0].course_name;
-			alert(document.getElementById("coursename").coursename);
-			document.getElementById("courseid").innerHTML = "Course ID: "+ data[0].course_id;
-			document.getElementById("courseid").courseid = "Course ID: "+ data[0].course_id;
-			alert(document.getElementById("courseid").courseid);
-
-			document.getElementById("description").innerHTML = "Description: " + data[0].course_description;
-			document.getElementById("coursestartdate").innerHTML = "Start Date: "+ data[0].start_date;
-			document.getElementById("courseenddate").innerHTML = "End Date: " + data[0].end_date;
-			document.getElementById("coursetime").innerHTML = "Course Time: " + data[0].course_time;
-			document.getElementById("courseinterval").innerHTML = "Course Interval: " + data[0].course_interval;
-			document.getElementById("coursedays").innerHTML = "Course Days: " + data[0].course_days;
-			document.getElementById("coursetarget").innerHTML = "Course target: " + data[0].course_target;
-			document.getElementById("coursecost").innerHTML = "Course cost: " + data[0].default_fee;
-			*/
+			//A Course Accordion Panel
 			var panel_default = $("<div></div>", {class: "panel panel-default"});
 			
 			var panel_heading = $("<div></div>", {class: "panel-heading"});
