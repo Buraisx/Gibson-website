@@ -134,7 +134,6 @@ header .intro-text .skills {
 }
 
 .navbar {
-    text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
 }
@@ -161,21 +160,33 @@ header .intro-text .skills {
     background-color: #2c3e50;
 }
 
-.nav.navbar-nav.navbar-right li a {
+.nav.navbar-nav.navbar-right > li > a {
     color: white;
 }
 
+/* specified this way to overwrite bootstrap */
+.navbar-nav > li > .dropdown-menu {
+	padding: 0px;
+	border-radius: 4px;
+}
+
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a{
-            background-color:#2c3e50;
+    color:#2c3e50;
+	background-color: white;
  }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-            background-color:#25A7DE;
+    color:#25A7DE;
+	background-color: #f5f5f5;
  }
 
+ .dropdown-menu > li{
+	padding-top:2px;
+	padding-bottom:2px;
+ }
+ 
  .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    background-color: #25A7DE;
-    color: #FFC0CB;
+    color : #25A7DE;
 }
 
 section {
@@ -278,7 +289,6 @@ section.success a.active {
 }
 
 .btn-outline:hover,
-.btn-outline:focus,
 .btn-outline:active,
 .btn-outline.active {
     border: solid 2px #fff;
