@@ -6,6 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Gibson' });
 });
 
+router.get('/test', function(req, res, next) {
+  res.render('test_waypoint');
+});
+
 router.get('/aboutus', function(req, res, next) {
   res.render('Aboutus', { title: 'Gibson' });
 });
