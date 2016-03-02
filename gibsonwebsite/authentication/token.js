@@ -35,7 +35,8 @@ function generateOneUse(req, res, next){
       }
 
       // MAKE TOKEN AND STORE IN req.oneUseToken
-      req.oneUseToken = jwt.sign({
+      req.oneUseToken = 'https://localhost:3000/confirm/token/';
+      req.oneUseToken += jwt.sign({
         token_id: results.insertId,
         iss: config.jwt.issuer,
         user: req.user.username,

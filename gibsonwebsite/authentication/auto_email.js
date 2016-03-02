@@ -10,6 +10,7 @@ function signupConfEmail (req, res, next){
 
   // IF config.sendEmail = false, DISABLE OUTGOING EMAIL
   if (!config.sendEmail){
+    console.log(req.oneUseToken);
     next();
   }
   // config.sendEmail = true, DO SEND EMAIL
@@ -17,18 +18,23 @@ function signupConfEmail (req, res, next){
 
     // CONFIGURING E-MAIL
     var mailOptions = {
-      from: '"105 Gibson" <nansagad@gmail.com>',
-      to: 'kevinxu_95@hotmail.com',
-      subject: '105 Gibson Center - Please Confirm Your Email Address',
-      text: "Please go to the following web address to confirm your email address: \n https://localhost:3000/confirm/token/" +req.oneUseToken,
+      from: '"105 Gibson Centre" <nansagad@gmail.com>',
+      to: req.user.email,
+      subject: '105 Gibson Centre - Confirmation Email',
+      text: ""
     };
+
+    // PLAIN TEXT EMAIL
+    mailOptions.text += "Hello " +req.user.username +",\n\nThank you for registering with 105 Gibson Community Centre.";
+    mailOptions.text += " To complete the registration process, please click on the following link:\n\n" +req.oneUseToken;
+    mailOptions.text += "\n\nIf you did not register, and recieved this email by mistake, please ignore and delete this email.";
+    mailOptions.text += "\nThis is an automated email, please do not reply to this email as this email address is not monitored.";
+    mailOptions.text += "\n\nThank you,\n105 Gibson Team\nhttps://www.105gibson.com";
 
     transport.sendMail(mailOptions, function(error, info){
       if(error){
         console.log(error);
-        return;
       }
-      console.log('Message sent: ' + info.response);
       next();
     });
   }

@@ -85,162 +85,178 @@ module.exports = function(passport){
           //req.flash('signupMessage', 'User already exist with that email')
         }
 
-        //=======================================
-        //=== USER NOT FOUND -> MAKE NEW USER ===
-        //=======================================
-        else{
-          var newUser = {
-            username:null, password:null, lname:null, fname:null, birth_date:null,
-            gender:null, address:null, unit_no:null, city:null, province_id:null,
-            postal_code:null, primary_phone:null, secondary_phone:null, email:null,
-            send_notification:null, student:null, user_id:null
-          };
+        // CHECKING IF THE USER IS ALREADY IN THE TEMPORARY TABLE
+        con.query('SELECT * FROM gibson.temp_user WHERE username = ?;', [req.username], function (err, results){
+          if (err){
+            con.release();
+            console.log ('passport.js: Error querying temporary user table; local-signup');
+            return done(err);
+          }
 
-          // INITIALIZING newUser VALUES
-          newUser.username = req.body.username;
-          newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(Math.floor(3*Math.random())+10));
-          newUser.lname = req.body.lname;
-          newUser.fname = req.body.fname;
-          newUser.birth_date = req.body.birth_date;
-          newUser.gender = req.body.gender;
-          newUser.address = req.body.address;
-          newUser.unit_no = req.body.apt;
-          newUser.city = req.body.city;
-          newUser.province_id = req.body.province;
-          newUser.postal_code = req.body.postal_code.replace(/ /g,''); //Deletes the white space in postal code.
-          newUser.primary_phone = req.body.primary_phone;
-          newUser.secondary_phone = req.body.secondary_phone;
-          newUser.email = req.body.email;
-          newUser.send_notification = (!req.body.send_notifications)? 0:req.body.send_notifications;
-          newUser.student = (!req.body.student)? 0:req.body.student;
+          // USER IS A TEMPORARY USER AND ALREADY EXIST IN THE DATABASE.
+          if (results.length){
+            con.release();
+            console.log('User already exist in the temporary user table.');
+            return done (null, false);
+          }
 
-          // CREATING QUERY
-          var createUser  = 'INSERT INTO gibson.user (username, password, lname, fname, birth_date, gender, address, unit_no, city, ';
-              createUser +=                          'province_id, postal_code, primary_phone, secondary_phone, email, send_notification, ';
-              createUser +=                          'student) ';
-              createUser += 'VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-          var values = [
-            newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.birth_date, newUser.gender,
-            newUser.address, newUser.unit_no, newUser.city, newUser.province_id, newUser.postal_code, newUser.primary_phone,
-            newUser.secondary_phone, newUser.email, newUser.send_notification, newUser.student
-          ];
+          //=======================================
+          //=== USER NOT FOUND -> MAKE NEW USER ===
+          //=======================================
+          else{
+            var newUser = {
+              username:null, password:null, lname:null, fname:null, birth_date:null,
+              gender:null, address:null, unit_no:null, city:null, province_id:null,
+              postal_code:null, primary_phone:null, secondary_phone:null, email:null,
+              send_notification:null, student:null, user_id:null
+            };
 
-          createUser = mysql.format(createUser, values);
+            // INITIALIZING newUser VALUES
+            newUser.username = req.body.username;
+            newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(Math.floor(3*Math.random())+10));
+            newUser.lname = req.body.lname;
+            newUser.fname = req.body.fname;
+            newUser.birth_date = req.body.birth_date;
+            newUser.gender = req.body.gender;
+            newUser.address = req.body.address;
+            newUser.unit_no = req.body.apt;
+            newUser.city = req.body.city;
+            newUser.province_id = req.body.province;
+            newUser.postal_code = req.body.postal_code.replace(/ /g,''); //Deletes the white space in postal code.
+            newUser.primary_phone = req.body.primary_phone;
+            newUser.secondary_phone = req.body.secondary_phone;
+            newUser.email = req.body.email;
+            newUser.send_notification = (!req.body.send_notifications)? 0:req.body.send_notifications;
+            newUser.student = (!req.body.student)? 0:req.body.student;
 
-          // INSERTING NEW USER INTO DATABASE
-          con.query(createUser, function(err, results){
-            if(err){
-              con.release();
-              console.log('passport.js: Error while inserting new user into the database.');
-              return done(err);
-            }
+            // CREATING QUERY
+            var createUser  = 'INSERT INTO gibson.temp_user (rank_id, username, password, lname, fname, birth_date, gender, address, unit_no, ';
+                createUser +=                               'city, province_id, postal_code, primary_phone, secondary_phone, email, ';
+                createUser +=                               'send_notification, student) ';
+                createUser += 'VALUES(1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+            var values = [
+              newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.birth_date, newUser.gender,
+              newUser.address, newUser.unit_no, newUser.city, newUser.province_id, newUser.postal_code, newUser.primary_phone,
+              newUser.secondary_phone, newUser.email, newUser.send_notification, newUser.student
+            ];
 
-            // QUERYING FOR NEW USER'S user_id
-            var query_id = mysql.format('SELECT user_id FROM gibson.user WHERE username = ?;', newUser.username);
-            var userId;
+            createUser = mysql.format(createUser, values);
 
-            con.query(query_id, function(err, results){
+            // INSERTING NEW USER INTO DATABASE
+            con.query(createUser, function(err, results){
               if(err){
                 con.release();
-                console.log("passport.js: Error while quering for new user's user_id");
+                console.log('passport.js: Error while inserting new user into the database.');
                 return done(err);
               }
 
-              userId = results[0].user_id;
-              newUser.user_id = userId;
+              // QUERYING FOR NEW USER'S user_id
+              var query_id = mysql.format('SELECT user_id FROM gibson.temp_user WHERE username = ?;', newUser.username);
+              var userId;
 
-              //==========================================================================
-              //=== INSERT NEW USER'S EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE ===
-              //==========================================================================
-
-              var emContacts = [];
-              var i = 1;
-              var contact = {
-                user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null
-              };
-
-              // PUSHING EMERGENCY CONTACT JSON OBJECT INTO emContacts ARRAY.
-              while(true){
-
-                // STOPS WHEN ALL JSON OBJECTS HAD BEEN PUSHED INTO emContacts ARRAY
-                if(!req.body['ephone' + i])
-                  break;
-
-                  contact.fname = req.body['emergencyfname' + i];
-                  contact.lname = req.body['emergencylname' + i];
-                  contact.relationship = req.body['relationship' + i];
-                  contact.contact_phone = req.body['ephone' + i];
-
-                  emContacts.push(contact);
-                  i += 1;
+              con.query(query_id, function(err, results){
+                if(err){
+                  con.release();
+                  console.log("passport.js: Error while quering for new user's user_id");
+                  return done(err);
                 }
 
-                var createEContacts =  'INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone)';
-                  createEContacts += 'VALUES (?,?,?,?,?);';
+                userId = results[0].user_id;
+                newUser.user_id = userId;
 
-                // INSERTING ALL EMERGENCY CONTACTS INTO DATABASE
-                for(var emc = 0; emc < emContacts.length; emc++){
+                //==========================================================================
+                //=== INSERT NEW USER'S EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE ===
+                //==========================================================================
 
-                  var econtact_values = [
-                    emContacts[emc].user_id, emContacts[emc].fname, emContacts[emc].lname,
-                    emContacts[emc].relationship, emContacts[emc].contact_phone
-                  ];
+                var emContacts = [];
+                var i = 1;
+                var contact = {
+                  user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null
+                };
 
-                  var contactInsert = mysql.format(createEContacts, econtact_values);
+                // PUSHING EMERGENCY CONTACT JSON OBJECT INTO emContacts ARRAY.
+                while(true){
 
-                  // QUERYING THE DATABASE TO INSERT EMERGENCY CONTACTS
-                  con.query(contactInsert, function(err, results){
-                    if(err){
-                      con.release();
-                      console.log('passport.js: Error while inserting emergency contacts.');
-                      return done(err);
-                    }
-                  });
-                }
+                  // STOPS WHEN ALL JSON OBJECTS HAD BEEN PUSHED INTO emContacts ARRAY
+                  if(!req.body['ephone' + i])
+                    break;
 
-                //===============================================
-                //=== INSERT STUDENT INFO TO STUDENT DATABASE ===
-                //===============================================
+                    contact.fname = req.body['emergencyfname' + i];
+                    contact.lname = req.body['emergencylname' + i];
+                    contact.relationship = req.body['relationship' + i];
+                    contact.contact_phone = req.body['ephone' + i];
 
-                // DO THIS ONLY IF THE STUDENT CHECKBOX IS SELECTED
-                if(newUser.student == 1){
+                    emContacts.push(contact);
+                    i += 1;
+                  }
 
-                  var studentInfo = {
-                    user_id:userId, school_name:null, grade:null, major:null, esl_level:null
-                  };
+                  var createEContacts =  'INSERT INTO gibson.temp_emergency_contact (user_id, lname, fname, relationship, contact_phone)';
+                      createEContacts += 'VALUES (?,?,?,?,?);';
 
-                  studentInfo.school_name = req.body.schoolname;
-                  studentInfo.grade = req.body.grade;
-                  studentInfo.major = req.body.major;
-                  studentInfo.esl_level = req.body.esl;
+                  // INSERTING ALL EMERGENCY CONTACTS INTO DATABASE
+                  for(var emc = 0; emc < emContacts.length; emc++){
 
-                  var createStudent = 'INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level)';
-                  createStudent += 'VALUES (?,?,?,?,?);';
-                  var student_values = [
-                    studentInfo.user_id, studentInfo.school_name, studentInfo.grade,
-                    studentInfo.major, studentInfo.esl_level
-                  ];
+                    var econtact_values = [
+                      emContacts[emc].user_id, emContacts[emc].fname, emContacts[emc].lname,
+                      emContacts[emc].relationship, emContacts[emc].contact_phone
+                    ];
 
-                  var studentInsert = mysql.format(createStudent, student_values);
+                    var contactInsert = mysql.format(createEContacts, econtact_values);
 
-                  // QUERYING THE DATABASE TO INSERT STUDENT'S INFO
-                  con.query(studentInsert, function(err, results){
-                    if(err){
-                      con.release();
-                      console.log("passport.js: Error while inserting student's info");
-                      return done(err);
-                    }
+                    // QUERYING THE DATABASE TO INSERT EMERGENCY CONTACTS
+                    con.query(contactInsert, function(err, results){
+                      if(err){
+                        con.release();
+                        console.log('passport.js: Error while inserting emergency contacts.');
+                        return done(err);
+                      }
+                    });
+                  }
+
+                  //===============================================
+                  //=== INSERT STUDENT INFO TO STUDENT DATABASE ===
+                  //===============================================
+
+                  // DO THIS ONLY IF THE STUDENT CHECKBOX IS SELECTED
+                  if(newUser.student == 1){
+
+                    var studentInfo = {
+                      user_id:userId, school_name:null, grade:null, major:null, esl_level:null
+                    };
+
+                    studentInfo.school_name = req.body.schoolname;
+                    studentInfo.grade = req.body.grade;
+                    studentInfo.major = req.body.major;
+                    studentInfo.esl_level = req.body.esl;
+
+                    var createStudent = 'INSERT INTO gibson.temp_student (user_id, school_name, grade, major, esl_level)';
+                    createStudent += 'VALUES (?,?,?,?,?);';
+                    var student_values = [
+                      studentInfo.user_id, studentInfo.school_name, studentInfo.grade,
+                      studentInfo.major, studentInfo.esl_level
+                    ];
+
+                    var studentInsert = mysql.format(createStudent, student_values);
+
+                    // QUERYING THE DATABASE TO INSERT STUDENT'S INFO
+                    con.query(studentInsert, function(err, results){
+                      if(err){
+                        con.release();
+                        console.log("passport.js: Error while inserting student's info");
+                        return done(err);
+                      }
+                      // FINISHED INSERTING A NEW USER
+                      return done(null, newUser);
+                    });
+                  }
+                  else{
                     // FINISHED INSERTING A NEW USER
                     return done(null, newUser);
-                  });
-                }
-                else{
-                  // FINISHED INSERTING A NEW USER
-                  return done(null, newUser);
-                }
+                  }
+              });
             });
-          });
-        }
+          }
+        });
       });
     });
   }));
@@ -316,7 +332,7 @@ module.exports = function(passport){
                     return next (null, user[0]);
                 });
             }
-        ], 
+        ],
             function(err, results){
                 //console.log(err + "\n" + JSON.stringify(results));
                 if(err)
@@ -346,7 +362,7 @@ module.exports = function(passport){
                     console.log(results);
                     con.release();
                     return done(null, results);
-                }      
+                }
             });
     });
   }));
