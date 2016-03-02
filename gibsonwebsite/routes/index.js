@@ -46,5 +46,8 @@ router.get('/theteam', function(req, res, next) {
   res.render('Theteam', { title: 'Gibson' });
 });
 
+router.get('/admin/profile', function(req, res, next) {
+  res.render('adminviews', { title: 'Admin Profile' });
+});
 
 module.exports = router;
