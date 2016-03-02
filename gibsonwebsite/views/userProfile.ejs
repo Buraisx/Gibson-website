@@ -13,9 +13,9 @@
 </head>
 
 <body>
-
+    <div class="page-wrap">
     <!-- *glyphicons are janky with this template; fix this later-->
-    <section>
+    <section class="container rcorners">
         <div class="tabs tabs-style-linemove">  
             <nav>
                 <ul>
@@ -65,10 +65,26 @@
                         <div class = "col-sm-6">
                             <p>Address: <%= user_info[0].address %> </p>
                         </div>
-                        <div class = "col-sm-6">
-                            <p>Student Info:  </p>
+                    </div>
+
+                    <!--Checks if user is a student-->
+                    <h3>Students Information</h3>
+                    <div class = "row">
+                        <div class = "form-group col-sm-6">
+                            <p>School Name: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>Grade: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>Major: </p>
+                        </div>
+                        <div class = "form-group col-sm-6">
+                            <p>ESL Level: </p>
                         </div>
                     </div>
+
+                    <!--Emergency Contacts-->
                     <h3>Emergency Contacts</h3>
                     <p>[*insert ejs code here]</p>
 
@@ -165,6 +181,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="/js/freelancer.js"></script>
 	<script src="/js/profileajax.js"></script>
+</div>
 </body>
 
 <%- include standardfooter %>

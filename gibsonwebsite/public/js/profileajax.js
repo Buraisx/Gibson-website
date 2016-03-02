@@ -173,7 +173,7 @@ $("a[href$='#courses']").click(function() {
 
 		for(i = 0; i < data.length; i++){
 			//A Course Accordion Panel
-			var panel_default = $("<div></div>", {class: "panel panel-default"});
+			var panel_default = $("<div></div>", {class: "panel panel-primary"});
 			
 			var panel_heading = $("<div></div>", {class: "panel-heading"});
 			var panel_title = $("<h4></h4>", {class: "panel-title"});

@@ -110,3 +110,16 @@ a {
 	font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
 	text-align: center;
 }
+
+/*round corners*/
+.rcorners {
+    border-radius: 25px;
+    padding: 20px; 
+    background-color: #F6F6F6;
+    margin-bottom: 15px;
+}
+
+/*change tabs' background colour*/
+.tabs nav ul {
+	background-color: #F6F6F6;
+}
