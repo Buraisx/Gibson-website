@@ -13,7 +13,7 @@
 <body>
     <div class="page-wrap">
     <section class="container rcorners">
-        <div class="tabs tabs-style-linemove">  
+        <div class="tabs tabs-style-linemove">
             <nav>
                 <ul>
                     <li><a href="#profile"><i class="fa fa-user"></i><span> Profile</span></a></li>
@@ -30,39 +30,39 @@
                     <h3>Basic Information</h3>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>First Name: <%= user_info[0].fname %> // Placeholder for actual user </p>
+                            <p>First Name: <%= user_info.user.fname %> // Placeholder for actual user </p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Last Name: <%= user_info[0].lname %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p>Username: <%= user_info[0].username %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p>Email: <%= user_info[0].email %></p>
+                            <p>Last Name: <%= user_info.user.lname %> </p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Phone (Home): <%= user_info[0].primary_phone %></p>
+                            <p>Username: <%= user_info.user.username %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Phone (Cell): <%= user_info[0].secondary_phone %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p>Gender: <%= user_info[0].gender %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p>Date of Birth: <%= user_info[0].birth_date %> </p>
+                            <p>Email: <%= user_info.user.email %></p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Address: <%= user_info[0].address %> </p>
+                            <p>Phone (Home): <%= user_info.user.primary_phone %></p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p>Phone (Cell): <%= user_info.user.secondary_phone %> </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p>Gender: <%= user_info.user.gender %></p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p>Date of Birth: <%= user_info.user.birth_date %> </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p>Address: <%= user_info.user.address %> </p>
                         </div>
                     </div>
 
@@ -147,7 +147,7 @@
             </div><!-- /content -->
         </div><!-- /tabs -->
     </section>
-            
+
 
     </div><!-- /container -->
 
