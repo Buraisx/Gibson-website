@@ -63,14 +63,14 @@ router.get('/user/profile', function(req, res, next) {
 						response.student_info = results[0];
 
 						//send info back to user
-						res.render('userProfile', {title: "Sign Up", user_info: results});
+						res.render('userProfile', {title: "Sign Up", user_info: response});
 					});
 				}
 				else{
 					response.student_info = null;
 
 					//send info back to user
-					res.render('userProfile', {title: "Sign Up", user_info: results});
+					res.render('userProfile', {title: "Sign Up", user_info: response});
 				}
 
 			});
