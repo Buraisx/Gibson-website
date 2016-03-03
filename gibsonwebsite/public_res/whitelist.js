@@ -5,6 +5,7 @@ var scriptSrc = [
   'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', // SuccessSignup.ejs
   'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js' , // SuccessSignup.ejs
   '//code.jquery.com/jquery-1.12.0.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js',	//waypoints
   '//code.jquery.com/jquery-migrate-1.2.1.min.js'
 ];
 

@@ -6,6 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Gibson' });
 });
 
+router.get('/test', function(req, res, next) {
+  res.render('test_waypoint');
+});
+
 router.get('/aboutus', function(req, res, next) {
   res.render('Aboutus', { title: 'Gibson' });
 });
@@ -42,5 +46,8 @@ router.get('/theteam', function(req, res, next) {
   res.render('Theteam', { title: 'Gibson' });
 });
 
+router.get('/admin/profile', function(req, res, next) {
+  res.render('adminviews', { title: 'Admin Profile' });
+});
 
 module.exports = router;

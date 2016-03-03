@@ -6,8 +6,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/css/tabs.css" />
     <link rel="stylesheet" type="text/css" href="/css/tabstyles.css" />
-    <script src = "/js/passwordvalidation.js"></script>
-    <script src = "/js/changepassword.js"></script>
 </head>
 
 <body>
@@ -18,9 +16,9 @@
                 <ul>
                     <li><a href="#profile"><i class="fa fa-user"></i><span> Profile</span></a></li>
                     <li><a href="#courses"><i class="fa fa-list"></i><span> Courses</span></a></li>
-                    <li><a href="#schedule"><i class="fa fa-calendar"></i><span> Schedule</span></a></li>
+                    <li><a href="#vol"><i class="fa fa-question"></i><span> Vol View</span></a></li>
                     <li><a href="#rental"><i class="fa fa-question"></i><span> Rental View</span></a></li>
-                    <li><a href="#receipt"><i class="fa fa-question"></i><span> Receipt View</span></a></li>
+                    <li><a href="#report"><i class="fa fa-question"></i><span> Report View</span></a></li>
                 </ul>
             </nav>
             <div class="content-wrap">
@@ -28,39 +26,39 @@
                     <h3>Basic Information</h3>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>First Name: <%= user_info[0].fname %> // Placeholder for actual user </p>
+                            <p>First Name: </p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Last Name: <%= user_info[0].lname %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p>Username: <%= user_info[0].username %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p>Email: <%= user_info[0].email %></p>
+                            <p>Last Name: </p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Phone (Home): <%= user_info[0].primary_phone %></p>
+                            <p>Username: </p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Phone (Cell): <%= user_info[0].secondary_phone %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p>Gender: <%= user_info[0].gender %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p>Date of Birth: <%= user_info[0].birth_date %> </p>
+                            <p>Email: </p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Address: <%= user_info[0].address %> </p>
+                            <p>Phone (Home): </p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p>Phone (Cell): </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p>Gender: </p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p>Date of Birth: </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p>Address: </p>
                         </div>
                     </div>
 
@@ -101,47 +99,13 @@
                             <p>Phone: </p>
                         </div>
                     </div>
-
-
-                    <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcontact">Add Emergency Contact</button>
-                    </div>
-                    <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "editinfo">Edit Information</button>
-                    </div>
-                    <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="togglepassworddropdown()" id = "changepassbutton">Change Password</button>
-                    </div>
-
-
-                    <!-- Password Change -->
-                    <div id='change_password' class='hidden changepassdesign'>
-                        <div class = "row">
-                            <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>
-                            <form class="form-inline" role = "form">
-                                <div class = "form-group">
-                                    <label>Current Password:</label>
-                                    <input type = "password" class = "form-control" name = "currentpass" id = "currentpass" placeholder="Enter Current Password" required pattern="\w+"><!--Character restrictions-->
-                                </div>
-                                <div class = "form-group">
-                                    <label>New Password:</label>
-                                    <input type = "password" class = "form-control" name = "newpass" id = "password" placeholder="Enter New Password" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
-                                </div>
-                                <div class = "form-group">
-                                    <label>Confirm New Password:</label>
-                                    <input type = "password" class = "form-control" name = "confirmnewpass" id = "passwordhashed" placeholder="Confirm New Password" onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
-                                    <button type = "button" class = "btn btn-default " onclick="" id = "changepassbutton">Change</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </section>
                 <section id="courses">
                     <!-- Tab On-Click fills courses-->
                 </section>
-                <section id="schedule">Schedule</section>
+                <section id="vol">Vol</section>
                 <section id="rental">Rental</section>
-                <section id="receipt">Receipt</section>
+                <section id="report">Report</section>
             </div><!-- /content -->
         </div><!-- /tabs -->
     </section>
@@ -177,7 +141,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/js/freelancer.js"></script>
-	<script src="/js/profileajax.js"></script>
+    <script src="/js/profileajax.js"></script>
 </div>
 </body>
 

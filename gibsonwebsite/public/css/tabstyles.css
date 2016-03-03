@@ -56,3 +56,10 @@
 .tabs-style-linemove nav a span {
 	font-weight: 700;
 }
+
+.tabs-style-linemove nav a:hover
+{
+	color: #2CC185;
+	-webkit-transform: translate3d(0,8px,0);
+	transform: translate3d(0,8px,0);
+}
