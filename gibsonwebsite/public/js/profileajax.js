@@ -13,18 +13,22 @@ $("a[href$='#courses']").click(function() {
 	});
 });
 */
+
+//Get cookie Values
 function getCookie(name) {
   var value = "; " + document.cookie;
   var parts = value.split("; " + name + "=");
   if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-
+//========================================
+//Send POST request on Register of Courses
+//========================================
 function register(course_register){
-	console.log("Clicked button " + getCookie("_csrf"));
+	console.log("Clicked button " + $('#_csrf').val());
 	$.post("/user/profile/register", {
 			course_id: course_register.id.substring(6),
-			_csrf: getCookie("_csrf")
+			_csrf: $('#_csrf').val()
 			},
 			function(err, res){
 				if (err){

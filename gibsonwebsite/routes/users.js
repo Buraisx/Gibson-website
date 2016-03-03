@@ -5,6 +5,7 @@ var jwt = require('jsonwebtoken');
 var token = require('../authentication/token');
 var mysql = require('mysql');
 var connection = mysql.createPool(config.db_config);
+var async = require('async');
 
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
@@ -143,6 +144,8 @@ router.post('/user/profile/register', function(req, res, next){
 		async.waterfall([
 			function(next){
 				query_course_exists = mysql.format(query_course_exists, inserts);
+
+				console.log(query_course_exists);
 				con.query(query_course_exists, function(err, results){
 					if (err)
 					{
@@ -160,14 +163,15 @@ router.post('/user/profile/register', function(req, res, next){
 			
 				course = results[0];
 				});
-				next(null, courses);
+				next(null, course);
 			}, 
 			function(course, next){
 				var query_not_already_registered = 'SELECT user_id, course_id FROM gibson.user_course WHERE user_id = ? AND course_id = ?';
 				inserts = [decode.id, course_id];
 				query_not_already_registered = mysql.format(query_not_already_registered, inserts);
-		
-				con.query(function(err, results) {
+			
+				console.log(query_not_already_registered);
+				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
 						console.log('Failed to query for registered courses');
 						regError = err;
@@ -179,7 +183,7 @@ router.post('/user/profile/register', function(req, res, next){
 						next(new Error('User already registered for course'), null);
 					}
 				});
-				next(null, course)
+				next(null, course);
 			}], 
 			function (err, course){
 				if (err) {
@@ -191,19 +195,24 @@ router.post('/user/profile/register', function(req, res, next){
 				
 				var query_register = "INSERT INTO user_course values (DEFAULT, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)";
 				inserts = [decode.id, course_id, course.default_fee, course.default_fee, 0, course.start_date, course.end_date, 'IDK', 'Registered for course ID ' + course_id];
-				query_register = mysql.format();
-				con.query(function(err, reg_res){
+				query_register = mysql.format(query_register, inserts);
+				
+				console.log(query_register);
+				con.query(query_register, function(err, reg_res){
 					if (err){
 						console.log('Error occured during registration query');
 						regError = err;
 						con.release();
 						return done(err);
 					}
+
+					else{
+						con.release();
+						console.log("User ID " + decode.id + " registered for course ID " + course_id);
+						regRes = true;
+					}
 				});
-				con.release();
-				console.log("User ID " + decode.id + " registered for course ID " + course_id);
-				regRes = true;
-				}
+			}
 		);
 	});
 	res.send(regError, regRes);
