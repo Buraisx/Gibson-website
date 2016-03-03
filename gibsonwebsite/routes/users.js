@@ -179,44 +179,38 @@ router.post('/user/profile/register', function(req, res, next){
 					}
 					if (results.length) {
 						console.log('User registered for same course already!');
-						// dunno what to return
+						//user already registered for course
 						next(new Error('User already registered for course'), null);
 					}
+
+					//user not in course, so register the user in the course
+					var query_register = "INSERT INTO gibson.user_course values (DEFAULT, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)";
+					inserts = [decode.id, course_id, course.default_fee, course.default_fee, 0, course.start_date, course.end_date, 'IDK', 'Registered for course ID ' + course_id];
+					query_register = mysql.format(query_register, inserts);
+				
+					console.log(query_register);
+					con.query(query_register, function(err, reg_res){
+						if (err){
+							console.log('Error occured during registration query');
+							regError = err;
+							con.release();
+							return done(err);
+						}
+
+						else{
+							con.release();
+							console.log("User ID " + decode.id + " registered for course ID " + course_id);
+							regRes = true;
+						}
+					});
 				});
 				next(null, course);
-			}], 
-			function (err, course){
-				if (err) {
-					console.log('Failed to register');
-					con.release();
-					regError = err;
-					return done(err);
-				}
-				
-				var query_register = "INSERT INTO user_course values (DEFAULT, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)";
-				inserts = [decode.id, course_id, course.default_fee, course.default_fee, 0, course.start_date, course.end_date, 'IDK', 'Registered for course ID ' + course_id];
-				query_register = mysql.format(query_register, inserts);
-				
-				console.log(query_register);
-				con.query(query_register, function(err, reg_res){
-					if (err){
-						console.log('Error occured during registration query');
-						regError = err;
-						con.release();
-						return done(err);
-					}
-
-					else{
-						con.release();
-						console.log("User ID " + decode.id + " registered for course ID " + course_id);
-						regRes = true;
-					}
-				});
-			}
-		);
+			}]);
 	});
-	res.status(regError).send(regRes);
 });
+
+	//res.status(regError).send(regRes);
+
 
 
 module.exports = router;
