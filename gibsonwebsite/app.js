@@ -58,7 +58,7 @@ app.use(function (req, res, next)
   next();
 });
 app.use(function (err, req, res, next){
-  if(err.code !== 'EBADCSRFTOKEN') 
+  if(err.code !== 'EBADCSRFTOKEN')
     return next(err);
 
   //Handle CSRF token errors
@@ -93,11 +93,13 @@ var signup = require('./routes/signup')(passport);
 var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
+var error = require('./routes/error');
 
 app.use('/', routes);
 app.use('/', signup);
 app.use('/', login);
 app.use('/', confirm);
+app.use('/', error);
 
 // ================================================
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
