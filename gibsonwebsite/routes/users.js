@@ -10,13 +10,11 @@ var async = require('async');
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
 	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
 
-	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
+	var sql = "SELECT username, lname, fname, birth_date, gender, address, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
 	var inserts = decode.id;
-	var response;
+	var response = {};
 	sql = mysql.format(sql, inserts);
-	console.log(sql);
 
 	// CREATING CONNECTION
 	connection.getConnection(function(err, con){
@@ -43,18 +41,18 @@ router.get('/user/profile', function(req, res, next) {
 			response.user = results[0];
 
 			// QUERYING FOR EMERGENCY CONTACTS
-			con.query('SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?', [decode.id], function(err, results){
+			con.query('SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;', [decode.id], function(err, results){
 				if(err){
 					console.log('user.js: Error querying for emergency contacts.');
 					return done(err);
 				}
 
-				response.emergency_contacts = results[0];
+				response.emergency_contacts = results;
 
 				if (response.user.student == 1){
 
 					// QUERYING FOR STUDENT INFO
-					con.query('SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?', [decode.id], function(err, results){
+					con.query('SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;', [decode.id], function(err, results){
 						if(err){
 							console.log('user.js: Error querying for student info.');
 							return done(err);
@@ -79,43 +77,43 @@ router.get('/user/profile', function(req, res, next) {
 });
 
 
-router.get('/user/profile/info', function(req, res) {
-	console.log("Getting user info");
-
-	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
-
-	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
-	var inserts = decode.id;
-	sql = mysql.format(sql, inserts);
-	console.log(sql);
-
-	connection.getConnection(function(err, con){
-		if(err){
-			con.release();
-			console.log("cannot get connection");
-			return done(err);
-		}
-
-		con.query(sql, function(err, results){
-			con.release();
-
-			if(err){
-				console.log("Query error for finding user info");
-				return done(err);
-			}
-
-			//check if there is a user with the info
-			if(!results.length){
-				console.log("No User");
-				return done(new Error('No user exist.'));
-			}
-
-			//send all course info to client
-			res.json(results);
-		});
-	});
-});
+// router.get('/user/profile/info', function(req, res) {
+// 	console.log("Getting user info");
+//
+// 	var decode = jwt.decode(req.cookies.access_token);
+// 	console.log(decode);
+//
+// 	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
+// 	var inserts = decode.id;
+// 	sql = mysql.format(sql, inserts);
+// 	console.log(sql);
+//
+// 	connection.getConnection(function(err, con){
+// 		if(err){
+// 			con.release();
+// 			console.log("cannot get connection");
+// 			return done(err);
+// 		}
+//
+// 		con.query(sql, function(err, results){
+// 			con.release();
+//
+// 			if(err){
+// 				console.log("Query error for finding user info");
+// 				return done(err);
+// 			}
+//
+// 			//check if there is a user with the info
+// 			if(!results.length){
+// 				console.log("No User");
+// 				return done(new Error('No user exist.'));
+// 			}
+//
+// 			//send all course info to client
+// 			res.json(results);
+// 		});
+// 	});
+// });
 
 router.get('/user/profile/courses', function(req, res) {
 	console.log("Getting registered courses");
