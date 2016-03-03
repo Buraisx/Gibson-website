@@ -196,7 +196,7 @@ $("a[href$='#courses']").click(function() {
 			var coursedays = $("<p></p>", {id: "coursedays"}).append("Days: " + data[0].course_days);
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("Target: " + data[0].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("Cost: $" + data[0].default_fee);
-			var button = $("<button></button>", {type: "submit", class: "btn btn-default", onclick: "", id:"submit"}).append("Register Now!!");
+			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "/user/profile/register", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
 
 
 			//=============================
@@ -252,4 +252,18 @@ $("a[href$='#courses']").click(function() {
 	});
 });
 
-
+$(".course-submit").click(function(){
+	console.log("Clicked button");
+	$.post("/user/profile/register", {
+		course_id: this.id.substring(6)
+		},
+		function(err, res){
+			if (err){
+				console.log(err);
+			}
+			if (res){
+				console.log("You're registered yay");
+				alert("You have successfully signed up!");
+			}
+		});
+});

@@ -118,5 +118,96 @@ router.get('/user/profile/courses', function(req, res) {
 	});
 });
 
+//waterfall this
+router.post('/user/profile/register', function(req, res, next){
+	var decode = jwt.decode(req.cookies.access_token);
+	console.log(decode);
+	
+	// get courseid and parse for course_id
+	var course_id = Number(req.body.course_id);
+	
+	// how to compare dates? 
+	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND start_date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY';
+	var inserts = [course_id];
+	var course = {};
+	var regError = null;
+	var regRes = false;
+	
+
+	connection.getConnection(function(err, con){
+		if (err){
+			con.release();
+			console.log("cannot get connection");
+			return done(err);
+		}
+		async.waterfall([
+			function(next){
+				query_course_exists = mysql.format(query_course_exists, inserts);
+				con.query(query_course_exists, function(err, results){
+					if (err)
+					{
+						//con.release(); // uncomment if ok to release after 1 error
+						console.log('Failed to query for courses');
+						regError = err;
+						return done(err);
+					}
+			
+					if (!results.length) {
+						console.log('No courses in database');
+						// dunno what to return
+						return done(null, null);
+					}
+			
+				course = results[0];
+				});
+				next(null, courses);
+			}, 
+			function(course, next){
+				var query_not_already_registered = 'SELECT user_id, course_id FROM gibson.user_course WHERE user_id = ? AND course_id = ?';
+				inserts = [decode.id, course_id];
+				query_not_already_registered = mysql.format(query_not_already_registered, inserts);
+		
+				con.query(function(err, results) {
+					if (err) {
+						console.log('Failed to query for registered courses');
+						regError = err;
+						return done(err);
+					}
+					if (results.length) {
+						console.log('User registered for same course already!');
+						// dunno what to return
+						next(new Error('User already registered for course'), null);
+					}
+				});
+				next(null, course)
+			}], 
+			function (err, course){
+				if (err) {
+					console.log('Failed to register');
+					con.release();
+					regError = err;
+					return done(err);
+				}
+				
+				var query_register = "INSERT INTO user_course values (DEFAULT, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)";
+				inserts = [decode.id, course_id, course.default_fee, course.default_fee, 0, course.start_date, course.end_date, 'IDK', 'Registered for course ID ' + course_id];
+				query_register = mysql.format();
+				con.query(function(err, reg_res){
+					if (err){
+						console.log('Error occured during registration query');
+						regError = err;
+						con.release();
+						return done(err);
+					}
+				});
+				con.release();
+				console.log("User ID " + decode.id + " registered for course ID " + course_id);
+				regRes = true;
+				}
+		);
+	});
+	res.send(regError, regRes);
+});
+
 
 module.exports = router;
