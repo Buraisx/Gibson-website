@@ -247,7 +247,7 @@ router.post('/user/profile/register', function(req, res, next){
 			}
 		);
 	});
-	res.send(regError, regRes);
+	res.status(regError).send(regRes);
 });
 
 
