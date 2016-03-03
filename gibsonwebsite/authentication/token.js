@@ -18,9 +18,10 @@ function generateOneUse(req, res, next){
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    var query =  'INSERT INTO gibson.active_tokens (user_id, username, expiry_date, \`desc\`)';
-        query += 'VALUES (?, ?, ?, ?);';
-    var inserts = [req.user.user_id, req.user.username, tomorrow.toISOString().slice(0, 19).replace('T', ' '), 'signup confirmation'];
+    // user_id HERE REFERS TO THE TEMPORARY TABLE, NOT gibson.user
+    var query =  'INSERT INTO gibson.active_tokens (username, expiry_date, \`desc\`)';
+        query += 'VALUES (?, ?, ?);';
+    var inserts = [req.user.username, tomorrow.toISOString().slice(0, 19).replace('T', ' '), config.jwt.type.signup];
     query = mysql.format(query, inserts);
 
     // INSERTING A NEW TOKEN INTO
@@ -30,17 +31,17 @@ function generateOneUse(req, res, next){
       if (err){
         console.log(query);
         console.log('token.js: Error inserting one use token');
-        res.redirect ('/');
+        res.redirect ('/error');
         return;
       }
 
       // MAKE TOKEN AND STORE IN req.oneUseToken
-      req.oneUseToken = 'https://localhost:3000/confirm/token/';
+      req.oneUseToken = 'https://localhost:3000/confirm?token=';
       req.oneUseToken += jwt.sign({
         token_id: results.insertId,
         iss: config.jwt.issuer,
         user: req.user.username,
-        type: 'signup confirmation'
+        type: config.jwt.type.signup
       },
       config.jwt.oneUseSecret, {
         expiresIn: 24*60*60
