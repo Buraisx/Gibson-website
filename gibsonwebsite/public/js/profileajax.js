@@ -13,6 +13,30 @@ $("a[href$='#courses']").click(function() {
 	});
 });
 */
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+
+function register(course_register){
+	console.log("Clicked button " + getCookie("_csrf"));
+	$.post("/user/profile/register", {
+			course_id: course_register.id.substring(6),
+			_csrf: getCookie("_csrf")
+			},
+			function(err, res){
+				if (err){
+					console.log(err);
+				}
+				if (res){
+					console.log("You're registered yay");
+					alert("You have successfully signed up!");
+				}
+	});
+}
+
 
 $("a[href$='#profile']").click(function(){
 	jQuery.getJSON("/user/profile/info", function(user_info){
@@ -196,7 +220,7 @@ $("a[href$='#courses']").click(function() {
 			var coursedays = $("<p></p>", {id: "coursedays"}).append("Days: " + data[0].course_days);
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("Target: " + data[0].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("Cost: $" + data[0].default_fee);
-			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "/user/profile/register", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
+			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
 
 
 			//=============================
@@ -250,20 +274,4 @@ $("a[href$='#courses']").click(function() {
 
 		$('#courses').append(courses);
 	});
-});
-
-$(".course-submit").click(function(){
-	console.log("Clicked button");
-	$.post("/user/profile/register", {
-		course_id: this.id.substring(6)
-		},
-		function(err, res){
-			if (err){
-				console.log(err);
-			}
-			if (res){
-				console.log("You're registered yay");
-				alert("You have successfully signed up!");
-			}
-		});
 });

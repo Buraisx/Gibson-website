@@ -13,13 +13,17 @@ function onScrollInit( items, trigger ) {
         var osTrigger = ( trigger ) ? trigger : osElement;
         
         osTrigger.waypoint(function() {
+          console.log("HI");
           osElement.addClass('animated').addClass(osAnimationClass);
           },{
               triggerOnce: true,
-              offset: '90%'
+              offset: '90%',
+              context: '.dammit'
         });
   });
 }
 
  onScrollInit( $('.os-animation') );
  onScrollInit( $('.staggered-animation'), $('.staggered-animation-container') );
+
+  
