@@ -151,11 +151,6 @@ router.get('/confirm', function(req, res) {
   });
 });
 
-// FUNCTION TO BLACKLIST TOKENS
-function blacklistTokens(user, decoded, next){
-
-}
-
 router.get('/signupconfirm', function(req, res){
   res.render('signupconfirm', {title: 'E-mail Address Confirmed'});
 });
