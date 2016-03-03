@@ -3,7 +3,7 @@
   "db_config": {
     "host": "localhost",
     "user": "root",
-    "password": "Sabad@th!s1234567",
+    "password": "local123",
     "database": "gibson",
     "port": 3306
   },
@@ -16,7 +16,7 @@
     }
   },
 
-  "sendEmail": true,
+  "sendEmail": false,
 
   "transport": {
     "host": "smtp.gmail.com",

@@ -6,6 +6,7 @@ var sanitizer = require('sanitizer');
 var async = require('async');
 
 // SETUP POOLING CONNECTION
+config.db_config.multipleStatements = true;
 var connection = mysql.createPool(config.db_config);
 
 // TESTING THE CONNECTION TO THE DB
@@ -149,70 +150,49 @@ module.exports = function(passport){
                 console.log('passport.js: Error while inserting new user into the database.');
                 return done(err);
               }
+              // user_id OF THE INSERTED USER
+              var userId = results.insertId;
 
-              // QUERYING FOR NEW USER'S user_id
-              var query_id = mysql.format('SELECT user_id FROM gibson.temp_user WHERE username = ?;', newUser.username);
-              var userId;
+              //==========================================================================
+              //=== INSERT NEW USER'S EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE ===
+              //==========================================================================
 
-              con.query(query_id, function(err, results){
+              // SOME FINE HARDCODING
+              var emContacts = [];
+
+              if(req.body.emergencyfname3 && req.body.emergencylname3 && req.body.relationship3 && req.body.ephone3){
+                emContacts = [
+                  [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1],
+                  [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2],
+                  [userId, req.body.emergencyfname3, req.body.emergencylname3, req.body.relationship3, req.body.ephone3]
+                ];
+              }
+              else if (req.body.emergencyfname2 && req.body.emergencylname2 && req.body.relationship2 && req.body.ephone2){
+                emContacts = [
+                  [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1],
+                  [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2]
+                ];
+              }
+              else{
+                emContacts = [
+                  [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1]
+                ];
+              }
+
+              // GENERATING THE INSERT QUERY
+              var insertEmContacts = '';
+              for (var ecnum = 0; ecnum < emContacts.length; ecnum++){
+                insertEmContacts += mysql.format('INSERT INTO gibson.temp_emergency_contact (user_id, lname, fname, relationship, contact_phone) VALUES(?, ?, ?, ?, ?); ', emContacts[ecnum]);
+              }
+
+              // QUERYING TO INSERT EMERGENCY CONTACTS
+              con.query(insertEmContacts, function(err, results){
                 if(err){
                   con.release();
-                  console.log("passport.js: Error while quering for new user's user_id");
+                  console.log('passport.js: Error while inserting emergency contacts.');
                   return done(err);
                 }
-
-                userId = results[0].user_id;
-                newUser.user_id = userId;
-
-                //==========================================================================
-                //=== INSERT NEW USER'S EMERGENCY CONTACTS TO EMERGENCY_CONTACT DATABASE ===
-                //==========================================================================
-
-                var emContacts = [];
-                var i = 1;
-                var contact = {
-                  user_id:userId, fname:null, lname:null, relationship:null, contact_phone:null
-                };
-
-                // PUSHING EMERGENCY CONTACT JSON OBJECT INTO emContacts ARRAY.
-                while(true){
-
-                  // STOPS WHEN ALL JSON OBJECTS HAD BEEN PUSHED INTO emContacts ARRAY
-                  if(!req.body['ephone' + i])
-                    break;
-
-                    contact.fname = req.body['emergencyfname' + i];
-                    contact.lname = req.body['emergencylname' + i];
-                    contact.relationship = req.body['relationship' + i];
-                    contact.contact_phone = req.body['ephone' + i];
-
-                    emContacts.push(contact);
-                    i += 1;
-                  }
-
-                  var createEContacts =  'INSERT INTO gibson.temp_emergency_contact (user_id, lname, fname, relationship, contact_phone)';
-                      createEContacts += 'VALUES (?,?,?,?,?);';
-
-                  // INSERTING ALL EMERGENCY CONTACTS INTO DATABASE
-                  for(var emc = 0; emc < emContacts.length; emc++){
-
-                    var econtact_values = [
-                      emContacts[emc].user_id, emContacts[emc].fname, emContacts[emc].lname,
-                      emContacts[emc].relationship, emContacts[emc].contact_phone
-                    ];
-
-                    var contactInsert = mysql.format(createEContacts, econtact_values);
-
-                    // QUERYING THE DATABASE TO INSERT EMERGENCY CONTACTS
-                    con.query(contactInsert, function(err, results){
-                      if(err){
-                        con.release();
-                        console.log('passport.js: Error while inserting emergency contacts.');
-                        return done(err);
-                      }
-                    });
-                  }
-
+                else{
                   //===============================================
                   //=== INSERT STUDENT INFO TO STUDENT DATABASE ===
                   //===============================================
@@ -245,6 +225,7 @@ module.exports = function(passport){
                         console.log("passport.js: Error while inserting student's info");
                         return done(err);
                       }
+
                       // FINISHED INSERTING A NEW USER
                       return done(null, newUser);
                     });
@@ -253,6 +234,7 @@ module.exports = function(passport){
                     // FINISHED INSERTING A NEW USER
                     return done(null, newUser);
                   }
+                }
               });
             });
           }
@@ -260,8 +242,6 @@ module.exports = function(passport){
       });
     });
   }));
-
-
 
   //=============LOGIN strategy=======================//
 
