@@ -149,6 +149,42 @@ router.get('/user/profile/courses', function(req, res) {
 	});
 });
 
+
+router.get('/user/profile/schedule', function(req, res) {
+	console.log("Getting schedule");
+	var decode = jwt.decode(req.cookies.access_token);
+	var sql = "select course.course_id, course_name,course_time, course_interval, course_description, course_days,course.end_date from course inner join user_course where user_course.course_id = course.course_id AND user_course.user_id= ?;";
+	var inserts = decode.id;
+	sql = mysql.format(sql, inserts);
+
+	connection.getConnection(function(err, con){
+		if(err){
+			con.release();
+			console.log("cannot get connection");
+			return done(err);
+		}
+
+		con.query(sql, function(err, results){
+			con.release();
+
+			if(err){
+				console.log("Query error for finding user_course");
+				return done(err);
+			}
+
+			//check if there is a user with the info
+			if(!results.length){
+				console.log("user_info for this does not exist");
+				return done(new Error('No courses exist.'));
+			}
+
+			//send all course info to client
+			console.log(results);
+			res.json(results);
+		});
+	});
+});
+
 //waterfall this
 router.post('/user/profile/register', function(req, res,next){
 	var decode = jwt.decode(req.cookies.access_token);

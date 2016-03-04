@@ -4,7 +4,6 @@
 <%- include standardnavbar.ejs %>
 
 <head>
-    <link href="css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/tabs.css" />
     <link rel="stylesheet" type="text/css" href="/css/tabstyles.css" />
     <script src = "/js/passwordvalidation.js"></script>
@@ -144,50 +143,12 @@
                 <section id="courses">
                     <!-- Tab On-Click fills courses-->
                 </section>
+
                 <section id="schedule">
-                <form name="frm" action = "" method = "post" role = "form">
-                    <h1>Add A Course</h1>
-                    <div class = "row">
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Course Name:</label>
-                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>
-                        </div>
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Course ID:</label>
-                            <input type = "text" class = "form-control" name = "addcourseid" id = "addcourseid" required>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Start Date:</label>
-                            <input type = "text" class = "form-control" name = "addstartdate" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
-                        </div>
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>End Date:</label>
-                            <input type = "text" class = "form-control" name = "addenddate" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Time:</label>
-                            <input type = "text" class = "form-control" name = "addtime" id = "addtime" required>
-                        </div>
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Interval:</label>
-                            <input type = "text" class = "form-control" name = "addinterval" id = "addinterval" required>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Cost:</label>
-                            <input type = "text" class = "form-control" name = "addcost" id = "addcost" required>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcourse">Add Course</button>
-                    </div>
-                </form>
+                
+                        
                 </section>
+              
                 <section id="rental">Rental</section>
                 <section id="receipt">Receipt</section>
             </div><!-- /content -->
@@ -210,8 +171,6 @@
 
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/datepicker.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
@@ -227,7 +186,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/js/freelancer.js"></script>
-	<script src="/js/profileajax.js"></script>
+    <script src="/js/profileajax.js"></script>
 </div>
 </body>
 
