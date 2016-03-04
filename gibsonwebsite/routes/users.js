@@ -150,7 +150,7 @@ router.get('/user/profile/courses', function(req, res) {
 });
 
 //waterfall this
-router.post('/user/profile/register', function(req, res, done, next){
+router.post('/user/profile/register', function(req, res,next){
 	var decode = jwt.decode(req.cookies.access_token);
 	console.log(decode);
 
@@ -232,9 +232,11 @@ router.post('/user/profile/register', function(req, res, done, next){
 							console.log("User ID " + decode.id + " registered for course ID " + course_id);
 							regRes = true;
 						}
+
 					});
 				});
 				//next(null, course);
+				//res.status(regError).send(regRes);
 			}]);
 	});
 });
