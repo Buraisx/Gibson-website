@@ -214,8 +214,8 @@ router.post('/user/profile/register', function(req, res, next){
 					}
 
 					//user not in course, so register the user in the course
-					var query_register = "INSERT INTO gibson.user_course values (DEFAULT, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)";
-					inserts = [decode.id, course_id, course.default_fee, course.default_fee, 0, course.start_date, course.end_date, 'IDK', 'Registered for course ID ' + course_id];
+					var query_register = "INSERT INTO gibson.user_course SELECT DEFAULT, ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, NULL, ? FROM gibson.course WHERE course_id = ?";
+					inserts = [decode.id, course_id, 'Registered for course ID ' + course_id, course_id];
 					query_register = mysql.format(query_register, inserts);
 				
 					console.log(query_register);
