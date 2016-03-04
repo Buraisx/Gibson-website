@@ -153,7 +153,7 @@ router.get('/user/profile/courses', function(req, res) {
 router.get('/user/profile/schedule', function(req, res) {
 	console.log("Getting schedule");
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = "select course.course_id, course_name,course_time, course_interval, course_description, course_days,course.end_date from course inner join user_course where course.course_id = ?;";
+	var sql = "select course.course_id, course_name,course_time, course_interval, course_description, course_days,course.end_date from course inner join user_course where user_course.course_id = course.course_id AND user_course.user_id= ?;";
 	var inserts = decode.id;
 	sql = mysql.format(sql, inserts);
 
