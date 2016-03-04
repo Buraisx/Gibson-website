@@ -151,7 +151,41 @@
 	max-width: 1200px;
 }
 
+/* keyframes are user-defined animations used for 
+ * webkit-animation, -moz-animation, etc
+ * to use a keyframe animation, write -webkit-animation: fadein 0.5s;,
+ * -webkit-animations use -webkit-keyframes, so make sure one is defined for all animations.
+ * only works on IE10 and up.
+ */
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 .content-wrap section.content-current {
+	-webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 0.5s; /* Firefox < 16 */
+    -ms-animation: fadein 0.5s; /* Internet Explorer */
+    -o-animation: fadein 0.5s; /* Opera < 12.1 */
+    animation: fadein 0.5s;
 	display: block;
 }
 
