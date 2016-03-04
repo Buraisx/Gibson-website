@@ -161,9 +161,6 @@ router.post('/user/profile/register', function(req, res,next){
 	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND start_date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY';
 	var inserts = [course_id];
 	var course = {};
-	var regError = null;
-	var regRes = false;
-
 
 	connection.getConnection(function(err, con){
 		if (err){
@@ -181,7 +178,7 @@ router.post('/user/profile/register', function(req, res,next){
 					{
 						//con.release(); // uncomment if ok to release after 1 error
 						console.log('Failed to query for courses');
-						regError = err;
+				
 						return done(err);
 					}
 
@@ -204,13 +201,13 @@ router.post('/user/profile/register', function(req, res,next){
 				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
 						console.log('Failed to query for registered courses');
-						regError = err;
+					
 						return done(err);
 					}
 					if (results.length) {
 						console.log('User registered for same course already!');
 						//user already registered for course
-						next(new Error('User already registered for course'), null);
+						return(new Error('User already registered for course'));
 					}
 
 					//user not in course, so register the user in the course
@@ -222,7 +219,7 @@ router.post('/user/profile/register', function(req, res,next){
 					con.query(query_register, function(err, reg_res){
 						if (err){
 							console.log('Error occured during registration query');
-							regError = err;
+							
 							con.release();
 							return done(err);
 						}
@@ -230,18 +227,17 @@ router.post('/user/profile/register', function(req, res,next){
 						else{
 							con.release();
 							console.log("User ID " + decode.id + " registered for course ID " + course_id);
-							regRes = true;
+				
 						}
 
 					});
 				});
-				//next(null, course);
-				//res.status(regError).send(regRes);
+
 			}]);
 	});
 });
 
-	//res.status(regError).send(regRes);
+
 
 
 
