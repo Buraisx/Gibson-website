@@ -172,7 +172,7 @@ router.post('/user/profile/register', function(req, res, next){
 			return done(err);
 		}
 		async.waterfall([
-			function(next){
+			function(next, done){
 				query_course_exists = mysql.format(query_course_exists, inserts);
 
 				console.log(query_course_exists);
@@ -195,7 +195,7 @@ router.post('/user/profile/register', function(req, res, next){
 				});
 				next(null, course);
 			},
-			function(course, next){
+			function(course, next, done){
 				var query_not_already_registered = 'SELECT user_id, course_id FROM gibson.user_course WHERE user_id = ? AND course_id = ?';
 				inserts = [decode.id, course_id];
 				query_not_already_registered = mysql.format(query_not_already_registered, inserts);
