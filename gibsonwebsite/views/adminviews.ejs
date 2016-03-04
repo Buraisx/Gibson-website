@@ -14,15 +14,33 @@
         <div class="tabs tabs-style-linemove">  
             <nav>
                 <ul>
-                    <li><a href="#profile"><i class="fa fa-user"></i><span> Profile</span></a></li>
-                    <li><a href="#courses"><i class="fa fa-list"></i><span> Courses</span></a></li>
-                    <li><a href="#vol"><i class="fa fa-question"></i><span> Vol View</span></a></li>
-                    <li><a href="#rental"><i class="fa fa-question"></i><span> Rental View</span></a></li>
-                    <li><a href="#report"><i class="fa fa-question"></i><span> Report View</span></a></li>
+                    <li><a href="#profile"><i class="fa fa-user faicon"></i><span> Profile</span></a></li>
+                    <li><a href="#courses"><i class="fa fa-list faicon"></i><span> Courses</span></a></li>
+                    <li><a href="#vol"><i class="fa fa-square faicon"></i><span> Vol View</span></a></li>
+                    <li><a href="#rental"><i class="fa fa-square faicon"></i><span> Rental View</span></a></li>
+                    <li><a href="#report"><i class="fa fa-square faicon"></i><span> Report View</span></a></li>
                 </ul>
             </nav>
             <div class="content-wrap">
                 <section id="profile">
+
+
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="#collapse0" data-toggle="collapse" data-parent="#accordion">
+                    <p id="fullname">[Fname Lname]</p>
+                </a>
+            </h4>
+        </div>
+
+
+
+        <div id="collapse0" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class = "profileaccordion">
                     <h3>Basic Information</h3>
                     <div class = "row">
                         <div class = "col-sm-6">
@@ -63,18 +81,20 @@
                     </div>
 
                     <!--Checks if user is a student-->
-                    <h3>Students Information</h3>
+                    <h3>Student Information</h3>
                     <div class = "row">
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>School Name: </p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>Grade: </p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
                             <p>Major: </p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>ESL Level: </p>
                         </div>
                     </div>
@@ -86,19 +106,30 @@
 
                     <h4>Contact x</h4>
                     <div class = "row">
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>First Name: </p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>Last Name: </p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
                             <p>Relationship: </p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>Phone: </p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
                 </section>
                 <section id="courses">
                     <!-- Tab On-Click fills courses-->
