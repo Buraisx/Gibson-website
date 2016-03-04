@@ -150,7 +150,7 @@ router.get('/user/profile/courses', function(req, res) {
 });
 
 //waterfall this
-router.post('/user/profile/register', function(req, res, next){
+router.post('/user/profile/register', function(req, res, done, next){
 	var decode = jwt.decode(req.cookies.access_token);
 	console.log(decode);
 
@@ -172,7 +172,7 @@ router.post('/user/profile/register', function(req, res, next){
 			return done(err);
 		}
 		async.waterfall([
-			function(next, done){
+			function(next){
 				query_course_exists = mysql.format(query_course_exists, inserts);
 
 				console.log(query_course_exists);
@@ -195,7 +195,7 @@ router.post('/user/profile/register', function(req, res, next){
 				});
 				next(null, course);
 			},
-			function(course, next, done){
+			function(course, next){
 				var query_not_already_registered = 'SELECT user_id, course_id FROM gibson.user_course WHERE user_id = ? AND course_id = ?';
 				inserts = [decode.id, course_id];
 				query_not_already_registered = mysql.format(query_not_already_registered, inserts);
@@ -214,8 +214,8 @@ router.post('/user/profile/register', function(req, res, next){
 					}
 
 					//user not in course, so register the user in the course
-					var query_register = "INSERT INTO gibson.user_course values (DEFAULT, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)";
-					inserts = [decode.id, course_id, course.default_fee, course.default_fee, 0, course.start_date, course.end_date, 'IDK', 'Registered for course ID ' + course_id];
+					var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?";
+					inserts = [decode.id, course_id, 'active', 'Registered for course ID ' + course_id, course_id];
 					query_register = mysql.format(query_register, inserts);
 				
 					console.log(query_register);
