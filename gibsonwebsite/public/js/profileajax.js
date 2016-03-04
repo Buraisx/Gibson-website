@@ -297,3 +297,68 @@ $("a[href$='#courses']").click(function() {
 		$('#courses').append(courses);
 	});
 });
+
+$("a[href$='#schedule']").click(function() {
+	jQuery.getJSON("/user/profile/schedule", function(data){
+		
+		$('#schedule').contents().remove();
+		
+		var courses = $("<div></div>", {class: "panel-group", id: "accordion"});
+
+		for(i = 0; i < data.length; i++){
+			//A Course Accordion Panel
+			var panel_default = $("<div></div>", {class: "panel panel-primary"});
+			
+			var panel_heading = $("<div></div>", {class: "panel-heading"});
+			var panel_title = $("<h4></h4>", {class: "panel-title"});
+			var collapse = $("<a></a>", {href: "#scollapse"+i});
+			collapse.attr("data-toggle", "collapse");
+			collapse.attr("data-parent", "#accordion");
+
+			var coursename = $("<div></div>", {class: "col-sm-6"}).append("Course Name:", data[i].course_name);
+			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course ID:", data[i].course_id);
+
+			var coursetime = $("<div></div>", {class: "col-sm-4"}).append("Time: " + data[i].course_time);
+			var courseinterval = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Interval: " + data[i].course_interval);
+			var coursedays = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Days: " + data[i].course_days);
+
+			var collapse2 = $("<div></div>", {id: "scollapse" + i, class: "panel-collapse collapse in"});
+			var panelbody = $("<div></div>", {class: "panel-body"});
+
+			var row = $("<div></div>", {class: "row"});
+			var row2 = $("<div></div>", {class: "row"});
+
+			var offset = $("<div></div>",{class: "col-sm-offset-1"});
+			var description = $("<p></p>", {id: "description"}).append("Description: "+ data[i].course_description);
+			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + data[i].end_date);
+			
+
+
+			//=============================
+			//Top Down compilation hierarchy
+			//=============================
+			panel_default = panel_default.append(panel_heading,collapse2);
+
+			//--------------------------
+			//First div of panel-default
+			panel_heading = panel_heading.append(panel_title);
+			panel_title = panel_title.append(collapse);
+			
+
+			row = row.append(coursename,courseid);
+			row = row.append("<br>"+"<br>");
+			row2 = row2.append(coursetime,courseinterval,coursedays);
+			collapse = collapse.append(row,row2);
+			//--------------------------
+			//Second div of panel-default
+
+			offset = offset.append(description,enddate);
+			panelbody = panelbody.append(offset);
+			collapse2 = collapse2.append(panelbody);
+
+			courses.append(panel_default);
+		}
+
+		$('#schedule').append(courses);
+	});
+});

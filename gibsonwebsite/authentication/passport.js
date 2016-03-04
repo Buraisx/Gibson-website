@@ -148,6 +148,7 @@ module.exports = function(passport){
               if(err){
                 con.release();
                 console.log('passport.js: Error while inserting new user into the database.');
+                console.log(results);
                 return done(err);
               }
               // user_id OF THE INSERTED USER
