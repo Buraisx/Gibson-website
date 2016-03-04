@@ -43,7 +43,7 @@ function register(course_register){
 
 
 $("a[href$='#profile']").click(function(){
-	jQuery.getJSON("/user/profile/info", function(user_info){
+	jQuery.getJSON("/user/profile", function(user_info){
 
 		$('#profile').contents().remove();
 
@@ -75,7 +75,13 @@ $("a[href$='#profile']").click(function(){
 		var address = $("<div></div>", {class: "col-sm-6"}).append("<p>Address: " + user_info[0].address + "</p>");
 
 		//Student Info
-		var student = $("<div></div>", {class: "col-sm-6"}).append("<p>Student Info: </p>");
+		var student = $("<h3></h3>").append("Student Information");
+		//School Name and Grade
+		var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p>School Name: " + user_info.user.address + " </p>");
+		var grade = $("<div></div>", {class: "col-sm-6"}).append("<p>Grade: " + user_info.user.address + " </p>");
+		//Major and ESL
+		var major = $("<div></div>", {class: "col-sm-6"}).append("<p>Major: " + user_info.user.address + " </p>");
+		var esl = $("<div></div>", {class: "col-sm-6"}).append("<p>ESL Level: " + user_info.user.address + " </p>");
 
 		//Emergency Contacts Header
 		var emInfo = $("<h3></h3>").append("Emergency Contacts");
@@ -161,9 +167,21 @@ $("a[href$='#profile']").click(function(){
 		//Gender and Date of Birth
 		$('#profile').append($("<div></div>", {class:"row"}).append(
 			gender, dob));
-		//Address and Student Info
+		//Address
 		$('#profile').append($("<div></div>", {class:"row"}).append(
-			address, student));
+			address));
+		//check if user is a student
+		if(user_info.user.student==1)
+		{
+			//Student Info
+			$('#profile').append(student);
+			//School Name and grade
+			$('#profile').append($("<div></div>", {class:"row"}).append(
+				schoolname, grade));
+			//major and esl level
+			$('#profile').append($("<div></div>", {class:"row"}).append(
+				major, esl));
+		}
 		//Emergency Contact
 		$('#profile').append(emInfo);
 		$('#profile').append(eContacts);

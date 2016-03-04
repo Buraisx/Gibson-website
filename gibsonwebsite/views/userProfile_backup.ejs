@@ -27,8 +27,7 @@
                 </ul>
             </nav>
             <div class="content-wrap">
-                <section id="profile">
-                    <h3>Basic Information</h3>
+                <h3>Basic Information</h3>
                     <div class = "row">
                         <div class = "col-sm-6">
                             <p>First Name: <%= user_info[0].fname %> // Placeholder for actual user </p>
@@ -65,10 +64,28 @@
                         <div class = "col-sm-6">
                             <p>Address: <%= user_info[0].address %> </p>
                         </div>
-                        <div class = "col-sm-6">
-                            <p>Student Info:  </p>
+                    </div>
+
+                    <div class="checkstudent">
+                    <!--Checks if user is a student-->
+                        <h3>Students Information</h3>
+                        <div class = "row">
+                            <div class = "form-group col-sm-6">
+                                <p>School Name: </p>
+                            </div>
+                            <div class = "form-group col-sm-6">
+                                <p>Grade: </p>
+                            </div>
+                            <div class = "form-group col-sm-6">
+                                <p>Major: </p>
+                            </div>
+                            <div class = "form-group col-sm-6">
+                                <p>ESL Level: </p>
+                            </div>
                         </div>
                     </div>
+
+                    <!--Emergency Contacts-->
                     <h3>Emergency Contacts</h3>
                     <p>[*insert ejs code here]</p>
 
@@ -94,13 +111,14 @@
                         <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcontact">Add Emergency Contact</button>
                     </div>
                     <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "editinfo">Edit Information</button></div>
+                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "editinfo">Edit Information</button>
+                    </div>
                     <div class="row form-group">
                         <button type = "button" class= "btn btn-default col-sm-2" onclick="togglepassworddropdown()" id = "changepassbutton">Change Password</button>
                     </div>
 
 
-                    <!-- *only client can change pass -->
+                    <!-- Password Change -->
                     <div id='change_password' class='hidden changepassdesign'>
                         <div class = "row">
                             <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>

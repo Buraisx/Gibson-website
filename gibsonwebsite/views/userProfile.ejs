@@ -67,42 +67,44 @@
                     </div>
 
                     <!--Checks if user is a student-->
-                    <h3>Students Information</h3>
-                    <div class = "row">
-                        <div class = "form-group col-sm-6">
-                            <p>School Name: </p>
+                    <% if(user_info.user.student==1){%> 
+                        <h3>Students Information</h3>
+                        <div class = "row">
+                            <div class = "form-group col-sm-6">
+                                <p>School Name: <%= user_info.student_info.school_name %></p>
+                            </div>
+                            <div class = "form-group col-sm-6">
+                                <p>Grade: <%= user_info.student_info.grade %></p>
+                            </div>
+                            <div class = "form-group col-sm-6">
+                                <p>Major: <%= user_info.student_info.major %></p>
+                            </div>
+                            <div class = "form-group col-sm-6">
+                                <p>ESL Level: <%= user_info.student_info.esl_level %></p>
+                            </div>
                         </div>
-                        <div class = "form-group col-sm-6">
-                            <p>Grade: </p>
-                        </div>
-                        <div class = "form-group col-sm-6">
-                            <p>Major: </p>
-                        </div>
-                        <div class = "form-group col-sm-6">
-                            <p>ESL Level: </p>
-                        </div>
-                    </div>
+                    <%}%>
 
                     <!--Emergency Contacts-->
                     <h3>Emergency Contacts</h3>
-                    <p>[*insert ejs code here]</p>
 
-
-                    <h4>Contact x</h4>
+                    <% for(var i=0; i<user_info.emergency_contacts.length; i++) {%>
+                    <h4>Contact <%= i+1 %></h4>
                     <div class = "row">
                         <div class = "form-group col-sm-6">
-                            <p>First Name: </p>
+                            <p>First Name: <%= user_info.emergency_contacts[i].fname %></p>
                         </div>
                         <div class = "form-group col-sm-6">
-                            <p>Last Name: </p>
+                            <p>Last Name: <%= user_info.emergency_contacts[i].lname %></p>
                         </div>
                         <div class = "form-group col-sm-6">
-                            <p>Relationship: </p>
+                            <p>Relationship: <%= user_info.emergency_contacts[i].relationship %></p>
                         </div>
                         <div class = "form-group col-sm-6">
-                            <p>Phone: </p>
+                            <p>Phone: <%= user_info.emergency_contacts[i].contact_phone %></p>
                         </div>
                     </div>
+                    <% } %>
 
 
                     <div class="row form-group">
