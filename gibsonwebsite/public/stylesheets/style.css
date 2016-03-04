@@ -123,3 +123,12 @@ a {
 .tabs nav ul {
 	background-color: #F6F6F6;
 }
+
+.faicon {
+	vertical-align: middle;
+}
+
+.profileaccordion > * {
+	font-size: medium;
+	margin-bottom:3px;
+}

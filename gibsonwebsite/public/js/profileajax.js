@@ -29,15 +29,15 @@ function register(course_register){
 	$.post("/user/profile/register", {
 			course_id: course_register.id.substring(6),
 			_csrf: $('#_csrf').val()
-			},
-			function(err, res){
-				if (err){
-					console.log(err);
-				}
-				if (res){
-					console.log("You're registered yay");
-					alert("You have successfully signed up!");
-				}
+	})
+	.done(function (res){
+		console.log("You're registered yay");
+		console.log(res);
+		alert("You have successfully signed up!");
+	})
+	.fail(function (err){
+		console.log("Already registered course.");
+		alert("You have already registered for this course!");
 	});
 }
 

@@ -16,11 +16,11 @@
         <div class="tabs tabs-style-linemove">
             <nav>
                 <ul>
-                    <li><a href="#profile"><i class="fa fa-user"></i><span> Profile</span></a></li>
-                    <li><a href="#courses"><i class="fa fa-list"></i><span> Courses</span></a></li>
-                    <li><a href="#schedule"><i class="fa fa-calendar"></i><span> Schedule</span></a></li>
-                    <li><a href="#rental"><i class="fa fa-question"></i><span> Rental View</span></a></li>
-                    <li><a href="#receipt"><i class="fa fa-question"></i><span> Receipt View</span></a></li>
+                    <li><a href="#profile"><i class="fa fa-user faicon"></i><span> Profile</span></a></li>
+                    <li><a href="#courses"><i class="fa fa-list faicon"></i><span> Courses</span></a></li>
+                    <li><a href="#schedule"><i class="fa fa-calendar faicon"></i><span> Schedule</span></a></li>
+                    <li><a href="#rental"><i class="fa fa-square faicon"></i><span> Rental View</span></a></li>
+                    <li><a href="#receipt"><i class="fa fa-square faicon"></i><span> Receipt View</span></a></li>
                 </ul>
             </nav>
             <div class="content-wrap">
@@ -70,16 +70,16 @@
                     <% if(user_info.user.student==1){%> 
                         <h3>Students Information</h3>
                         <div class = "row">
-                            <div class = "form-group col-sm-6">
+                            <div class = "col-sm-6">
                                 <p>School Name: <%= user_info.student_info.school_name %></p>
                             </div>
-                            <div class = "form-group col-sm-6">
+                            <div class = "col-sm-6">
                                 <p>Grade: <%= user_info.student_info.grade %></p>
                             </div>
-                            <div class = "form-group col-sm-6">
+                            <div class = "col-sm-6">
                                 <p>Major: <%= user_info.student_info.major %></p>
                             </div>
-                            <div class = "form-group col-sm-6">
+                            <div class = "col-sm-6">
                                 <p>ESL Level: <%= user_info.student_info.esl_level %></p>
                             </div>
                         </div>
@@ -91,16 +91,16 @@
                     <% for(var i=0; i<user_info.emergency_contacts.length; i++) {%>
                     <h4>Contact <%= i+1 %></h4>
                     <div class = "row">
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>First Name: <%= user_info.emergency_contacts[i].fname %></p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>Last Name: <%= user_info.emergency_contacts[i].lname %></p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>Relationship: <%= user_info.emergency_contacts[i].relationship %></p>
                         </div>
-                        <div class = "form-group col-sm-6">
+                        <div class = "col-sm-6">
                             <p>Phone: <%= user_info.emergency_contacts[i].contact_phone %></p>
                         </div>
                     </div>

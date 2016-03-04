@@ -166,6 +166,7 @@ router.post('/user/profile/register', function(req, res,next){
 		if (err){
 			con.release();
 			console.log("cannot get connection");
+			res.send(400, 'Connection Failed');
 			return done(err);
 		}
 		async.waterfall([
@@ -178,13 +179,14 @@ router.post('/user/profile/register', function(req, res,next){
 					{
 						//con.release(); // uncomment if ok to release after 1 error
 						console.log('Failed to query for courses');
-				
+						res.send(400, 'Failed to query for courses.');
 						return done(err);
 					}
 
 					if (!results.length) {
 						console.log('No courses in database');
 						// dunno what to return
+						res.send(400, 'Course does not exist.');
 						return done(null, null);
 					}
 
@@ -201,12 +203,13 @@ router.post('/user/profile/register', function(req, res,next){
 				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
 						console.log('Failed to query for registered courses');
-					
+						res.send(400, 'Failed to query for registered courses.');
 						return done(err);
 					}
 					if (results.length) {
 						console.log('User registered for same course already!');
 						//user already registered for course
+						res.send(400, 'User registered for same course already!.');
 						return(new Error('User already registered for course'));
 					}
 
@@ -221,13 +224,14 @@ router.post('/user/profile/register', function(req, res,next){
 							console.log('Error occured during registration query');
 							
 							con.release();
+							res.send(400, 'Registration failed.');
 							return done(err);
 						}
 
 						else{
 							con.release();
 							console.log("User ID " + decode.id + " registered for course ID " + course_id);
-				
+							res.send(200, 'Registration Complete!');
 						}
 
 					});
