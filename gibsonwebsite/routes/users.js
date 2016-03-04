@@ -150,7 +150,7 @@ router.get('/user/profile/courses', function(req, res) {
 });
 
 //waterfall this
-router.post('/user/profile/register', function(req, res, next){
+router.post('/user/profile/register', function(req, res, done, next){
 	var decode = jwt.decode(req.cookies.access_token);
 	console.log(decode);
 
@@ -172,7 +172,7 @@ router.post('/user/profile/register', function(req, res, next){
 			return done(err);
 		}
 		async.waterfall([
-			function(next, done){
+			function(next){
 				query_course_exists = mysql.format(query_course_exists, inserts);
 
 				console.log(query_course_exists);
@@ -195,7 +195,7 @@ router.post('/user/profile/register', function(req, res, next){
 				});
 				next(null, course);
 			},
-			function(course, next, done){
+			function(course, next){
 				var query_not_already_registered = 'SELECT user_id, course_id FROM gibson.user_course WHERE user_id = ? AND course_id = ?';
 				inserts = [decode.id, course_id];
 				query_not_already_registered = mysql.format(query_not_already_registered, inserts);
