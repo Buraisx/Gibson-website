@@ -143,14 +143,13 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 			//check if there is a user with the info
 			if(!results.length){
 				console.log("userinfo for this does not exist");
-				return new Error("userinfo for this does not exist");
 			}
 
 			//send all course info to client
-			else{
-				console.log(results);
-				res.json(results);
-			}	
+			
+			console.log(results);
+			res.json(results);
+			
 		});
 	});
 });
