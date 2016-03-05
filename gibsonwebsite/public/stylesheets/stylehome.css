@@ -158,3 +158,83 @@ hr.star-green:after {
 p {
 	color: #fff;
 }
+
+/* keyframes are user-defined animations used for 
+ * webkit-animation, -moz-animation, etc
+ * to use a keyframe animation, write -webkit-animation: fadein 0.5s;,
+ * -webkit-animations use -webkit-keyframes, so make sure one is defined for all animations.
+ * only works on IE10 and up.
+ */
+@keyframes leftFadein {
+    from { 
+		opacity: 0; 
+		-webkit-transform: translateX(-30px);
+		-ms-transform: translateX(-30px);
+		transform: translateX(-30px);
+	}
+    to { 
+		opacity: 1; 
+		-webkit-transform: translateX(0px);
+		-ms-transform: translateX(0px);
+		transform: translateX(0px);
+	}
+}
+
+/* Firefox < 16 */
+@-moz-keyframes leftFadein {
+    from { 
+		opacity: 0; 
+		-webkit-transform: translateX(-30px);
+		-ms-transform: translateX(-30px);
+		transform: translateX(-30px)
+	}
+    to { 
+		opacity: 1; 
+		-webkit-transform: translateX(0px);
+		-ms-transform: translateX(0px);
+		transform: translateX(0px);
+	}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes leftFadein {
+    from { 
+		opacity: 0; 
+		-webkit-transform: translateX(-20px);
+		-ms-transform: translateX(-20px);
+		transform: translateX(-20px);
+	}
+    to { 
+		opacity: 1; 
+		-webkit-transform: translateX(0px);
+		-ms-transform: translateX(0px);
+		transform: translateX(0px);
+	}
+}
+
+/* Internet Explorer */
+@-ms-keyframes leftFadein {
+    from { 
+		opacity: 1; 
+		-webkit-transform: translateX(-30px);
+		-ms-transform: translateX(-30px);
+		transform: translateX(-30px);
+	}
+    to { 
+		opacity: 1; 
+		-webkit-transform: translateX(0px);
+		-ms-transform: translateX(0px);
+		transform: translateX(0px);
+	}
+}
+
+.fadedLeft {
+	-webkit-animation: leftFadein 0.7s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: leftFadein 0.7s; /* Firefox < 16 */
+    -ms-animation: leftFadein 0.7s; /* Internet Explorer */
+    -o-animation: leftFadein 0.7s; /* Opera < 12.1 */
+}
+
+.blackFont{
+	color:black;
+}
