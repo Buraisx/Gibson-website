@@ -82,45 +82,6 @@ router.get('/user/profile', function(req, res, next) {
 	});
 });
 
-/*
-router.get('/user/profile/info', function(req, res) {
-	console.log("Getting user info");
-
-	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
-
-	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
-	var inserts = decode.id;
-	sql = mysql.format(sql, inserts);
-	console.log(sql);
-
-	connection.getConnection(function(err, con){
-		if(err){
-			con.release();
-			console.log("cannot get connection");
-			callback(err);
-		}
-
-		con.query(sql, function(err, results){
-			con.release();
-
-			if(err){
-				console.log("Query error for finding user info");
-				callback(err);
-			}
-
-			//check if there is a user with the info
-			if(!results.length){
-				console.log("No User");
-				callback(new Error('No user exist.'));
-			}
-
-			//send all course info to client
-			res.send(results);
-		});
-	});
-});
-*/
 
 router.get('/user/profile/courses', function(req, res, callback) {
 	console.log("Getting registered courses");
@@ -261,12 +222,12 @@ router.post('/user/profile/register', function(req, res, next, callback){
 					var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?";
 					inserts = [decode.id, course_id, 'active', 'Registered for course ID ' + course_id, course_id];
 					query_register = mysql.format(query_register, inserts);
-				
+
 					console.log(query_register);
 					con.query(query_register, function(err, reg_res){
 						if (err){
 							console.log('Error occured during registration query');
-							
+
 							con.release();
 							res.send(400, 'Registration failed.');
 							callback(err);

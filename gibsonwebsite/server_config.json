@@ -1,8 +1,12 @@
 {
 
   "db_config": {
+<<<<<<< HEAD
     "connectionLimit":10,
     "host": "localhost",
+=======
+    "host": "192.168.1.47",
+>>>>>>> 15e87303e658f5434cf3a122bb12eed750ed0e49
     "user": "root",
     "password": "Sabad@th!s1234567",
     "database": "gibson",
