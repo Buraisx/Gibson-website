@@ -21,9 +21,8 @@ $(function listusers(){
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#usercollapse"+i});
 			collapse.attr("data-toggle", "collapse");
-			collapse.attr("data-parent", "#profileaccordion");
 			var fullname = $("<p></p>", {id: "fullname" + i}).append(user_info[i].fname, " ", user_info[i].lname);
-			var collapse2 = $("<div></div>", {id: "usercollapse" + i, class: "panel-collapse collapse in"});
+			var collapse2 = $("<div></div>", {id: "usercollapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
 
 
@@ -218,11 +217,10 @@ $("a[href$='#courses']").click(function() {
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
-			collapse.attr("data-parent", "#accordion");
 			var coursename = $("<p></p>", {id: "coursename"}).append(data[i].course_name);
 			var courseid = $("<p></p>", {id: "courseid"}).append("Course ID:", data[i].course_id);
 
-			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse in"});
+			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
 
 			var row = $("<div></div>", {class: "row"});
