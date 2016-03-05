@@ -1,3 +1,11 @@
+
+//Get cookie Values
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
 // Runs automatically on document load
 $(function listusers(){
 	jQuery.getJSON("/admin/profile/info", function(user_info){
@@ -31,23 +39,23 @@ $(function listusers(){
 			var colsm6 = $("<div></div>", {class:"form-group col-sm-6"});
 
 			//Name
-			var fname = $("<p></p>", {id: "fname" + i}).append("First Name: ").append(user_info[i].fname);
-			var lname = $("<p></p>", {id: "lname" + i}).append("Last Name: ").append(user_info[i].lname);
+			var fname = $("<p></p>", {id: "fname" + i}).append($("<strong></strong>").append("First Name: "), (user_info[i].fname));
+			var lname = $("<p></p>", {id: "lname" + i}).append($("<strong></strong>").append("Last Name: "), (user_info[i].lname));
 
 			//Identifiers
-			var username = $("<p></p>", {id: "username" + i}).append("Username: ").append(user_info[i].username);
-			var email = $("<p></p>", {id: "email" + i}).append("Email: ").append(user_info[i].email);
+			var username = $("<p></p>", {id: "username" + i}).append($("<strong></strong>").append("Username: "), (user_info[i].username));
+			var email = $("<p></p>", {id: "email" + i}).append($("<strong></strong>").append("Email: "), (user_info[i].email));
 
 			//Phone
-			var primaryPhone = $("<p></p>", {id: "primaryphone" + i}).append("Phone (Home): ").append(user_info[i].primary_phone);
-			var secondaryPhone = $("<p></p>", {id: "secondaryphone" + i}).append("Phone (Cell): ").append(user_info[i].secondary_phone);
+			var primaryPhone = $("<p></p>", {id: "primaryphone" + i}).append($("<strong></strong>").append("Phone (Home): "), (user_info[i].primary_phone));
+			var secondaryPhone = $("<p></p>", {id: "secondaryphone" + i}).append($("<strong></strong>").append("Phone (Cell): "), (user_info[i].secondary_phone));
 
 			//Birth Info
-			var gender = $("<p></p>", {id: "gender" + i}).append("Gender: ").append(user_info[i].gender);
-			var dob = $("<p></p>", {id: "dob" + i}).append("Date of Birth: ").append(user_info[i].birth_date);
+			var gender = $("<p></p>", {id: "gender" + i}).append($("<strong></strong>").append("Gender: "), (user_info[i].gender));
+			var dob = $("<p></p>", {id: "dob" + i}).append($("<strong></strong>").append("Date of Birth: "), (user_info[i].birth_date));
 
 			//Address
-			var address = $("<p></p>", {id: "" + i}).append("Address: ").append(user_info[i].address);
+			var address = $("<p></p>", {id: "" + i}).append($("<strong></strong>").append("Address: "), (user_info[i].address));
 
 
 			/*
@@ -227,7 +235,6 @@ $("a[href$='#courses']").click(function() {
 			var coursedays = $("<p></p>", {id: "coursedays"}).append("Days: " + data[0].course_days);
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("Target: " + data[0].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("Cost: $" + data[0].default_fee);
-			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
 
 
 			//=============================
@@ -271,14 +278,88 @@ $("a[href$='#courses']").click(function() {
 			//COURSE COST & BUTTON
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
 										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
-										 		coursecost),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
-										 		button)));			//escaping closures
+										 		coursecost)));			//escaping closures
 
 			
 			courses.append(panel_default);
 		}
 
 		$('#courses').append(courses);
+	});
+});
+
+//Add courses
+$("a[href$='#addcourses']").click(function() {
+	jQuery.getJSON("", function(data){//need to add a route
+		
+		$('#addcourses').contents().remove();
+
+		//==================================
+		///Header in Add Course
+		var addcourse = $("<h1></h1>").append("Add Courses");
+
+		var formInline = $("<form></form>", {class:"form-inline", role : "form"});
+
+		//mix in one div form-group
+		var coursename = $("<label></label>", {class:"required"}).append("Course Name:");
+		var inputname = $("<input></input>", {type:"text", class:"form-control", name:"addcoursename", id:"addcoursename", required:""});
+
+		//mix in one div form-group
+		var courseid = $("<label></label>", {class:"required"}).append("Course ID:");
+		var inputid = $("<input></input>", {type:"text", class:"form-control", name:"addcourseid", id:"addcourseid", required:""});
+
+		//mix in one div form-group
+		var startdate = $("<label></label>", {class:"required"}).append("Start Date:");
+		var inputstart = $("<input></input>", {type:"text", class:"form-control", name:"addstartdate", id:"addstartdate", required:""});
+
+		//mix in one div form-group
+		var enddate = $("<label></label>", {class:"required"}).append("End Date:");
+		var inputend = $("<input></input>", {type:"text", class:"form-control", name:"addenddate", id:"addenddate", required:""});
+
+		//mix in one div form-group
+		var addtime = $("<label></label>", {class:"required"}).append("Time:");
+		var inputtime = $("<input></input>", {type:"text", class:"form-control", name:"addtime", id:"addtime", required:""});
+
+		//mix in one div form-group
+		var interval = $("<label></label>", {class:"required"}).append("End Date:");
+		var inputinterval = $("<input></input>", {type:"text", class:"form-control", name:"addinterval", id:"addinterval", required:""});
+
+		//mix in one div form-group
+		var cost = $("<label></label>", {class:"required"}).append("Cost:");
+		var inputcost = $("<input></input>", {type:"text", class:"form-control", name:"addcost", id:"addcost", required:""});
+
+		//sumbit course button
+		var button = $("<button></button>", {type : "submit", class : "btn btn-default", id : "submit"}).append("Add Course");
+		
+		var row = $("<div></div>", {class:"row"});
+		//==============
+		
+
+		//==================
+		//TOP DOWN HIERARCHY
+		//==================
+		$('#profile').append(addcourse);
+
+		$('#profile').append(row);
+		//course name and id
+		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(coursename, inputname));
+		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(courseid, inputid));
+		
+		$('#profile').append(row);
+		//Start and end date
+		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(startdate, inputstart));
+		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(enddate, inputend));
+		
+		$('#profile').append(row);
+		//time and interval
+		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(addtime, inputtime));
+		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(interval, inputinterval));
+		
+		$('#profile').append(row);
+		//cost
+		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(cost, inputcost));
+
+		//submit button
+		formInline.append($("<div></div>", {class:"row form-group"}).append(button));
 	});
 });
