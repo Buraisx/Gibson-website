@@ -331,7 +331,7 @@ $("a[href$='#addcourses']").click(function() {
 		//sumbit course button
 		var button = $("<button></button>", {type : "submit", class : "btn btn-default", id : "submit"}).append("Add Course");
 		
-		var row = $("<div></div>", {class:"row"});
+		//var row = $("<div></div>", {class:"row"});
 		//==============
 		
 
@@ -339,23 +339,24 @@ $("a[href$='#addcourses']").click(function() {
 		//TOP DOWN HIERARCHY
 		//==================
 		$('#profile').append(addcourse);
+		$('#profile').append(formInline);
 
-		$('#profile').append(row);
 		//course name and id
-		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(coursename, inputname));
-		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(courseid, inputid));
+		formInline.append($("<div></div>", {class:"row"}).append(
+			$("<div></div>", {class:"form-group col-sm-4"}).append(coursename, inputname),
+			$("<div></div>", {class:"form-group col-sm-4"}).append(courseid, inputid)));
 		
-		$('#profile').append(row);
+		$('#profile').append($("<div></div>", {class:"row"});
 		//Start and end date
 		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(startdate, inputstart));
 		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(enddate, inputend));
 		
-		$('#profile').append(row);
+		$('#profile').append($("<div></div>", {class:"row"});
 		//time and interval
 		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(addtime, inputtime));
 		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(interval, inputinterval));
 		
-		$('#profile').append(row);
+		$('#profile').append($("<div></div>", {class:"row"});
 		//cost
 		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(cost, inputcost));
 
