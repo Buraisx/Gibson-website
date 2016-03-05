@@ -139,7 +139,6 @@ router.get('/user/profile/courses', function(req, res) {
 			//check if there is a user with the info
 			if(!results.length){
 				console.log("No courses");
-				return done(new Error('No courses exist.'));
 			}
 
 			//send all course info to client
@@ -175,7 +174,6 @@ router.get('/user/profile/schedule', function(req, res) {
 			//check if there is a user with the info
 			if(!results.length){
 				console.log("userinfo for this does not exist");
-				return done(null);
 			}
 
 			//send all course info to client
