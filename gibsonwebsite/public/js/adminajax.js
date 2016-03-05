@@ -35,7 +35,7 @@ $(function listusers(){
 			var basicInfo = $("<h3></h3>").append("Basic Information");
 
 			var row = $("<div></div>", {class: "row"});
-			var colsm6 = $("<div></div>", {class:"form-group col-sm-6"});
+			var colsm6 = $("<div></div>", {class:"col-sm-6"});
 
 			//Name
 			var fname = $("<p></p>", {id: "fname" + i}).append($("<strong></strong>").append("First Name: "), (user_info[i].fname));
@@ -79,16 +79,16 @@ $(function listusers(){
 			//unnecessary html code
 			//<h4>Contact x</h4>
 	        //    <div class = "row">
-	        //        <div class = "form-group col-sm-6">
+	        //        <div class = "col-sm-6">
 	        //            <p>First Name: </p>
 	        //        </div>
-	        //        <div class = "form-group col-sm-6">
+	        //        <div class = "col-sm-6">
 	        //            <p>Last Name: </p>
 	        //        </div>
-	        //        <div class = "form-group col-sm-6">
+	        //        <div class = "col-sm-6">
 	        //            <p>Relationship: </p>
 	        //       </div>
-	        //        <div class = "form-group col-sm-6">
+	        //        <div class = "col-sm-6">
 	        //            <p>Phone: </p>
 	        //        </div>
 	        //    </div>
@@ -116,35 +116,35 @@ $(function listusers(){
 
 			// First & last name
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		fname),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		lname)));			//escaping closures
 
 			// Username & email
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		username),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		email)));			//escaping closures
 
 			// Phone numbers
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		primaryPhone),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		secondaryPhone)));			//escaping closures
 			
 			// Birth info
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		gender),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		dob)));			//escaping closures
 
 			// Address
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		address)));			//escaping closures
 
 			// Emergency contacts header
@@ -224,7 +224,7 @@ $("a[href$='#courses']").click(function() {
 			var panelbody = $("<div></div>", {class: "panel-body"});
 
 			var row = $("<div></div>", {class: "row"});
-			var colsm6 = $("<div></div>", {class:"form-group col-sm-6"});
+			var colsm6 = $("<div></div>", {class:"col-sm-6"});
 			var description = $("<p></p>", {id: "description"}).append("Description: ").append(data[i].course_description);
 			var startdate = $("<p></p>", {id: "coursestartdate"}).append("Start Date: " + data[i].start_date);
 			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + data[0].end_date);
@@ -252,30 +252,30 @@ $("a[href$='#courses']").click(function() {
 
 			//DESCRIPTION
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		description)));		//escaping closures	
 
 			panelbody = panelbody.append("<br>");
 
 			//STARTDATE & ENDDATE
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		startdate),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		enddate)));			//escaping closures
 
 			//COURSE TIME & COURSE INTERVAL
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		coursetime),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		courseinterval)));			//escaping closures
 
 			panelbody = panelbody.append("<br>");
 
 			//COURSE COST & BUTTON
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		coursecost)));			//escaping closures
 
 			
@@ -341,22 +341,22 @@ $("a[href$='#addcourses']").click(function() {
 
 		//course name and id
 		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"form-group col-sm-4"}).append(coursename, inputname),
-			$("<div></div>", {class:"form-group col-sm-4"}).append(courseid, inputid)));
+			$("<div></div>", {class:"col-sm-4"}).append(coursename, inputname),
+			$("<div></div>", {class:"col-sm-4"}).append(courseid, inputid)));
 
 		//Start and end date
 		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"form-group col-sm-4"}).append(startdate, inputstart),
-			$("<div></div>", {class:"form-group col-sm-4"}).append(enddate, inputend)));
+			$("<div></div>", {class:"col-sm-4"}).append(startdate, inputstart),
+			$("<div></div>", {class:"col-sm-4"}).append(enddate, inputend)));
 
 		//time and interval
 		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"form-group col-sm-4"}).append(addtime, inputtime),
-			$("<div></div>", {class:"form-group col-sm-4"}).append(interval, inputinterval)));
+			$("<div></div>", {class:"col-sm-4"}).append(addtime, inputtime),
+			$("<div></div>", {class:"col-sm-4"}).append(interval, inputinterval)));
 		
 		//cost
 		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"form-group col-sm-4"}).append(cost, inputcost)));
+			$("<div></div>", {class:"col-sm-4"}).append(cost, inputcost)));
 
 		//submit button
 		formInline.append($("<div></div>", {class:"row"}).append(
