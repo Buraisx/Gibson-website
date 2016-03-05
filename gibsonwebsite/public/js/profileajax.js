@@ -226,8 +226,8 @@ $("a[href$='#courses']").click(function() {
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
 			collapse.attr("data-parent", "#accordion");
-			var coursename = $("<p></p>", {id: "coursename"}).append("Course Name:", data[i].course_name);
-			var courseid = $("<p></p>", {id: "courseid"}).append("Course ID:", data[i].course_id);
+			var coursename = $("<p></p>", {id: "coursename"}).append(data[i].course_name);
+			var courseid = $("<p></p>", {id: "courseid"}).append(data[i].course_id);
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse in"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
