@@ -84,6 +84,7 @@ router.get('/user/profile', function(req, res, next) {
 
 
 router.get('/user/profile/courses', function(req, res, callback) {
+
 	console.log("Getting registered courses");
 
 	var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course ORDER BY course_id DESC";
@@ -93,7 +94,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 		if(err){
 			con.release();
 			console.log("cannot get connection");
-			callback(err);
+			return err;
 		}
 
 		con.query(sql, function(err, results){
@@ -101,7 +102,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 			if(err){
 				console.log("Query error for finding courses");
-				callback(err);
+				return err;
 			}
 
 			//check if there is a user with the info
@@ -128,7 +129,7 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 		if(err){
 			con.release();
 			console.log("cannot get connection");
-			callback(err);
+			return err;
 		}
 
 		con.query(sql, function(err, results){
@@ -136,13 +137,13 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 
 			if(err){
 				console.log("Query error for finding user course schedule");
-				callback(err);
+				return err;
 			}
 
 			//check if there is a user with the info
 			if(!results.length){
 				console.log("userinfo for this does not exist");
-				callback(new Error("userinfo for this does not exist"));
+				return new Error("userinfo for this does not exist");
 			}
 
 			//send all course info to client
@@ -245,45 +246,5 @@ router.post('/user/profile/register', function(req, res, next, callback){
 			}]);
 	});
 });
-
-router.get('/admin/profile/info', function(req, res, callback) {
-	console.log("Getting all user info");
-
-	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
-
-	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user";
-	var inserts = decode.id;
-	sql = mysql.format(sql, inserts);
-	console.log(sql);
-
-	connection.getConnection(function(err, con){
-		if(err){
-			con.release();
-			console.log("cannot get connection");
-			callback(err);
-		}
-
-		con.query(sql, function(err, results){
-			con.release();
-
-			if(err){
-				console.log("Query error for finding user info");
-				callback(err);
-			}
-
-			//check if there is a user with the info
-			if(!results.length){
-				console.log("No User");
-				callback(new Error('No user exist.'));
-			}
-
-			//send all course info to client
-			res.json(results);
-		});
-	});
-});
-
-
 
 module.exports = router;
