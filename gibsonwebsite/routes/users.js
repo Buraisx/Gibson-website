@@ -153,10 +153,7 @@ router.get('/user/profile/courses', function(req, res) {
 router.get('/user/profile/schedule', function(req, res) {
 	console.log("Getting schedule");
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = "SELECT c.course_id, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.end_date FROM course c  
-			   INNER JOIN user_course uc 
-			   ON c.course_id = uc.course_id 
-			   WHERE uc.user_id= ?;";
+	var sql = "SELECT c.course_id, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
 	var inserts = decode.id;
 	sql = mysql.format(sql, inserts);
 
@@ -177,8 +174,8 @@ router.get('/user/profile/schedule', function(req, res) {
 
 			//check if there is a user with the info
 			if(!results.length){
-				console.log("user info for this does not exist");
-				return done(new Error('No courses exist.'));
+				console.log("userinfo for this does not exist");
+				return done(null);
 			}
 
 			//send all course info to client
