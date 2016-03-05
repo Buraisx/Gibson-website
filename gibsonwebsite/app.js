@@ -106,7 +106,7 @@ app.use('/', error);
 // ================================================
 
 // AUTHENTICATION FUNCTION - CHECKS THE TOKEN IN COOKIE
-app.use(function(req, res, next){
+app.use(function(req, res, next, done){
 
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
@@ -121,7 +121,8 @@ app.use(function(req, res, next){
 
   catch(err){
       console.log(err);
-      res.redirect('/login');
+      res.end();
+      return done(null, null);
   }
 
   // TOKEN FOUND, TRYING TO VALIDATE
@@ -131,7 +132,8 @@ app.use(function(req, res, next){
     connection.getConnection(function(err, con){
   		if (err){
         console.log('app.js: Error connecting to the DB.');
-        return res.redirect('/login');
+        res.end();
+        return done(null, null);
       }
 
       // SETTING UP QUERIES NEEDED
@@ -142,11 +144,10 @@ app.use(function(req, res, next){
 
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
-        console.log(err);
         if (err){
-
           console.log('app.js: Error querying the Database for secret_key');
-          return res.redirect('/');
+          res.end();
+          return done(null, null);
         }
 
         var secretKey = results[0].secret_key;
@@ -155,7 +156,8 @@ app.use(function(req, res, next){
         con.query(passwordQuery, function(err, password){
           if (err){
             console.log('app.js: Error querying the Database for password');
-            return res.redirect('/login');
+            //res.end();
+            return done(null, null);
           }
 
           // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
@@ -165,7 +167,8 @@ app.use(function(req, res, next){
           jwt.verify(token, secretKey, function(err, userInfo){
             if (err){
               console.log('app.js: Error verifying token.');
-              return res.redirect('/login');
+              res.end();
+              return done(null, null);
             }
             else{
               req.decoded = userInfo;
@@ -177,7 +180,10 @@ app.use(function(req, res, next){
   	});
   }
   // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
-  else {return res.redirect('/login');}
+  else {
+    //res.end();
+    done(null, null);
+  }
 
 });
 // =============================================
