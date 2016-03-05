@@ -227,14 +227,17 @@ module.exports = function(passport){
                         return done(err);
                       }
 
+                      con.release();
                       // FINISHED INSERTING A NEW USER
                       return done(null, newUser);
                     });
                   }
                   else{
+                    con.release();
                     // FINISHED INSERTING A NEW USER
                     return done(null, newUser);
                   }
+                  
                 }
               });
             });
