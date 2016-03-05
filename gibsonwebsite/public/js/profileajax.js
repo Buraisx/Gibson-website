@@ -26,7 +26,7 @@ function getCookie(name) {
 //========================================
 function register(course_register){
 	console.log("Clicked button " + $('#_csrf').val());
-	$.post("/user/profile/register", {
+	$.post("/register", {
 			course_id: course_register.id.substring(6),
 			_csrf: $('#_csrf').val()
 	})

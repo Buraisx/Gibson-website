@@ -87,7 +87,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 	console.log("Getting registered courses");
 
-	var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course ORDER BY course_id DESC";
+	var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC";
 	console.log(sql);
 
 	connection.getConnection(function(err, con){
@@ -155,7 +155,7 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 });
 
 //waterfall this
-router.post('/user/profile/register', function(req, res, next){
+router.post('/register', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
 	console.log(decode);
 
@@ -163,7 +163,7 @@ router.post('/user/profile/register', function(req, res, next){
 	var course_id = Number(req.body.course_id);
 
 	// how to compare dates?
-	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND start_date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY';
+	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY';
 	var inserts = [course_id];
 	var course = {};
 
@@ -184,7 +184,7 @@ router.post('/user/profile/register', function(req, res, next){
 					{
 						con.release(); // uncomment if ok to release after 1 error
 						console.log('Failed to query for courses');
-						res.send(400, 'Failed to query for courses.');
+						//res.send(400, 'Failed to query for courses.');
 						next(err);
 					}
 
@@ -193,7 +193,7 @@ router.post('/user/profile/register', function(req, res, next){
 						con.release();
 						console.log('No courses in database');
 						
-						res.send(400, 'Course does not exist.');
+						//res.send(400, 'Course does not exist.');
 						next(new Error('No courses in database'));
 					}
 
@@ -201,6 +201,7 @@ router.post('/user/profile/register', function(req, res, next){
 				});
 				next(null, course);
 			},
+
 			function(course, next){
 				var query_not_already_registered = 'SELECT user_id, course_id FROM gibson.user_course WHERE user_id = ? AND course_id = ?';
 				inserts = [decode.id, course_id];
@@ -211,29 +212,28 @@ router.post('/user/profile/register', function(req, res, next){
 					if (err) {
 						con.release();
 						console.log('Failed to query for registered courses');
-						res.send(400, 'Failed to query for registered courses.');
+						//res.send(400, 'Failed to query for registered courses.');
 						next(err);
 					}
 					if (results.length) {
 						con.release();
 						console.log('User registered for same course already!');
 						//user already registered for course
-						res.send(400, 'User registered for same course already!.');
+						//res.send(400, 'User registered for same course already!.');
 						next(new Error('User already registered for course'));
 					}
 
 					//user not in course, so register the user in the course
 					var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?";
-					inserts = [decode.id, course_id, 'active', 'Registered for course ID ' + course_id, course_id];
+					inserts = [decode.id, course_id, 'Enrolled', 'Registered for course ID ' + course_id, course_id];
 					query_register = mysql.format(query_register, inserts);
 
 					console.log(query_register);
 					con.query(query_register, function(err, reg_res){
 						if (err){
 							console.log('Error occured during registration query');
-
 							con.release();
-							res.send(400, 'Registration failed.');
+							//res.send(400, 'Registration failed.');
 							next(err);
 						}
 
