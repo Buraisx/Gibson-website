@@ -111,8 +111,18 @@ app.use(function(req, res, next){
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
+  var rank;
+  var user_id;
 
+  try{
+      rank = decoded.rank;
+      user_id = decoded.id;
+  }
 
+  catch(err){
+      console.log(err);
+      res.redirect('/login');
+  }
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
@@ -125,13 +135,14 @@ app.use(function(req, res, next){
       }
 
       // SETTING UP QUERIES NEEDED
-      var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?;';
-      secretQuery = mysql.format(secretQuery, decoded.rank);
+      var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = 1;';
+      //secretQuery = mysql.format(secretQuery, decoded.rank);
       var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
-      passwordQuery = mysql.format(passwordQuery, decoded.id);
+      passwordQuery = mysql.format(passwordQuery, user_id);
 
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
+        console.log(err);
         if (err){
 
           console.log('app.js: Error querying the Database for secret_key');
@@ -156,9 +167,10 @@ app.use(function(req, res, next){
               console.log('app.js: Error verifying token.');
               return res.redirect('/login');
             }
-
-            req.decoded = userInfo;
-            next();
+            else{
+              req.decoded = userInfo;
+              next(); 
+            }
           });
         });
       });
