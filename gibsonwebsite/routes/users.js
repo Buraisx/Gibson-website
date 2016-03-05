@@ -138,7 +138,7 @@ router.get('/user/profile/info', function(req, res) {
 					response.student_info = null;
 
 					//send info back to user
-					res.json('userProfile', {title: "Sign Up", user_info: response});
+					res.json(response);
 				}
 			});
 		});
