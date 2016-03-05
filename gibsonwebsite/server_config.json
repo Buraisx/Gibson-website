@@ -1,7 +1,7 @@
 {
 
   "db_config": {
-    "connectionLimit":10,
+    "connectionLimit":3,
     "host": "192.168.1.47",
     "user": "root",
     "password": "Sabad@th!s1234567",
