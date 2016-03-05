@@ -345,22 +345,23 @@ $("a[href$='#addcourses']").click(function() {
 		formInline.append($("<div></div>", {class:"row"}).append(
 			$("<div></div>", {class:"form-group col-sm-4"}).append(coursename, inputname),
 			$("<div></div>", {class:"form-group col-sm-4"}).append(courseid, inputid)));
-		
-		$('#profile').append($("<div></div>", {class:"row"});
+
 		//Start and end date
-		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(startdate, inputstart));
-		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(enddate, inputend));
-		
-		$('#profile').append($("<div></div>", {class:"row"});
+		formInline.append($("<div></div>", {class:"row"}).append(
+			$("<div></div>", {class:"form-group col-sm-4"}).append(startdate, inputstart),
+			$("<div></div>", {class:"form-group col-sm-4"}).append(enddate, inputend)));
+
 		//time and interval
-		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(addtime, inputtime));
-		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(interval, inputinterval));
+		formInline.append($("<div></div>", {class:"row"}).append(
+			$("<div></div>", {class:"form-group col-sm-4"}).append(addtime, inputtime),
+			$("<div></div>", {class:"form-group col-sm-4"}).append(interval, inputinterval)));
 		
-		$('#profile').append($("<div></div>", {class:"row"});
 		//cost
-		formInline.append($("<div></div>", {class:"form-group col-sm-4"}).append(cost, inputcost));
+		formInline.append($("<div></div>", {class:"row"}).append(
+			$("<div></div>", {class:"form-group col-sm-4"}).append(cost, inputcost)));
 
 		//submit button
-		formInline.append($("<div></div>", {class:"row form-group"}).append(button));
+		formInline.append($("<div></div>", {class:"row"}).append(
+			$("<div></div>", {class:"row form-group"}).append(button)));
 	});
 });

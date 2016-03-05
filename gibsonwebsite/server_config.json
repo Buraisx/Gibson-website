@@ -1,7 +1,7 @@
 {
 
   "db_config": {
-    "host": "localhost",
+    "host": "192.168.1.47",
     "user": "root",
     "password": "Sabad@th!s1234567",
     "database": "gibson",

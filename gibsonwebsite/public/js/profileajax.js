@@ -42,8 +42,8 @@ function register(course_register){
 }
 
 
-$("a[href$='#profile']").click(function(){
-	jQuery.getJSON("/user/profile", function(user_info){
+$("a[href$='#profile']").ready(function(){
+	jQuery.getJSON("/user/profile/info", function(user_info){
 
 		$('#profile').contents().remove();
 
@@ -85,29 +85,6 @@ $("a[href$='#profile']").click(function(){
 
 		//Emergency Contacts Header
 		var emInfo = $("<h3></h3>").append("Emergency Contacts");
-
-		//===================================
-		//Place holder for Emergency Contacts
-		//===================================
-		var eContacts = $("<p></p>").append("[*Insert EJS code here]");
-		//unnecessary html code
-		//<h4>Contact x</h4>
-        //    <div class = "row">
-        //        <div class = "form-group col-sm-6">
-        //            <p>First Name: </p>
-        //        </div>
-        //        <div class = "form-group col-sm-6">
-        //            <p>Last Name: </p>
-        //        </div>
-        //        <div class = "form-group col-sm-6">
-        //            <p>Relationship: </p>
-        //       </div>
-        //        <div class = "form-group col-sm-6">
-        //            <p>Phone: </p>
-        //        </div>
-        //    </div>
-		
-		//==================================
 
 		//Add Emergency Contacts
 		var addContacts = $("<div></div>", {class:"row form-group"}).append(
@@ -184,7 +161,16 @@ $("a[href$='#profile']").click(function(){
 		}
 		//Emergency Contact
 		$('#profile').append(emInfo);
-		$('#profile').append(eContacts);
+
+		for(var i=0; i<user_info.emergency_contacts.length; i++)
+		{
+		$('#profile').append($("<div></div>", {class:"row"}).append(
+			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>First Name:</strong> " + user_info.emergency_contacts[i].fname + "</p>"),
+			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>Last Name:</strong> " + user_info.emergency_contacts[i].lname + "</p>"),
+			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>Relationship:</strong> " + user_info.emergency_contacts[i].relationship + "</p>"),
+			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>Phone:</strong> " + user_info.emergency_contacts[i].contact_phone + "</p>")));
+		}
+
 		//Add E-Contacts, Edit Info
 		$('#profile').append(addContacts);
 		$('#profile').append(editInfo);
