@@ -84,6 +84,7 @@ router.get('/user/profile/info', function(req, res) {
 
 	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
 	var inserts = decode.id;
+	var response = {};
 	sql = mysql.format(sql, inserts);
 
 	// CREATING CONNECTION
