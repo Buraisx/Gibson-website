@@ -42,8 +42,8 @@ function register(course_register){
 }
 
 
-$("a[href$='#profile']").ready(function(){
-	jQuery.getJSON("/user/profile/info", function(user_info){
+$("a[href$='#profile']").click(function(){
+	jQuery.getJSON("/user/profile", function(user_info){
 
 		$('#profile').contents().remove();
 
