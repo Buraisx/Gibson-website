@@ -235,7 +235,6 @@ $("a[href$='#courses']").click(function() {
 			var coursedays = $("<p></p>", {id: "coursedays"}).append("Days: " + data[0].course_days);
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("Target: " + data[0].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("Cost: $" + data[0].default_fee);
-			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
 
 
 			//=============================
@@ -279,9 +278,7 @@ $("a[href$='#courses']").click(function() {
 			//COURSE COST & BUTTON
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
 										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
-										 		coursecost),			//escaping closures
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
-										 		button)));			//escaping closures
+										 		coursecost)));			//escaping closures
 
 			
 			courses.append(panel_default);
