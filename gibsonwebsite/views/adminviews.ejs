@@ -6,6 +6,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/css/tabs.css" />
     <link rel="stylesheet" type="text/css" href="/css/tabstyles.css" />
+    <!-- datepicker CSS -->
+    <link href="/css/datepicker.css" rel="stylesheet">
 </head>
 
 <body>
@@ -16,119 +18,21 @@
                 <ul>
                     <li><a href="#profile"><i class="fa fa-user faicon"></i><span> Profile</span></a></li>
                     <li><a href="#courses"><i class="fa fa-list faicon"></i><span> Courses</span></a></li>
-                    <li><a href="#vol"><i class="fa fa-square faicon"></i><span> Vol View</span></a></li>
+                    <li><a href="#addcourses"><i class="fa fa-square faicon"></i><span> Vol View</span></a></li>
                     <li><a href="#rental"><i class="fa fa-square faicon"></i><span> Rental View</span></a></li>
                     <li><a href="#report"><i class="fa fa-square faicon"></i><span> Report View</span></a></li>
                 </ul>
             </nav>
             <div class="content-wrap">
                 <section id="profile">
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a href="#collapse0" data-toggle="collapse" data-parent="#accordion">
-                                    <p id="fullname">[Fname Lname]</p>
-                                </a>
-                            </h4>
-                        </div>
-
-                        <div id="collapse0" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <div class = "profileaccordion">
-                                    <h3>Basic Information</h3>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>First Name: </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>Last Name: </p>
-                                        </div>
-                                    </div>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>Username: </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>Email: </p>
-                                        </div>
-                                    </div>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>Phone (Home): </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>Phone (Cell): </p>
-                                        </div>
-                                    </div>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>Gender: </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>Date of Birth: </p>
-                                        </div>
-                                    </div>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>Address: </p>
-                                        </div>
-                                    </div>
-
-                                    <!--Checks if user is a student-->
-                                    <h3>Student Information</h3>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>School Name: </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>Grade: </p>
-                                        </div>
-                                    </div>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>Major: </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>ESL Level: </p>
-                                        </div>
-                                    </div>
-
-                                    <!--Emergency Contacts-->
-                                    <h3>Emergency Contacts</h3>
-                                    <p>[*insert ejs code here]</p>
-
-
-                                    <h4>Contact x</h4>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>First Name: </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>Last Name: </p>
-                                        </div>
-                                    </div>
-                                    <div class = "row">
-                                        <div class = "col-sm-6">
-                                            <p>Relationship: </p>
-                                        </div>
-                                        <div class = "col-sm-6">
-                                            <p>Phone: </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                    <!-- Tab On-Click fills profile tab-->
                 </section>
                 <section id="courses">
                     <!-- Tab On-Click fills courses-->
                 </section>
-                <section id="addcourse">
+                <section id="addcourses">
+                <h1>Add A Course</h1>
                 <form name="frm" action = "" method = "post" role = "form">
-                    <h1>Add A Course</h1>
                     <div class = "row">
                         <div class = "form-group col-sm-4">
                             <label><span class="required">*</span>Course Name:</label>
@@ -142,11 +46,11 @@
                     <div class = "row">
                         <div class = "form-group col-sm-4">
                             <label><span class="required">*</span>Start Date:</label>
-                            <input type = "text" class = "form-control" name = "addstartdate" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
+                            <input type = "text" class = "form-control datepicker" name = "addstartdate" id = "startdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
                         </div>
                         <div class = "form-group col-sm-4">
                             <label><span class="required">*</span>End Date:</label>
-                            <input type = "text" class = "form-control" name = "addenddate" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
+                            <input type = "text" class = "form-control datepicker" name = "addenddate" id = "enddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
                         </div>
                     </div>
                     <div class = "row">
@@ -192,6 +96,8 @@
 
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/datepicker.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
@@ -207,8 +113,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/js/freelancer.js"></script>
-    <script src="/js/profileajax.js"></script>
-</div>
+    <script src="/js/adminajax.js"></script>
 </body>
 
 <%- include standardfooter %>

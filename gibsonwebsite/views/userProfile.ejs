@@ -30,39 +30,39 @@
                     <h3>Basic Information</h3>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>First Name: <%= user_info.user.fname %> // Placeholder for actual user </p>
+                            <p><strong>First Name:</strong></strong> <%= user_info.user.fname %> </p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Last Name: <%= user_info.user.lname %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p>Username: <%= user_info.user.username %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p>Email: <%= user_info.user.email %></p>
+                            <p><strong>Last Name:</strong> <%= user_info.user.lname %> </p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Phone (Home): <%= user_info.user.primary_phone %></p>
+                            <p><strong>Username:</strong> <%= user_info.user.username %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Phone (Cell): <%= user_info.user.secondary_phone %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p>Gender: <%= user_info.user.gender %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p>Date of Birth: <%= user_info.user.birth_date %> </p>
+                            <p><strong>Email:</strong> <%= user_info.user.email %></p>
                         </div>
                     </div>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>Address: <%= user_info.user.address %> </p>
+                            <p><strong>Phone (Home):</strong> <%= user_info.user.primary_phone %></p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p><strong>Phone (Cell):</strong> <%= user_info.user.secondary_phone %> </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p><strong>Gender:</strong> <%= user_info.user.gender %></p>
+                        </div>
+                        <div class = "col-sm-6">
+                            <p><strong>Date of Birth:</strong> <%= user_info.user.birth_date %> </p>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-sm-6">
+                            <p><strong>Address:</strong> <%= user_info.user.address %> </p>
                         </div>
                     </div>
 
@@ -71,16 +71,16 @@
                         <h3>Students Information</h3>
                         <div class = "row">
                             <div class = "col-sm-6">
-                                <p>School Name: <%= user_info.student_info.school_name %></p>
+                                <p><strong>School Name:</strong> <%= user_info.student_info.school_name %></p>
                             </div>
                             <div class = "col-sm-6">
-                                <p>Grade: <%= user_info.student_info.grade %></p>
+                                <p><strong>Grade:</strong> <%= user_info.student_info.grade %></p>
                             </div>
                             <div class = "col-sm-6">
-                                <p>Major: <%= user_info.student_info.major %></p>
+                                <p><strong>Major:</strong> <%= user_info.student_info.major %></p>
                             </div>
                             <div class = "col-sm-6">
-                                <p>ESL Level: <%= user_info.student_info.esl_level %></p>
+                                <p><strong>ESL Level:</strong> <%= user_info.student_info.esl_level %></p>
                             </div>
                         </div>
                     <%}%>
@@ -92,16 +92,16 @@
                     <h4>Contact <%= i+1 %></h4>
                     <div class = "row">
                         <div class = "col-sm-6">
-                            <p>First Name: <%= user_info.emergency_contacts[i].fname %></p>
+                            <p><strong>First Name:</strong> <%= user_info.emergency_contacts[i].fname %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Last Name: <%= user_info.emergency_contacts[i].lname %></p>
+                            <p><strong>Last Name:</strong> <%= user_info.emergency_contacts[i].lname %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Relationship: <%= user_info.emergency_contacts[i].relationship %></p>
+                            <p><strong>Relationship:</strong> <%= user_info.emergency_contacts[i].relationship %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p>Phone: <%= user_info.emergency_contacts[i].contact_phone %></p>
+                            <p><strong>Phone:</strong> <%= user_info.emergency_contacts[i].contact_phone %></p>
                         </div>
                     </div>
                     <% } %>
@@ -143,10 +143,8 @@
                 <section id="courses">
                     <!-- Tab On-Click fills courses-->
                 </section>
-
                 <section id="schedule">
-                
-                        
+                    <!-- Tab On-Click fills schedule-->
                 </section>
               
                 <section id="rental">Rental</section>

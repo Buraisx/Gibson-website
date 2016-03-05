@@ -77,43 +77,43 @@ router.get('/user/profile', function(req, res, next) {
 });
 
 
-// router.get('/user/profile/info', function(req, res) {
-// 	console.log("Getting user info");
-//
-// 	var decode = jwt.decode(req.cookies.access_token);
-// 	console.log(decode);
-//
-// 	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
-// 	var inserts = decode.id;
-// 	sql = mysql.format(sql, inserts);
-// 	console.log(sql);
-//
-// 	connection.getConnection(function(err, con){
-// 		if(err){
-// 			con.release();
-// 			console.log("cannot get connection");
-// 			return done(err);
-// 		}
-//
-// 		con.query(sql, function(err, results){
-// 			con.release();
-//
-// 			if(err){
-// 				console.log("Query error for finding user info");
-// 				return done(err);
-// 			}
-//
-// 			//check if there is a user with the info
-// 			if(!results.length){
-// 				console.log("No User");
-// 				return done(new Error('No user exist.'));
-// 			}
-//
-// 			//send all course info to client
-// 			res.json(results);
-// 		});
-// 	});
-// });
+router.get('/user/profile/info', function(req, res) {
+	console.log("Getting user info");
+
+	var decode = jwt.decode(req.cookies.access_token);
+	console.log(decode);
+
+	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
+	var inserts = decode.id;
+	sql = mysql.format(sql, inserts);
+	console.log(sql);
+
+	connection.getConnection(function(err, con){
+		if(err){
+			con.release();
+			console.log("cannot get connection");
+			return done(err);
+		}
+
+		con.query(sql, function(err, results){
+			con.release();
+
+			if(err){
+				console.log("Query error for finding user info");
+				return done(err);
+			}
+
+			//check if there is a user with the info
+			if(!results.length){
+				console.log("No User");
+				return done(new Error('No user exist.'));
+			}
+
+			//send all course info to client
+			res.json(results);
+		});
+	});
+});
 
 router.get('/user/profile/courses', function(req, res) {
 	console.log("Getting registered courses");
@@ -153,7 +153,10 @@ router.get('/user/profile/courses', function(req, res) {
 router.get('/user/profile/schedule', function(req, res) {
 	console.log("Getting schedule");
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = "select course.course_id, course_name,course_time, course_interval, course_description, course_days,course.end_date from course inner join user_course where user_course.course_id = course.course_id AND user_course.user_id= ?;";
+	var sql = "SELECT c.course_id, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.end_date FROM course c  
+			   INNER JOIN user_course uc 
+			   ON c.course_id = uc.course_id 
+			   WHERE uc.user_id= ?;";
 	var inserts = decode.id;
 	sql = mysql.format(sql, inserts);
 
@@ -168,13 +171,13 @@ router.get('/user/profile/schedule', function(req, res) {
 			con.release();
 
 			if(err){
-				console.log("Query error for finding user_course");
+				console.log("Query error for finding user course schedule");
 				return done(err);
 			}
 
 			//check if there is a user with the info
 			if(!results.length){
-				console.log("user_info for this does not exist");
+				console.log("user info for this does not exist");
 				return done(new Error('No courses exist.'));
 			}
 
@@ -277,7 +280,43 @@ router.post('/user/profile/register', function(req, res,next){
 	});
 });
 
+router.get('/admin/profile/info', function(req, res) {
+	console.log("Getting all user info");
 
+	var decode = jwt.decode(req.cookies.access_token);
+	console.log(decode);
+
+	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user";
+	var inserts = decode.id;
+	sql = mysql.format(sql, inserts);
+	console.log(sql);
+
+	connection.getConnection(function(err, con){
+		if(err){
+			con.release();
+			console.log("cannot get connection");
+			return done(err);
+		}
+
+		con.query(sql, function(err, results){
+			con.release();
+
+			if(err){
+				console.log("Query error for finding user info");
+				return done(err);
+			}
+
+			//check if there is a user with the info
+			if(!results.length){
+				console.log("No User");
+				return done(new Error('No user exist.'));
+			}
+
+			//send all course info to client
+			res.json(results);
+		});
+	});
+});
 
 
 
