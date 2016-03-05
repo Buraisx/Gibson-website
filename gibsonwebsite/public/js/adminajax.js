@@ -1,7 +1,202 @@
+// Runs automatically on document load
+$(function listusers(){
+	jQuery.getJSON("/admin/profile/info", function(user_info){
+		$('#profile').contents().remove();
 
-//view all courses
+		var users = $("<div></div>", {class: "panel-group", id: "profileaccordion"});
+
+		for(var i = 0; i < user_info.length; i++) {
+			//A user Accordion Panel
+			var panel_default = $("<div></div>", {class: "panel panel-primary"});
+			
+			var panel_heading = $("<div></div>", {class: "panel-heading"});
+			var panel_title = $("<h4></h4>", {class: "panel-title"});
+			var collapse = $("<a></a>", {href: "#collapse"+i});
+			collapse.attr("data-toggle", "collapse");
+			collapse.attr("data-parent", "#profileaccordion");
+			var fullname = $("<p></p>", {id: "fullname" + i}).append(user_info[i].fname, " ", user_info[i].lname);
+			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse in"});
+			var panelbody = $("<div></div>", {class: "panel-body"});
+
+
+			//==================================
+			//==================================
+			//WRITE ALL BASIC TAGS
+			//==================================
+			//==================================
+			///Header in Profile
+			var basicInfo = $("<h3></h3>").append("Basic Information");
+
+			var row = $("<div></div>", {class: "row"});
+			var colsm6 = $("<div></div>", {class:"form-group col-sm-6"});
+
+			//Name
+			var fname = $("<p></p>", {id: "fname" + i}).append("First Name: ").append(user_info[i].fname);
+			var lname = $("<p></p>", {id: "lname" + i}).append("Last Name: ").append(user_info[i].lname);
+
+			//Identifiers
+			var username = $("<p></p>", {id: "username" + i}).append("Username: ").append(user_info[i].username);
+			var email = $("<p></p>", {id: "email" + i}).append("Email: ").append(user_info[i].email);
+
+			//Phone
+			var primaryPhone = $("<p></p>", {id: "primaryphone" + i}).append("Phone (Home): ").append(user_info[i].primary_phone);
+			var secondaryPhone = $("<p></p>", {id: "secondaryphone" + i}).append("Phone (Cell): ").append(user_info[i].secondary_phone);
+
+			//Birth Info
+			var gender = $("<p></p>", {id: "gender" + i}).append("Gender: ").append(user_info[i].gender);
+			var dob = $("<p></p>", {id: "dob" + i}).append("Date of Birth: ").append(user_info[i].birth_date);
+
+			//Address
+			var address = $("<p></p>", {id: "" + i}).append("Address: ").append(user_info[i].address);
+
+
+			/*
+				//Student Info
+				var student = $("<h3></h3>").append("Student Information");
+				//School Name and Grade
+				var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p>School Name: " + user_info.user.address + " </p>");
+				var grade = $("<div></div>", {class: "col-sm-6"}).append("<p>Grade: " + user_info.user.address + " </p>");
+				//Major and ESL
+				var major = $("<div></div>", {class: "col-sm-6"}).append("<p>Major: " + user_info.user.address + " </p>");
+				var esl = $("<div></div>", {class: "col-sm-6"}).append("<p>ESL Level: " + user_info.user.address + " </p>");
+			*/
+
+
+			//Emergency Contacts Header
+			//var emInfo = $("<h3></h3>").append("Emergency Contacts");
+
+			//===================================
+			//Place holder for Emergency Contacts
+			//===================================
+			//var eContacts = $("<p></p>").append("[*Insert EJS code here]");
+			//unnecessary html code
+			//<h4>Contact x</h4>
+	        //    <div class = "row">
+	        //        <div class = "form-group col-sm-6">
+	        //            <p>First Name: </p>
+	        //        </div>
+	        //        <div class = "form-group col-sm-6">
+	        //            <p>Last Name: </p>
+	        //        </div>
+	        //        <div class = "form-group col-sm-6">
+	        //            <p>Relationship: </p>
+	        //       </div>
+	        //        <div class = "form-group col-sm-6">
+	        //            <p>Phone: </p>
+	        //        </div>
+	        //    </div>
+			
+			//==================================
+
+
+			//=============================
+			//Top Down compilation hierarchy
+			//=============================
+			panel_default = panel_default.append(panel_heading, collapse2);
+
+			//--------------------------
+			//First div of panel-default
+			panel_heading = panel_heading.append(panel_title);
+			panel_title = panel_title.append(collapse);
+			collapse = collapse.append(fullname);
+
+			//--------------------------
+			//Second div of panel-default
+			collapse2 = collapse2.append(panelbody);
+
+			// Header
+			panelbody = panelbody.append(basicInfo);
+
+			// First & last name
+			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		fname),			//escaping closures
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		lname)));			//escaping closures
+
+			// Username & email
+			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		username),			//escaping closures
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		email)));			//escaping closures
+
+			// Phone numbers
+			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		primaryPhone),			//escaping closures
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		secondaryPhone)));			//escaping closures
+			
+			// Birth info
+			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		gender),			//escaping closures
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		dob)));			//escaping closures
+
+			// Address
+			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		address)));			//escaping closures
+
+			// Emergency contacts header
+			//panelbody = panelbody.append(emInfo);
+
+
+			users.append(panel_default);
+
+
+		/*
+				//==================
+				//TOP DOWN HIERARCHY
+				//==================
+				$('#profile').append(basicInfo);
+				//fname lname
+				$('#profile').append($("<div></div>", {class:"row"}).append(
+					fname, lname));
+				//username email
+				$('#profile').append($("<div></div>", {class:"row"}).append(
+					username, email));
+				//Phone (Home, Cell)
+				$('#profile').append($("<div></div>", {class:"row"}).append(
+					primaryPhone, secondaryPhone));
+				//Gender and Date of Birth
+				$('#profile').append($("<div></div>", {class:"row"}).append(
+					gender, dob));
+				//Address
+				$('#profile').append($("<div></div>", {class:"row"}).append(
+					address));
+				/*
+				//check if user is a student
+				if(user_info.user.student==1)
+				{
+					//Student Info
+					$('#profile').append(student);
+					//School Name and grade
+					$('#profile').append($("<div></div>", {class:"row"}).append(
+						schoolname, grade));
+					//major and esl level
+					$('#profile').append($("<div></div>", {class:"row"}).append(
+						major, esl));
+				}[*]/
+				//Emergency Contact
+				$('#profile').append(emInfo);
+				$('#profile').append(eContacts);
+
+				*/
+		}
+		$('#profile').append(users);
+	});
+});
+
+$("a[href$='#profile']").click(function(){
+	listusers();
+});
+
+
 $("a[href$='#courses']").click(function() {
-	jQuery.getJSON("", function(data){//need to add a route
+	jQuery.getJSON("/user/profile/courses", function(data){
 		
 		$('#courses').contents().remove();
 		
@@ -32,6 +227,7 @@ $("a[href$='#courses']").click(function() {
 			var coursedays = $("<p></p>", {id: "coursedays"}).append("Days: " + data[0].course_days);
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("Target: " + data[0].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("Cost: $" + data[0].default_fee);
+			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
 
 
 			//=============================
@@ -76,6 +272,8 @@ $("a[href$='#courses']").click(function() {
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
 										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
 										 		coursecost),			//escaping closures
+										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 		button)));			//escaping closures
 
 			
 			courses.append(panel_default);
