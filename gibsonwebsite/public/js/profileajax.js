@@ -316,7 +316,7 @@ $("a[href$='#schedule']").click(function() {
 			collapse.attr("data-parent", "#accordion");
 
 			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append(data[i].course_id);
+			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course ID:", data[i].course_id);
 
 			var coursetime = $("<div></div>", {class: "col-sm-4"}).append("Time: " + data[i].course_time);
 			var courseinterval = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Interval: " + data[i].course_interval);
