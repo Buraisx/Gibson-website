@@ -155,7 +155,7 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 });
 
 //waterfall this
-router.post('/user/profile/register', function(req, res, next, callback){
+router.post('/user/profile/register', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
 	console.log(decode);
 
@@ -172,7 +172,7 @@ router.post('/user/profile/register', function(req, res, next, callback){
 			con.release();
 			console.log("cannot get connection");
 			res.send(400, 'Connection Failed');
-			callback(err);
+			return err;
 		}
 		async.waterfall([
 			function(next){
@@ -182,17 +182,19 @@ router.post('/user/profile/register', function(req, res, next, callback){
 				con.query(query_course_exists, function(err, results){
 					if (err)
 					{
-						//con.release(); // uncomment if ok to release after 1 error
+						con.release(); // uncomment if ok to release after 1 error
 						console.log('Failed to query for courses');
 						res.send(400, 'Failed to query for courses.');
-						callback(err);
+						next(err);
 					}
 
 					if (!results.length) {
+
+						con.release();
 						console.log('No courses in database');
-						// dunno what to return
+						
 						res.send(400, 'Course does not exist.');
-						callback(null, null);
+						next(new Error('No courses in database'));
 					}
 
 				course = results[0];
@@ -207,15 +209,17 @@ router.post('/user/profile/register', function(req, res, next, callback){
 				console.log(query_not_already_registered);
 				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
+						con.release();
 						console.log('Failed to query for registered courses');
 						res.send(400, 'Failed to query for registered courses.');
-						callback(err);
+						next(err);
 					}
 					if (results.length) {
+						con.release();
 						console.log('User registered for same course already!');
 						//user already registered for course
 						res.send(400, 'User registered for same course already!.');
-						return(new Error('User already registered for course'));
+						next(new Error('User already registered for course'));
 					}
 
 					//user not in course, so register the user in the course
@@ -230,19 +234,28 @@ router.post('/user/profile/register', function(req, res, next, callback){
 
 							con.release();
 							res.send(400, 'Registration failed.');
-							callback(err);
+							next(err);
 						}
 
 						else{
 							con.release();
-							console.log("User ID " + decode.id + " registered for course ID " + course_id);
-							res.send(200, 'Registration Complete!');
+							next(null, {message: "Registration Complete!"});
 						}
 
 					});
 				});
 
-			}]);
+			}],
+			function(err, results){
+				if(err){
+					return err;
+				}
+
+				console.log("User ID " + decode.id + " registered for course ID " + course_id);
+				res.send(200, 'Registration Complete!');
+
+			}
+		);
 	});
 });
 
