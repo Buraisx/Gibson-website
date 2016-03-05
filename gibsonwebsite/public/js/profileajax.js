@@ -69,7 +69,7 @@ $("a[href$='#profile']").ready(function(){
 
 		//Birth Info
 		var gender = $("<div></div>", {class: "col-sm-6"}).append("<p>Gender: " + user_info[0].gender + "</p>");
-		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p>Date of Birth: " + user_info[0].birth_date + "</p>");
+		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p>Date of Birth: " + String(user_info[0].birth_date).substring(0, 10) + "</p>"); // WIP
 
 		//Address
 		var address = $("<div></div>", {class: "col-sm-6"}).append("<p>Address: " + user_info[0].address + "</p>");
@@ -211,23 +211,22 @@ $("a[href$='#courses']").click(function() {
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
-			collapse.attr("data-parent", "#accordion");
 			var coursename = $("<p></p>", {id: "coursename"}).append(data[i].course_name);
 			var courseid = $("<p></p>", {id: "courseid"}).append("Course ID:", data[i].course_id);
 
-			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse in"});
+			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
 
 			var row = $("<div></div>", {class: "row"});
 			var colsm6 = $("<div></div>", {class:"form-group col-sm-6"});
-			var description = $("<p></p>", {id: "description"}).append("Description: ").append(data[i].course_description);
-			var startdate = $("<p></p>", {id: "coursestartdate"}).append("Start Date: " + data[i].start_date);
-			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + data[0].end_date);
-			var coursetime = $("<p></p>", {id: "coursetime"}).append("Time: " + data[0].course_time);
-			var courseinterval = $("<p></p>", {id: "courseinterval"}).append("Interval: " + data[0].course_interval);
-			var coursedays = $("<p></p>", {id: "coursedays"}).append("Days: " + data[0].course_days);
-			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("Target: " + data[0].course_target);
-			var coursecost = $("<p></p>", {id: "cost"}).append("Cost: $" + data[0].default_fee);
+			var description = $("<p></p>", {id: "description"}).append("<strong>Description: </strong>").append(data[i].course_description);
+			var startdate = $("<p></p>", {id: "coursestartdate"}).append("<strong>Start Date: </strong>" + String(data[i].start_date).substring(0, 10));
+			var enddate = $("<p></p>", {id: "courseenddate"}).append("<strong>End Date: </strong>" + String(data[i].end_date).substring(0, 10));
+			var coursetime = $("<p></p>", {id: "coursetime"}).append("<strong>Time: </strong>" + data[i].course_time);
+			var courseinterval = $("<p></p>", {id: "courseinterval"}).append("<strong>Interval: </strong>" + data[i].course_interval);
+			var coursedays = $("<p></p>", {id: "coursedays"}).append("<strong>Days: </strong>" + data[i].course_days);
+			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("<strong>Target: </strong>" + data[i].course_target);
+			var coursecost = $("<p></p>", {id: "cost"}).append("<strong>Cost: </strong>$" + data[i].default_fee);
 			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
 
 
@@ -248,7 +247,7 @@ $("a[href$='#courses']").click(function() {
 
 			//DESCRIPTION
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
+										 	$("<div></div>", {class:"form-group col-sm-12"}).append(
 										 		description)));		//escaping closures	
 
 			panelbody = panelbody.append("<br>");
@@ -299,7 +298,6 @@ $("a[href$='#schedule']").click(function() {
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#scollapse"+i});
 			collapse.attr("data-toggle", "collapse");
-			collapse.attr("data-parent", "#accordion");
 
 			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
 			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course ID:", data[i].course_id);
@@ -308,7 +306,7 @@ $("a[href$='#schedule']").click(function() {
 			var courseinterval = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Interval: " + data[i].course_interval);
 			var coursedays = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Days: " + data[i].course_days);
 
-			var collapse2 = $("<div></div>", {id: "scollapse" + i, class: "panel-collapse collapse in"});
+			var collapse2 = $("<div></div>", {id: "scollapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
 
 			var row = $("<div></div>", {class: "row"});
@@ -316,7 +314,7 @@ $("a[href$='#schedule']").click(function() {
 
 			var offset = $("<div></div>",{class: "col-sm-offset-1"});
 			var description = $("<p></p>", {id: "description"}).append("Description: "+ data[i].course_description);
-			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + data[i].end_date);
+			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + String(data[i].end_date).substring(0, 10));
 			
 
 

@@ -51,10 +51,10 @@ $(function listusers(){
 
 			//Birth Info
 			var gender = $("<p></p>", {id: "gender" + i}).append($("<strong></strong>").append("Gender: "), (user_info[i].gender));
-			var dob = $("<p></p>", {id: "dob" + i}).append($("<strong></strong>").append("Date of Birth: "), (user_info[i].birth_date));
+			var dob = $("<p></p>", {id: "dob" + i}).append($("<strong></strong>").append("Date of Birth: "), String(user_info[i].birth_date).substring(0, 10));
 
 			//Address
-			var address = $("<p></p>", {id: "" + i}).append($("<strong></strong>").append("Address: "), (user_info[i].address));
+			var address = $("<p></p>", {id: "address" + i}).append($("<strong></strong>").append("Address: "), (user_info[i].address));
 
 
 			/*
@@ -225,14 +225,14 @@ $("a[href$='#courses']").click(function() {
 
 			var row = $("<div></div>", {class: "row"});
 			var colsm6 = $("<div></div>", {class:"col-sm-6"});
-			var description = $("<p></p>", {id: "description"}).append("Description: ").append(data[i].course_description);
-			var startdate = $("<p></p>", {id: "coursestartdate"}).append("Start Date: " + data[i].start_date);
-			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + data[0].end_date);
-			var coursetime = $("<p></p>", {id: "coursetime"}).append("Time: " + data[0].course_time);
-			var courseinterval = $("<p></p>", {id: "courseinterval"}).append("Interval: " + data[0].course_interval);
-			var coursedays = $("<p></p>", {id: "coursedays"}).append("Days: " + data[0].course_days);
-			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("Target: " + data[0].course_target);
-			var coursecost = $("<p></p>", {id: "cost"}).append("Cost: $" + data[0].default_fee);
+			var description = $("<p></p>", {id: "description"}).append("<strong>Description: </strong>").append(data[i].course_description);
+			var startdate = $("<p></p>", {id: "coursestartdate"}).append("<strong>Start Date: </strong>" + String(data[i].start_date).substring(0, 10));
+			var enddate = $("<p></p>", {id: "courseenddate"}).append("<strong>End Date: </strong>" + String(data[i].end_date).substring(0, 10));
+			var coursetime = $("<p></p>", {id: "coursetime"}).append("<strong>Time: </strong>" + data[i].course_time);
+			var courseinterval = $("<p></p>", {id: "courseinterval"}).append("<strong>Interval: </strong>" + data[i].course_interval);
+			var coursedays = $("<p></p>", {id: "coursedays"}).append("<strong>Days: </strong>" + data[i].course_days);
+			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("<strong>Target: </strong>" + data[i].course_target);
+			var coursecost = $("<p></p>", {id: "cost"}).append("<strong>Cost: </strong>$" + data[i].default_fee);
 
 
 			//=============================
@@ -252,7 +252,7 @@ $("a[href$='#courses']").click(function() {
 
 			//DESCRIPTION
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"col-sm-6"}).append(
+										 	$("<div></div>", {class:"col-sm-12"}).append(
 										 		description)));		//escaping closures	
 
 			panelbody = panelbody.append("<br>");
@@ -273,7 +273,7 @@ $("a[href$='#courses']").click(function() {
 
 			panelbody = panelbody.append("<br>");
 
-			//COURSE COST & BUTTON
+			//COURSE COST
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
 										 	$("<div></div>", {class:"col-sm-6"}).append(
 										 		coursecost)));			//escaping closures
