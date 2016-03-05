@@ -131,6 +131,7 @@ router.get('/confirm', function(req, res) {
                                   }
                                   else{
                                     // USER IS NOW PERMANENT!
+                                    con.release();
                                     res.redirect('/signupconfirm');
                                   }
                                 });
