@@ -50,4 +50,10 @@ router.get('/admin/profile', function(req, res, next) {
   res.render('adminviews', { title: 'Admin Profile' });
 });
 
+//logout of account
+router.post('/logout', function(req,res,next){
+  res.clearCookie('access_token');
+  res.redirect('/');
+});
+
 module.exports = router;

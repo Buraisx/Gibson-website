@@ -254,4 +254,10 @@ router.post('/register', function(req, res, next){
 	});
 });
 
+//logout of account
+router.get('/logout', function(req,res,next){
+	res.clearCookie('access_token');
+	res.redirect('/');
+});
+
 module.exports = router;

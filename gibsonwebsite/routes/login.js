@@ -44,11 +44,5 @@ function redirect(req, res){
 	res.redirect('/user/profile');
 }
 
-//logout of account
-router.post('/logout', function(req,res,next){
-	res.clearCookie('access_token');
-	res.redirect('/');
-});
-
 	return router;
 };
