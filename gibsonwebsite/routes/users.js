@@ -182,19 +182,15 @@ router.post('/register', function(req, res, next){
 				con.query(query_course_exists, function(err, results){
 					if (err)
 					{
-						con.release(); // uncomment if ok to release after 1 error
 						console.log('Failed to query for courses');
 						//res.send(400, 'Failed to query for courses.');
-						next(err);
+						return next(err);
 					}
 
 					if (!results.length) {
-
-						con.release();
 						console.log('No courses in database');
-						
 						//res.send(400, 'Course does not exist.');
-						next(new Error('No courses in database'));
+						return next(new Error('No courses in database'));
 					}
 
 				course = results[0];
@@ -210,17 +206,15 @@ router.post('/register', function(req, res, next){
 				console.log(query_not_already_registered);
 				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
-						con.release();
 						console.log('Failed to query for registered courses');
 						//res.send(400, 'Failed to query for registered courses.');
-						next(err);
+						return next(err);
 					}
 					if (results.length) {
-						con.release();
 						console.log('User registered for same course already!');
 						//user already registered for course
 						//res.send(400, 'User registered for same course already!.');
-						next(new Error('User already registered for course'));
+						return next(new Error('User already registered for course'));
 					}
 
 					//user not in course, so register the user in the course
@@ -232,13 +226,11 @@ router.post('/register', function(req, res, next){
 					con.query(query_register, function(err, reg_res){
 						if (err){
 							console.log('Error occured during registration query');
-							con.release();
 							//res.send(400, 'Registration failed.');
-							next(err);
+							return next(err);
 						}
 
 						else{
-							con.release();
 							next(null, {message: "Registration Complete!"});
 						}
 
@@ -247,7 +239,10 @@ router.post('/register', function(req, res, next){
 
 			}],
 			function(err, results){
+				con.release();
+
 				if(err){
+					res.send(400, 'Failed to signup course!');
 					return err;
 				}
 
