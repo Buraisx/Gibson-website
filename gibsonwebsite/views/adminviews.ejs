@@ -40,8 +40,14 @@
                             <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>
                         </div>
                         <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Course ID:</label>
-                            <input type = "text" class = "form-control" name = "addcourseid" id = "addcourseid" required>
+                            <label><span class="required">*</span>Course Code:</label>
+                            <input type = "text" class = "form-control" name = "addcoursecode" id = "addcoursecode" required>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "form-group col-sm-8">
+                            <label><span class="required">*</span>Description:</label>
+                            <input type = "text" class = "form-control" name = "adddescription" id = "adddescription" required>
                         </div>
                     </div>
                     <div class = "row">
@@ -60,8 +66,18 @@
                             <input type = "text" class = "form-control" name = "addtime" id = "addtime" required>
                         </div>
                         <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Interval:</label>
-                            <input type = "text" class = "form-control" name = "addinterval" id = "addinterval" required>
+                            <label><span class="required">*</span>Interval:</label><br>
+                            <form role="form" required>
+                            <label class="radio-inline">
+                              <input type="radio" name="optradio">Weekly
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="optradio">Bi-weekly
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="optradio">Daily
+                            </label>
+                            </form>
                         </div>
                     </div>
                     <div class = "row">
@@ -69,6 +85,30 @@
                             <label><span class="required">*</span>Cost:</label>
                             <input type = "text" class = "form-control" name = "addcost" id = "addcost" required>
                         </div>
+                        <div class = "form-group col-sm-4">
+                            <label><span class="required">*</span>Target:</label>
+                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>
+                        </div>
+                    </div>
+                        <div class = "row">
+                        <label><span class="required">*</span>Days:</label>
+                        <form role="form">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" value="">Monday
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" value="">Tuesday
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" value="">Wednesday
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" value="">Thursday
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" value="">Friday
+                        </label>
+                        </form>
                     </div>
                     <div class="row form-group">
                         <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcourse">Add Course</button>
