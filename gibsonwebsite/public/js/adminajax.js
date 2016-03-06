@@ -351,7 +351,9 @@ $("a[href$='#addcourses']").click(function() {
 		var inputcost = $("<input></input>", {type:"text", class:"form-control", name:"addcost", id:"addcost", required:""});
 
 		//sumbit course button
+
 		var button = $("<button></button>", {type : "submit", class : "btn btn-default", method="POST", onclick:"addCourse(this)" id : "submit"}).append("Add Course");
+
 		
 		//var row = $("<div></div>", {class:"row"});
 		//==============
