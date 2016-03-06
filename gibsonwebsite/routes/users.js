@@ -111,7 +111,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			}
 
 			//send all course info to client
-			console.log(results);
+			//console.log(results);
 			res.json(results);
 		});
 	});
@@ -157,7 +157,7 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 //waterfall this
 router.post('/register', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
+	//console.log(decode);
 
 	// get courseid and parse for course_id
 	var course_id = Number(req.body.course_id);
@@ -258,7 +258,7 @@ router.post('/register', function(req, res, next){
 router.get('/logout', function(req,res,next){
 	//clears cookie of account from browser
 	res.clearCookie('access_token');
-	
+
 	res.redirect('/');
 });
 

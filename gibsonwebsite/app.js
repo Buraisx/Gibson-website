@@ -94,6 +94,7 @@ var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
 var error = require('./routes/error');
+//var adminPages = require('/lols');
 
 app.use('/', routes);
 app.use('/', signup);
@@ -106,26 +107,12 @@ app.use('/', error);
 // ================================================
 
 // AUTHENTICATION FUNCTION - CHECKS THE TOKEN IN COOKIE
-app.use(function(req, res, next, done){
+app.use(function (req, res, next){
 
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
-  console.log(decoded);
-  var rank;
-  var user_id;
-/*
-  try{
-      rank = decoded.rank;
-      user_id = decoded.id;
-  }
-
-  catch(err){
-      console.log(err);
-      res.end();
-      return done(null, null);
-  }
-  */
+  //console.log(decoded);
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
@@ -134,7 +121,7 @@ app.use(function(req, res, next, done){
     connection.getConnection(function(err, con){
   		if (err){
         console.log('app.js: Error connecting to the DB.');
-        res.end();
+        //res.end();
         return err;
       }
 
@@ -142,14 +129,14 @@ app.use(function(req, res, next, done){
       var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = 1;';
       //secretQuery = mysql.format(secretQuery, decoded.rank);
       var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
-      passwordQuery = mysql.format(passwordQuery, user_id);
+      passwordQuery = mysql.format(passwordQuery, decoded.id);
 
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
         if (err){
           con.release();
           console.log('app.js: Error querying the Database for secret_key');
-          res.end();
+          //res.end();
           return err;
         }
 
@@ -172,7 +159,7 @@ app.use(function(req, res, next, done){
             if (err){
               con.release();
               console.log('app.js: Error verifying token.');
-              res.end();
+              //res.end();
               return err;
             }
             else{
@@ -201,12 +188,12 @@ app.use('/', users);
 
 //======↓↓↓↓↓AUTHENTICATION FOR ADMIN =========
 
-app.use(function(req, res, next, done){
+app.use(function (req, res, next){
 
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.priviledge;
   var decoded = jwt.decode(token);
-  console.log(decoded);
+  //console.log(decoded);
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
@@ -215,7 +202,7 @@ app.use(function(req, res, next, done){
     connection.getConnection(function(err, con){
       if (err){
         console.log('app.js: Error connecting to the DB.');
-        res.end();
+        //res.end();
         return err;
       }
 
@@ -229,7 +216,7 @@ app.use(function(req, res, next, done){
           if (err){
             con.release();
             console.log('app.js: Error querying the Database for secret_key');
-            res.end();
+          //  res.end();
             return err;
           }
 
@@ -240,7 +227,7 @@ app.use(function(req, res, next, done){
             if (err){
               con.release();
               console.log('app.js: Error verifying token.');
-              res.end();
+            //  res.end();
               return err;
             }
             else{
@@ -268,6 +255,7 @@ app.use(function(req, res, next, done){
 //routes under here are admin only routes
 
 app.use('/', test_profile);
+//app.use('/', adminPages);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

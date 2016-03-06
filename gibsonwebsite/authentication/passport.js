@@ -299,7 +299,8 @@ module.exports = function(passport){
 
             function (userresults, next){
                 // UPDATING THE LAST LOGIN TIME IN THE DATABASE
-                console.log("Username exists and password matches\n"+typeof(userresults));
+                console.log("Username exists and password matches.")
+                //console.log("Username exists and password matches\n"+typeof(userresults));
                 var user = userresults;
                 var lastLogIn = user[0].last_login_time; // The value before the login time is replaced to CURRENT_TIMESTAMP
                 var updateLastLogin = 'UPDATE gibson.user SET last_login_time = CURRENT_TIMESTAMP WHERE username = ?;';
@@ -343,7 +344,7 @@ module.exports = function(passport){
                 }
 
                 else{
-                    console.log(results);
+                    //console.log(results);
                     con.release();
                     return done(null, results);
                 }
