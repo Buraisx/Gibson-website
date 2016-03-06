@@ -51,6 +51,12 @@ router.get('/admin/profile/info', function(req, res) {
     });
 });
 
+router.post('/admin/profile/addCourse', function(req, res, next){
+
+    
+
+});
+
 
 
 module.exports = router;

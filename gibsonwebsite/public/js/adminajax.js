@@ -352,7 +352,7 @@ $("a[href$='#addcourses']").click(function() {
 
 		//sumbit course button
 
-		var button = $("<button></button>", {type : "submit", class : "btn btn-default", method="POST", onclick:"addCourse(this)" id : "submit"}).append("Add Course");
+		var button = $("<button></button>", {type : "submit", class : "btn btn-default", method: "POST", onclick:"addCourse(this)",  id : "submit"}).append("Add Course");
 
 		
 		//var row = $("<div></div>", {class:"row"});
