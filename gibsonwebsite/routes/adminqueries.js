@@ -13,7 +13,7 @@ router.get('/admin/profile', function(req, res, next) {
 });
 
 /* Get all users */
-router.get('/admin/profile/info', function(req, res) {
+router.post('/admin/profile/info', function(req, res) {
     console.log("Getting all user info");
 
     var decode = jwt.decode(req.cookies.access_token);
@@ -28,7 +28,7 @@ router.get('/admin/profile/info', function(req, res) {
         if(err) {
           con.release();
           console.log("cannot get connection");
-          return done(err);
+          return err;
         }
 
         con.query(sql, function(err, results){
@@ -36,13 +36,13 @@ router.get('/admin/profile/info', function(req, res) {
 
             if(err) {
                 console.log("Query error for finding user info");
-                return done(err);
+                return err;
             }
 
             //check if there is a user with the info
             if(!results.length) {
                 console.log("No User");
-                return done(new Error('No user exist.'));
+                return new Error('No user exist.');
             }
 
             //send all course info to client
@@ -50,5 +50,7 @@ router.get('/admin/profile/info', function(req, res) {
         });
     });
 });
+
+
 
 module.exports = router;
