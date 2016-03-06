@@ -1,17 +1,12 @@
 function setBackgroundImage(items) {
-	if (items === undefined || items === null) {
-		return;
-	}
-	else {
 		items.each( function() {
 			var theElement = $(this),
-				backgroundUrl = theElement.attr('data-background');
+				backgroundURL = theElement.attr('data-background');
 
-
+			theElement.css({
+				'background-image': 'url(' + backgroundURL + ')'
+			});
 		});
-	}
 }
 
 setBackgroundImage( $('.background-imgr') );
-setBackgroundImage( $('.static-background') );
-setBackgroundImage( $('.absolute-background') );
