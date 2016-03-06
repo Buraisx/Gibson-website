@@ -121,7 +121,8 @@ function generateToken(req, res, next) {
                 lastLoggedIn: req.user.last_login_time
               },
                 req.user.adminSecretKey, {
-                  expiresIn: 12*60*60 // 12 hours
+                  expiresIn: 14*24*60*60
+          // 12 hours 12 * 60 * 60
 
               });
               console.log("ADMIN TOKEN:" + req.adminToken);
