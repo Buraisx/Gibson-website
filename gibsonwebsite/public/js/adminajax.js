@@ -7,7 +7,7 @@ function getCookie(name) {
 }
 
 // Runs automatically on document load
-$(function listusers(){
+function listusers(){
 	jQuery.getJSON("/admin/profile/info", function(user_info){
 		$('#profile').contents().remove();
 
@@ -198,11 +198,13 @@ $(function listusers(){
 		}
 		$('#profile').append(users);
 	});
-});
+}
 
 $("a[href$='#profile']").click(function(){
 	listusers();
 });
+
+$(function(){listusers();});
 
 
 $("a[href$='#courses']").click(function() {
