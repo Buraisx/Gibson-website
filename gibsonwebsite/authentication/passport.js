@@ -227,14 +227,17 @@ module.exports = function(passport){
                         return done(err);
                       }
 
+                      con.release();
                       // FINISHED INSERTING A NEW USER
                       return done(null, newUser);
                     });
                   }
                   else{
+                    con.release();
                     // FINISHED INSERTING A NEW USER
                     return done(null, newUser);
                   }
+                  
                 }
               });
             });
@@ -324,17 +327,17 @@ module.exports = function(passport){
 
                         if(err){
                             console.log('passport.js: Error while querying database for username; local-login');
-                            return done(null,err);
+                            return done(null, err, {message: 'passport.js: Error while querying database for username; local-login'});
                         }
 
                         if (!results.length){
-                            console.log (req.body.username +' not found in the database.');
-                            return done(null,{message:'not found in database'}); //, req.flash('loginMessage', 'Invalid Username.')
+                            console.log (req.body.username +' not found in the temp database.');
+                            return done(null, false, {message:'not found in temp database'}); //, req.flash('loginMessage', 'Invalid Username.')
                         }
                         // USER IS FOUND IN temp_user -> NEEDS TO AUTHENTICATE EMAIL
                         else{
                             console.log(req.body.username +' needs to confirm their email.');
-                            return done(null,{message:'email not confirmed'});
+                            return done(null, false, {message:'email not confirmed'});
                         }
                     });
                 }

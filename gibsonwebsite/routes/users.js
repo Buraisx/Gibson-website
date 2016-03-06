@@ -21,20 +21,21 @@ router.get('/user/profile', function(req, res, next) {
 		if(err){
 			con.release();
 			console.log("user.js: Cannot get connection to the database.");
-			return done(err);
+			return err;
 		}
 
 		con.query(sql, function(err, results){
 			if(err){
 				con.release();
 				console.log("user.js: Query error for finding user info");
-				return done(err);
+				return err;
 			}
 
 			//check if there is a user with the info
 			if(!results.length){
+				con.release();
 				console.log("user.js: There is no user with this info");
-				return done(new Error('No user with this info.'));
+				done(new Error('No user with this info.'));
 			}
 
 			// SAVING USER INFO INTO RESPONSE OBJECT
@@ -44,7 +45,7 @@ router.get('/user/profile', function(req, res, next) {
 			con.query('SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;', [decode.id], function(err, results){
 				if(err){
 					console.log('user.js: Error querying for emergency contacts.');
-					return done(err);
+					return err;
 				}
 
 				response.emergency_contacts = results;
@@ -55,77 +56,45 @@ router.get('/user/profile', function(req, res, next) {
 					con.query('SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;', [decode.id], function(err, results){
 						if(err){
 							console.log('user.js: Error querying for student info.');
-							return done(err);
+							return err;
 						}
 
 						response.student_info = results[0];
 
 						//send info back to user
-						res.render('userProfile', {title: "Sign Up", user_info: response});
+						res.render('userProfile', {title: "Sign Up", user_info: response}, function(err, html){
+							con.release();
+							res.send(html);
+						});
 					});
 				}
 				else{
 					response.student_info = null;
 
 					//send info back to user
-					res.render('userProfile', {title: "Sign Up", user_info: response});
+					res.render('userProfile', {title: "Sign Up", user_info: response}, function(err, html){
+						con.release();
+						res.send(html);
+					});
 				}
-
 			});
 		});
 	});
 });
 
 
-router.get('/user/profile/info', function(req, res) {
-	console.log("Getting user info");
+router.get('/user/profile/courses', function(req, res, callback) {
 
-	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
-
-	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user WHERE user_id = ?";
-	var inserts = decode.id;
-	sql = mysql.format(sql, inserts);
-	console.log(sql);
-
-	connection.getConnection(function(err, con){
-		if(err){
-			con.release();
-			console.log("cannot get connection");
-			return done(err);
-		}
-
-		con.query(sql, function(err, results){
-			con.release();
-
-			if(err){
-				console.log("Query error for finding user info");
-				return done(err);
-			}
-
-			//check if there is a user with the info
-			if(!results.length){
-				console.log("No User");
-				return done(new Error('No user exist.'));
-			}
-
-			//send all course info to client
-			res.json(results);
-		});
-	});
-});
-
-router.get('/user/profile/courses', function(req, res) {
 	console.log("Getting registered courses");
 
-	var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course ORDER BY course_id DESC";
+	var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC";
 	console.log(sql);
 
 	connection.getConnection(function(err, con){
 		if(err){
 			con.release();
 			console.log("cannot get connection");
-			return done(err);
+			return err;
 		}
 
 		con.query(sql, function(err, results){
@@ -133,13 +102,12 @@ router.get('/user/profile/courses', function(req, res) {
 
 			if(err){
 				console.log("Query error for finding courses");
-				return done(err);
+				return err;
 			}
 
 			//check if there is a user with the info
 			if(!results.length){
 				console.log("No courses");
-				return done(new Error('No courses exist.'));
 			}
 
 			//send all course info to client
@@ -150,13 +118,10 @@ router.get('/user/profile/courses', function(req, res) {
 });
 
 
-router.get('/user/profile/schedule', function(req, res) {
+router.get('/user/profile/schedule', function(req, res, callback) {
 	console.log("Getting schedule");
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = "SELECT c.course_id, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.end_date FROM course c  
-			   INNER JOIN user_course uc 
-			   ON c.course_id = uc.course_id 
-			   WHERE uc.user_id= ?;";
+	var sql = "SELECT c.course_id, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
 	var inserts = decode.id;
 	sql = mysql.format(sql, inserts);
 
@@ -164,7 +129,7 @@ router.get('/user/profile/schedule', function(req, res) {
 		if(err){
 			con.release();
 			console.log("cannot get connection");
-			return done(err);
+			return err;
 		}
 
 		con.query(sql, function(err, results){
@@ -172,24 +137,25 @@ router.get('/user/profile/schedule', function(req, res) {
 
 			if(err){
 				console.log("Query error for finding user course schedule");
-				return done(err);
+				return err;
 			}
 
 			//check if there is a user with the info
 			if(!results.length){
-				console.log("user info for this does not exist");
-				return done(new Error('No courses exist.'));
+				console.log("userinfo for this does not exist");
 			}
 
 			//send all course info to client
+			
 			console.log(results);
 			res.json(results);
+			
 		});
 	});
 });
 
 //waterfall this
-router.post('/user/profile/register', function(req, res,next){
+router.post('/register', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
 	console.log(decode);
 
@@ -197,7 +163,7 @@ router.post('/user/profile/register', function(req, res,next){
 	var course_id = Number(req.body.course_id);
 
 	// how to compare dates?
-	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND start_date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY';
+	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY';
 	var inserts = [course_id];
 	var course = {};
 
@@ -206,7 +172,7 @@ router.post('/user/profile/register', function(req, res,next){
 			con.release();
 			console.log("cannot get connection");
 			res.send(400, 'Connection Failed');
-			return done(err);
+			return err;
 		}
 		async.waterfall([
 			function(next){
@@ -216,23 +182,22 @@ router.post('/user/profile/register', function(req, res,next){
 				con.query(query_course_exists, function(err, results){
 					if (err)
 					{
-						//con.release(); // uncomment if ok to release after 1 error
 						console.log('Failed to query for courses');
-						res.send(400, 'Failed to query for courses.');
-						return done(err);
+						//res.send(400, 'Failed to query for courses.');
+						return next(err);
 					}
 
 					if (!results.length) {
 						console.log('No courses in database');
-						// dunno what to return
-						res.send(400, 'Course does not exist.');
-						return done(null, null);
+						//res.send(400, 'Course does not exist.');
+						return next(new Error('No courses in database'));
 					}
 
 				course = results[0];
 				});
 				next(null, course);
 			},
+
 			function(course, next){
 				var query_not_already_registered = 'SELECT user_id, course_id FROM gibson.user_course WHERE user_id = ? AND course_id = ?';
 				inserts = [decode.id, course_id];
@@ -242,82 +207,51 @@ router.post('/user/profile/register', function(req, res,next){
 				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
 						console.log('Failed to query for registered courses');
-						res.send(400, 'Failed to query for registered courses.');
-						return done(err);
+						//res.send(400, 'Failed to query for registered courses.');
+						return next(err);
 					}
 					if (results.length) {
 						console.log('User registered for same course already!');
 						//user already registered for course
-						res.send(400, 'User registered for same course already!.');
-						return(new Error('User already registered for course'));
+						//res.send(400, 'User registered for same course already!.');
+						return next(new Error('User already registered for course'));
 					}
 
 					//user not in course, so register the user in the course
 					var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?";
-					inserts = [decode.id, course_id, 'active', 'Registered for course ID ' + course_id, course_id];
+					inserts = [decode.id, course_id, 'Enrolled', 'Registered for course ID ' + course_id, course_id];
 					query_register = mysql.format(query_register, inserts);
-				
+
 					console.log(query_register);
 					con.query(query_register, function(err, reg_res){
 						if (err){
 							console.log('Error occured during registration query');
-							
-							con.release();
-							res.send(400, 'Registration failed.');
-							return done(err);
+							//res.send(400, 'Registration failed.');
+							return next(err);
 						}
 
 						else{
-							con.release();
-							console.log("User ID " + decode.id + " registered for course ID " + course_id);
-							res.send(200, 'Registration Complete!');
+							next(null, {message: "Registration Complete!"});
 						}
 
 					});
 				});
 
-			}]);
+			}],
+			function(err, results){
+				con.release();
+
+				if(err){
+					res.send(400, 'Failed to signup course!');
+					return err;
+				}
+
+				console.log("User ID " + decode.id + " registered for course ID " + course_id);
+				res.send(200, 'Registration Complete!');
+
+			}
+		);
 	});
 });
-
-router.get('/admin/profile/info', function(req, res) {
-	console.log("Getting all user info");
-
-	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
-
-	var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user";
-	var inserts = decode.id;
-	sql = mysql.format(sql, inserts);
-	console.log(sql);
-
-	connection.getConnection(function(err, con){
-		if(err){
-			con.release();
-			console.log("cannot get connection");
-			return done(err);
-		}
-
-		con.query(sql, function(err, results){
-			con.release();
-
-			if(err){
-				console.log("Query error for finding user info");
-				return done(err);
-			}
-
-			//check if there is a user with the info
-			if(!results.length){
-				console.log("No User");
-				return done(new Error('No user exist.'));
-			}
-
-			//send all course info to client
-			res.json(results);
-		});
-	});
-});
-
-
 
 module.exports = router;
