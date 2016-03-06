@@ -47,7 +47,7 @@
                     <div class = "row">
                         <div class = "form-group col-sm-8">
                             <label><span class="required">*</span>Description:</label>
-                            <input type = "text" class = "form-control" name = "adddescription" id = "adddescription" required>
+                            <textarea class = "form-control" rows = "3" name = "adddescription" id = "adddescription"></textarea>
                         </div>
                     </div>
                     <div class = "row">
@@ -89,27 +89,31 @@
                         </div>
                     </div>
                     <div class = "row">
-                        <label><span class="required">*</span>Days:</label><br>
-                        <form role="form">
-                        <label class="checkbox-inline">
-                          <input type="checkbox" value="monday">Monday
-                        </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox" value="tuesday">Tuesday
-                        </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox" value="wednesday">Wednesday
-                        </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox" value="thursday">Thursday
-                        </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox" value="friday">Friday
-                        </label>
+                        <div class = "form-group col-sm-8">
+                            <label><span class="required">*</span>Days:</label><br>
+                            <form role="form">
+                            <label class="checkbox-inline">
+                              <input type="checkbox" value="monday">Monday
+                            </label>
+                            <label class="checkbox-inline">
+                              <input type="checkbox" value="tuesday">Tuesday
+                            </label>
+                            <label class="checkbox-inline">
+                              <input type="checkbox" value="wednesday">Wednesday
+                            </label>
+                            <label class="checkbox-inline">
+                              <input type="checkbox" value="thursday">Thursday
+                            </label>
+                            <label class="checkbox-inline">
+                              <input type="checkbox" value="friday">Friday
+                            </label>
+                        </div>
                     </form>
                     </div>
                     <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcourse">Add Course</button>
+                        <div class = "col-sm-8">
+                            <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcourse">Add Course</button>
+                        </div>
                     </div>
                 </form>
                 </section>
