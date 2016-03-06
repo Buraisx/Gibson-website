@@ -94,7 +94,7 @@ var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
 var error = require('./routes/error');
-//var adminPages = require('/lols');
+var adminPages = require('./routes/adminqueries');
 
 app.use('/', routes);
 app.use('/', signup);
@@ -255,7 +255,7 @@ app.use(function (req, res, next){
 //routes under here are admin only routes
 
 app.use('/', test_profile);
-//app.use('/', adminPages);
+app.use('/', adminPages);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
