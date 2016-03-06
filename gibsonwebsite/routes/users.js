@@ -82,6 +82,95 @@ router.get('/user/profile', function(req, res, next) {
 	});
 });
 
+router.get('/user/profile/info', function(req, res, next) {
+	var decode = jwt.decode(req.cookies.access_token);
+	var response = {};
+
+	connection.getConnection(function(err, con){
+		if(err){
+			con.release();
+			console.log("user.js: Cannot get connection to the database.");
+			return err;
+		}
+
+		else{
+			async.waterfall([
+				function(next){
+					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
+					var inserts = decode.id;
+			
+					sql = mysql.format(sql, inserts);
+					con.query(sql, function(err, results){
+						if(err){
+							console.log("Cannot query for user info.");
+							return next(err);
+						}
+
+						else if(!results.length){
+							console.log("No user found.");
+							return (new Error("No user found."));
+
+						}
+
+						else{
+							response.user = results[0];
+							next(null);
+						}
+					});
+				},
+
+				function(next){
+					var sql = 'SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;';
+					var inserts = decode.id;
+
+					sql = mysql.format(sql, inserts);
+					con.query(sql, function(err, results){
+						if(err){
+							console.log("Cannot query for emergency contacts.");
+							return next(err);
+						}
+
+						else if(!results.length){
+							console.log("No contacts found.");
+						}
+
+						response.emergency_contacts = results;
+						next(null);
+					});
+				},
+
+				function(next){
+					var sql = 'SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;';
+					var inserts = decode.id;
+
+					sql = mysql.format(sql, inserts);
+					con.query(sql, function(err, results){
+						if(err){
+							console.log("Cannot query for student info.");
+							return next(err);
+						}
+
+						else if(!results.length){
+							console.log("Not a student.");
+						}
+
+						response.student_info = results[0];
+						next(null);
+					});
+				}
+			],
+				function(err){
+					con.release();
+					if(err){	
+						return err;
+					}
+					console.log(response);
+					res.send(response);
+				}
+			);
+		}
+	});
+});
 
 router.get('/user/profile/courses', function(req, res, callback) {
 

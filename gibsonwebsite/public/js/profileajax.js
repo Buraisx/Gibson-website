@@ -42,9 +42,21 @@ function register(course_register){
 }
 
 
-$("a[href$='#profile']").click(function(){
-	jQuery.getJSON("/user/profile", function(user_info){
+//On ready
+$("a[href$='#profile']").ready(function(){
+	console.log("Ready Profile");
+	load_profile();
+});
 
+//On Click
+$("a[href$='#profile']").click(function(){
+	console.log("Click Profile");
+	load_profile();
+});
+
+//FUNCTION TO LOAD HTML OF USER PROFILE
+function load_profile(){
+	jQuery.getJSON("/user/profile/info", function(user_info){
 		$('#profile').contents().remove();
 
 		//==================================
@@ -56,50 +68,50 @@ $("a[href$='#profile']").click(function(){
 		var basicInfo = $("<h3></h3>").append("Basic Information");
 
 		//Name
-		var fname = $("<div></div>", {class: "col-sm-6"}).append("<p>First Name: " + user_info[0].fname + "</p>");
-		var lname = $("<div></div>", {class: "col-sm-6"}).append("<p>Last Name: " + user_info[0].lname + "</p>");
+		var fname = $("<div></div>", {class: "col-sm-6"}).append("<p>First Name: " + user_info.user.fname + "</p>");
+		var lname = $("<div></div>", {class: "col-sm-6"}).append("<p>Last Name: " + user_info.user.lname + "</p>");
 
 		//Identifiers
-		var username = $("<div></div>", {class: "col-sm-6"}).append("<p>Username: " + user_info[0].username + "</p>");
-		var email = $("<div></div>", {class: "col-sm-6"}).append("<p>Email: " + user_info[0].email + "</p>");
+		var username = $("<div></div>", {class: "col-sm-6"}).append("<p>Username: " + user_info.user.username + "</p>");
+		var email = $("<div></div>", {class: "col-sm-6"}).append("<p>Email: " + user_info.user.email + "</p>");
 
 		//Phone
-		var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Home): " + user_info[0].primary_phone + "</p>");
-		var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Cell): " + user_info[0].secondary_phone + "</p>");
+		var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Home): " + user_info.user.primary_phone + "</p>");
+		var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Cell): " + user_info.user.secondary_phone + "</p>");
 
 		//Birth Info
-		var gender = $("<div></div>", {class: "col-sm-6"}).append("<p>Gender: " + user_info[0].gender + "</p>");
-		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p>Date of Birth: " + String(user_info[0].birth_date).substring(0, 10) + "</p>"); // WIP
+		var gender = $("<div></div>", {class: "col-sm-6"}).append("<p>Gender: " + user_info.user.gender + "</p>");
+		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p>Date of Birth: " + String(user_info.user.birth_date).substring(0, 10) + "</p>"); // WIP
 
 		//Address
-		var address = $("<div></div>", {class: "col-sm-6"}).append("<p>Address: " + user_info[0].address + "</p>");
+		var address = $("<div></div>", {class: "col-sm-6"}).append("<p>Address: " + user_info.user.address + "</p>");
 
 		//Student Info
 		var student = $("<h3></h3>").append("Student Information");
 		//School Name and Grade
-		var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p>School Name: " + user_info.user.address + " </p>");
-		var grade = $("<div></div>", {class: "col-sm-6"}).append("<p>Grade: " + user_info.user.address + " </p>");
+		var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p>School Name: " + user_info.student_info.school_name + " </p>");
+		var grade = $("<div></div>", {class: "col-sm-6"}).append("<p>Grade: " + user_info.student_info.grade + " </p>");
 		//Major and ESL
-		var major = $("<div></div>", {class: "col-sm-6"}).append("<p>Major: " + user_info.user.address + " </p>");
-		var esl = $("<div></div>", {class: "col-sm-6"}).append("<p>ESL Level: " + user_info.user.address + " </p>");
+		var major = $("<div></div>", {class: "col-sm-6"}).append("<p>Major: " + user_info.student_info.major + " </p>");
+		var esl = $("<div></div>", {class: "col-sm-6"}).append("<p>ESL Level: " + user_info.student_info.esl_level + " </p>");
 
 		//Emergency Contacts Header
 		var emInfo = $("<h3></h3>").append("Emergency Contacts");
 
 		//Add Emergency Contacts
 		var addContacts = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type: "button", class: "btn btn-default col-sm-2", onclick: "", id: "addcontact"}).append(
+			$("<button></button>", {type: "button", class: "btn btn-default col-sm-3", onclick: "", id: "addcontact"}).append(
 				"Add Emergency Contact"));
 
 		//Edit Info
 		var editInfo = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type: "button", class: "btn btn-default col-sm-2", onclick: "", id : "editinfo"}).append(
+			$("<button></button>", {type: "button", class: "btn btn-default col-sm-3", onclick: "", id : "editinfo"}).append(
 				"Edit Information"));
 
 		//===============
 		//Change Password 
 		var changePassword = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type : "button", class: "btn btn-default col-sm-2", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
+			$("<button></button>", {type : "button", class: "btn btn-default col-sm-3", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
 				"Change Password"));
 
 		//Only client Can change Pass
@@ -164,7 +176,8 @@ $("a[href$='#profile']").click(function(){
 
 		for(var i=0; i<user_info.emergency_contacts.length; i++)
 		{
-		$('#profile').append($("<div></div>", {class:"row"}).append(
+			$('#profile').append($("<h4></h4>").append("Contact #"+(i+1)+":"));
+			$('#profile').append($("<div></div>", {class:"row"}).append(
 			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>First Name:</strong> " + user_info.emergency_contacts[i].fname + "</p>"),
 			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>Last Name:</strong> " + user_info.emergency_contacts[i].lname + "</p>"),
 			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>Relationship:</strong> " + user_info.emergency_contacts[i].relationship + "</p>"),
@@ -193,7 +206,7 @@ $("a[href$='#profile']").click(function(){
 			label3, input3, button3));
 		//================
 	});
-});
+}
 
 
 $("a[href$='#courses']").click(function() {
