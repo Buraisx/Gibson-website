@@ -9,76 +9,9 @@ var async = require('async');
 
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
-	var decode = jwt.decode(req.cookies.access_token);
-
-	var sql = "SELECT username, lname, fname, birth_date, gender, address, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
-	var inserts = decode.id;
-	var response = {};
-	sql = mysql.format(sql, inserts);
-
-	// CREATING CONNECTION
-	connection.getConnection(function(err, con){
-		if(err){
-			con.release();
-			console.log("user.js: Cannot get connection to the database.");
-			return err;
-		}
-
-		con.query(sql, function(err, results){
-			if(err){
-				con.release();
-				console.log("user.js: Query error for finding user info");
-				return err;
-			}
-
-			//check if there is a user with the info
-			if(!results.length){
-				con.release();
-				console.log("user.js: There is no user with this info");
-				done(new Error('No user with this info.'));
-			}
-
-			// SAVING USER INFO INTO RESPONSE OBJECT
-			response.user = results[0];
-
-			// QUERYING FOR EMERGENCY CONTACTS
-			con.query('SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;', [decode.id], function(err, results){
-				if(err){
-					console.log('user.js: Error querying for emergency contacts.');
-					return err;
-				}
-
-				response.emergency_contacts = results;
-
-				if (response.user.student == 1){
-
-					// QUERYING FOR STUDENT INFO
-					con.query('SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;', [decode.id], function(err, results){
-						if(err){
-							console.log('user.js: Error querying for student info.');
-							return err;
-						}
-
-						response.student_info = results[0];
-
-						//send info back to user
-						res.render('userProfile', {title: "Sign Up", user_info: response}, function(err, html){
-							con.release();
-							res.send(html);
-						});
-					});
-				}
-				else{
-					response.student_info = null;
-
-					//send info back to user
-					res.render('userProfile', {title: "Sign Up", user_info: response}, function(err, html){
-						con.release();
-						res.send(html);
-					});
-				}
-			});
-		});
+	//send info back to user
+	res.render('userProfile', {title: "Sign Up"}, function(err, html){
+		res.send(html);
 	});
 });
 
@@ -88,7 +21,7 @@ router.get('/user/profile/info', function(req, res, next) {
 
 	connection.getConnection(function(err, con){
 		if(err){
-			con.release();
+			connection.end();
 			console.log("user.js: Cannot get connection to the database.");
 			return err;
 		}
