@@ -25,6 +25,7 @@
                 </ul>
             </nav>
             <div class="content-wrap">
+             
                 <section id="profile">
                     <!-- Tab On-Click fills profile tab-->
                 </section>
@@ -33,7 +34,8 @@
                 </section>
                 <section id="addcourses">
                 <h1>Add A Course</h1>
-                <form name="frm" action = "" method = "post" role = "form">
+                <form name="frm" action = "/addCourse" method = "POST" role = "form">
+                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
                     <div class = "row">
                         <div class = "form-group col-sm-4">
                             <label><span class="required">*</span>Course Name:</label>
@@ -54,9 +56,9 @@
                     <div class = "form-group col-sm-8">
                         <label><span class="required">*</span>Date :</label><br>
                         <div class="input-daterange input-group" id="rangedatepicker">
-                            <input type="text" class="input-sm form-control" name="startdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />
+                            <input type="text" class="input-sm form-control" name="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />
                             <span class="input-group-addon">to</span>
-                            <input type="text" class="input-sm form-control" name="enddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />
+                            <input type="text" class="input-sm form-control" name="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />
                         </div>
                     </div>
                     </div>
@@ -68,13 +70,13 @@
                         <div class = "form-group col-sm-4" required>
                             <label><span class="required">*</span>Interval:</label><br>
                             <label class="radio-inline">
-                              <input type="radio" name="optradio" value="weekly">Weekly
+                              <input type="radio" name="addinterval" value="weekly">Weekly
                             </label>
                             <label class="radio-inline">
-                              <input type="radio" name="optradio" value="bi-weekly">Bi-weekly
+                              <input type="radio" name="addinterval" value="bi-weekly">Bi-weekly
                             </label>
                             <label class="radio-inline">
-                              <input type="radio" name="optradio"  value="daily">Daily
+                              <input type="radio" name="addinterval"  value="daily">Daily
                             </label>
                         </div>
                     </div>
@@ -91,28 +93,28 @@
                     <div class = "row">
                         <div class = "form-group col-sm-8">
                             <label><span class="required">*</span>Days:</label><br>
-                            <form role="form">
+                        
                             <label class="checkbox-inline">
-                              <input type="checkbox" value="monday">Monday
+                              <input type="checkbox" name= "adddays" value="monday">Monday
                             </label>
                             <label class="checkbox-inline">
-                              <input type="checkbox" value="tuesday">Tuesday
+                              <input type="checkbox" name= "adddays" value="tuesday">Tuesday
                             </label>
                             <label class="checkbox-inline">
-                              <input type="checkbox" value="wednesday">Wednesday
+                              <input type="checkbox" name= "adddays" value="wednesday">Wednesday
                             </label>
                             <label class="checkbox-inline">
-                              <input type="checkbox" value="thursday">Thursday
+                              <input type="checkbox" name= "adddays" value="thursday">Thursday
                             </label>
                             <label class="checkbox-inline">
-                              <input type="checkbox" value="friday">Friday
+                              <input type="checkbox" name= "adddays" value="friday">Friday
                             </label>
                         </div>
-                    </form>
+                        
                     </div>
                     <div class="row form-group">
                         <div class = "col-sm-8">
-                            <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcourse">Add Course</button>
+                            <button type = "submit" class= "btn btn-default col-sm-2" id = "addcourse">Add Course</button>
                         </div>
                     </div>
                 </form>

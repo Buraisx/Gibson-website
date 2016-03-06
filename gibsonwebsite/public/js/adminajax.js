@@ -1,17 +1,11 @@
 
-//Get cookie Values
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
-}
-
+/*
 //========================================
 //Send POST request on Register of Courses
 //========================================
 function addCourse(course_add){
 	console.log("Clicked button " + $('#_csrf').val());
-	$.post("/admin/profile/addCourse", {
+	$.post("/addCourse", {
 			_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
@@ -24,6 +18,7 @@ function addCourse(course_add){
 		alert("This is an already existing course");
 	});
 }
+*/
 
 // Runs automatically on document load
 function listusers(){
@@ -309,10 +304,10 @@ $("a[href$='#courses']").click(function() {
 		$('#courses').append(courses);
 	});
 });
-
+/*
 //Add courses
 $("a[href$='#addcourses']").click(function() {
-	jQuery.getJSON("/admin/addcourse", function(data){//need to add a route
+	jQuery.getJSON("/admin/profile/addCourse", function(data){//need to add a route
 		
 		$('#addcourses').contents().remove();
 
@@ -389,3 +384,4 @@ $("a[href$='#addcourses']").click(function() {
 			$("<div></div>", {class:"row form-group"}).append(button)));
 	});
 });
+*/
