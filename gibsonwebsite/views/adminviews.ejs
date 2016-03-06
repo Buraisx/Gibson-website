@@ -65,19 +65,17 @@
                             <label><span class="required">*</span>Time:</label>
                             <input type = "text" class = "form-control" name = "addtime" id = "addtime" required>
                         </div>
-                        <div class = "form-group col-sm-4">
+                        <div class = "form-group col-sm-4" required>
                             <label><span class="required">*</span>Interval:</label><br>
-                            <form role="form" required>
                             <label class="radio-inline">
-                              <input type="radio" name="optradio">Weekly
+                              <input type="radio" name="optradio" value="weekly">Weekly
                             </label>
                             <label class="radio-inline">
-                              <input type="radio" name="optradio">Bi-weekly
+                              <input type="radio" name="optradio" value="bi-weekly">Bi-weekly
                             </label>
                             <label class="radio-inline">
-                              <input type="radio" name="optradio">Daily
+                              <input type="radio" name="optradio"  value="daily">Daily
                             </label>
-                            </form>
                         </div>
                     </div>
                     <div class = "row">
@@ -90,25 +88,25 @@
                             <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>
                         </div>
                     </div>
-                        <div class = "row">
-                        <label><span class="required">*</span>Days:</label>
+                    <div class = "row">
+                        <label><span class="required">*</span>Days:</label><br>
                         <form role="form">
                         <label class="checkbox-inline">
-                          <input type="checkbox" value="">Monday
+                          <input type="checkbox" value="monday">Monday
                         </label>
                         <label class="checkbox-inline">
-                          <input type="checkbox" value="">Tuesday
+                          <input type="checkbox" value="tuesday">Tuesday
                         </label>
                         <label class="checkbox-inline">
-                          <input type="checkbox" value="">Wednesday
+                          <input type="checkbox" value="wednesday">Wednesday
                         </label>
                         <label class="checkbox-inline">
-                          <input type="checkbox" value="">Thursday
+                          <input type="checkbox" value="thursday">Thursday
                         </label>
                         <label class="checkbox-inline">
-                          <input type="checkbox" value="">Friday
+                          <input type="checkbox" value="friday">Friday
                         </label>
-                        </form>
+                    </form>
                     </div>
                     <div class="row form-group">
                         <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcourse">Add Course</button>
