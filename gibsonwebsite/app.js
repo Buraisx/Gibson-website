@@ -111,9 +111,10 @@ app.use(function(req, res, next, done){
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
+  console.log(decoded);
   var rank;
   var user_id;
-
+/*
   try{
       rank = decoded.rank;
       user_id = decoded.id;
@@ -124,6 +125,7 @@ app.use(function(req, res, next, done){
       res.end();
       return done(null, null);
   }
+  */
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
@@ -133,7 +135,7 @@ app.use(function(req, res, next, done){
   		if (err){
         console.log('app.js: Error connecting to the DB.');
         res.end();
-        return done(null, null);
+        return err;
       }
 
       // SETTING UP QUERIES NEEDED
@@ -145,9 +147,10 @@ app.use(function(req, res, next, done){
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
         if (err){
+          con.release();
           console.log('app.js: Error querying the Database for secret_key');
           res.end();
-          return done(null, null);
+          return err;
         }
 
         var secretKey = results[0].secret_key;
@@ -155,9 +158,10 @@ app.use(function(req, res, next, done){
         // QUERYING THE DATABASE FOR USER'S PASSWORD
         con.query(passwordQuery, function(err, password){
           if (err){
+            con.release();
             console.log('app.js: Error querying the Database for password');
             //res.end();
-            return done(null, null);
+            return err;
           }
 
           // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
@@ -166,11 +170,13 @@ app.use(function(req, res, next, done){
           // VERIFYING TOKEN
           jwt.verify(token, secretKey, function(err, userInfo){
             if (err){
+              con.release();
               console.log('app.js: Error verifying token.');
               res.end();
-              return done(null, null);
+              return err;
             }
             else{
+              con.release();
               req.decoded = userInfo;
               next(); 
             }
@@ -182,7 +188,7 @@ app.use(function(req, res, next, done){
   // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
   else {
     //res.end();
-    done(null, null);
+    return err;
   }
 
 });
