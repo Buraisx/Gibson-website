@@ -56,6 +56,9 @@ $(function listusers(){
 			//Address
 			var address = $("<p></p>", {id: "address" + i}).append($("<strong></strong>").append("Address: "), (user_info[i].address));
 
+			if (user_info[i].student == 1) {
+				// Do student stuff
+			}
 
 			/*
 				//Student Info
