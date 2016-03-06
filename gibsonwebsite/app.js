@@ -181,6 +181,7 @@ app.use(function(req, res, next, done){
               next(); 
             }
           });
+
         });
       });
   	});
@@ -195,12 +196,78 @@ app.use(function(req, res, next, done){
 // =============================================
 // ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // =============================================
-app.use('/', test_profile);
 app.use('/', users);
-//app.use('/users', express.static(__dirname + '/public'));
-//app.use('/user', users);
 
 
+//======↓↓↓↓↓AUTHENTICATION FOR ADMIN =========
+
+app.use(function(req, res, next, done){
+
+  // LOOKING FOR TOKEN IN COOKIES
+  var token = req.cookies.priviledge;
+  var decoded = jwt.decode(token);
+  console.log(decoded);
+
+  // TOKEN FOUND, TRYING TO VALIDATE
+  if (token){
+    // CREATING CONNECTION
+    var connection = mysql.createPool(config.db_config);
+    connection.getConnection(function(err, con){
+      if (err){
+        console.log('app.js: Error connecting to the DB.');
+        res.end();
+        return err;
+      }
+
+      if (decoded.rank > 1){
+              // SETTING UP QUERIES NEEDED
+          var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?;';
+          secretQuery = mysql.format(secretQuery, decoded.rank);
+
+        // QUERYING THE DATABASE FOR SECRET KEY
+        con.query(secretQuery, function(err, results){
+          if (err){
+            con.release();
+            console.log('app.js: Error querying the Database for secret_key');
+            res.end();
+            return err;
+          }
+
+          var secretKey = results[0].secret_key;
+
+          // VERIFYING TOKEN
+          jwt.verify(token, secretKey, function(err, adminInfo){
+            if (err){
+              con.release();
+              console.log('app.js: Error verifying token.');
+              res.end();
+              return err;
+            }
+            else{
+              con.release();
+              next(); 
+            }
+          });
+       
+        });
+      }
+      else{
+        return err;
+      }
+
+    });
+  }
+  // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
+  else {
+    //res.end();
+    return err;
+  }
+
+});
+// =============================================
+//routes under here are admin only routes
+
+app.use('/', test_profile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

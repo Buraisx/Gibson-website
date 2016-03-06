@@ -256,7 +256,9 @@ router.post('/register', function(req, res, next){
 
 //logout of account
 router.get('/logout', function(req,res,next){
+	//clears cookie of account from browser
 	res.clearCookie('access_token');
+	
 	res.redirect('/');
 });
 
