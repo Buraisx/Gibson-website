@@ -10,7 +10,7 @@ var async = require('async');
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
 	//send info back to user
-	res.render('userProfile', {title: "Sign Up"}, function(err, html){
+	res.render('userProfile', {title: "Your Profile"}, function(err, html){
 		res.send(html);
 	});
 });
