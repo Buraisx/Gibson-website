@@ -53,8 +53,30 @@ router.get('/admin/profile/info', function(req, res) {
 
 router.post('/admin/profile/addCourse', function(req, res, next){
 
-    
+    var sql = "INSERT INTO gibson.course (course_code, course_name, default_fee, payment_period_id, start_date, end_date, course_time, course_interval, course_target, course_description, course_days) VALUES (?,?,?,2,?,?,?,?,?,?,?);" 
+    var inserts = [req.body.addcourseid, req.body.addcoursename, req.body.addcost, req.body.addstartdate, req.body.addenddate, req.body.addtime, req.body.addinterval, req.body.addtarget, req.body.adddescription, req.body.adddays];
 
+    sql = mysql.format(sql, inserts);
+
+    connection.getConnection(function(err,con){
+
+        if(err){
+            con.release();
+            console.log("cannot get connection");
+            return err;
+        }
+
+        con.query(sql, function(err, results){
+            con.release();
+            if(err){
+                console.log("Query error for inserting course to datebase");
+                res.send(400, "Query error for inserting course to datebase");
+                return err;
+            }
+            res.send(200, "Inserted course successfully");
+        });
+
+    });
 });
 
 
