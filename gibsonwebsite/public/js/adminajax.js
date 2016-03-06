@@ -6,6 +6,25 @@ function getCookie(name) {
   if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
+//========================================
+//Send POST request on Register of Courses
+//========================================
+function addCourse(course_add){
+	console.log("Clicked button " + $('#_csrf').val());
+	$.post("/admin/profile/addCourse", {
+			_csrf: $('#_csrf').val()
+	})
+	.done(function (res){
+		console.log("You have added a course!");
+		console.log(res);
+		alert("You have successfully added a new course!");
+	})
+	.fail(function (err){
+		console.log("This course already exists.");
+		alert("This is an already existing course");
+	});
+}
+
 // Runs automatically on document load
 function listusers(){
 	jQuery.getJSON("/admin/profile/info", function(user_info){
@@ -293,7 +312,7 @@ $("a[href$='#courses']").click(function() {
 
 //Add courses
 $("a[href$='#addcourses']").click(function() {
-	jQuery.getJSON("", function(data){//need to add a route
+	jQuery.getJSON("/admin/addcourse", function(data){//need to add a route
 		
 		$('#addcourses').contents().remove();
 
@@ -332,7 +351,7 @@ $("a[href$='#addcourses']").click(function() {
 		var inputcost = $("<input></input>", {type:"text", class:"form-control", name:"addcost", id:"addcost", required:""});
 
 		//sumbit course button
-		var button = $("<button></button>", {type : "submit", class : "btn btn-default", method="POST", id : "submit"}).append("Add Course");
+		var button = $("<button></button>", {type : "submit", class : "btn btn-default", method="POST", onclick:"addCourse(this)" id : "submit"}).append("Add Course");
 		
 		//var row = $("<div></div>", {class:"row"});
 		//==============

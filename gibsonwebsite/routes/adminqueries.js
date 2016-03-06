@@ -13,7 +13,7 @@ router.get('/admin/profile', function(req, res, next) {
 });
 
 /* Get all users */
-router.post('/admin/profile/info', function(req, res) {
+router.get('/admin/profile/info', function(req, res) {
     console.log("Getting all user info");
 
     var decode = jwt.decode(req.cookies.access_token);
