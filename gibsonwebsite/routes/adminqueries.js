@@ -7,6 +7,11 @@ var mysql = require('mysql');
 var connection = mysql.createPool(config.db_config);
 var async = require('async');
 
+
+router.get('/admin/profile', function(req, res, next) {
+  res.render('adminviews', { title: 'Admin Profile' });
+});
+
 /* Get all users */
 router.get('/admin/profile/info', function(req, res) {
     console.log("Getting all user info");
