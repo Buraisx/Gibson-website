@@ -57,7 +57,7 @@
                             <p><strong>Gender:</strong> <%= user_info.user.gender %></p>
                         </div>
                         <div class = "col-sm-6">
-                            <p><strong>Date of Birth:</strong> <%= user_info.user.birth_date %> </p>
+                            <p><strong>Date of Birth:</strong> <%= (user_info.user.birth_date).toString().substring(4,15) %> </p>
                         </div>
                     </div>
                     <div class = "row">
