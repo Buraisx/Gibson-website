@@ -140,7 +140,7 @@ header .intro-text .skills {
 
     .navbar-fixed-top.navbar-shrink {
         padding: 10px 0;
-        background-color: #2c3e50;
+        background-color: #6378a0;
         opacity:1;
     }
 
@@ -152,7 +152,7 @@ header .intro-text .skills {
 /* this is to replace the bootstrap default. */
  .nav > li > a:hover,
  .nav > li > a:focus{
-	background-color: #2c3e50;
+	background-color: #6378a0;
 }
 
 .navbar {
@@ -179,7 +179,7 @@ header .intro-text .skills {
 }
 
 .navbar-custum{
-    background-color: #2c3e50;
+    background-color: #6378a0;
     opacity:0.9;
 }
 
@@ -250,7 +250,11 @@ section.success a.active {
     display: block;
     position: relative;
     margin: 0 auto;
-    max-width: 400px;
+    height:265px;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #portfolio .portfolio-item .portfolio-link .caption {
@@ -382,7 +386,7 @@ footer h3 {
 
 footer .footer-above {
     padding-top: 50px;
-    background-color: #2c3e50;
+    background-color: #6378a0;
 }
 
 footer .footer-col {
@@ -391,7 +395,7 @@ footer .footer-col {
 
 footer .footer-below {
     padding: 25px 0;
-    background-color: #233140;
+    background-color: #6378a0;
 }
 
 .btn-social {

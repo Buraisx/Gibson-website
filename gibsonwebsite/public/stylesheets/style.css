@@ -2,6 +2,40 @@
 html, body {
   height: 100%;
 }
+body{
+	background-color: transparent;
+}
+
+
+.absolute-background::before {
+	background-image:url("/img/gibsonpic.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+ 	position: absolute;
+ 	top:0%;
+ 	left:0%;
+ 	content:"";
+ 	height: 100%;
+ 	width: 100%;
+ 	z-index: -1;  
+ 	opacity: 0.5;
+ }
+
+ .static-background::before {
+	background-image:url("/img/gibsonpic.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+ 	position: fixed;
+ 	top:0%;
+ 	left:0%;
+ 	content:"";
+ 	height: 100%;
+ 	width: 100%;
+ 	z-index: -1;  
+ 	opacity: 0.5;
+ }
 
 /*sticky footer for short pages using page-wrap*/
 .page-wrap {
@@ -12,6 +46,7 @@ html, body {
 .page-wrap:after {
   content: "";
   display: block;
+
 }
 .site-footer, .page-wrap:after {
   height: 374px; 
@@ -113,18 +148,35 @@ a {
 
 /*round corners*/
 .rcorners {
+	border: 2px solid rgba(0,0,0,0.5);
     border-radius: 25px;
     padding: 20px; 
-    background-color: #F6F6F6;
+    background-color: #ffffff;
     margin-bottom: 15px;
 }
 
 /*change tabs' background colour*/
 .tabs nav ul {
-	background-color: #F6F6F6;
+	background-color: #ffffff;
 }
 
 .centered {
 	margin: auto;
 	max-width: 800px;
+}
+
+
+.panel-primary > .panel-heading {
+	background-color: #6378A0;
+}
+
+
+.btn-primary {
+	background-color: #6378a0;
+	border-color: #6378a0;
+}
+
+.btn-primary:hover {
+	background-color: #2c3e50;
+	border-color: #2c3e50;
 }

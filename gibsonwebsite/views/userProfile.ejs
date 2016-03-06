@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="page-wrap">
+    <div class="page-wrap static-background" data-background="/img/gibsonpic.jpg">
     <section class="container rcorners">
         <div class="tabs tabs-style-linemove">
             <nav>
@@ -87,7 +87,7 @@
 
                     <!--Emergency Contacts-->
                     <h3>Emergency Contacts</h3>
-
+                    <h4></h4>
                     <% for(var i=0; i<user_info.emergency_contacts.length; i++) {%>
                     <h4>Contact <%= i+1 %></h4>
                     <div class = "row">
@@ -185,6 +185,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="/js/freelancer.js"></script>
     <script src="/js/profileajax.js"></script>
+
+    <!-- Set Background Javascript -->
+    <script src="/js/setBackgroundImage.js"></script>
 </div>
 </body>
 
