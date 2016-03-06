@@ -87,7 +87,7 @@ a {
 }
 
 .smalltext{
-	font-size: 10pt;
+	font-size: 12pt;
 }
 
 .required {
@@ -122,4 +122,9 @@ a {
 /*change tabs' background colour*/
 .tabs nav ul {
 	background-color: #F6F6F6;
+}
+
+.centered {
+	margin: auto;
+	max-width: 800px;
 }
