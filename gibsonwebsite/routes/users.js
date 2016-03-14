@@ -134,7 +134,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 			//send all course info to client
 			//console.log(results);
-			res.json(results);
+			res.send(results);
 		});
 	});
 });

@@ -92,11 +92,9 @@ function generateToken(req, res, next) {
           console.log("user token:" + req.token);
 
           // IF ADMIN, GET THE ADMIN's secret_key
-          console.log("MAKIFORLIFE");
           console.log(typeof(req.user.rank_id));
           //console.log(4>1);
           if (req.user.rank_id > 1){
-            console.log("UMIFORLIFE");
 
             var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?';
             secretQuery = mysql.format(secretQuery, req.user.rank_id);
@@ -121,7 +119,7 @@ function generateToken(req, res, next) {
                 lastLoggedIn: req.user.last_login_time
               },
                 req.user.adminSecretKey, {
-                  expiresIn: 14*24*60*60
+                  expiresIn: 12*60*60
           // 12 hours 12 * 60 * 60
 
               });
@@ -139,10 +137,10 @@ function generateToken(req, res, next) {
   });
 }
 
-// PLACING THE TOKEN IN A COOKIE
+// PLACING THE TOKEN IN A COOKIE (MaxAge in MILLISECONDS)
 function respond(req, res, next) {
 	res.clearCookie('access_token');
-	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 14*24*60*60});
+	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
 
   next();
 	//res.redirect('/');
@@ -150,11 +148,10 @@ function respond(req, res, next) {
 
 function adminRespond(req,res,next){
 
-  // IF ADMIN, GIVE EXTRA TOKEN
-  if (req.user.rank_id > 1){
+  // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
+  if (req.user.rank_id > 1) {
     res.clearCookie('priviledge');
-    res.cookie('priviledge', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60});
-    console.log("TAMAMO IS LIFE:" + req.adminToken);
+    res.cookie('priviledge', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60*1000});
   }
   next();
 }

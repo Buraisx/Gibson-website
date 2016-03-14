@@ -46,10 +46,44 @@ router.get('/admin/profile/info', function(req, res) {
             }
 
             //send all course info to client
-            res.json(results);
+            res.send(results);
         });
     });
 });
+
+router.get('/admin/profile/courses', function(req, res){
+    console.log("adminqueries.js: Getting registered courses");
+
+    var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course ORDER BY course_id DESC";
+    console.log(sql);
+
+    connection.getConnection(function(err, con){
+        if(err){
+            con.release();
+            console.log("adminqueries.js: Cannot get connection");
+            return err;
+        }
+
+        con.query(sql, function(err, results){
+            con.release();
+
+            if(err){
+                console.log("adminqueries.js: Query error for finding courses");
+                return err;
+            }
+
+            //check if there is a user with the info
+            if(!results.length){
+                console.log("adminqueries.js: No courses found!");
+            }
+
+            //send all course info to client
+            //console.log(results);
+            res.send(results);
+        });
+    });
+});
+
 /*
 router.get('/admin/profile/addCourse', function(req, res){
     res.sendStatus(200);
@@ -57,13 +91,15 @@ router.get('/admin/profile/addCourse', function(req, res){
 */
 
 
-router.post('/addCourse', function(req, res, next){
+router.post('/admin/profile/addCourse', function(req, res){
 
     var sql = "INSERT INTO gibson.course (course_code, course_name, default_fee, payment_period_id, start_date, end_date, course_time, course_interval, course_target, course_description, course_days) VALUES (?,?,?,2,?,?,?,?,?,?,?);" 
-    var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.addcost, req.body.addstartdate, req.body.addenddate, req.body.addtime, req.body.addinterval, req.body.addtarget, req.body.adddescription, null];
+    var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.addcost , req.body.addstartdate, req.body.addenddate, req.body.addtime, 
+                   req.body.addinterval, req.body.addtarget, req.body.adddescription, null];
 
     sql = mysql.format(sql, inserts);
 
+    console.log(sql);
     connection.getConnection(function(err,con){
 
         if(err){
@@ -75,7 +111,7 @@ router.post('/addCourse', function(req, res, next){
         con.query(sql, function(err, results){
             con.release();
             if(err){
-                console.log("Query error for inserting course to datebase");
+                console.log("Query error for inserting course to database");
                 //alert("Query error for inserting course to datebase");
                 //res.send(400, "Query error for inserting course to datebase");
                 //res.status(400).send("Query error for inserting course to datebase")

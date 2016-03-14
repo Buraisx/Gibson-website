@@ -222,7 +222,7 @@ $(function(){listusers();});
 
 
 $("a[href$='#courses']").click(function() {
-	jQuery.getJSON("/user/profile/courses", function(data){
+	jQuery.getJSON("/admin/profile/courses", function(data){
 		
 		$('#courses').contents().remove();
 		
