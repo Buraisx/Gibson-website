@@ -1,4 +1,36 @@
 
+//List users on page ready
+$("a[href$='#profile']").ready(function(){
+	listusers();
+});
+
+//List users on Click
+$("a[href$='#profile']").click(function(){
+	listusers();
+});
+
+//List of Courses on click
+$("a[href$='#courses']").click(function() {
+	listcourses();
+});
+
+$("a[href$='#addcourses']").ready(function(){
+	courseform();
+});
+
+
+
+
+
+
+//====================================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+//LIST OF FUNCTIONS===================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+
 /*
 //========================================
 //Send POST request on Register of Courses
@@ -20,7 +52,7 @@ function addCourse(course_add){
 }
 */
 
-// Runs automatically on document load
+// Generate List of users HTML
 function listusers(){
 	jQuery.getJSON("/admin/profile/info", function(user_info){
 		$('#profile').contents().remove();
@@ -214,14 +246,8 @@ function listusers(){
 	});
 }
 
-$("a[href$='#profile']").click(function(){
-	listusers();
-});
-
-$(function(){listusers();});
-
-
-$("a[href$='#courses']").click(function() {
+//Generates List of Courses HTML
+function listcourses(){
 	jQuery.getJSON("/admin/profile/courses", function(data){
 		
 		$('#courses').contents().remove();
@@ -303,85 +329,96 @@ $("a[href$='#courses']").click(function() {
 
 		$('#courses').append(courses);
 	});
-});
-/*
-//Add courses
-$("a[href$='#addcourses']").click(function() {
-	jQuery.getJSON("/admin/profile/addCourse", function(data){//need to add a route
-		
-		$('#addcourses').contents().remove();
+}
 
-		//==================================
-		///Header in Add Course
-		var addcourse = $("<h1></h1>").append("Add Courses");
 
-		var formInline = $("<form></form>", {class:"form-inline", role : "form"});
-
-		//mix in one div form-group
-		var coursename = $("<label></label>", {class:"required"}).append("Course Name:");
-		var inputname = $("<input></input>", {type:"text", class:"form-control", name:"addcoursename", id:"addcoursename", required:""});
-
-		//mix in one div form-group
-		var courseid = $("<label></label>", {class:"required"}).append("Course ID:");
-		var inputid = $("<input></input>", {type:"text", class:"form-control", name:"addcourseid", id:"addcourseid", required:""});
-
-		//mix in one div form-group
-		var startdate = $("<label></label>", {class:"required"}).append("Start Date:");
-		var inputstart = $("<input></input>", {type:"text", class:"form-control", name:"addstartdate", id:"addstartdate", required:""});
-
-		//mix in one div form-group
-		var enddate = $("<label></label>", {class:"required"}).append("End Date:");
-		var inputend = $("<input></input>", {type:"text", class:"form-control", name:"addenddate", id:"addenddate", required:""});
-
-		//mix in one div form-group
-		var addtime = $("<label></label>", {class:"required"}).append("Time:");
-		var inputtime = $("<input></input>", {type:"text", class:"form-control", name:"addtime", id:"addtime", required:""});
-
-		//mix in one div form-group
-		var interval = $("<label></label>", {class:"required"}).append("End Date:");
-		var inputinterval = $("<input></input>", {type:"text", class:"form-control", name:"addinterval", id:"addinterval", required:""});
-
-		//mix in one div form-group
-		var cost = $("<label></label>", {class:"required"}).append("Cost:");
-		var inputcost = $("<input></input>", {type:"text", class:"form-control", name:"addcost", id:"addcost", required:""});
-
-		//sumbit course button
-
-		var button = $("<button></button>", {type : "submit", class : "btn btn-default", method: "POST", onclick:"addCourse(this)",  id : "submit"}).append("Add Course");
-
-		
-		//var row = $("<div></div>", {class:"row"});
-		//==============
-		
-
-		//==================
-		//TOP DOWN HIERARCHY
-		//==================
-		$('#profile').append(addcourse);
-		$('#profile').append(formInline);
-
-		//course name and id
-		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"col-sm-4"}).append(coursename, inputname),
-			$("<div></div>", {class:"col-sm-4"}).append(courseid, inputid)));
-
-		//Start and end date
-		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"col-sm-4"}).append(startdate, inputstart),
-			$("<div></div>", {class:"col-sm-4"}).append(enddate, inputend)));
-
-		//time and interval
-		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"col-sm-4"}).append(addtime, inputtime),
-			$("<div></div>", {class:"col-sm-4"}).append(interval, inputinterval)));
-		
-		//cost
-		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"col-sm-4"}).append(cost, inputcost)));
-
-		//submit button
-		formInline.append($("<div></div>", {class:"row"}).append(
-			$("<div></div>", {class:"row form-group"}).append(button)));
-	});
-});
-*/
+function courseform(){
+	var csrfmeta = $("meta[name=_csrf]");
+	var addcourses='';
+	addcourses+='			<h1>Add A Course</h1>';
+	addcourses+='                <form name="frm" action = "/admin/profile/addCourse" method = "POST" role = "form">';
+	addcourses+='                     <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
+	addcourses+='                    <div class = "row">';
+	addcourses+='                        <div class = "form-group col-sm-4">';
+	addcourses+='                            <label><span class="required">*</span>Course Name:</label>';
+	addcourses+='                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>';
+	addcourses+='                        </div>';
+	addcourses+='                        <div class = "form-group col-sm-4">';
+	addcourses+='                            <label><span class="required">*</span>Course Code:</label>';
+	addcourses+='                            <input type = "text" class = "form-control" name = "addcoursecode" id = "addcoursecode" required>';
+	addcourses+='                        </div>';
+	addcourses+='                    </div>';
+	addcourses+='                    <div class = "row">';
+	addcourses+='                        <div class = "form-group col-sm-8">';
+	addcourses+='                            <label><span class="required">*</span>Description:</label>';
+	addcourses+='                            <textarea class = "form-control" rows = "3" name = "adddescription" id = "adddescription"></textarea>';
+	addcourses+='                        </div>';
+	addcourses+='                    </div>';
+	addcourses+='                    <div class = "row">';
+	addcourses+='                    <div class = "form-group col-sm-8">';
+	addcourses+='                        <label><span class="required">*</span>Date :</label><br>';
+	addcourses+='                        <div class="input-daterange input-group" id="rangedatepicker">';
+	addcourses+='                            <input type="text" class="input-sm form-control" name="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	addcourses+='                            <span class="input-group-addon">to</span>';
+	addcourses+='                            <input type="text" class="input-sm form-control" name="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	addcourses+='                        </div>';
+	addcourses+='                    </div>';
+	addcourses+='                    </div>';
+	addcourses+='                    <div class = "row">';
+	addcourses+='                        <div class = "form-group col-sm-4">';
+	addcourses+='                            <label><span class="required">*</span>Time:</label>';
+	addcourses+='                            <input type = "text" class = "form-control" name = "addtime" id = "addtime" required>';
+	addcourses+='                        </div>';
+	addcourses+='                        <div class = "form-group col-sm-4" required>';
+	addcourses+='                            <label><span class="required">*</span>Interval:</label><br>';
+	addcourses+='                            <label class="radio-inline">';
+	addcourses+='                              <input type="radio" name="addinterval" value="weekly">Weekly';
+	addcourses+='                            </label>';
+	addcourses+='                            <label class="radio-inline">';
+	addcourses+='                              <input type="radio" name="addinterval" value="bi-weekly">Bi-weekly';
+	addcourses+='                            </label>';
+	addcourses+='                            <label class="radio-inline">';
+	addcourses+='                              <input type="radio" name="addinterval"  value="daily">Daily';
+	addcourses+='                            </label>';
+	addcourses+='                        </div>';
+	addcourses+='                    </div>';
+	addcourses+='                    <div class = "row">';
+	addcourses+='                        <div class = "form-group col-sm-4">';
+	addcourses+='                            <label><span class="required">*</span>Cost:</label>';
+	addcourses+='                            <input type = "text" class = "form-control" name = "addcost" id = "addcost" required>';
+	addcourses+='                        </div>';
+	addcourses+='                        <div class = "form-group col-sm-4">';
+	addcourses+='                            <label><span class="required">*</span>Target:</label>';
+	addcourses+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
+	addcourses+='                        </div>';
+	addcourses+='                    </div>';
+	addcourses+='                    <div class = "row">';
+	addcourses+='                        <div class = "form-group col-sm-8">';
+	addcourses+='                            <label><span class="required">*</span>Days:</label><br>';
+	addcourses+='                        ';
+	addcourses+='                            <label class="checkbox-inline">';
+	addcourses+='                              <input type="checkbox" name= "adddays" value="monday">Monday';
+	addcourses+='                            </label>';
+	addcourses+='                            <label class="checkbox-inline">';
+	addcourses+='                              <input type="checkbox" name= "adddays" value="tuesday">Tuesday';
+	addcourses+='                            </label>';
+	addcourses+='                            <label class="checkbox-inline">';
+	addcourses+='                              <input type="checkbox" name= "adddays" value="wednesday">Wednesday';
+	addcourses+='                            </label>';
+	addcourses+='                            <label class="checkbox-inline">';
+	addcourses+='                              <input type="checkbox" name= "adddays" value="thursday">Thursday';
+	addcourses+='                            </label>';
+	addcourses+='                            <label class="checkbox-inline">';
+	addcourses+='                              <input type="checkbox" name= "adddays" value="friday">Friday';
+	addcourses+='                            </label>';
+	addcourses+='                        </div>';
+	addcourses+='                        ';
+	addcourses+='                    </div>';
+	addcourses+='                    <div class="row form-group">';
+	addcourses+='                        <div class = "col-sm-8">';
+	addcourses+='                            <button type = "submit" class= "btn btn-default col-sm-2" id = "addcourse">Add Course</button>';
+	addcourses+='                        </div>';
+	addcourses+='                    </div>';
+	addcourses+='                </form>';
+	$('#addcourses').append(addcourses);
+}

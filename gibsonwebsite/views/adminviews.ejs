@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <%- include standardnavbar.ejs %>
 
 <head>
     <link rel="stylesheet" type="text/css" href="/css/tabs.css" />
     <link rel="stylesheet" type="text/css" href="/css/tabstyles6.css" />
+    <meta name="_csrf" content="<%= csrfToken %>" />
     <!-- datepicker CSS -->
     <link href="/css/datepicker.css" rel="stylesheet">
 </head>
@@ -33,91 +35,7 @@
                     <!-- Tab On-Click fills courses-->
                 </section>
                 <section id="addcourses">
-                <h1>Add A Course</h1>
-                <form name="frm" action = "/admin/profile/addCourse" method = "POST" role = "form">
-                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
-                    <div class = "row">
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Course Name:</label>
-                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>
-                        </div>
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Course Code:</label>
-                            <input type = "text" class = "form-control" name = "addcoursecode" id = "addcoursecode" required>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-8">
-                            <label><span class="required">*</span>Description:</label>
-                            <textarea class = "form-control" rows = "3" name = "adddescription" id = "adddescription"></textarea>
-                        </div>
-                    </div>
-                    <div class = "row">
-                    <div class = "form-group col-sm-8">
-                        <label><span class="required">*</span>Date :</label><br>
-                        <div class="input-daterange input-group" id="rangedatepicker">
-                            <input type="text" class="input-sm form-control" name="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />
-                            <span class="input-group-addon">to</span>
-                            <input type="text" class="input-sm form-control" name="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />
-                        </div>
-                    </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Time:</label>
-                            <input type = "text" class = "form-control" name = "addtime" id = "addtime" required>
-                        </div>
-                        <div class = "form-group col-sm-4" required>
-                            <label><span class="required">*</span>Interval:</label><br>
-                            <label class="radio-inline">
-                              <input type="radio" name="addinterval" value="weekly">Weekly
-                            </label>
-                            <label class="radio-inline">
-                              <input type="radio" name="addinterval" value="bi-weekly">Bi-weekly
-                            </label>
-                            <label class="radio-inline">
-                              <input type="radio" name="addinterval"  value="daily">Daily
-                            </label>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Cost:</label>
-                            <input type = "text" class = "form-control" name = "addcost" id = "addcost" required>
-                        </div>
-                        <div class = "form-group col-sm-4">
-                            <label><span class="required">*</span>Target:</label>
-                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "form-group col-sm-8">
-                            <label><span class="required">*</span>Days:</label><br>
-                        
-                            <label class="checkbox-inline">
-                              <input type="checkbox" name= "adddays" value="monday">Monday
-                            </label>
-                            <label class="checkbox-inline">
-                              <input type="checkbox" name= "adddays" value="tuesday">Tuesday
-                            </label>
-                            <label class="checkbox-inline">
-                              <input type="checkbox" name= "adddays" value="wednesday">Wednesday
-                            </label>
-                            <label class="checkbox-inline">
-                              <input type="checkbox" name= "adddays" value="thursday">Thursday
-                            </label>
-                            <label class="checkbox-inline">
-                              <input type="checkbox" name= "adddays" value="friday">Friday
-                            </label>
-                        </div>
-                        
-                    </div>
-                    <div class="row form-group">
-                        <div class = "col-sm-8">
-                            <button type = "submit" class= "btn btn-default col-sm-2" id = "addcourse">Add Course</button>
-                        </div>
-                    </div>
-                </form>
+                    <!-- On Load fills add courses -->
                 </section>
                 <section id="vol">Volunteers</section>
                 <section id="rental">Rental</section>

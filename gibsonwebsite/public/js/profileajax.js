@@ -1,3 +1,32 @@
+
+//On ready load profile info
+$("a[href$='#profile']").ready(function(){
+	load_profile();
+});
+
+//On Click profile tab load profile info
+$("a[href$='#profile']").click(function(){
+	load_profile();
+});
+
+//On Click course tab load a list of viewable courses
+$("a[href$='#courses']").click(function() {
+	listcourses();
+});
+
+//On Click schedule tab load personal schedule
+$("a[href$='#schedule']").click(function() {
+	listschedule();
+});
+
+//====================================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+//LIST OF FUNCTIONS===================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+
 /*
 $("a[href$='#courses']").click(function() {
 	$.ajax({
@@ -40,19 +69,6 @@ function register(course_register){
 		alert("You have already registered for this course!");
 	});
 }
-
-
-//On ready
-$("a[href$='#profile']").ready(function(){
-	console.log("Ready Profile");
-	load_profile();
-});
-
-//On Click
-$("a[href$='#profile']").click(function(){
-	console.log("Click Profile");
-	load_profile();
-});
 
 //FUNCTION TO LOAD HTML OF USER PROFILE
 function load_profile(){
@@ -209,7 +225,8 @@ function load_profile(){
 }
 
 
-$("a[href$='#courses']").click(function() {
+//Display list of registerable courses
+function listcourses(){
 	jQuery.getJSON("/user/profile/courses", function(data){
 		
 		$('#courses').contents().remove();
@@ -294,9 +311,10 @@ $("a[href$='#courses']").click(function() {
 
 		$('#courses').append(courses);
 	});
-});
+}
 
-$("a[href$='#schedule']").click(function() {
+//Show a personal user schedule
+function listschedule(){
 	jQuery.getJSON("/user/profile/schedule", function(data){
 		
 		$('#schedule').contents().remove();
@@ -358,4 +376,4 @@ $("a[href$='#schedule']").click(function() {
 
 		$('#schedule').append(courses);
 	});
-});
+}
