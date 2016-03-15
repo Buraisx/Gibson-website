@@ -115,19 +115,34 @@ function load_profile(){
 		var emInfo = $("<h3></h3>").append("Emergency Contacts");
 
 		//Add Emergency Contacts
-		var addContacts = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type: "button", class: "btn btn-default col-sm-3", onclick: "", id: "addcontact"}).append(
-				"Add Emergency Contact"));
+		var newcontact = $("<h4></h4>").append("New Contact");
+		var efnameinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("First Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "efname", id: "efname", placeholder: "e.g. Alice", pattern: 
+		"[a-zA-Z0-9. ]+", oninvalid: "setCustomValidity('Invalid name.')", onchange: "try{setCustomValidity('')}catch(e){}"}));
+		var elnameinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("Last Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "elname", id: "elname", placeholder: "e.g. Smith", pattern: 
+		"[a-zA-Z0-9. ]+", oninvalid: "setCustomValidity('Invalid name.')", onchange: "try{setCustomValidity('')}catch(e){}"}));
+		var erelationshipinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("Relationship:")).append($("<input></input>", {type: "text", class: "form-control", pattern: "[a-zA-Z0-9. ]+", name: "erelationship"}));
+		var ephoneinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("Phone:")).append($("<input></input>", {type: "text", class: "form-control", maxlength: "16", pattern: "\w+", oninvalid: 
+		"setCustomValidity('Invalid phone number.')", onchange: "try{setCustomValidity('')}catch(e){}" }));
+		// Hidden emergency contact input
+		var einputrow1 = $("<div></div>", {class:"row"}).append(efnameinput, elnameinput);
+		var einputrow2 = $("<div></div>", {class:"row"}).append(erelationshipinput, ephoneinput);
+		// Add button
+		var addContacts = $("<div></div>", {class:"row form-group col-sm-12"}).append($("<button></button>", {class:"btn btn-default", onclick: "toggleaddecontact()", id: "econtactbutton"}).append("Add Emergency Contact"));
+
 
 		//Edit Info
-		var editInfo = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type: "button", class: "btn btn-default col-sm-3", onclick: "", id : "editinfo"}).append(
+		var editInfo = $("<div></div>", {class:"row form-group col-sm-12"}).append(
+			$("<button></button>", {type: "button", class: "btn btn-default", onclick: "", id : "editinfo"}).append(
 				"Edit Information"));
 
 		//===============
 		//Change Password 
-		var changePassword = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type : "button", class: "btn btn-default col-sm-3", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
+		var changePassword = $("<div></div>", {class:"row form-group col-sm-12"}).append(
+			$("<button></button>", {type : "button", class: "btn btn-default", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
 				"Change Password"));
 
 		//Only client Can change Pass
@@ -201,7 +216,9 @@ function load_profile(){
 		}
 
 		//Add E-Contacts, Edit Info
+		$('#profile').append($("<div></div>", {id: "addecontact", class: "hidden"}).append(newcontact, einputrow1, einputrow2));
 		$('#profile').append(addContacts);
+		addcontactbuttontoggle(user_info.emergency_contacts.length);
 		$('#profile').append(editInfo);
 
 		//===============
@@ -224,6 +241,12 @@ function load_profile(){
 	});
 }
 
+function addcontactbuttontoggle(contacts) {
+	// Disables the add contact button if the user already has max contacts
+	if (contacts >= 3) {
+		$('#addcontact').prop('disabled', true);
+	}
+}
 
 //Display list of registerable courses
 function listcourses(){
