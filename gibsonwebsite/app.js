@@ -94,6 +94,7 @@ var login = require('./routes/login')(passport);
 var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
 var error = require('./routes/error');
+var adminPages = require('./routes/adminqueries');
 
 app.use('/', routes);
 app.use('/', signup);
@@ -106,24 +107,12 @@ app.use('/', error);
 // ================================================
 
 // AUTHENTICATION FUNCTION - CHECKS THE TOKEN IN COOKIE
-app.use(function(req, res, next, done){
+app.use(function (req, res, next){
 
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
-  var rank;
-  var user_id;
-
-  try{
-      rank = decoded.rank;
-      user_id = decoded.id;
-  }
-
-  catch(err){
-      console.log(err);
-      res.end();
-      return done(null, null);
-  }
+  //console.log(decoded);
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
@@ -132,22 +121,23 @@ app.use(function(req, res, next, done){
     connection.getConnection(function(err, con){
   		if (err){
         console.log('app.js: Error connecting to the DB.');
-        res.end();
-        return done(null, null);
+        //res.end();
+        return err;
       }
 
       // SETTING UP QUERIES NEEDED
       var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = 1;';
       //secretQuery = mysql.format(secretQuery, decoded.rank);
       var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
-      passwordQuery = mysql.format(passwordQuery, user_id);
+      passwordQuery = mysql.format(passwordQuery, decoded.id);
 
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
         if (err){
+          con.release();
           console.log('app.js: Error querying the Database for secret_key');
-          res.end();
-          return done(null, null);
+          //res.end();
+          return err;
         }
 
         var secretKey = results[0].secret_key;
@@ -155,9 +145,10 @@ app.use(function(req, res, next, done){
         // QUERYING THE DATABASE FOR USER'S PASSWORD
         con.query(passwordQuery, function(err, password){
           if (err){
+            con.release();
             console.log('app.js: Error querying the Database for password');
             //res.end();
-            return done(null, null);
+            return err;
           }
 
           // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
@@ -166,15 +157,18 @@ app.use(function(req, res, next, done){
           // VERIFYING TOKEN
           jwt.verify(token, secretKey, function(err, userInfo){
             if (err){
+              con.release();
               console.log('app.js: Error verifying token.');
-              res.end();
-              return done(null, null);
+              //res.end();
+              return err;
             }
             else{
+              con.release();
               req.decoded = userInfo;
               next(); 
             }
           });
+
         });
       });
   	});
@@ -182,19 +176,86 @@ app.use(function(req, res, next, done){
   // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
   else {
     //res.end();
-    done(null, null);
+    return err;
   }
 
 });
 // =============================================
 // ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // =============================================
-app.use('/', test_profile);
 app.use('/', users);
-//app.use('/users', express.static(__dirname + '/public'));
-//app.use('/user', users);
 
 
+//======↓↓↓↓↓AUTHENTICATION FOR ADMIN =========
+
+app.use(function (req, res, next){
+
+  // LOOKING FOR TOKEN IN COOKIES
+  var token = req.cookies.priviledge;
+  var decoded = jwt.decode(token);
+  //console.log(decoded);
+
+  // TOKEN FOUND, TRYING TO VALIDATE
+  if (token){
+    // CREATING CONNECTION
+    var connection = mysql.createPool(config.db_config);
+    connection.getConnection(function(err, con){
+      if (err){
+        console.log('app.js: Error connecting to the DB.');
+        //res.end();
+        return err;
+      }
+
+      if (decoded.rank > 1){
+              // SETTING UP QUERIES NEEDED
+          var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?;';
+          secretQuery = mysql.format(secretQuery, decoded.rank);
+
+        // QUERYING THE DATABASE FOR SECRET KEY
+        con.query(secretQuery, function(err, results){
+          if (err){
+            con.release();
+            console.log('app.js: Error querying the Database for secret_key');
+          //  res.end();
+            return err;
+          }
+
+          var secretKey = results[0].secret_key;
+
+          // VERIFYING TOKEN
+          jwt.verify(token, secretKey, function(err, adminInfo){
+            if (err){
+              con.release();
+              console.log('app.js: Error verifying token.');
+            //  res.end();
+              return err;
+            }
+            else{
+              con.release();
+              next(); 
+            }
+          });
+       
+        });
+      }
+      else{
+        return err;
+      }
+
+    });
+  }
+  // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
+  else {
+    //res.end();
+    return err;
+  }
+
+});
+// =============================================
+//routes under here are admin only routes
+
+app.use('/', test_profile);
+app.use('/', adminPages);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

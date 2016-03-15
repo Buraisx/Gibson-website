@@ -9,79 +9,101 @@ var async = require('async');
 
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
+	//send info back to user
+	res.render('userProfile', {title: "Your Profile"}, function(err, html){
+		res.send(html);
+	});
+});
+
+router.get('/user/profile/info', function(req, res, next) {
 	var decode = jwt.decode(req.cookies.access_token);
-
-	var sql = "SELECT username, lname, fname, birth_date, gender, address, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
-	var inserts = decode.id;
 	var response = {};
-	sql = mysql.format(sql, inserts);
 
-	// CREATING CONNECTION
 	connection.getConnection(function(err, con){
 		if(err){
-			con.release();
+			connection.end();
 			console.log("user.js: Cannot get connection to the database.");
 			return err;
 		}
 
-		con.query(sql, function(err, results){
-			if(err){
-				con.release();
-				console.log("user.js: Query error for finding user info");
-				return err;
-			}
-
-			//check if there is a user with the info
-			if(!results.length){
-				con.release();
-				console.log("user.js: There is no user with this info");
-				done(new Error('No user with this info.'));
-			}
-
-			// SAVING USER INFO INTO RESPONSE OBJECT
-			response.user = results[0];
-
-			// QUERYING FOR EMERGENCY CONTACTS
-			con.query('SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;', [decode.id], function(err, results){
-				if(err){
-					console.log('user.js: Error querying for emergency contacts.');
-					return err;
-				}
-
-				response.emergency_contacts = results;
-
-				if (response.user.student == 1){
-
-					// QUERYING FOR STUDENT INFO
-					con.query('SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;', [decode.id], function(err, results){
+		else{
+			async.waterfall([
+				function(next){
+					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
+					var inserts = decode.id;
+			
+					sql = mysql.format(sql, inserts);
+					con.query(sql, function(err, results){
 						if(err){
-							console.log('user.js: Error querying for student info.');
-							return err;
+							console.log("Cannot query for user info.");
+							return next(err);
+						}
+
+						else if(!results.length){
+							console.log("No user found.");
+							return (new Error("No user found."));
+
+						}
+
+						else{
+							response.user = results[0];
+							next(null);
+						}
+					});
+				},
+
+				function(next){
+					var sql = 'SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;';
+					var inserts = decode.id;
+
+					sql = mysql.format(sql, inserts);
+					con.query(sql, function(err, results){
+						if(err){
+							console.log("Cannot query for emergency contacts.");
+							return next(err);
+						}
+
+						else if(!results.length){
+							console.log("No contacts found.");
+						}
+
+						response.emergency_contacts = results;
+						next(null);
+					});
+				},
+
+				function(next){
+					var sql = 'SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;';
+					var inserts = decode.id;
+
+					sql = mysql.format(sql, inserts);
+					con.query(sql, function(err, results){
+						if(err){
+							console.log("Cannot query for student info.");
+							return next(err);
+						}
+
+						else if(!results.length){
+							console.log("Not a student.");
 						}
 
 						response.student_info = results[0];
-
-						//send info back to user
-						res.render('userProfile', {title: "Sign Up", user_info: response}, function(err, html){
-							con.release();
-							res.send(html);
-						});
+						next(null);
 					});
 				}
-				else{
-					response.student_info = null;
-
-					//send info back to user
-					res.render('userProfile', {title: "Sign Up", user_info: response}, function(err, html){
-						con.release();
-						res.send(html);
-					});
+			],
+				function(err){
+					con.release();
+					if(err){	
+						return err;
+					}
+					console.log(response);
+					res.send(response);
 				}
-			});
-		});
+			);
+		}
 	});
 });
-
 
 router.get('/user/profile/courses', function(req, res, callback) {
 
@@ -111,8 +133,8 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			}
 
 			//send all course info to client
-			console.log(results);
-			res.json(results);
+			//console.log(results);
+			res.send(results);
 		});
 	});
 });
@@ -157,7 +179,7 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 //waterfall this
 router.post('/register', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
-	console.log(decode);
+	//console.log(decode);
 
 	// get courseid and parse for course_id
 	var course_id = Number(req.body.course_id);
@@ -252,6 +274,16 @@ router.post('/register', function(req, res, next){
 			}
 		);
 	});
+});
+
+//logout of account
+router.get('/logout', function(req,res,next){
+	//clears cookie of account from browser
+	res.clearCookie('access_token');
+	browser
+	res.clearCookie('priviledge');
+
+	res.redirect('/');
 });
 
 module.exports = router;

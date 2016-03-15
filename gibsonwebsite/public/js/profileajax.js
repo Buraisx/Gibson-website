@@ -1,3 +1,32 @@
+
+//On ready load profile info
+$("a[href$='#profile']").ready(function(){
+	load_profile();
+});
+
+//On Click profile tab load profile info
+$("a[href$='#profile']").click(function(){
+	load_profile();
+});
+
+//On Click course tab load a list of viewable courses
+$("a[href$='#courses']").click(function() {
+	listcourses();
+});
+
+//On Click schedule tab load personal schedule
+$("a[href$='#schedule']").click(function() {
+	listschedule();
+});
+
+//====================================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+//LIST OF FUNCTIONS===================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+//====================================================================================================================================================
+
 /*
 $("a[href$='#courses']").click(function() {
 	$.ajax({
@@ -41,10 +70,9 @@ function register(course_register){
 	});
 }
 
-
-$("a[href$='#profile']").click(function(){
-	jQuery.getJSON("/user/profile", function(user_info){
-
+//FUNCTION TO LOAD HTML OF USER PROFILE
+function load_profile(){
+	jQuery.getJSON("/user/profile/info", function(user_info){
 		$('#profile').contents().remove();
 
 		//==================================
@@ -56,50 +84,65 @@ $("a[href$='#profile']").click(function(){
 		var basicInfo = $("<h3></h3>").append("Basic Information");
 
 		//Name
-		var fname = $("<div></div>", {class: "col-sm-6"}).append("<p>First Name: " + user_info[0].fname + "</p>");
-		var lname = $("<div></div>", {class: "col-sm-6"}).append("<p>Last Name: " + user_info[0].lname + "</p>");
+		var fname = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>First Name: </strong>" + user_info.user.fname + "</p>");
+		var lname = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Last Name: </strong>" + user_info.user.lname + "</p>");
 
 		//Identifiers
-		var username = $("<div></div>", {class: "col-sm-6"}).append("<p>Username: " + user_info[0].username + "</p>");
-		var email = $("<div></div>", {class: "col-sm-6"}).append("<p>Email: " + user_info[0].email + "</p>");
+		var username = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Username: </strong>" + user_info.user.username + "</p>");
+		var email = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Email: </strong>" + user_info.user.email + "</p>");
 
 		//Phone
-		var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Home): " + user_info[0].primary_phone + "</p>");
-		var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p>Phone (Cell): " + user_info[0].secondary_phone + "</p>");
+		var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Home): </strong>" + user_info.user.primary_phone + "</p>");
+		var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Cell): </strong>" + user_info.user.secondary_phone + "</p>");
 
 		//Birth Info
-		var gender = $("<div></div>", {class: "col-sm-6"}).append("<p>Gender: " + user_info[0].gender + "</p>");
-		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p>Date of Birth: " + String(user_info[0].birth_date).substring(0, 10) + "</p>"); // WIP
+		var gender = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Gender: </strong>" + user_info.user.gender + "</p>");
+		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Date of Birth: </strong>" + String(user_info.user.birth_date).substring(0, 10) + "</p>"); // WIP
 
 		//Address
-		var address = $("<div></div>", {class: "col-sm-6"}).append("<p>Address: " + user_info[0].address + "</p>");
+		var address = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Address: </strong>" + user_info.user.address + "</p>");
 
 		//Student Info
 		var student = $("<h3></h3>").append("Student Information");
 		//School Name and Grade
-		var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p>School Name: " + user_info.user.address + " </p>");
-		var grade = $("<div></div>", {class: "col-sm-6"}).append("<p>Grade: " + user_info.user.address + " </p>");
+		var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>School Name: </strong>" + user_info.student_info.school_name + " </p>");
+		var grade = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Grade: </strong>" + user_info.student_info.grade + " </p>");
 		//Major and ESL
-		var major = $("<div></div>", {class: "col-sm-6"}).append("<p>Major: " + user_info.user.address + " </p>");
-		var esl = $("<div></div>", {class: "col-sm-6"}).append("<p>ESL Level: " + user_info.user.address + " </p>");
+		var major = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Major: </strong>" + user_info.student_info.major + " </p>");
+		var esl = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>ESL Level: </strong>" + user_info.student_info.esl_level + " </p>");
 
 		//Emergency Contacts Header
 		var emInfo = $("<h3></h3>").append("Emergency Contacts");
 
 		//Add Emergency Contacts
-		var addContacts = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type: "button", class: "btn btn-default col-sm-2", onclick: "", id: "addcontact"}).append(
-				"Add Emergency Contact"));
+		var newcontact = $("<h4></h4>").append("New Contact");
+		var efnameinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("First Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "efname", id: "efname", placeholder: "e.g. Alice", pattern: 
+		"[a-zA-Z0-9. ]+", oninvalid: "setCustomValidity('Invalid name.')", onchange: "try{setCustomValidity('')}catch(e){}"}));
+		var elnameinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("Last Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "elname", id: "elname", placeholder: "e.g. Smith", pattern: 
+		"[a-zA-Z0-9. ]+", oninvalid: "setCustomValidity('Invalid name.')", onchange: "try{setCustomValidity('')}catch(e){}"}));
+		var erelationshipinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("Relationship:")).append($("<input></input>", {type: "text", class: "form-control", pattern: "[a-zA-Z0-9. ]+", name: "erelationship"}));
+		var ephoneinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
+			"*")).append("Phone:")).append($("<input></input>", {type: "text", class: "form-control", maxlength: "16", pattern: "\w+", oninvalid: 
+		"setCustomValidity('Invalid phone number.')", onchange: "try{setCustomValidity('')}catch(e){}" }));
+		// Hidden emergency contact input
+		var einputrow1 = $("<div></div>", {class:"row"}).append(efnameinput, elnameinput);
+		var einputrow2 = $("<div></div>", {class:"row"}).append(erelationshipinput, ephoneinput);
+		// Add button
+		var addContacts = $("<div></div>", {class:"row form-group col-sm-12"}).append($("<button></button>", {class:"btn btn-default", onclick: "toggleaddecontact()", id: "econtactbutton"}).append("Add Emergency Contact"));
+
 
 		//Edit Info
-		var editInfo = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type: "button", class: "btn btn-default col-sm-2", onclick: "", id : "editinfo"}).append(
+		var editInfo = $("<div></div>", {class:"row form-group col-sm-12"}).append(
+			$("<button></button>", {type: "button", class: "btn btn-default", onclick: "", id : "editinfo"}).append(
 				"Edit Information"));
 
 		//===============
 		//Change Password 
-		var changePassword = $("<div></div>", {class:"row form-group"}).append(
-			$("<button></button>", {type : "button", class: "btn btn-default col-sm-2", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
+		var changePassword = $("<div></div>", {class:"row form-group col-sm-12"}).append(
+			$("<button></button>", {type : "button", class: "btn btn-default", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
 				"Change Password"));
 
 		//Only client Can change Pass
@@ -164,7 +207,8 @@ $("a[href$='#profile']").click(function(){
 
 		for(var i=0; i<user_info.emergency_contacts.length; i++)
 		{
-		$('#profile').append($("<div></div>", {class:"row"}).append(
+			$('#profile').append($("<h4></h4>").append("Contact #"+(i+1)+":"));
+			$('#profile').append($("<div></div>", {class:"row"}).append(
 			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>First Name:</strong> " + user_info.emergency_contacts[i].fname + "</p>"),
 			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>Last Name:</strong> " + user_info.emergency_contacts[i].lname + "</p>"),
 			$("<div></div>", {class:"col-sm-6"}).append("<p><strong>Relationship:</strong> " + user_info.emergency_contacts[i].relationship + "</p>"),
@@ -172,7 +216,9 @@ $("a[href$='#profile']").click(function(){
 		}
 
 		//Add E-Contacts, Edit Info
+		$('#profile').append($("<div></div>", {id: "addecontact", class: "hidden"}).append(newcontact, einputrow1, einputrow2));
 		$('#profile').append(addContacts);
+		addcontactbuttontoggle(user_info.emergency_contacts.length);
 		$('#profile').append(editInfo);
 
 		//===============
@@ -193,10 +239,17 @@ $("a[href$='#profile']").click(function(){
 			label3, input3, button3));
 		//================
 	});
-});
+}
 
+function addcontactbuttontoggle(contacts) {
+	// Disables the add contact button if the user already has max contacts
+	if (contacts >= 3) {
+		$('#addcontact').prop('disabled', true);
+	}
+}
 
-$("a[href$='#courses']").click(function() {
+//Display list of registerable courses
+function listcourses(){
 	jQuery.getJSON("/user/profile/courses", function(data){
 		
 		$('#courses').contents().remove();
@@ -281,9 +334,10 @@ $("a[href$='#courses']").click(function() {
 
 		$('#courses').append(courses);
 	});
-});
+}
 
-$("a[href$='#schedule']").click(function() {
+//Show a personal user schedule
+function listschedule(){
 	jQuery.getJSON("/user/profile/schedule", function(data){
 		
 		$('#schedule').contents().remove();
@@ -345,4 +399,4 @@ $("a[href$='#schedule']").click(function() {
 
 		$('#schedule').append(courses);
 	});
-});
+}

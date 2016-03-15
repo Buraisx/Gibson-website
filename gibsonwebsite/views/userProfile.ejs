@@ -11,134 +11,23 @@
 </head>
 
 <body>
-    <div class="page-wrap">
+    <div class="page-wrap static-background" data-background="/img/gibsonpic.jpg">
     <section class="container rcorners">
         <div class="tabs tabs-style-linemove">
             <nav>
                 <ul>
-                    <li><a href="#profile"><i class="fa fa-user"></i><span>Profile</span></a></li>
-                    <li><a href="#courses"><i class="fa fa-list"></i><span>Courses</span></a></li>
-                    <li><a href="#schedule"><i class="fa fa-calendar"></i><span>Schedule</span></a></li>
-                    <li><a href="#rental"><i class="fa fa-square"></i><span>Rental View</span></a></li>
-                    <li><a href="#receipt"><i class="fa fa-square"></i><span>Receipt View</span></a></li>
+                    <li><a href="#profile"><i class="fa fa-user tabicon"></i><span>Profile</span></a></li>
+                    <li><a href="#courses"><i class="fa fa-list tabicon"></i><span>Courses</span></a></li>
+                    <li><a href="#schedule"><i class="fa fa-calendar tabicon"></i><span>Schedule</span></a></li>
+                    <li><a href="#rental"><i class="fa fa-square tabicon"></i><span>Rental View</span></a></li>
+                    <li><a href="#receipt"><i class="fa fa-square tabicon"></i><span>Receipt View</span></a></li>
                 </ul>
             </nav>
             <div class="content-wrap">
                 <!--GET csrf token-->
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
                 <section id="profile">
-                    <h3>Basic Information</h3>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p><strong>First Name:</strong></strong> <%= user_info.user.fname %> </p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p><strong>Last Name:</strong> <%= user_info.user.lname %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p><strong>Username:</strong> <%= user_info.user.username %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p><strong>Email:</strong> <%= user_info.user.email %></p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p><strong>Phone (Home):</strong> <%= user_info.user.primary_phone %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p><strong>Phone (Cell):</strong> <%= user_info.user.secondary_phone %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p><strong>Gender:</strong> <%= user_info.user.gender %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p><strong>Date of Birth:</strong> <%= user_info.user.birth_date %> </p>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p><strong>Address:</strong> <%= user_info.user.address %> </p>
-                        </div>
-                    </div>
-
-                    <!--Checks if user is a student-->
-                    <% if(user_info.user.student==1){%> 
-                        <h3>Students Information</h3>
-                        <div class = "row">
-                            <div class = "col-sm-6">
-                                <p><strong>School Name:</strong> <%= user_info.student_info.school_name %></p>
-                            </div>
-                            <div class = "col-sm-6">
-                                <p><strong>Grade:</strong> <%= user_info.student_info.grade %></p>
-                            </div>
-                            <div class = "col-sm-6">
-                                <p><strong>Major:</strong> <%= user_info.student_info.major %></p>
-                            </div>
-                            <div class = "col-sm-6">
-                                <p><strong>ESL Level:</strong> <%= user_info.student_info.esl_level %></p>
-                            </div>
-                        </div>
-                    <%}%>
-
-                    <!--Emergency Contacts-->
-                    <h3>Emergency Contacts</h3>
-
-                    <% for(var i=0; i<user_info.emergency_contacts.length; i++) {%>
-                    <h4>Contact <%= i+1 %></h4>
-                    <div class = "row">
-                        <div class = "col-sm-6">
-                            <p><strong>First Name:</strong> <%= user_info.emergency_contacts[i].fname %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p><strong>Last Name:</strong> <%= user_info.emergency_contacts[i].lname %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p><strong>Relationship:</strong> <%= user_info.emergency_contacts[i].relationship %></p>
-                        </div>
-                        <div class = "col-sm-6">
-                            <p><strong>Phone:</strong> <%= user_info.emergency_contacts[i].contact_phone %></p>
-                        </div>
-                    </div>
-                    <% } %>
-
-
-                    <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "addcontact">Add Emergency Contact</button>
-                    </div>
-                    <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="" id = "editinfo">Edit Information</button>
-                    </div>
-                    <div class="row form-group">
-                        <button type = "button" class= "btn btn-default col-sm-2" onclick="togglepassworddropdown()" id = "changepassbutton">Change Password</button>
-                    </div>
-
-
-                    <!-- Password Change -->
-                    <div id='change_password' class='hidden changepassdesign'>
-                        <div class = "row">
-                            <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>
-                            <form class="form-inline" role = "form">
-                                <div class = "form-group">
-                                    <label>Current Password:</label>
-                                    <input type = "password" class = "form-control" name = "currentpass" id = "currentpass" placeholder="Enter Current Password" required pattern="\w+"><!--Character restrictions-->
-                                </div>
-                                <div class = "form-group">
-                                    <label>New Password:</label>
-                                    <input type = "password" class = "form-control" name = "newpass" id = "password" placeholder="Enter New Password" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
-                                </div>
-                                <div class = "form-group">
-                                    <label>Confirm New Password:</label>
-                                    <input type = "password" class = "form-control" name = "confirmnewpass" id = "passwordhashed" placeholder="Confirm New Password" onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}"><!--Character restrictions-->
-                                    <button type = "button" class = "btn btn-default " onclick="" id = "changepassbutton">Change</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    <!-- Tab On Load/Click fills profile-->
                 </section>
                 <section id="courses">
                     <!-- Tab On-Click fills courses-->
@@ -185,6 +74,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="/js/freelancer.js"></script>
     <script src="/js/profileajax.js"></script>
+
+    <!-- Set Background Javascript -->
+    <script src="/js/setBackgroundImage.js"></script>
 </div>
 </body>
 

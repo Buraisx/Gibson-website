@@ -62,8 +62,8 @@ function generateToken(req, res, next) {
   connection.getConnection(function(err, con){
     if(err){
       console.log('token.js: Error connecting to the database.');
-      res.redirect('/login');
-      return;
+      //res.redirect('/login');
+      return err;
     }
     else{
       // QUERING THE DB FOR COMMON secret_key
@@ -71,8 +71,8 @@ function generateToken(req, res, next) {
         if (err){
           con.release();
           console.log('token.js: Error while querying the database for common secret_key.');
-          res.redirect('/login');
-          return;
+          //res.redirect('/login');
+          return err;
         }
         // RETRIEVED secret_key
         else{
@@ -89,64 +89,74 @@ function generateToken(req, res, next) {
           req.user.secretKey, {
             expiresIn: 14*24*60*60 // 14 day
           });
+          console.log("user token:" + req.token);
 
           // IF ADMIN, GET THE ADMIN's secret_key
+          console.log(typeof(req.user.rank_id));
+          //console.log(4>1);
           if (req.user.rank_id > 1){
 
             var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?';
             secretQuery = mysql.format(secretQuery, req.user.rank_id);
 
-            con.query(secretQuery, function(err, results){
+            con.query(secretQuery, function(err, results1){
               con.release();
 
               if (err){
                 console.log('token.js: Error while querying the database for admin secret_key');
-                res.redirect('/login');
-                return;
+                //res.redirect('/login');
+                return err;
               }
-              else{
-                req.user.adminSecretKey = results[0].secret_key;
 
-                // ADMIN -> ISSUE A SECOND TOKEN
-                if (req.user.rank === 'admin'){
-                  req.adminToken = jwt.sign({
-                    iss: config.jwt.issuer,
-                    id: req.user.user_id,
-                    user: req.user.username,
-                    rank: req.user.rank_id,
-                    lastLoggedIn: req.user.last_login_time
-                  },
-                  req.user.adminSecretKey, {
-                    expiresIn: 12*60*60 // 12 hours
-                  });
-                }
-                next();
-              }
+              req.user.adminSecretKey = results1[0].secret_key;
+
+              // ADMIN -> ISSUE A SECOND TOKEN
+              req.adminToken = jwt.sign({
+                iss: config.jwt.issuer,
+                id: req.user.user_id,
+                user: req.user.username,
+                rank: req.user.rank_id,
+                lastLoggedIn: req.user.last_login_time
+              },
+                req.user.adminSecretKey, {
+                  expiresIn: 12*60*60
+          // 12 hours 12 * 60 * 60
+
+              });
+              console.log("ADMIN TOKEN:" + req.adminToken);
+              next();
             });
+            //next();
           }
-          console.log(req.user);
-          next();
+          else{
+            next();
+          }
         }
       });
     }
   });
 }
 
-// PLACING THE TOKEN IN A COOKIE
+// PLACING THE TOKEN IN A COOKIE (MaxAge in MILLISECONDS)
 function respond(req, res, next) {
 	res.clearCookie('access_token');
-	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 14*24*60*60});
-
-  // IF ADMIN, GIVE EXTRA TOKEN
-  if (req.user.rank_id > 1){
-    res.clearCookie('priviledge');
-    res.cookie('priviledge', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60});
-  }
+	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
 
   next();
 	//res.redirect('/');
 }
 
+function adminRespond(req,res,next){
+
+  // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
+  if (req.user.rank_id > 1) {
+    res.clearCookie('priviledge');
+    res.cookie('priviledge', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60*1000});
+  }
+  next();
+}
+
 module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
 module.exports.respond = respond;
+module.exports.adminRespond = adminRespond;

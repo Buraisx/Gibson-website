@@ -37,18 +37,12 @@ router.post('/login', passport.authenticate('local-login', {
 	//successRedirect: '/user/profile',		// Redirect to main page when login complete
 	failureRedirect: '/login'	// Return to login when fail, and flash error
 
-}), token.generateToken, token.respond, redirect);
+}), token.generateToken, token.respond, token.adminRespond, redirect);
 
 // REDIRECT FOR LOGIN
 function redirect(req, res){
 	res.redirect('/user/profile');
 }
-
-//logout of account
-router.post('/logout', function(req,res,next){
-	res.clearCookie('access_token');
-	res.redirect('/');
-});
 
 	return router;
 };
