@@ -421,5 +421,5 @@ function courseform(){
 	addcourses+='                    </div>';
 	addcourses+='                </form>';
 	$('#addcourses').append(addcourses);
-	$('#rangedatepicker').not('.hasDatePicker').datepicker();
+	$('#rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
 }
