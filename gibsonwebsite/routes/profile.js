@@ -75,4 +75,3 @@ function get_user_data () {
 		
 	});
 }
-*/

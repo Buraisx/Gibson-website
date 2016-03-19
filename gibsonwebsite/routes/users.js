@@ -4,7 +4,7 @@ var config = require('../server_config');
 var jwt = require('jsonwebtoken');
 var token = require('../authentication/token');
 var mysql = require('mysql');
-var connection = mysql.createPool(config.db_config);
+var connection = require('../mysqlpool');
 var async = require('async');
 
 /* GET users listing. */

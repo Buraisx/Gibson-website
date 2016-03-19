@@ -3,11 +3,11 @@ var config = require("server_config");
 
 var connection = mysql.createPool(config.db_config);
 
-exports.getConnection = function (cb){
+exports.getConnection = function (callback){
   connection.getConnection(function(err, con){
     if (err){
-      return cb(err);
+      return callback(err);
     }
-    cb(err, con);
+    callback(err, con);
   });
 };
