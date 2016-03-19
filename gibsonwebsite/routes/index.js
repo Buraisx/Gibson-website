@@ -50,4 +50,8 @@ router.get('/forgotpassword', function(req, res, next) {
   res.render('forgotpassword', { title: 'Forgotten Password' });
 });
 
+router.get('/hardcodedprofile', function(req, res, next) {
+  res.render('hardcodeduserProfile', { title: 'hardcode masters' });
+});
+
 module.exports = router;
