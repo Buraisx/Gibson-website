@@ -96,12 +96,14 @@ var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
 var error = require('./routes/error');
 var adminPages = require('./routes/adminqueries');
+var forgotcreds = require('./routes/forgotcredentials');
 
 app.use('/', routes);
 app.use('/', signup);
 app.use('/', login);
 app.use('/', confirm);
 app.use('/', error);
+app.use('/', forgotcreds);
 
 // ================================================
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
