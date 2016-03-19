@@ -154,7 +154,14 @@ function adminRespond(req,res,next){
   next();
 }
 
+function sendUsername(req,res,next) {
+  res.clearCookie('gibson_user');
+  res.cookie('gibson_user', req.user.username, {maxAge: 14*24*60*60*1000});
+  next();
+}
+
 module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
 module.exports.respond = respond;
 module.exports.adminRespond = adminRespond;
+module.exports.sendUsername = sendUsername;
