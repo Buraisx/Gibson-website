@@ -1,9 +1,7 @@
 var config = require('../server_config');
 var mysql = require('mysql');
 var jwt = require('jsonwebtoken');
-
-// SETUP POOLING CONNECTION
-var connection = mysql.createPool(config.db_config);
+var connection = require('../mysqlpool');
 
 // ONE-TIME TOKEN
 function generateOneUse(req, res, next){
