@@ -2,14 +2,17 @@
 $(document).ready(function(){
 	var user = getCookie('gibson_user');
 	$('#loginoutbutton').contents().remove();
+	$('#userdisplay').contents().remove();
 	var button = '';
 	if(user != null) {
 		button += '<a href="/logout">Logout</a>';
+		$('#loginoutbutton').append(button);
+		$('#userdisplay').append('<p>' + user + '</p>');
 	}
 	else {
 		button += '<a href="/login">Login</a>';
+		$('#loginoutbutton').append(button);
 	}
-	$('#loginoutbutton').append(button);
 });
 
 //Get cookie Values
