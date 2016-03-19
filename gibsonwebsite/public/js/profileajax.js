@@ -174,7 +174,7 @@ function load_profile(){
 			var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Cell): </strong>" + user_info.user.secondary_phone + "</p>");
 
 			//Phone (Home,Cell)
-			$('#profile').append($("<div></div>", {class:"row"}).append(primaryPhone,secondary_phone));
+			$('#profile').append($("<div></div>", {class:"row"}).append(primaryPhone,secondaryPhone));
 			}
 
 			else if(user_info.user.secondary_phone)
