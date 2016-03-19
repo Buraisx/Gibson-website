@@ -17,7 +17,7 @@ recaptcha.init('6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0','6LeqAhkTAAAAADZXG0cYZ
 //load sign up page
 router.get('/signup', function(req,res,next){
 
-	if(token){
+	if(req.cookies.access_token){
 	 	res.redirect('/user/profile');
 	 }
 	else
