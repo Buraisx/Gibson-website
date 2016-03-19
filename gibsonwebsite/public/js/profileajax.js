@@ -91,25 +91,8 @@ function load_profile(){
 		var username = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Username: </strong>" + user_info.user.username + "</p>");
 		var email = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Email: </strong>" + user_info.user.email + "</p>");
 
-		//Phone
-		var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Home): </strong>" + user_info.user.primary_phone + "</p>");
-		var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Cell): </strong>" + user_info.user.secondary_phone + "</p>");
-
 		//Birth Info
-		var gender = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Gender: </strong>" + user_info.user.gender + "</p>");
 		var dob = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Date of Birth: </strong>" + String(user_info.user.birth_date).substring(0, 10) + "</p>"); // WIP
-
-		//Address
-		var address = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Address: </strong>" + user_info.user.address + "</p>");
-
-		//Student Info
-		var student = $("<h3></h3>").append("Student Information");
-		//School Name and Grade
-		var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>School Name: </strong>" + user_info.student_info.school_name + " </p>");
-		var grade = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Grade: </strong>" + user_info.student_info.grade + " </p>");
-		//Major and ESL
-		var major = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Major: </strong>" + user_info.student_info.major + " </p>");
-		var esl = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>ESL Level: </strong>" + user_info.student_info.esl_level + " </p>");
 
 		//Emergency Contacts Header
 		var emInfo = $("<h3></h3>").append("Emergency Contacts");
@@ -181,26 +164,83 @@ function load_profile(){
 		//username email
 		$('#profile').append($("<div></div>", {class:"row"}).append(
 			username, email));
-		//Phone (Home, Cell)
-		$('#profile').append($("<div></div>", {class:"row"}).append(
-			primaryPhone, secondaryPhone));
-		//Gender and Date of Birth
-		$('#profile').append($("<div></div>", {class:"row"}).append(
-			gender, dob));
-		//Address
-		$('#profile').append($("<div></div>", {class:"row"}).append(
-			address));
+
+		if(user_info.user.primary_phone||user_info.user.secondary_phone)
+		{
+			if(user_info.user.primary_phone&&user_info.user.secondary_phone)
+			{
+			//Phone
+			var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Home): </strong>" + user_info.user.primary_phone + "</p>");
+			var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Cell): </strong>" + user_info.user.secondary_phone + "</p>");
+
+			//Phone (Home,Cell)
+			$('#profile').append($("<div></div>", {class:"row"}).append(primaryPhone,secondary_phone));
+			}
+
+			else if(user_info.user.secondary_phone)
+			{
+			var secondaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Cell): </strong>" + user_info.user.secondary_phone + "</p>");
+
+			//Phone (cell)
+			$('#profile').append($("<div></div>", {class:"row"}).append(secondaryPhone));
+			}
+			else
+			{
+			//Phone
+			var primaryPhone = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Phone (Home): </strong>" + user_info.user.primary_phone + "</p>");
+
+			//Phone (Home)
+			$('#profile').append($("<div></div>", {class:"row"}).append(primaryPhone));
+			}
+		}
+
+		//Date of Birth
+		$('#profile').append($("<div></div>", {class:"row"}).append(dob));
+
 		//check if user is a student
 		if(user_info.user.student==1)
 		{
+			//Student Info
+			var student = $("<h3></h3>").append("Student Information");
+			//School Name and Grade
+			var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>School Name: </strong>" + user_info.student_info.school_name + " </p>");
+			var grade = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Grade: </strong>" + user_info.student_info.grade + " </p>");
+			
 			//Student Info
 			$('#profile').append(student);
 			//School Name and grade
 			$('#profile').append($("<div></div>", {class:"row"}).append(
 				schoolname, grade));
-			//major and esl level
-			$('#profile').append($("<div></div>", {class:"row"}).append(
-				major, esl));
+
+			if(user_info.student_info.major||user_info.student_info.esl_level)
+			{
+				if(user_info.student_info.major&&user_info.student_info.esl_level)
+				{
+					//Major and ESL
+					var major = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Major: </strong>" + user_info.student_info.major + " </p>");
+					var esl = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>ESL Level: </strong>" + user_info.student_info.esl_level + " </p>");
+
+					//major and esl level
+					$('#profile').append($("<div></div>", {class:"row"}).append(
+						major, esl));
+				}
+				else if(user_info.student_info.major)
+				{
+					//Major
+					var major = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>Major: </strong>" + user_info.student_info.major + " </p>");
+
+					//major
+					$('#profile').append($("<div></div>", {class:"row"}).append(major));
+				}
+				else
+				{
+					//ESL
+					var esl = $("<div></div>", {class: "col-sm-6"}).append("<p><strong>ESL Level: </strong>" + user_info.student_info.esl_level + " </p>");
+
+					//esl level
+					$('#profile').append($("<div></div>", {class:"row"}).append(esl));
+				}
+			}
 		}
 		//Emergency Contact
 		$('#profile').append(emInfo);
