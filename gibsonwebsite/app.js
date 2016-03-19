@@ -14,6 +14,7 @@ var dnsPrefetchControl = require('dns-prefetch-control');
 var jwt = require('jsonwebtoken');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
+var connection = require('mysqlpool');
 
 //CSRF Protection
 var csrf = require('csurf');
@@ -117,7 +118,7 @@ app.use(function (req, res, next){
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
     // CREATING CONNECTION
-    var connection = mysql.createPool(config.db_config);
+    //// var connection = mysql.createPool(config.db_config);
     connection.getConnection(function(err, con){
   		if (err){
         console.log('app.js: Error connecting to the DB.');
@@ -165,7 +166,7 @@ app.use(function (req, res, next){
             else{
               con.release();
               req.decoded = userInfo;
-              next(); 
+              next();
             }
           });
 
@@ -198,7 +199,7 @@ app.use(function (req, res, next){
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
     // CREATING CONNECTION
-    var connection = mysql.createPool(config.db_config);
+    // var connection = mysql.createPool(config.db_config);
     connection.getConnection(function(err, con){
       if (err){
         console.log('app.js: Error connecting to the DB.');
@@ -232,10 +233,10 @@ app.use(function (req, res, next){
             }
             else{
               con.release();
-              next(); 
+              next();
             }
           });
-       
+
         });
       }
       else{

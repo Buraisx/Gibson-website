@@ -9,6 +9,7 @@ var connection = require('../mysqlpool');
 // SETUP POOLING CONNECTION
 config.db_config.multipleStatements = true;
 
+
 // TESTING THE CONNECTION TO THE DB
 connection.getConnection(function(err, con){
     if(err)
@@ -237,7 +238,7 @@ module.exports = function(passport){
                     // FINISHED INSERTING A NEW USER
                     return done(null, newUser);
                   }
-                  
+
                 }
               });
             });
