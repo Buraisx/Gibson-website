@@ -51,5 +51,44 @@ router.get('/forgotpassword', function(req,res,next){
 
 });
 
+router.post('/forgotpassword', function(req,res,next){
+
+	connection.getConnection(function(err,con){
+
+		if (err){
+        	console.log('forgotcredentials.js: Error connecting to the DB.');
+        	//res.end();
+        	return err;
+      	}
+
+      	// LOOK FOR THE EMAIl CORRESPONDING TO THE USER
+      	var userquery = 'SELECT email FROM gibson.user WHERE username = ?;';
+      	var inserts = req.body.username;
+      	userquery = mysql.format(userquery, inserts);
+
+      	con.query(userquery, function(err, results){
+
+      		con.release();
+
+      		if(err){
+
+      			return (new Error("forgotcredentials.js: Query error for forgot password"))
+      		}
+      		else if (!results.length){
+
+      			return (new Error("forgotcredentials.js: No email with this username found."));
+      		}
+
+      		//send user the email with the username
+      		res.send("LOLZ SEND THE EMAILS LOL");
+
+      	});
+
+	});
+
+
+
+});
+
 
 module.exports = router;
