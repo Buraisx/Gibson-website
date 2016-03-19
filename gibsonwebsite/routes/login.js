@@ -10,7 +10,15 @@ module.exports = function(passport){
 //load login page
 router.get('/login', function(req,res,next){
 
-	res.render('login', { title: 'Login'});
+	 var token = req.cookies.access_token;
+
+	 if(token){
+	 	res.redirect('/user/profile');
+	 }
+	 else
+	 {
+	 	res.render('login', { title: 'Login'});
+	 }
 
 });
 

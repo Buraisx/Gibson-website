@@ -17,19 +17,25 @@ recaptcha.init('6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0','6LeqAhkTAAAAADZXG0cYZ
 //load sign up page
 router.get('/signup', function(req,res,next){
 
-	// MAKING THE QUERY STRING
-	var sql = "SELECT province_id, province_name FROM gibson.province;";
-
-	//query to look for the province names and the their respective province ids
-	connection.getConnection(function(err, con)
+	if(token){
+	 	res.redirect('/user/profile');
+	 }
+	else
 	{
-			con.query(sql,function(err, results)
-			{
-					con.release();
-					//Sends Sign up Title, List of Canada Provinces, Max emergency contact
-					res.render('signup', { title: 'Sign Up', province_list: results,  MAX: 3, captcha: recaptcha.render()});
-			});
-	});
+		// MAKING THE QUERY STRING
+		var sql = "SELECT province_id, province_name FROM gibson.province;";
+
+		//query to look for the province names and the their respective province ids
+		connection.getConnection(function(err, con)
+		{
+				con.query(sql,function(err, results)
+				{
+						con.release();
+						//Sends Sign up Title, List of Canada Provinces, Max emergency contact
+						res.render('signup', { title: 'Sign Up', province_list: results,  MAX: 3, captcha: recaptcha.render()});
+				});
+		});
+	}
 });
 
 //create new user
