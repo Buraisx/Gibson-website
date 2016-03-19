@@ -4,10 +4,10 @@ var config = require('../server_config');
 var bcrypt = require('bcrypt-nodejs');
 var sanitizer = require('sanitizer');
 var async = require('async');
+var connection = require('../mysqlpool');
 
 // SETUP POOLING CONNECTION
 config.db_config.multipleStatements = true;
-var connection = mysql.createPool(config.db_config);
 
 // TESTING THE CONNECTION TO THE DB
 connection.getConnection(function(err, con){
