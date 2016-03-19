@@ -3,7 +3,7 @@ var config = require('../server_config');
 var jwt = require('jsonwebtoken');
 var mysql = require('mysql');
 var router = express.Router();
-var connection = mysql.createPool(config.db_config);
+var connection = require('../mysqlpool');
 var pagename = 'profile.js';
 
 function get_user_data () {
@@ -75,4 +75,3 @@ function get_user_data () {
 		
 	});
 }
-*/

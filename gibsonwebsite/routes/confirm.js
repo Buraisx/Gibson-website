@@ -3,6 +3,7 @@ var config = require('../server_config');
 var jwt = require('jsonwebtoken');
 var mysql = require('mysql');
 var router = express.Router();
+var connection = require('../mysqlpool');
 
 router.get('/confirm', function(req, res) {
 
@@ -16,7 +17,6 @@ router.get('/confirm', function(req, res) {
 
     // CREATES POOLING connection
     config.db_config.multipleStatements = true;
-    var connection = mysql.createPool(config.db_config);
     connection.getConnection(function(err, con){
       if(err){
         con.release();

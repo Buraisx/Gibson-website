@@ -5,7 +5,8 @@ var config = require('../server_config');
 var token = require('../authentication/token');
 var email = require('../authentication/auto_email');
 var recaptcha = require('express-recaptcha');
-
+// CREATING CONNECTION
+var connection = require('../mysqlpool');
 
 module.exports = function(passport){
 
@@ -15,8 +16,6 @@ recaptcha.init('6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0','6LeqAhkTAAAAADZXG0cYZ
 
 //load sign up page
 router.get('/signup', function(req,res,next){
-	// CREATING CONNECTION
-	var connection = mysql.createPool(config.db_config);
 
 	// MAKING THE QUERY STRING
 	var sql = "SELECT province_id, province_name FROM gibson.province;";
