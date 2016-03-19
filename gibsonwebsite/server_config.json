@@ -2,7 +2,7 @@
 
   "db_config": {
     "connectionLimit":3,
-    "host": "localhost",
+    "host": "192.168.1.47",
     "user": "root",
     "password": "Sabad@th!s1234567",
     "database": "gibson",
@@ -23,7 +23,7 @@
     "https://www.105gibson.ca"
   ],
 
-  "sendEmail": false,
+  "sendEmail": true,
 
   "transport": {
     "host": "smtp.gmail.com",

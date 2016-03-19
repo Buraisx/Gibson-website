@@ -194,7 +194,7 @@ app.use('/', users);
 app.use(function (req, res, next){
 
   // LOOKING FOR TOKEN IN COOKIES
-  var token = req.cookies.priviledge;
+  var token = req.cookies.privilege;
   var decoded = jwt.decode(token);
   //console.log(decoded);
 

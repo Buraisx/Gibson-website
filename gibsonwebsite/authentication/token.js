@@ -34,8 +34,7 @@ function generateOneUse(req, res, next){
       }
 
       // MAKE TOKEN AND STORE IN req.oneUseToken
-      req.oneUseToken = 'https://localhost:3000/confirm?token=';
-      req.oneUseToken += jwt.sign({
+      req.oneUseToken = jwt.sign({
         token_id: results.insertId,
         iss: config.jwt.issuer,
         user: req.user.username,
@@ -148,8 +147,8 @@ function adminRespond(req,res,next){
 
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
   if (req.user.rank_id > 1) {
-    res.clearCookie('priviledge');
-    res.cookie('priviledge', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60*1000});
+    res.clearCookie('privilege');
+    res.cookie('privilege', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60*1000});
   }
   next();
 }
