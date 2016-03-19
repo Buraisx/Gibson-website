@@ -46,10 +46,6 @@ router.get('/theteam', function(req, res, next) {
   res.render('Theteam', { title: 'Gibson' });
 });
 
-router.get('/forgotusername', function(req, res, next) {
-  res.render('forgotusername', { title: 'Forgotten Username' });
-});
-
 router.get('/forgotpassword', function(req, res, next) {
   res.render('forgotpassword', { title: 'Forgotten Password' });
 });
