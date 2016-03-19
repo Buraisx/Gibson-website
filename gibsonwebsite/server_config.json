@@ -17,6 +17,12 @@
     }
   },
 
+  "domains": [
+    "https://localhost:3000",
+    "https://www.105gibson.com",
+    "https://www.105gibson.ca"
+  ],
+
   "sendEmail": false,
 
   "transport": {
