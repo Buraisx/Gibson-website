@@ -14,7 +14,7 @@ var dnsPrefetchControl = require('dns-prefetch-control');
 var jwt = require('jsonwebtoken');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
-var connection = require('mysqlpool');
+var connection = require('./mysqlpool');
 
 //CSRF Protection
 var csrf = require('csurf');
