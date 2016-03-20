@@ -348,6 +348,18 @@ function courseform(){
 	addcourses+='                            <input type = "text" class = "form-control" name = "addcoursecode" id = "addcoursecode" required>';
 	addcourses+='                        </div>';
 	addcourses+='                    </div>';
+	addcourses+='					 <div class = "row">';
+	addcourses+='					 	 <div class = "form-group col-sm-4">';
+	addcourses+='					 		 <label>Instructor\'s Username:</label>';
+	addcourses+='                            <input type = "text" class = "form-control" name = "instructor_username" id = "instructor_username" required>';
+	addcourses+='					 	 </div>';
+	addcourses+='					 </div>';
+	addcourses+='					 <div class = "row">';
+	addcourses+='					 	 <div class = "form-group col-sm-4">';
+	addcourses+='					 		 <label><span class="required">*</span>Instructor\'s Name:</label>';
+	addcourses+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name" required>';
+	addcourses+='					 	 </div>';
+	addcourses+='					 </div>';
 	addcourses+='                    <div class = "row">';
 	addcourses+='                        <div class = "form-group col-sm-8">';
 	addcourses+='                            <label><span class="required">*</span>Description:</label>';
