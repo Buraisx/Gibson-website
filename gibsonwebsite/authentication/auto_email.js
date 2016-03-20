@@ -105,6 +105,50 @@ function usernameReminder(email, username, next){
   });
 }
 
+// FORGOT PASSWORD EMAIL
+function forgotpassword(email, username, token, next){
 
+  console.log(email);
+  console.log(username);
+  //console.log(token);
+
+  fs.readFile('../gibsonwebsite/email_templates/forgot_password/text.txt', 'utf-8', function(err, data){
+    if(err){
+      console.log('auto_email.js: Cannot read text.txt for forgot password.');
+    }
+    else{
+
+      var plain = data;
+      //console.log(plain);
+
+      // CREATE TEMPLATE BASE SENDER FUNCTION
+      var sendForgotPassword = transport.templateSender({
+        subject: 'Forgotten Password',
+        text: plain
+      },
+      {
+        from: config.transport.auth.user
+      });
+
+      // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
+      sendForgotPassword({
+        to: email,
+      },
+      {
+        username: username,
+        domain: config.domains[0],
+        token: token
+      },
+      function(err, info){
+        if (err){
+          console.log('auto_email.js: Error sending forgot password email.');
+        }
+        
+      });
+    }
+  });
+}
+
+module.exports.forgotpassword = forgotpassword;
 module.exports.usernameReminder = usernameReminder;
 module.exports.signupConfEmail = signupConfEmail;

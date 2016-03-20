@@ -1,0 +1,13 @@
+Hello {{username}},
+
+You have requested for your lost password. Click the following link and follow the steps to change your password. 
+
+{{domain}}?token={{token}}
+
+If you did not request for your password, please ignore and delete this email.
+
+Thank you, 
+
+105 Gibson Team
+
+https://www.105gibson.com

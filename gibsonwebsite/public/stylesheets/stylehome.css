@@ -3,10 +3,13 @@ body {
     height: 100%;
 }
 
-.carousel,
 .item,
 .active {
     height: 500px;
+}
+
+.carousel {
+	height: 600px;
 }
 
 .carousel-inner {
@@ -137,20 +140,20 @@ hr.star-green:after {
 }
 
 hr.star-blue {
-    border-color: #2c3e50;
+    border-color: #fff;
 }
 
 hr.star-blue:after {
-    color: #2c3e50;
+    color: #fff;
     background-color: #25A7DE;
 }
 
 hr.star-green {
-    border-color: #2c3e50;
+    border-color: #fff;
 }
 
 hr.star-green:after {
-    color: #2c3e50;
+    color: #fff;
     background-color: #8BC43F;
 }
 
@@ -252,10 +255,10 @@ p {
 }
 
 .fadedIn {
-	-webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
-    -moz-animation: fadein 0.5s; /* Firefox < 16 */
-    -ms-animation: fadein 0.5s; /* Internet Explorer */
-    -o-animation: fadein 0.5s; /* Opera < 12.1 */
+	-webkit-animation: fadein 0.7s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 0.7s; /* Firefox < 16 */
+    -ms-animation: fadein 0.7s; /* Internet Explorer */
+    -o-animation: fadein 0.7s; /* Opera < 12.1 */
 }
 
 .fadedLeft {
@@ -278,4 +281,40 @@ p {
 
 .paddingbutton{
 	padding-bottom: 10px;
+}
+
+/* this is to replace the default bootstrap 0.6 tranisition timer. all other styles for this rule is based off bootstrap */
+.carousel-inner > .item {
+  -webkit-transition: 0.9s ease-in-out left;
+  -moz-transition: 0.9s ease-in-out left;
+  -o-transition: 0.9s ease-in-out left;
+  transition: 0.9s ease-in-out left;
+}
+
+@media (max-width: 1000px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+		top: 0;
+		border-width: 0 0 1px;
+	}
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+		margin-top: 7.5px;
+	}
+    .collapse.in{
+  		display:block !important;
+	}
 }

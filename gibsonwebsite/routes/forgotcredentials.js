@@ -3,6 +3,7 @@ var router = express.Router();
 var mysql = require('mysql');
 var email = require('../authentication/auto_email');
 var connection = require('../mysqlpool');
+var token = require('../authentication/token');
 
 router.get('/forgotusername', function(req,res,next){
 
@@ -54,7 +55,9 @@ router.post('/forgotpassword', function(req,res,next){
         	console.log('forgotcredentials.js: Error connecting to the DB.');
         	//res.end();
         	return err;
-      	}
+    }
+    else{
+
 
       	// LOOK FOR THE EMAIl CORRESPONDING TO THE USER
       	var userquery = 'SELECT email FROM gibson.user WHERE username = ?;';
@@ -75,10 +78,12 @@ router.post('/forgotpassword', function(req,res,next){
       		}
 
       		//send user the email with the username
-      		res.send("LOLZ SEND THE EMAILS LOL");
+          token.forgotPasswordToken(results[0].email, req.body.username);
+         // email.forgotpassword(results[0].email, req.body.username, fptoken);
+          res.redirect('/forgotusername');
 
       	});
-
+      }
 	});
 
 
