@@ -18,3 +18,14 @@ var waypointTwo = $('section > div').each( function() {
 		offset: '90%'
 	})
 })
+var waypointTwo = $('iframe').each( function() {
+	var thisElement = $(this);
+	thisElement.css("opacity", "0");
+	thisElement.waypoint({
+		handler: function() {
+			thisElement.addClass('fadedLeft');
+			thisElement.css("opacity", "1");
+		},
+		offset: '90%'
+	})
+})
