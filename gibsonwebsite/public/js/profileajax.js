@@ -484,15 +484,15 @@ function listcourses(){
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
-			var coursename = $("<p></p>", {id: "coursename"}).append(data[i].course_name);
-			var courseid = $("<p></p>", {id: "courseid"}).append("Course ID:", data[i].course_id);
+			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
+			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code:", data[i].course_id);
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
 
 			var row = $("<div></div>", {class: "row"});
 			var colsm6 = $("<div></div>", {class:"form-group col-sm-6"});
-			var description = $("<p></p>", {id: "description"}).append("<strong>Description: </strong>").append(data[i].course_description);
+			var description = $("<p></p>", {id: "description"}).append(data[i].course_description);
 			var startdate = $("<p></p>", {id: "coursestartdate"}).append("<strong>Start Date: </strong>" + String(data[i].start_date).substring(0, 10));
 			var enddate = $("<p></p>", {id: "courseenddate"}).append("<strong>End Date: </strong>" + String(data[i].end_date).substring(0, 10));
 			var coursetime = $("<p></p>", {id: "coursetime"}).append("<strong>Time: </strong>" + data[i].course_time);
@@ -501,7 +501,7 @@ function listcourses(){
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("<strong>Target: </strong>" + data[i].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("<strong>Cost: </strong>$" + data[i].default_fee);
 			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
-
+			var row = $("<div></div>", {class: "row"});
 
 			//=============================
 			//Top Down compilation hierarchy
@@ -512,7 +512,8 @@ function listcourses(){
 			//First div of panel-default
 			panel_heading = panel_heading.append(panel_title);
 			panel_title = panel_title.append(collapse);
-			collapse = collapse.append(coursename, courseid);
+			row = row.append(coursename,courseid);
+			collapse = collapse.append(row);
 
 			//--------------------------
 			//Second div of panel-default
@@ -522,8 +523,6 @@ function listcourses(){
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
 										 	$("<div></div>", {class:"form-group col-sm-12"}).append(
 										 		description)));		//escaping closures	
-
-			panelbody = panelbody.append("<br>");
 
 			//STARTDATE & ENDDATE
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
@@ -538,8 +537,6 @@ function listcourses(){
 										 		coursetime),			//escaping closures
 										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
 										 		courseinterval)));			//escaping closures
-
-			panelbody = panelbody.append("<br>");
 
 			//COURSE COST & BUTTON
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
@@ -574,7 +571,7 @@ function listschedule(){
 			collapse.attr("data-toggle", "collapse");
 
 			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course ID:", data[i].course_id);
+			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code:", data[i].course_id);
 
 			var coursetime = $("<div></div>", {class: "col-sm-4"}).append("Time: " + data[i].course_time);
 			var courseinterval = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Interval: " + data[i].course_interval);
@@ -587,7 +584,7 @@ function listschedule(){
 			var row2 = $("<div></div>", {class: "row"});
 
 			var offset = $("<div></div>",{class: "col-sm-offset-1"});
-			var description = $("<p></p>", {id: "description"}).append("Description: "+ data[i].course_description);
+			var description = $("<p></p>", {id: "description"}).append(data[i].course_description);
 			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + String(data[i].end_date).substring(0, 10));
 			
 
