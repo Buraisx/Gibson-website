@@ -1,48 +1,43 @@
 var express = require('express');
 var router = express.Router();
+var mysql = require('mysql');
+var email = require('../authentication/auto_email');
 var connection = require('../mysqlpool');
 
 router.get('/forgotusername', function(req,res,next){
 
 	res.render('forgotusername', {title:'Forgot Username?'});
-
 });
 
 router.post('/forgotusername', function(req,res,next){
 
 	connection.getConnection(function(err,con){
-
 		if (err){
-        	console.log('forgotcredentials.js: Error connecting to the DB.');
-        	//res.end();
-        	return err;
-      	}
+      console.log('forgotcredentials.js: Error connecting to the DB.');
+      return err;
+    }
 
-      	// LOOK FOR THE USERNAME CORRESPONDING TO THE EMAIL
-      	var userquery = 'SELECT username FROM gibson.user WHERE email = ?;';
-      	var inserts = req.body.email;
-      	userquery = mysql.format(userquery, inserts);
+    // LOOK FOR THE USERNAME CORRESPONDING TO THE EMAIL
+    var userquery = 'SELECT username FROM gibson.user WHERE email = ?;';
+    var inserts = req.body.email;
+    userquery = mysql.format(userquery, inserts);
 
-      	con.query(userquery, function(err, results){
+    con.query(userquery, function(err, results){
+     con.release();
 
-      		con.release();
+      if(err){
+      	return (new Error("forgotcredentials.js: Query error for forgot username"));
+      }
+      else if (!results.length){
+      	return (new Error("forgotcredentials.js: No user with this email found."));
+      }
 
-      		if(err){
+			email.usernameReminder(req.body.email, results[0].username);
+      //send user the email with the username
+      res.redirect('/forgotpassword');
 
-      			return (new Error("forgotcredentials.js: Query error for forgot username"))
-      		}
-      		else if (!results.length){
-
-      			return (new Error("forgotcredentials.js: No user with this email found."));
-      		}
-
-      		//send user the email with the username
-      		res.send("LOLZ SEND THE EMAILS LOL");
-
-      	});
-
+    });
 	});
-
 });
 
 router.get('/forgotpassword', function(req,res,next){
@@ -72,7 +67,7 @@ router.post('/forgotpassword', function(req,res,next){
 
       		if(err){
 
-      			return (new Error("forgotcredentials.js: Query error for forgot password"))
+      			return (new Error("forgotcredentials.js: Query error for forgot password"));
       		}
       		else if (!results.length){
 

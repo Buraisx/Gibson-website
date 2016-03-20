@@ -60,7 +60,6 @@ function signupConfEmail (req, res, next){
             },
             function(err, info){
               if (err){
-                console.log(err);
                 console.log('auto_email.js: Error sending signup confirmation email.');
               }
               next();
@@ -72,4 +71,40 @@ function signupConfEmail (req, res, next){
   }
 }
 
+// USERNAME REMINDER EMAIL
+function usernameReminder(email, username, next){
+
+  fs.readFile('../gibsonwebsite/email_templates/username_reminder/text.txt', 'utf-8', function(err, data){
+    if(err){
+      console.log('auto_email.js: Cannot read text.txt for usernameReminder');
+    }
+    else{
+      // CREATE TEMPLATE BASE SENDER FUNCTION
+      var sendReminder = transport.templateSender({
+        subject: 'Account Information',
+        text: data,
+      },
+      {
+        from: config.transport.auth.user
+      });
+
+      // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
+      sendReminder({
+        to: email,
+      },
+      {
+        username: username,
+      },
+      function(err, info){
+        if (err){
+          console.log('auto_email.js: Error sending username reminder.');
+        }
+        next();
+      });
+    }
+  });
+}
+
+
+module.exports.usernameReminder = usernameReminder;
 module.exports.signupConfEmail = signupConfEmail;

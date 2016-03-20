@@ -50,6 +50,8 @@ function generateOneUse(req, res, next){
 }
 
 
+// FORGOT CREDENTIAL JWT
+//function reminderToken (username )
 
 
 // GENERATING JSON WEB TOKEN
@@ -89,8 +91,6 @@ function generateToken(req, res, next) {
           console.log("user token:" + req.token);
 
           // IF ADMIN, GET THE ADMIN's secret_key
-          console.log(typeof(req.user.rank_id));
-          //console.log(4>1);
           if (req.user.rank_id > 1){
 
             var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?';

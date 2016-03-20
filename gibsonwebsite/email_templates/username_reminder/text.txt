@@ -1,0 +1,9 @@
+Hello,
+
+You have requested a reminder for your 105 Gibson Centre account credentials.
+
+Your username is: {{username}}
+
+Regards,
+105 Gibson Team
+https://www.105gibson.com
