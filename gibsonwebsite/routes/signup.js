@@ -50,7 +50,6 @@ router.post('/signup', function(req, res, next) {
 	});
 } ,passport.authenticate('local-signup', {
 	session: false,
-	//successRedirect: '/signup/success',		// Redirect to main page when login complete
 	failureRedirect: '/lol',	// Return to login when fail, and flash error
 	failureFlash: true
 }),token.generateOneUse, email.signupConfEmail , redirect);
