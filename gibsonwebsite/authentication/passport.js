@@ -34,7 +34,6 @@ module.exports = function(passport){
     var sql = "SELECT * FROM gibson.user WHERE username = ?";
     var inserts = [id];
     sql = mysql.format(sql, inserts);
-    console.log(sql);
 
     // QUERY TO LOOK FOR THE USER WITH THE SERIALIZED USERNAME
     connection.getConnection(function(err, con){
@@ -149,7 +148,6 @@ module.exports = function(passport){
               if(err){
                 con.release();
                 console.log('passport.js: Error while inserting new user into the database.');
-                console.log(results);
                 return done(err);
               }
               // user_id OF THE INSERTED USER
@@ -293,15 +291,12 @@ module.exports = function(passport){
                         console.log ('Wrong password for ' +req.body.username);
                         return next ('bad password', null); //, req.flash('loginMessage', 'Incorrect Password.')
                     }
-                    //console.log(results);
                     next(null, results);
                 });
             },
 
             function (userresults, next){
                 // UPDATING THE LAST LOGIN TIME IN THE DATABASE
-                console.log("Username exists and password matches.")
-                //console.log("Username exists and password matches\n"+typeof(userresults));
                 var user = userresults;
                 var lastLogIn = user[0].last_login_time; // The value before the login time is replaced to CURRENT_TIMESTAMP
                 var updateLastLogin = 'UPDATE gibson.user SET last_login_time = CURRENT_TIMESTAMP WHERE username = ?;';
@@ -314,16 +309,13 @@ module.exports = function(passport){
                         return next('Error updating last login time', null);
                     }
                     user[0].last_login_time = lastLogIn;
-                    //console.log(user[0]);
                     return next (null, user[0]);
                 });
             }
         ],
             function(err, results){
-                //console.log(err + "\n" + JSON.stringify(results));
                 if(err)
                 {
-                    console.log('here we go!');
                     con.query(mysql.format('SELECT * FROM gibson.temp_user WHERE username = ?;', [req.body.username]), function (err, results){
                         con.release();
 
@@ -345,7 +337,6 @@ module.exports = function(passport){
                 }
 
                 else{
-                    //console.log(results);
                     con.release();
                     return done(null, results);
                 }

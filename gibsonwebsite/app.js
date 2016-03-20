@@ -54,7 +54,6 @@ app.use(csrfProtection);
 
 app.use(function (req, res, next)
 {
-  console.log(req.csrfToken());
   res.locals.csrfToken = req.csrfToken();
   next();
 });
@@ -115,7 +114,6 @@ app.use(function (req, res, next){
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
-  //console.log(decoded);
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
@@ -196,7 +194,6 @@ app.use(function (req, res, next){
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.privilege;
   var decoded = jwt.decode(token);
-  //console.log(decoded);
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){

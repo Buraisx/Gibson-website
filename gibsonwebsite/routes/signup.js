@@ -42,11 +42,9 @@ router.get('/signup', function(req,res,next){
 router.post('/signup', function(req, res, next) {
 	recaptcha.verify(req, function(err){
 		if (!err){
-			console.log('GOGOGO');
 			next();
 		}
 		else {
-			console.log('BACK TO SQUARE ONE');
 			res.redirect('/signup');
 		}
 	});
