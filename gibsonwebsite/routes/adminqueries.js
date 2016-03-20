@@ -92,10 +92,10 @@ router.get('/admin/profile/addCourse', function(req, res){
 
 
 router.post('/admin/profile/addCourse', function(req, res){
-
-    var sql = "INSERT INTO gibson.course (course_code, course_name, default_fee, payment_period_id, start_date, end_date, course_time, course_interval, course_target, course_description, course_days) VALUES (?,?,?,2,?,?,?,?,?,?,?);" 
-    var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.addcost , req.body.addstartdate, req.body.addenddate, req.body.addtime, 
-                   req.body.addinterval, req.body.addtarget, req.body.adddescription, null];
+	// instructor_username is set to null
+    var sql = "INSERT INTO gibson.course (course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, payment_period_id, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, notes) VALUES (?,?,?,?,?,?,2,?,?,?,?,?,?,?,?,?);" 
+    var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
+				   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.languages, req.body.course_days, req.body.addtarget, req.body.adddescription, req.body.instructor_bio, req.body.notes];
 
     sql = mysql.format(sql, inserts);
 
