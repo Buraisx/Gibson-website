@@ -2,6 +2,7 @@ var config = require('../server_config');
 var mysql = require('mysql');
 var jwt = require('jsonwebtoken');
 var connection = require('../mysqlpool');
+var autoemail = require('./auto_email');
 
 // ONE-TIME TOKEN
 function generateOneUse(req, res, next){
@@ -50,8 +51,61 @@ function generateOneUse(req, res, next){
 }
 
 
-// FORGOT CREDENTIAL JWT
-//function reminderToken (username )
+// FORGOT PASSWORD JWT
+function forgotPasswordToken (email, username){
+
+  connection.getConnection(function(err, con){
+    if (err){
+      console.log('token.js: Error connecting to the database.');
+      return;
+    }
+
+    else{
+
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      console.log("MAKISXD123");
+      
+      // user_id HERE REFERS TO THE TEMPORARY TABLE, NOT gibson.user
+      var query =  'INSERT INTO gibson.active_tokens (username, expiry_date, \`desc\`) VALUES (?, ?, ?);';
+      var inserts = [username, tomorrow.toISOString().slice(0, 19).replace('T', ' '), config.jwt.type.forgotpassword];
+      query = mysql.format(query, inserts);
+
+      console.log(query);
+
+      // INSERTING A NEW TOKEN INTO
+      con.query(query, function(err, results){
+
+        con.release();
+
+        if (err){
+          console.log(query);
+          console.log('token.js: Error inserting one use token');
+          res.redirect ('/error');
+          return;
+        }
+
+        // MAKE TOKEN AND STORE IN req.oneUseToken
+         var forgotPasswordToken = jwt.sign({
+          token_id: results.insertId,
+          iss: config.jwt.issuer,
+          user: username,
+          type: config.jwt.type.forgotpassword
+        },
+        config.jwt.oneUseSecret, {
+          expiresIn: 24*60*60
+        });
+      //console.log(forgotPasswordToken);
+      autoemail.forgotpassword(email, username, forgotPasswordToken);
+        //console.log(results.insertId);
+        
+        
+      });
+    }
+  });
+
+}
 
 
 // GENERATING JSON WEB TOKEN
@@ -159,6 +213,7 @@ function sendUsername(req,res,next) {
   next();
 }
 
+module.exports.forgotPasswordToken = forgotPasswordToken;
 module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
 module.exports.respond = respond;
