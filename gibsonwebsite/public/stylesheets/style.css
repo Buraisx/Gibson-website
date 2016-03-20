@@ -225,16 +225,19 @@ a {
 }
 
 hr {
+	width: 100%;
     border: none;
     height: 1px;
-    /* Set the hr color */
-    color: #000; /* old IE */
-    background-color: #000; /* Modern Browsers */
+    color: #000;
+    background-color: #000;
 }
 
 .fieldname {
-	text-align: right;
+	text-align: left;
+	padding-left: 0px;
 }
 
 .fieldval {
 	text-align: left;
+	padding-left: 100px;
+}

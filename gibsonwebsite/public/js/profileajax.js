@@ -43,13 +43,6 @@ $("a[href$='#courses']").click(function() {
 });
 */
 
-//Get cookie Values
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
-}
-
 //========================================
 //Send POST request on Register of Courses
 //========================================
@@ -78,58 +71,71 @@ function load_profile(){
 		profileinfo+='    <hr>';
 		profileinfo+='    <h3>Basic Information</h3>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>First Name: ' + user_info.user.fname + ' </p>';
-		profileinfo+='            </label>';
-		profileinfo+='        </div>';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Last Name: ' + user_info.user.lname + ' </p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-7 fieldval">' + user_info.user.fname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Username: ' + user_info.user.username + '</p>';
-		profileinfo+='            </label>';
-		profileinfo+='        </div>';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Email: ' + user_info.user.email + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-7 fieldval">' + user_info.user.lname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Phone (Home): ' + user_info.user.primary_phone + '</p>';
-		profileinfo+='            </label>';
-		profileinfo+='        </div>';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Phone (Cell): ' + user_info.user.secondary_phone + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Username:</span><span class="col-sm-7 fieldval">' + user_info.user.username + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Gender: ' + user_info.user.gender + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Email:</span><span class="col-sm-7 fieldval">' + user_info.user.email + '</span></p>';
 		profileinfo+='        </div>';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Date of Birth: ' + String(user_info.user.birth_date).substring(0, 10) + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='    </div>';
+		//Checks if phone number exist
+		if(user_info.user.primary_phone||user_info.user.secondary_phone)
+		{
+			if(user_info.user.primary_phone&&user_info.user.secondary_phone)
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-7 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-7 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+			else if(user_info.user.primary_phone)
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-7 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+			else
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-7 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+		}
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='                <p><span class="col-sm-2 fieldname">Gender:</span><span class="col-sm-7 fieldval">' + user_info.user.gender + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Address: ' + user_info.user.address + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='                <p><span class="col-sm-2 fieldname">Date of Birth:</span><span class="col-sm-7 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='                <p><span class="col-sm-2 fieldname">Address:</span><span class="col-sm-7 fieldval">' + user_info.user.address + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//check if user is a student
@@ -138,15 +144,13 @@ function load_profile(){
 			profileinfo+='    <hr>';
 			profileinfo+='    <h3>Student Information</h3>';
 			profileinfo+='    <div class="row">';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>School Name: </strong>' + user_info.student_info.school_name + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">School Name:</span><span class="col-sm-7 fieldval">' + user_info.student_info.school_name + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Grade: </strong>' + user_info.student_info.grade + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Grade:</span><span class="col-sm-7 fieldval">' + user_info.student_info.grade + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			if(user_info.student_info.major||user_info.student_info.esl_level)
@@ -154,35 +158,29 @@ function load_profile(){
 				if(user_info.student_info.major&&user_info.student_info.esl_level)
 				{
 					profileinfo+='    <div class="row">';
-					profileinfo+='        <div class="col-sm-6">';
-					profileinfo+='            <label>';
-					profileinfo+='                <p><strong>Major: </strong>' + user_info.student_info.major + '</p>';
-					profileinfo+='            </label>';
-					profileinfo+='        </div>';
-					profileinfo+='        <div class="col-sm-6">';
-					profileinfo+='            <label>';
-					profileinfo+='                <p><strong>ESL Level: </strong>' + user_info.student_info.esl_level + '</p>';
-					profileinfo+='            </label>';
+					profileinfo+='        <div class="form-group col-sm-12">';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-7 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='    	  </div>';
+					profileinfo+='    </div>';
+					profileinfo+='    <div class="row">';
+					profileinfo+='        <div class="form-group col-sm-12">';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-7 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='        </div>';
 					profileinfo+='    </div>';
 				}
 				else if(user_info.student_info.major)
 				{
-					profileinfo+='	<div class="row">';
-					profileinfo+='  	<div class="col-sm-6">';
-					profileinfo+='      	<label>';
-					profileinfo+='    			<p><strong>Major: </strong>' + user_info.student_info.major + '</p>';
-					profileinfo+='          </label>';
+					profileinfo+='  <div class="row">';
+					profileinfo+='      <div class="form-group col-sm-12">';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-7 fieldval">' + user_info.student_info.major + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
 				else
 				{
-					profileinfo+='	<div class="row">';
-					profileinfo+='  	<div class="col-sm-6">';
-					profileinfo+='      	<label>';
-					profileinfo+='    			<p><strong>ESL Level: </strong>' + user_info.student_info.esl_level + '</p>';
-					profileinfo+='          </label>';
+					profileinfo+='  <div class="row">';
+					profileinfo+='      <div class="form-group col-sm-12">';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-7 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
@@ -194,25 +192,23 @@ function load_profile(){
 		{
 			profileinfo+='    <h4>Contact #'+(i+1)+':</h4>';
 			profileinfo+='    <div class="row">';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>First Name:</strong>' + user_info.emergency_contacts[i].fname + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].fname + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Last Name:</strong>' + user_info.emergency_contacts[i].lname + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].lname + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Relationship:</strong>' + user_info.emergency_contacts[i].relationship + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Relationship:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].relationship + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Phone:</strong>' + user_info.emergency_contacts[i].contact_phone + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 		}
@@ -377,8 +373,7 @@ function editinfo () {
 		editinfo+='            <label>';
 		editinfo+='                <p><strong>Date of Birth: </strong></p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type="text" class = "form-control datepicker" name="birth_date" id = "editdatepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required value = "' + String(user_info.user.birth_date).substring(0, 10) + '">';
-		editinfo+='        </div>';
+  		editinfo+='            <input type="text" class = "form-control datepicker" name="birth_date" id = "datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required value = "' + String(user_info.user.birth_date).substring(0, 10).replace(/-/g, "\/") + '">';		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="col-sm-6">';
@@ -458,6 +453,7 @@ function editinfo () {
 		editinfo+='    <button type="button" class="btn btn-default" onclick="returntoprofile()">Return</button>';
 		editinfo+='</div>';
 		$('#profile').append(editinfo);
+		$('#datepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
 	});
 }
 
