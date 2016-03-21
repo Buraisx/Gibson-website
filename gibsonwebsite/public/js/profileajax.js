@@ -485,7 +485,7 @@ function listcourses(){
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
 			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code:", data[i].course_id);
+			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code: ", data[i].course_code);
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
@@ -556,64 +556,39 @@ function listcourses(){
 //Show a personal user schedule
 function listschedule(){
 	jQuery.getJSON("/user/profile/schedule", function(data){
-		
 		$('#schedule').contents().remove();
-		
-		var courses = $("<div></div>", {class: "panel-group", id: "accordion"});
-
-		for(i = 0; i < data.length; i++){
-			//A Course Accordion Panel
-			var panel_default = $("<div></div>", {class: "panel panel-primary"});
-			
-			var panel_heading = $("<div></div>", {class: "panel-heading"});
-			var panel_title = $("<h4></h4>", {class: "panel-title"});
-			var collapse = $("<a></a>", {href: "#scollapse"+i});
-			collapse.attr("data-toggle", "collapse");
-
-			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code:", data[i].course_id);
-
-			var coursetime = $("<div></div>", {class: "col-sm-4"}).append("Time: " + data[i].course_time);
-			var courseinterval = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Interval: " + data[i].course_interval);
-			var coursedays = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Days: " + data[i].course_days);
-
-			var collapse2 = $("<div></div>", {id: "scollapse" + i, class: "panel-collapse collapse"});
-			var panelbody = $("<div></div>", {class: "panel-body"});
-
-			var row = $("<div></div>", {class: "row"});
-			var row2 = $("<div></div>", {class: "row"});
-
-			var offset = $("<div></div>",{class: "col-sm-offset-1"});
-			var description = $("<p></p>", {id: "description"}).append(data[i].course_description);
-			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + String(data[i].end_date).substring(0, 10));
-			
-
-
-			//=============================
-			//Top Down compilation hierarchy
-			//=============================
-			panel_default = panel_default.append(panel_heading,collapse2);
-
-			//--------------------------
-			//First div of panel-default
-			panel_heading = panel_heading.append(panel_title);
-			panel_title = panel_title.append(collapse);
-			
-
-			row = row.append(coursename,courseid);
-			row = row.append("<br>"+"<br>");
-			row2 = row2.append(coursetime,courseinterval,coursedays);
-			collapse = collapse.append(row,row2);
-			//--------------------------
-			//Second div of panel-default
-
-			offset = offset.append(description,enddate);
-			panelbody = panelbody.append(offset);
-			collapse2 = collapse2.append(panelbody);
-
-			courses.append(panel_default);
+		var schedule = '';
+		schedule += '<div id="scheduleaccordion" class="panel-group">'
+		for(i = 0; i < data.length; i++) {
+			schedule += '    <div class="panel panel-primary">'
+			schedule += '        <div class="panel-heading">'
+			schedule += '            <h4 class="panel-title">'
+			schedule += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#scollapse' + i + '">'
+			schedule += '                    <div class="row">'
+			schedule += '                        <div class="col-sm-6">' + data[i].course_name +'</div>'
+			schedule += '                        <div class="col-sm-offset-3 col-sm-3">Course Code: ' + data[i].course_code + '</div>'
+			schedule += '                    </div>'
+			schedule += '                </a>'
+			schedule += '            </h4>'
+			schedule += '        </div>'
+			schedule += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="scollapse' + i + '">'
+			schedule += '            <div class="panel-body">'
+			schedule += '                <div class="col-sm-offset-1">'
+			schedule += '                    <p id="description' + i + '">' + data[i].course_description + '</p>'
+			schedule += '                    <div class="row">'
+			schedule += '                    <div class="col-sm-6">'
+			schedule += '                        <p id="coursestartdate' + i + '"><strong>Start Date: </strong>' + String(data[i].start_date).substring(0, 10) + '</p>'
+			schedule += '                	 </div>'
+			schedule += '                    <div class="col-sm-6">'
+			schedule += '                        <p id="courseenddate' + i + '"><strong>End Date: </strong>' + String(data[i].end_date).substring(0, 10) + '</p>'
+			schedule += '                    </div>'
+			schedule += '                    <div class="col-sm-3"><strong>Days: </strong>' + data[i].course_days + '</div>'
+			schedule += '                </div>'
+			schedule += '            </div>'
+			schedule += '        </div>'
+			schedule += '    </div>'
 		}
-
-		$('#schedule').append(courses);
+		schedule += '</div>'
+		$('#schedule').append(schedule);
 	});
 }
