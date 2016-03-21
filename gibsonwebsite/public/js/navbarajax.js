@@ -1,23 +1,25 @@
 //On ready load get cookie and create login or logout button
 $(document).ready(function(){
 	var user = getCookie('gibson_user');
-	$('#loginoutbutton').contents().remove();
 	$('#userdisplay').contents().remove();
-	var button = '';
+	var userdisplay = '';
 	if(user != null) {
-		button += '<a href="/logout">Logout</a>';
-		$('#loginoutbutton').append(button);
-		$('#userdisplay').append('<p>' + user + '</p>');
+		userdisplay = '<a class = "dropdown-toggle" href="/user/profile">' + user + '</a>';
+		userdisplay += '<ul class = "dropdown-menu">';
+		userdisplay += '	<li><a href="/logout">Logout</a></li>';
+		userdisplay += '</ul>';
 	}
 	else {
-		button += '<a href="/login">Login</a>';
-		$('#loginoutbutton').append(button);
+		userdisplay += '<a href="/login">Login</a>';
 	}
+	$('#userdisplay').append(userdisplay);
 });
+
+
 
 //Get cookie Values
 function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
+	var value = "; " + document.cookie;
+	var parts = value.split("; " + name + "=");
+	if (parts.length == 2) return parts.pop().split(";").shift();
 }
