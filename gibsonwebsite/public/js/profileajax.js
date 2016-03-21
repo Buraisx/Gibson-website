@@ -260,13 +260,13 @@ function load_profile(){
 		//mix in one div form-group
 		var label2 = $("<label></label>").append("New Password:");
 		var input2 = $("<input></input>", {type : "password", class : "form-control", name : "newpass", id : "password", placeholder:"Enter New Password", minlength: "6", 
-										   required:"", pattern:'(?=.*\\d)(?=.*[a-zA-Z]).{6,}'});
+										   required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
 		
 		//mix in one div form-group
 		var label3 = $("<label></label>").append("Confirm New Password:");
 		var input3 = $("<input></input>", {type : "password", class : "form-control", name : "confirmnewpass", id : "passwordhashed",
 										   placeholder:"Confirm New Password", onkeyup:"checkPass(); return false;",
-										   minlength: "6", required:"", pattern:'(?=.*\\d)(?=.*[a-zA-Z]).{6,}'});
+										   minlength: "6", required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
 		var button3 = $("<button></button>", {type : "button", class : "btn btn-default", onclick:"", id : "changepassbutton"}).append("Change");
 
 		//Add E-Contacts, Edit Info
