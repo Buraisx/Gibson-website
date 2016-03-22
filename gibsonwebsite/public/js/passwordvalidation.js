@@ -8,7 +8,7 @@ function val() {
     return true;
 }
 
-//Javascript to check passwords matches
+//Javascript to check password forms are acceptable
 function checkPass()
 {
     //Store the password field objects into variables
@@ -25,16 +25,31 @@ function checkPass()
     // 2. the message's been changed (i.e., pass2's been
     // changed before)
     if(pass2.value != '' || message.innerHTML != '') {
-        if(pass1.value == pass2.value) {
+        if(pass1.value == pass2.value && passValid(pass1.value)) {
             //The passwords match. 
             pass2.style.backgroundColor = greenColor;
             message.style.color = greenColor;
-            message.innerHTML = "Passwords Match!"
+            message.innerHTML = "OK!"
         } else {
-            //The passwords do not match.
-            pass2.style.backgroundColor = redColor;
-            message.style.color = redColor;
-            message.innerHTML = "Passwords Do Not Match!"
+            if (pass1.value != pass2.value) {
+                // The passwords do not match.
+                pass2.style.backgroundColor = redColor;
+                message.style.color = redColor;
+                message.innerHTML = "Passwords do not match!";
+            }
+            else {
+                // The passwords match but are invalid.
+                pass2.style.backgroundColor = redColor;
+                message.style.color = redColor;
+                message.innerHTML = "Password is invalid!";
+            }
         }
     }
+}
+
+// Helper function: check that input password is valid
+function passValid(pass) {
+    // Returns true iff the input password matches the regex
+    // (length 6+, at least one letter and one number, no special chars)
+    return (pass.match(/(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}/g) == pass);
 }
