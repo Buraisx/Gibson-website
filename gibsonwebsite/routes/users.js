@@ -120,7 +120,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 	console.log(alreadyRegCourses);
 
 	var nonRegCourses = sql + " EXCEPT " + alreadyRegCourses + ";";
-	
+
 	connection.getConnection(function(err, con){
 		if(err){
 			con.release();
@@ -128,7 +128,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			return err;
 		}
 
-		con.query(sql, function(err, results){
+		con.query(nonRegCourses, function(err, results){
 			con.release();
 
 			if(err){
