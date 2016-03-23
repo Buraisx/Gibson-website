@@ -6,7 +6,7 @@ var config = require('../server_config');
 // SETTING UP TRANSPORTER
 var transport = nodemailer.createTransport(smtpTransport(config.transport));
 
-// SENDING EMAIL
+// SIGNUP CONFIRMATION EMAIL
 function signupConfEmail (req, res, next){
 
   // IF config.sendEmail = false, DISABLE OUTGOING EMAIL
@@ -20,7 +20,6 @@ function signupConfEmail (req, res, next){
     // READING FILE FOR PLAIN TEXT EMAIL
     fs.readFile('../gibsonwebsite/email_templates/signup_confirmation/text.txt', 'utf-8', function(err, data){
       if (err){
-        console.log(err);
         console.log('auto_email.js: Error reading text.txt, signupConfEmail');
         next();
       }
@@ -108,23 +107,18 @@ function usernameReminder(email, username, next){
 // FORGOT PASSWORD EMAIL
 function forgotpassword(email, username, token, next){
 
-  console.log(email);
-  console.log(username);
-  //console.log(token);
-
   fs.readFile('../gibsonwebsite/email_templates/forgot_password/text.txt', 'utf-8', function(err, data){
     if(err){
       console.log('auto_email.js: Cannot read text.txt for forgot password.');
     }
     else{
 
-      var plain = data;
-      //console.log(plain);
+      //var plain = data;
 
       // CREATE TEMPLATE BASE SENDER FUNCTION
       var sendForgotPassword = transport.templateSender({
         subject: 'Forgotten Password',
-        text: plain
+        text: data
       },
       {
         from: config.transport.auth.user
@@ -143,7 +137,6 @@ function forgotpassword(email, username, token, next){
         if (err){
           console.log('auto_email.js: Error sending forgot password email.');
         }
-        
       });
     }
   });

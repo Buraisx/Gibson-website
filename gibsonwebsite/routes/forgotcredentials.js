@@ -6,12 +6,11 @@ var connection = require('../mysqlpool');
 var token = require('../authentication/token');
 
 router.get('/forgotusername', function(req,res,next){
-
 	res.render('forgotusername', {title:'Forgot Username?'});
 });
 
-router.post('/forgotusername', function(req,res,next){
 
+router.post('/forgotusername', function(req,res,next){
 	connection.getConnection(function(err,con){
 		if (err){
       console.log('forgotcredentials.js: Error connecting to the DB.');
@@ -35,59 +34,50 @@ router.post('/forgotusername', function(req,res,next){
 
 			email.usernameReminder(req.body.email, results[0].username);
       //send user the email with the username
-      res.redirect('/forgotpassword');
+      res.redirect('/forgotpassword'); // TODO: change this!
 
     });
 	});
 });
 
+
+
+
+
+
 router.get('/forgotpassword', function(req,res,next){
-
 	res.render('forgotpassword', {title:'Forgot Password?'});
-
 });
 
+
 router.post('/forgotpassword', function(req,res,next){
-
 	connection.getConnection(function(err,con){
-
 		if (err){
-        	console.log('forgotcredentials.js: Error connecting to the DB.');
-        	//res.end();
-        	return err;
+      console.log('forgotcredentials.js: Error connecting to the DB.');
+      return err;
     }
     else{
+      // LOOK FOR THE EMAIl CORRESPONDING TO THE USER
+      var userquery = 'SELECT email FROM gibson.user WHERE username = ?;';
+      var inserts = req.body.username;
+      userquery = mysql.format(userquery, inserts);
 
+      con.query(userquery, function(err, results){
+      	con.release();
 
-      	// LOOK FOR THE EMAIl CORRESPONDING TO THE USER
-      	var userquery = 'SELECT email FROM gibson.user WHERE username = ?;';
-      	var inserts = req.body.username;
-      	userquery = mysql.format(userquery, inserts);
+      	if(err){
+      		return (new Error("forgotcredentials.js: Query error for forgot password"));
+      	}
+      	else if (!results.length){
+      		return (new Error("forgotcredentials.js: No email with this username found."));
+      	}
 
-      	con.query(userquery, function(err, results){
-
-      		con.release();
-
-      		if(err){
-
-      			return (new Error("forgotcredentials.js: Query error for forgot password"));
-      		}
-      		else if (!results.length){
-
-      			return (new Error("forgotcredentials.js: No email with this username found."));
-      		}
-
-      		//send user the email with the username
-          token.forgotPasswordToken(results[0].email, req.body.username);
-         // email.forgotpassword(results[0].email, req.body.username, fptoken);
-          res.redirect('/forgotusername');
-
-      	});
-      }
+      	//send user the email with the username
+        token.forgotPasswordToken(results[0].email, req.body.username);
+        res.redirect('/forgotusername'); // TODO: change this!
+      });
+    }
 	});
-
-
-
 });
 
 

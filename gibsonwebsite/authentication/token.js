@@ -65,22 +65,16 @@ function forgotPasswordToken (email, username){
       var tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
 
-      console.log("MAKISXD123");
-      
-      // user_id HERE REFERS TO THE TEMPORARY TABLE, NOT gibson.user
+      // GENERATING QUERY TO INSERT AN ACTIVE ONE-USE TOKEN
       var query =  'INSERT INTO gibson.active_tokens (username, expiry_date, \`desc\`) VALUES (?, ?, ?);';
       var inserts = [username, tomorrow.toISOString().slice(0, 19).replace('T', ' '), config.jwt.type.forgotpassword];
       query = mysql.format(query, inserts);
 
-      console.log(query);
-
       // INSERTING A NEW TOKEN INTO
       con.query(query, function(err, results){
-
         con.release();
 
         if (err){
-          console.log(query);
           console.log('token.js: Error inserting one use token');
           res.redirect ('/error');
           return;
@@ -96,15 +90,12 @@ function forgotPasswordToken (email, username){
         config.jwt.oneUseSecret, {
           expiresIn: 24*60*60
         });
-      //console.log(forgotPasswordToken);
+
+      // SENDS EMAIL WITH URL TO RESET PASSWORD
       autoemail.forgotpassword(email, username, forgotPasswordToken);
-        //console.log(results.insertId);
-        
-        
       });
     }
   });
-
 }
 
 
