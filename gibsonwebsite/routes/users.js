@@ -109,9 +109,18 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 	console.log("Getting registered courses");
 
-	var sql = "SELECT course_id, course_code, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC";
-	console.log(sql);
+	var decode = jwt.decode(req.cookies.access_token);
+	//id of user
+	var inserts = decode.id;
 
+	var sql = "(SELECT course_id, course_code, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC)";
+	console.log(sql);
+	var alreadyRegCourses = "(SELECT course_id, course_code, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = ? AND gibson.course.course_id = gibson.user_course.course_id AND start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC)";
+	alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
+	console.log(alreadyRegCourses);
+
+	var nonRegCourses = sql + " EXCEPT " + alreadyRegCourses + ";";
+	
 	connection.getConnection(function(err, con){
 		if(err){
 			con.release();
