@@ -582,7 +582,7 @@ function listschedule(){
 			schedule += '                        <div class="col-sm-6">'
 			schedule += '                            <p id="courseenddate' + i + '"><strong>End Date: </strong>' + String(data[i].end_date).substring(0, 10) + '</p>'
 			schedule += '                        </div>'
-			schedule += '                        <div class="col-sm-3"><strong>Days: </strong>' + data[i].course_days + '</div>'
+			schedule += '                        <div class="col-sm-3"><strong>Days of Week: </strong>' + data[i].course_days + '</div>'
 			schedule += '                    </div>'
 			schedule += '                </div>'
 			schedule += '            </div>'
