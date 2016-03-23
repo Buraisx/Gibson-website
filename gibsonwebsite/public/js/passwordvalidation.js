@@ -30,23 +30,23 @@ function checkPass()
             // The passwords match and are valid.
             pass2.style.backgroundColor = greenColor;
             message.style.color = greenColor;
-            message.innerHTML = "OK!"
+            message.innerHTML = "<strong>OK!</strong>"
         } else {
             if (pass1.value != pass2.value) {
                 // The passwords do not match.
                 pass2.style.backgroundColor = redColor;
                 message.style.color = redColor;
-                message.innerHTML = "Passwords do not match!";
+                message.innerHTML = "<strong>Passwords do not match!</strong>";
             }
             else {
                 // The passwords match but are invalid.
                 pass2.style.backgroundColor = redColor;
                 message.style.color = redColor;
                 if (passValidity == -1) {
-                    message.innerHTML = "Password is too short!";
+                    message.innerHTML = "<strong>Password is too short!</strong>";
                 }
                 else {
-                    message.innerHTML = "Password has invalid symbols!";
+                    message.innerHTML = "<strong>Password has invalid symbols!</strong>";
                 }
             }
         }
