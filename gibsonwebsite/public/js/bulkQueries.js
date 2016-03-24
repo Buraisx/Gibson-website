@@ -14,7 +14,7 @@ var BIWEEKLY = 14;
 exports.getScheduledDays = function (course_id, start_date, end_date, interval, days) {
 	
 	var commit = [];
-	for (int i = 0; i < days.length(); i++){
+	for (i = 0; i < days.length(); i++){
 		var day_of_week = parseDay(days[i].day);
 		var course_day = start_date.setDate(start_date.getDate() + (day_of_week - start_date.getDay() + 7) % 7);
 		var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
@@ -31,12 +31,11 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 };
 
 function getInterval(interval){
-	if(interval === 'Weekly'){
-		return WEEKLY;
-	}
-	
-	else if(interval === 'Bi-weekly'){
-		return BIWEEKLY;
+	switch (interval){
+		case 'Weekly':
+			return WEEKLY;
+		case 'Bi-weekly':
+			return BIWEEKLY;
 	}
 }
 
