@@ -91,6 +91,31 @@ router.get('/admin/profile/addCourse', function(req, res){
 });
 */
 
+router.post('/validateCourse', function(req, res){
+    //validate the course name and course code
+    var sql = "SELECT course_id FROM gibson.course WHERE course_name = ? OR course_code = ?;";
+    var inserts = [req.body.course_name, req.body.course_code];
+
+    sql = mysql.format(sql, inserts);
+
+    connection.getConnection(function(err, con){
+        con.query(sql, function(err, results){
+            con.release();
+            console.log(results);
+            if(err){
+                res.send(new Error("err querying"));
+            }
+
+            if(!results.length){
+                res.send("adminqueries.js: Validated!");
+            }   
+
+            else{
+                res.send(new Error("adminqueries.js: Course name or course code already exists!"));
+            }
+        });
+    });
+});
 
 router.post('/admin/profile/addCourse', function(req, res){
 	// instructor_username is set to null

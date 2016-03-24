@@ -488,7 +488,6 @@ function courseform(){
 	set_date+='							<label class = "form-group col-sm-2">End Time:</label>';
 	set_date+='                    	</div>';
 	set_date+='                    </div>';
-
 	set_date+='                   <div class = "row" id="adhoc1">';
 	set_date+='                    <div class = "form-group col-sm-4">';
 	set_date+='                        <div class="input-daterange input-group rangedatepicker">';
@@ -502,7 +501,6 @@ function courseform(){
 	set_date+='						   <input type = "text" class = "form-control" name = "endadhoc1" id = "endadhoc1" required>';
 	set_date+='                    </div>'; 
 	set_date+='                   </div>';
-
 	set_date+='                    <div class = "row" id="adhocMods">';
 	set_date+='                        <div class = "form-group col-sm-2">';
 	set_date+='                            <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="addAdhocTime()">Add a custom schedule</button>';
@@ -522,7 +520,7 @@ function courseform(){
 	addcourses+='				  	 </div>';	//closing tab div
 	addcourses+='                    <div class="row form-group">';
 	addcourses+='                        <div class = "col-sm-8">';
-	addcourses+='                            <button type = "submit" class= "btn btn-default" id = "addcourse">Add Course</button>';
+	addcourses+='                            <button type = "button" class= "btn btn-default" id = "validate" onClick="validateCourse()">Validate!</button>';
 	addcourses+='                        </div>';
 	addcourses+='                    </div>';
 	addcourses+='                </form>';
@@ -673,4 +671,20 @@ function removeAdhocTime(){
 	else{
 		console.log("Cannot Remove Default Adhoc Schedule.");
 	}
+}
+
+function validateCourse(){
+	$("#courseform").slideToggle();
+	$.post("/validateCourse",{
+		course_name: $('#addcoursename').val(),
+		course_code: $('#addcoursecode').val(),
+		_csrf: $('#_csrf').val()
+	})
+	.done(function (res){
+		alert(res);
+	})
+	.fail(function (err){
+		$("#courseform").slideToggle();
+		alert(err);
+	});
 }
