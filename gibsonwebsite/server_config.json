@@ -6,6 +6,7 @@
     "user": "root",
     "password": "local123",
     "database": "gibson",
+    "multipleStatements": true,
     "port": 3306
   },
 

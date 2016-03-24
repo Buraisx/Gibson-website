@@ -40,12 +40,12 @@ function signupConfEmail (req, res, next){
 
             // CREATE TEMPLATE BASE SENDER FUNCTION
             var sendSignupConf = transport.templateSender({
-              subject: '105 Gibson Centre - Signup Confirmation',
+              subject: 'Signup Confirmation',
               text: plain,
               html: styled
             },
             {
-              from: config.transport.auth.user
+              from: '105 Gibson Centre <' +config.transport.auth.user +'>'
             });
 
             // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
@@ -84,7 +84,7 @@ function usernameReminder(email, username, next){
         text: data,
       },
       {
-        from: config.transport.auth.user
+        from: '105 Gibson Centre <' +config.transport.auth.user +'>'
       });
 
       // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
@@ -121,7 +121,7 @@ function forgotpassword(email, username, token, next){
         text: data
       },
       {
-        from: config.transport.auth.user
+        from: '105 Gibson Centre <' +config.transport.auth.user +'>'
       });
 
       // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL

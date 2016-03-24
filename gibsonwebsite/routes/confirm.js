@@ -16,7 +16,6 @@ router.get('/confirm', function(req, res) {
     }
 
     // CREATES POOLING connection
-    config.db_config.multipleStatements = true;
     connection.getConnection(function(err, con){
       if(err){
         con.release();
