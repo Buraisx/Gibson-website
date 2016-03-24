@@ -119,9 +119,9 @@ router.get('/user/profile/courses', function(req, res, callback) {
 	//alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
 	//console.log(alreadyRegCourses);
 
-	var nonRegCourses = "SELECT * FROM (SELECT * FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY) AS A LEFT JOIN (SELECT gibson.course.course_id, course_code, course_name, default_fee, gibson.course.start_date, gibson.course.end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = 6 AND gibson.course.course_id = gibson.user_course.course_id AND gibson.course.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY gibson.course.course_id DESC) AS B ON A.course_id = B.course_id WHERE B.course_id is NULL;";
+	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_days, a.default_fee FROM (SELECT * FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC) AS A LEFT JOIN (SELECT gibson.course.course_id, course_code, course_name, default_fee, gibson.course.start_date, gibson.course.end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = 6 AND gibson.course.course_id = gibson.user_course.course_id AND gibson.course.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY gibson.course.course_id DESC) AS B ON A.course_id = B.course_id WHERE B.course_id is NULL;";
 	nonRegCourses = mysql.format(nonRegCourses, inserts);
-	console.log(nonRegCourses);
+	//console.log(nonRegCourses);
 
 	connection.getConnection(function(err, con){
 		if(err){
@@ -142,6 +142,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			if(!results.length){
 				console.log("No courses");
 			}
+			//console.log(results);
 
 			//send all course info to client
 			//console.log(results);
