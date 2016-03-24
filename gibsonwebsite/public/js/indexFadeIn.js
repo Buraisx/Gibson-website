@@ -13,7 +13,6 @@ function onScrollInit( items, trigger ) {
         var osTrigger = ( trigger ) ? trigger : osElement;
         
         osTrigger.waypoint(function() {
-          console.log("HI");
           osElement.addClass('animated').addClass(osAnimationClass);
           },{
               triggerOnce: true,

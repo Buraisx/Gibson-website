@@ -96,6 +96,7 @@ var confirm = require('./routes/confirm');
 var error = require('./routes/error');
 var adminPages = require('./routes/adminqueries');
 var forgotcreds = require('./routes/forgotcredentials');
+var resetpassword = require('./routes/resetpassword');
 
 app.use('/', routes);
 app.use('/', signup);
@@ -103,6 +104,7 @@ app.use('/', login);
 app.use('/', confirm);
 app.use('/', error);
 app.use('/', forgotcreds);
+app.use('/', resetpassword);
 
 // ================================================
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===

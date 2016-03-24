@@ -43,13 +43,6 @@ $("a[href$='#courses']").click(function() {
 });
 */
 
-//Get cookie Values
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
-}
-
 //========================================
 //Send POST request on Register of Courses
 //========================================
@@ -63,6 +56,7 @@ function register(course_register){
 		console.log("You're registered yay");
 		console.log(res);
 		alert("You have successfully signed up!");
+		listcourses();
 	})
 	.fail(function (err){
 		console.log("Already registered course.");
@@ -78,58 +72,71 @@ function load_profile(){
 		profileinfo+='    <hr>';
 		profileinfo+='    <h3>Basic Information</h3>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>First Name: ' + user_info.user.fname + ' </p>';
-		profileinfo+='            </label>';
-		profileinfo+='        </div>';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Last Name: ' + user_info.user.lname + ' </p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-7 fieldval">' + user_info.user.fname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Username: ' + user_info.user.username + '</p>';
-		profileinfo+='            </label>';
-		profileinfo+='        </div>';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Email: ' + user_info.user.email + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-7 fieldval">' + user_info.user.lname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="form-group col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Phone (Home): ' + user_info.user.primary_phone + '</p>';
-		profileinfo+='            </label>';
-		profileinfo+='        </div>';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Phone (Cell): ' + user_info.user.secondary_phone + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Username:</span><span class="col-sm-7 fieldval">' + user_info.user.username + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Gender: ' + user_info.user.gender + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Email:</span><span class="col-sm-7 fieldval">' + user_info.user.email + '</span></p>';
 		profileinfo+='        </div>';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Date of Birth: ' + String(user_info.user.birth_date).substring(0, 10) + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='    </div>';
+		//Checks if phone number exist
+		if(user_info.user.primary_phone||user_info.user.secondary_phone)
+		{
+			if(user_info.user.primary_phone&&user_info.user.secondary_phone)
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-7 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-7 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+			else if(user_info.user.primary_phone)
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-7 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+			else
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-7 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+		}
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='                <p><span class="col-sm-2 fieldname">Gender:</span><span class="col-sm-7 fieldval">' + user_info.user.gender + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
-		profileinfo+='        <div class="col-sm-6">';
-		profileinfo+='            <label>';
-		profileinfo+='                <p>Address: ' + user_info.user.address + '</p>';
-		profileinfo+='            </label>';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='                <p><span class="col-sm-2 fieldname">Date of Birth:</span><span class="col-sm-7 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='                <p><span class="col-sm-2 fieldname">Address:</span><span class="col-sm-7 fieldval">' + user_info.user.address + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//check if user is a student
@@ -138,15 +145,13 @@ function load_profile(){
 			profileinfo+='    <hr>';
 			profileinfo+='    <h3>Student Information</h3>';
 			profileinfo+='    <div class="row">';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>School Name: </strong>' + user_info.student_info.school_name + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">School Name:</span><span class="col-sm-7 fieldval">' + user_info.student_info.school_name + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Grade: </strong>' + user_info.student_info.grade + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Grade:</span><span class="col-sm-7 fieldval">' + user_info.student_info.grade + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			if(user_info.student_info.major||user_info.student_info.esl_level)
@@ -154,35 +159,29 @@ function load_profile(){
 				if(user_info.student_info.major&&user_info.student_info.esl_level)
 				{
 					profileinfo+='    <div class="row">';
-					profileinfo+='        <div class="col-sm-6">';
-					profileinfo+='            <label>';
-					profileinfo+='                <p><strong>Major: </strong>' + user_info.student_info.major + '</p>';
-					profileinfo+='            </label>';
-					profileinfo+='        </div>';
-					profileinfo+='        <div class="col-sm-6">';
-					profileinfo+='            <label>';
-					profileinfo+='                <p><strong>ESL Level: </strong>' + user_info.student_info.esl_level + '</p>';
-					profileinfo+='            </label>';
+					profileinfo+='        <div class="form-group col-sm-12">';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-7 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='    	  </div>';
+					profileinfo+='    </div>';
+					profileinfo+='    <div class="row">';
+					profileinfo+='        <div class="form-group col-sm-12">';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-7 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='        </div>';
 					profileinfo+='    </div>';
 				}
 				else if(user_info.student_info.major)
 				{
-					profileinfo+='	<div class="row">';
-					profileinfo+='  	<div class="col-sm-6">';
-					profileinfo+='      	<label>';
-					profileinfo+='    			<p><strong>Major: </strong>' + user_info.student_info.major + '</p>';
-					profileinfo+='          </label>';
+					profileinfo+='  <div class="row">';
+					profileinfo+='      <div class="form-group col-sm-12">';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-7 fieldval">' + user_info.student_info.major + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
 				else
 				{
-					profileinfo+='	<div class="row">';
-					profileinfo+='  	<div class="col-sm-6">';
-					profileinfo+='      	<label>';
-					profileinfo+='    			<p><strong>ESL Level: </strong>' + user_info.student_info.esl_level + '</p>';
-					profileinfo+='          </label>';
+					profileinfo+='  <div class="row">';
+					profileinfo+='      <div class="form-group col-sm-12">';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-7 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
@@ -194,25 +193,23 @@ function load_profile(){
 		{
 			profileinfo+='    <h4>Contact #'+(i+1)+':</h4>';
 			profileinfo+='    <div class="row">';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>First Name:</strong>' + user_info.emergency_contacts[i].fname + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].fname + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Last Name:</strong>' + user_info.emergency_contacts[i].lname + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].lname + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Relationship:</strong>' + user_info.emergency_contacts[i].relationship + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Relationship:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].relationship + '</span></p>';
 			profileinfo+='        </div>';
-			profileinfo+='        <div class="col-sm-6">';
-			profileinfo+='            <label>';
-			profileinfo+='                <p><strong>Phone:</strong>' + user_info.emergency_contacts[i].contact_phone + '</p>';
-			profileinfo+='            </label>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone:</span><span class="col-sm-7 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 		}
@@ -264,13 +261,13 @@ function load_profile(){
 		//mix in one div form-group
 		var label2 = $("<label></label>").append("New Password:");
 		var input2 = $("<input></input>", {type : "password", class : "form-control", name : "newpass", id : "password", placeholder:"Enter New Password", minlength: "6", 
-										   required:"", pattern:'(?=.*\\d)(?=.*[a-zA-Z]).{6,}'});
+										   required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
 		
 		//mix in one div form-group
 		var label3 = $("<label></label>").append("Confirm New Password:");
 		var input3 = $("<input></input>", {type : "password", class : "form-control", name : "confirmnewpass", id : "passwordhashed",
 										   placeholder:"Confirm New Password", onkeyup:"checkPass(); return false;",
-										   minlength: "6", required:"", pattern:'(?=.*\\d)(?=.*[a-zA-Z]).{6,}'});
+										   minlength: "6", required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
 		var button3 = $("<button></button>", {type : "button", class : "btn btn-default", onclick:"", id : "changepassbutton"}).append("Change");
 
 		//Add E-Contacts, Edit Info
@@ -377,8 +374,7 @@ function editinfo () {
 		editinfo+='            <label>';
 		editinfo+='                <p><strong>Date of Birth: </strong></p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type="text" class = "form-control datepicker" name="birth_date" id = "editdatepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required value = "' + String(user_info.user.birth_date).substring(0, 10) + '">';
-		editinfo+='        </div>';
+  		editinfo+='            <input type="text" class = "form-control datepicker" name="birth_date" id = "datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required value = "' + String(user_info.user.birth_date).substring(0, 10).replace(/-/g, "\/") + '">';		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="col-sm-6">';
@@ -458,6 +454,7 @@ function editinfo () {
 		editinfo+='    <button type="button" class="btn btn-default" onclick="returntoprofile()">Return</button>';
 		editinfo+='</div>';
 		$('#profile').append(editinfo);
+		$('#datepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
 	});
 }
 
@@ -488,15 +485,15 @@ function listcourses(){
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
-			var coursename = $("<p></p>", {id: "coursename"}).append(data[i].course_name);
-			var courseid = $("<p></p>", {id: "courseid"}).append("Course ID:", data[i].course_id);
+			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
+			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code: ", data[i].course_code);
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
 
 			var row = $("<div></div>", {class: "row"});
 			var colsm6 = $("<div></div>", {class:"form-group col-sm-6"});
-			var description = $("<p></p>", {id: "description"}).append("<strong>Description: </strong>").append(data[i].course_description);
+			var description = $("<p></p>", {id: "description"}).append(data[i].course_description);
 			var startdate = $("<p></p>", {id: "coursestartdate"}).append("<strong>Start Date: </strong>" + String(data[i].start_date).substring(0, 10));
 			var enddate = $("<p></p>", {id: "courseenddate"}).append("<strong>End Date: </strong>" + String(data[i].end_date).substring(0, 10));
 			var coursetime = $("<p></p>", {id: "coursetime"}).append("<strong>Time: </strong>" + data[i].course_time);
@@ -505,7 +502,7 @@ function listcourses(){
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("<strong>Target: </strong>" + data[i].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("<strong>Cost: </strong>$" + data[i].default_fee);
 			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
-
+			var row = $("<div></div>", {class: "row"});
 
 			//=============================
 			//Top Down compilation hierarchy
@@ -516,7 +513,8 @@ function listcourses(){
 			//First div of panel-default
 			panel_heading = panel_heading.append(panel_title);
 			panel_title = panel_title.append(collapse);
-			collapse = collapse.append(coursename, courseid);
+			row = row.append(coursename,courseid);
+			collapse = collapse.append(row);
 
 			//--------------------------
 			//Second div of panel-default
@@ -526,8 +524,6 @@ function listcourses(){
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
 										 	$("<div></div>", {class:"form-group col-sm-12"}).append(
 										 		description)));		//escaping closures	
-
-			panelbody = panelbody.append("<br>");
 
 			//STARTDATE & ENDDATE
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
@@ -542,8 +538,6 @@ function listcourses(){
 										 		coursetime),			//escaping closures
 										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
 										 		courseinterval)));			//escaping closures
-
-			panelbody = panelbody.append("<br>");
 
 			//COURSE COST & BUTTON
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
@@ -563,64 +557,40 @@ function listcourses(){
 //Show a personal user schedule
 function listschedule(){
 	jQuery.getJSON("/user/profile/schedule", function(data){
-		
 		$('#schedule').contents().remove();
-		
-		var courses = $("<div></div>", {class: "panel-group", id: "accordion"});
-
-		for(i = 0; i < data.length; i++){
-			//A Course Accordion Panel
-			var panel_default = $("<div></div>", {class: "panel panel-primary"});
-			
-			var panel_heading = $("<div></div>", {class: "panel-heading"});
-			var panel_title = $("<h4></h4>", {class: "panel-title"});
-			var collapse = $("<a></a>", {href: "#scollapse"+i});
-			collapse.attr("data-toggle", "collapse");
-
-			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course ID:", data[i].course_id);
-
-			var coursetime = $("<div></div>", {class: "col-sm-4"}).append("Time: " + data[i].course_time);
-			var courseinterval = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Interval: " + data[i].course_interval);
-			var coursedays = $("<div></div>", {class: "col-sm-offset-1 col-sm-3"}).append("Days: " + data[i].course_days);
-
-			var collapse2 = $("<div></div>", {id: "scollapse" + i, class: "panel-collapse collapse"});
-			var panelbody = $("<div></div>", {class: "panel-body"});
-
-			var row = $("<div></div>", {class: "row"});
-			var row2 = $("<div></div>", {class: "row"});
-
-			var offset = $("<div></div>",{class: "col-sm-offset-1"});
-			var description = $("<p></p>", {id: "description"}).append("Description: "+ data[i].course_description);
-			var enddate = $("<p></p>", {id: "courseenddate"}).append("End Date: " + String(data[i].end_date).substring(0, 10));
-			
-
-
-			//=============================
-			//Top Down compilation hierarchy
-			//=============================
-			panel_default = panel_default.append(panel_heading,collapse2);
-
-			//--------------------------
-			//First div of panel-default
-			panel_heading = panel_heading.append(panel_title);
-			panel_title = panel_title.append(collapse);
-			
-
-			row = row.append(coursename,courseid);
-			row = row.append("<br>"+"<br>");
-			row2 = row2.append(coursetime,courseinterval,coursedays);
-			collapse = collapse.append(row,row2);
-			//--------------------------
-			//Second div of panel-default
-
-			offset = offset.append(description,enddate);
-			panelbody = panelbody.append(offset);
-			collapse2 = collapse2.append(panelbody);
-
-			courses.append(panel_default);
+		var schedule = '';
+		schedule += '<div id="scheduleaccordion" class="panel-group">'
+		for(i = 0; i < data.length; i++) {
+			schedule += '    <div class="panel panel-primary">'
+			schedule += '        <div class="panel-heading">'
+			schedule += '            <h4 class="panel-title">'
+			schedule += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#scollapse' + i + '">'
+			schedule += '                    <div class="row">'
+			schedule += '                        <div class="col-sm-6">' + data[i].course_name +'</div>'
+			schedule += '                        <div class="col-sm-offset-3 col-sm-3">Course Code: ' + data[i].course_code + '</div>'
+			schedule += '                    </div>'
+			schedule += '                </a>'
+			schedule += '            </h4>'
+			schedule += '        </div>'
+			schedule += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="scollapse' + i + '">'
+			schedule += '            <div class="panel-body">'
+			schedule += '                <div class="col-sm-offset-1">'
+			schedule += '                    <p id="description' + i + '">' + data[i].course_description + '</p>'
+			schedule += '                    <div class="row">'
+			schedule += '                        <div class="col-sm-6">'
+			schedule += '                            <p id="coursestartdate' + i + '"><strong>Start Date: </strong>' + String(data[i].start_date).substring(0, 10) + '</p>'
+			schedule += '                    	 </div>'
+			schedule += '                        <div class="col-sm-6">'
+			schedule += '                            <p id="courseenddate' + i + '"><strong>End Date: </strong>' + String(data[i].end_date).substring(0, 10) + '</p>'
+			schedule += '                        </div>'
+			schedule += '                        <div class="col-sm-3"><strong>Days of Week: </strong>' + data[i].course_days + '</div>'
+			schedule += '                    </div>'
+			schedule += '                </div>'
+			schedule += '            </div>'
+			schedule += '        </div>'
+			schedule += '    </div>'
 		}
-
-		$('#schedule').append(courses);
+		schedule += '</div>'
+		$('#schedule').append(schedule);
 	});
 }

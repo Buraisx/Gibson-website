@@ -25,10 +25,8 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 		course_day += getInterval(interval);
 	}
 	return commit;
-});
+}
 	
-	
-};
 
 function getInterval(interval){
 	switch (interval){
@@ -36,6 +34,7 @@ function getInterval(interval){
 			return WEEKLY;
 		case 'Bi-weekly':
 			return BIWEEKLY;
+
 	}
 }
 

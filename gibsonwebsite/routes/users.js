@@ -109,8 +109,19 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 	console.log("Getting registered courses");
 
-	var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC";
-	console.log(sql);
+	var decode = jwt.decode(req.cookies.access_token);
+	//id of user
+	var inserts = decode.id;
+
+	//var sql = "CREATE VIEW allcourses AS (SELECT course_id, course_code, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY);";
+	//console.log(sql);
+	//var alreadyRegCourses = "CREATE VIEW registeredcourses AS (SELECT gibson.course.course_id, course_code, course_name, default_fee, gibson.course.start_date, gibson.course.end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = ? AND gibson.course.course_id = gibson.user_course.course_id AND gibson.course.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY gibson.course.course_id DESC);";
+	//alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
+	//console.log(alreadyRegCourses);
+
+	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_days, a.default_fee FROM (SELECT * FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC) AS A LEFT JOIN (SELECT gibson.course.course_id, course_code, course_name, default_fee, gibson.course.start_date, gibson.course.end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = ? AND gibson.course.course_id = gibson.user_course.course_id AND gibson.course.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY gibson.course.course_id DESC) AS B ON A.course_id = B.course_id WHERE B.course_id is NULL;";
+	nonRegCourses = mysql.format(nonRegCourses, inserts);
+	//console.log(nonRegCourses);
 
 	connection.getConnection(function(err, con){
 		if(err){
@@ -119,7 +130,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			return err;
 		}
 
-		con.query(sql, function(err, results){
+		con.query(nonRegCourses, function(err, results){
 			con.release();
 
 			if(err){
@@ -131,6 +142,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			if(!results.length){
 				console.log("No courses");
 			}
+			//console.log(results);
 
 			//send all course info to client
 			//console.log(results);
@@ -143,7 +155,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 router.get('/user/profile/schedule', function(req, res, callback) {
 	console.log("Getting schedule");
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = "SELECT c.course_id, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
+	var sql = "SELECT c.course_id, course_code, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.start_date, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
 	var inserts = decode.id;
 	sql = mysql.format(sql, inserts);
 

@@ -8,7 +8,7 @@ function val() {
     return true;
 }
 
-//Javascript to check passwords matches
+//Javascript to check password forms are acceptable
 function checkPass()
 {
     //Store the password field objects into variables
@@ -25,16 +25,48 @@ function checkPass()
     // 2. the message's been changed (i.e., pass2's been
     // changed before)
     if(pass2.value != '' || message.innerHTML != '') {
-        if(pass1.value == pass2.value) {
-            //The passwords match. 
+        var passValidity = passValid(pass1.value);
+        if(pass1.value == pass2.value && passValidity == 1) {
+            // The passwords match and are valid.
             pass2.style.backgroundColor = greenColor;
             message.style.color = greenColor;
-            message.innerHTML = "Passwords Match!"
+            message.innerHTML = "<strong>OK!</strong>"
         } else {
-            //The passwords do not match.
-            pass2.style.backgroundColor = redColor;
-            message.style.color = redColor;
-            message.innerHTML = "Passwords Do Not Match!"
+            if (pass1.value != pass2.value) {
+                // The passwords do not match.
+                pass2.style.backgroundColor = redColor;
+                message.style.color = redColor;
+                message.innerHTML = "<strong>Passwords do not match!</strong>";
+            }
+            else {
+                // The passwords match but are invalid.
+                pass2.style.backgroundColor = redColor;
+                message.style.color = redColor;
+                if (passValidity == -1) {
+                    message.innerHTML = "<strong>Password is too short!</strong>";
+                }
+                else {
+                    message.innerHTML = "<strong>Password has invalid symbols!</strong>";
+                }
+            }
         }
     }
+}
+
+// Helper function: check that input password is valid
+function passValid(pass) {
+
+    // True if the password is valid, false otherwise
+    var status = (pass.match(/(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}/g) == pass);
+    if (status) {
+        // Returns 1 iff the input password matches the regex
+        // (length 6+, at least one letter and one number, no special chars)
+        return(1);
+    }
+    else if (pass.length < 6) {
+        // -1 return means the password is too short
+        return (-1);
+    }
+    // Otherwise password has invalid symbols
+    return (-2);
 }

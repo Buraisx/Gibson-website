@@ -16,13 +16,16 @@ p.small {
     font-size: 16px;
 }
 
-a,
+a, {
+    outline: 0;
+    color: #18bc9c;
+}
+
 a:hover,
 a:focus,
 a:active,
 a.active {
-    outline: 0;
-    color: #18bc9c;
+    color: #159e82;
 }
 
 h1,

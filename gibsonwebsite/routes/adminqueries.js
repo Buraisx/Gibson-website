@@ -6,6 +6,7 @@ var token = require('../authentication/token');
 var mysql = require('mysql');
 var connection = require('../mysqlpool');
 var async = require('async');
+var adminFunctions = require('../public/js/bulkQueries');
 
 
 router.get('/admin/profile', function(req, res, next) {
@@ -90,6 +91,31 @@ router.get('/admin/profile/addCourse', function(req, res){
 });
 */
 
+router.post('/validateCourse', function(req, res){
+    //validate the course name and course code
+    var sql = "SELECT course_id FROM gibson.course WHERE course_name = ? OR course_code = ?;";
+    var inserts = [req.body.course_name, req.body.course_code];
+
+    sql = mysql.format(sql, inserts);
+
+    connection.getConnection(function(err, con){
+        con.query(sql, function(err, results){
+            con.release();
+            console.log(results);
+            if(err){
+                res.send(new Error("err querying"));
+            }
+
+            if(!results.length){
+                res.send("adminqueries.js: Validated!");
+            }   
+
+            else{
+                res.send(new Error("adminqueries.js: Course name or course code already exists!"));
+            }
+        });
+    });
+});
 
 router.post('/admin/profile/addCourse', function(req, res){
 	// instructor_username is set to null
@@ -104,28 +130,64 @@ router.post('/admin/profile/addCourse', function(req, res){
 
         if(err){
             con.release();
-            console.log("cannot get connection");
-            return err;
+            console.log("adminqueries.js: cannot get connection");
+            return next(err);
         }
 
-        con.query(sql, function(err, results){
-            con.release();
-            if(err){
-                console.log("Query error for inserting course to database");
-                //alert("Query error for inserting course to datebase");
-                //res.send(400, "Query error for inserting course to datebase");
-                //res.status(400).send("Query error for inserting course to datebase")
-                return err;
-            }
-            //res.status.send(200, "Inserted course successfully");
-            //res.status(200).send("Inserted course successfully");
-            //alert("Inserted course successfully");
-            res.redirect('/admin/profile');
-        });
+        async.waterfall([
+            function (next){
+                con.query("START TRANSACTION;", function(err, results){
+                    if(err){
+                        console.log("adminqueries.js: Cannot start transactions.");
+                        return next(err);
+                    }
 
+                    next();
+                });
+            },
+
+            function (next){
+                con.query(sql, function(err, results){
+                    if(err){
+                        console.log("adminqueries.js: Query error for inserting course to database");
+                        return next(err);
+                    }
+
+                    next(results.insertId);        
+                });
+            },
+
+            function (course_id, next){
+                var all_days = adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.course_days);
+                for(i = 0; i < all_days.length; i++){
+                    con.query(all_days[i], function(err, results){
+                        if(err){
+                            console.log("adminqueries.js: " + all_days[i] + " FAILED!");
+                            return next(err);
+                        }
+                    });
+                }
+            }
+        ],
+        function (err, results){
+            if(err){
+                con.query("ROLLBACK;", function(err, results){
+                    con.release();
+                    console.log("adminqueries.js: Rollbacked because " + err);
+                    return err;
+                });
+            }
+
+            else{
+                con.query("COMMIT;", function(err, results){
+                    con.release();
+                    console.log("adminqueries.js: Commited course!");
+                    res.redirect('/admin/profile');
+                });
+            }
+        });
     });
 });
-
 
 
 module.exports = router;

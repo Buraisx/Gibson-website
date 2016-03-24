@@ -20,7 +20,7 @@ body{
  	width: 100%;
  	z-index: -1;  
  	opacity: 0.5;
- 	min-height: 700px;
+ 	min-height: 800px;
  	
  }
 
@@ -43,7 +43,7 @@ body{
 .page-wrap {
   min-height: 100%;
   /* equal to footer height */
-  margin-bottom: -374px; 
+  margin-bottom: -266px; 
 }
 .page-wrap:after {
   content: "";
@@ -51,7 +51,7 @@ body{
 
 }
 .site-footer, .page-wrap:after {
-  height: 374px; 
+  height: 266px; 
 }
 
 /*removed line in links*/
@@ -127,12 +127,20 @@ a {
 	font-size: 12pt;
 }
 
+.rentalheader {
+	font-size: 24pt;
+}
+
+.centeredtext {
+	text-align: center;
+}
+
 .required {
 	color: red;
 }
 
 .logindesign {
-	margin-top:80px;
+	padding-top:59px;
 }
 
 .normalfont {
@@ -225,16 +233,50 @@ a {
 }
 
 hr {
+	width: 100%;
     border: none;
     height: 1px;
-    /* Set the hr color */
-    color: #000; /* old IE */
-    background-color: #000; /* Modern Browsers */
+    color: #000;
+    background-color: #000;
 }
 
 .fieldname {
-	text-align: right;
+	text-align: left;
+	padding-left: 0px;
 }
 
 .fieldval {
 	text-align: left;
+	padding-left: 100px;
+}
+
+.rentaltablemargin {
+	margin-bottom: 0px;
+}
+
+.footer-left {
+	text-align: right;
+}
+
+.footer-right{
+	text-align: left;
+}
+
+@media (max-width: 815px)
+{
+	.footer-left {
+		text-align: center;
+	}
+
+	.footer-right{
+		text-align: center;
+	}
+
+	footer h3 
+	{
+		margin-bottom: 0px;
+	}
+	footer .footer-col {
+	    margin-bottom: 40px;
+	}
+}

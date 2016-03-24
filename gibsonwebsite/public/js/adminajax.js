@@ -1,4 +1,3 @@
-
 //List users on page ready
 $("a[href$='#profile']").ready(function(){
 	listusers();
@@ -333,93 +332,359 @@ function listcourses(){
 
 
 function courseform(){
+	var nav = '';
+	nav += '<h1>Add A Course</h1>'
+	nav += '</br>'
+	nav += '<ul class="nav nav-tabs">';
+	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">Course Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#instructor-tab" data-toggle="tab">Instructor Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#time-tab" data-toggle="tab">Set Course Schedule <i class="fa"></i></a></li>';
+	nav += '</ul>';
+
 	var csrfmeta = $("meta[name=_csrf]");
 	var addcourses='';
-	addcourses+='			<h1>Add A Course</h1>';
-	addcourses+='                <form name="frm" action = "/admin/profile/addCourse" method = "POST" role = "form">';
+	addcourses+='                <form name="frm" action = "/admin/profile/addCourse" method = "POST" role = "form" id="courseform">';
 	addcourses+='                     <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
-	addcourses+='                    <div class = "row">';
-	addcourses+='                        <div class = "form-group col-sm-4">';
-	addcourses+='                            <label><span class="required">*</span>Course Name:</label>';
-	addcourses+='                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>';
-	addcourses+='                        </div>';
-	addcourses+='                        <div class = "form-group col-sm-4">';
-	addcourses+='                            <label><span class="required">*</span>Course Code:</label>';
-	addcourses+='                            <input type = "text" class = "form-control" name = "addcoursecode" id = "addcoursecode" required>';
-	addcourses+='                        </div>';
-	addcourses+='                    </div>';
-	addcourses+='                    <div class = "row">';
-	addcourses+='                        <div class = "form-group col-sm-8">';
-	addcourses+='                            <label><span class="required">*</span>Description:</label>';
-	addcourses+='                            <textarea class = "form-control" rows = "3" name = "adddescription" id = "adddescription"></textarea>';
-	addcourses+='                        </div>';
-	addcourses+='                    </div>';
-	addcourses+='                    <div class = "row">';
-	addcourses+='                    <div class = "form-group col-sm-8">';
-	addcourses+='                        <label><span class="required">*</span>Date :</label><br>';
-	addcourses+='                        <div class="input-daterange input-group" id="rangedatepicker">';
-	addcourses+='                            <input type="text" class="input-sm form-control" name="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
-	addcourses+='                            <span class="input-group-addon">to</span>';
-	addcourses+='                            <input type="text" class="input-sm form-control" name="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
-	addcourses+='                        </div>';
-	addcourses+='                    </div>';
-	addcourses+='                    </div>';
-	addcourses+='                    <div class = "row">';
-	addcourses+='                        <div class = "form-group col-sm-4">';
-	addcourses+='                            <label><span class="required">*</span>Time:</label>';
-	addcourses+='                            <input type = "text" class = "form-control" name = "addtime" id = "addtime" required>';
-	addcourses+='                        </div>';
-	addcourses+='                        <div class = "form-group col-sm-4" required>';
-	addcourses+='                            <label><span class="required">*</span>Interval:</label><br>';
-	addcourses+='                            <label class="radio-inline">';
-	addcourses+='                              <input type="radio" name="addinterval" value="weekly">Weekly';
-	addcourses+='                            </label>';
-	addcourses+='                            <label class="radio-inline">';
-	addcourses+='                              <input type="radio" name="addinterval" value="bi-weekly">Bi-weekly';
-	addcourses+='                            </label>';
-	addcourses+='                            <label class="radio-inline">';
-	addcourses+='                              <input type="radio" name="addinterval"  value="daily">Daily';
-	addcourses+='                            </label>';
-	addcourses+='                        </div>';
-	addcourses+='                    </div>';
-	addcourses+='                    <div class = "row">';
-	addcourses+='                        <div class = "form-group col-sm-4">';
-	addcourses+='                            <label><span class="required">*</span>Cost:</label>';
-	addcourses+='                            <input type = "text" class = "form-control" name = "addcost" id = "addcost" required>';
-	addcourses+='                        </div>';
-	addcourses+='                        <div class = "form-group col-sm-4">';
-	addcourses+='                            <label><span class="required">*</span>Target:</label>';
-	addcourses+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
-	addcourses+='                        </div>';
-	addcourses+='                    </div>';
-	addcourses+='                    <div class = "row">';
-	addcourses+='                        <div class = "form-group col-sm-8">';
-	addcourses+='                            <label><span class="required">*</span>Days:</label><br>';
-	addcourses+='                        ';
-	addcourses+='                            <label class="checkbox-inline">';
-	addcourses+='                              <input type="checkbox" name= "adddays" value="monday">Monday';
-	addcourses+='                            </label>';
-	addcourses+='                            <label class="checkbox-inline">';
-	addcourses+='                              <input type="checkbox" name= "adddays" value="tuesday">Tuesday';
-	addcourses+='                            </label>';
-	addcourses+='                            <label class="checkbox-inline">';
-	addcourses+='                              <input type="checkbox" name= "adddays" value="wednesday">Wednesday';
-	addcourses+='                            </label>';
-	addcourses+='                            <label class="checkbox-inline">';
-	addcourses+='                              <input type="checkbox" name= "adddays" value="thursday">Thursday';
-	addcourses+='                            </label>';
-	addcourses+='                            <label class="checkbox-inline">';
-	addcourses+='                              <input type="checkbox" name= "adddays" value="friday">Friday';
-	addcourses+='                            </label>';
-	addcourses+='                        </div>';
-	addcourses+='                        ';
-	addcourses+='                    </div>';
+	addcourses+='						<div class="tab-content">';
+	addcourses+='						<br>';
+
+	//Course Info Tab
+	var course_info='';
+	course_info+='					<div class="tab-pane active" id="info-tab">';
+	course_info+='                    <div class = "row">';
+	course_info+='                        <div class = "form-group col-sm-4">';
+	course_info+='                            <label><span class="required">*</span>Course Name:</label>';
+	course_info+='                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>';
+	course_info+='                        </div>';
+	course_info+='                        <div class = "form-group col-sm-4">';
+	course_info+='                            <label><span class="required">*</span>Course Code:</label>';
+	course_info+='                            <input type = "text" class = "form-control" name = "addcoursecode" id = "addcoursecode" required>';
+	course_info+='                        </div>';
+	course_info+='                    </div>';
+	course_info+='                    <div class = "row">';
+	course_info+='                        <div class = "form-group col-sm-4">';
+	course_info+='                            <label><span class="required">*</span>Cost:</label>';
+	course_info+='                            <input type = "number" class = "form-control" name = "addcost" id = "addcost" required>';
+	course_info+='                        </div>';
+	course_info+='                    </div>';
+	course_info+='                    <div class = "row">';
+	course_info+='                        <div class = "form-group col-sm-4">';
+	course_info+='                            <label>Maxmimum Capacity:</label>';
+	course_info+='                            <input type = "number" class = "form-control" name = "course_limit" id = "course_limit" required>';
+	course_info+='                        </div>';
+	course_info+='                    </div>';
+	course_info+='                    <div class = "row" id="language1">';
+	course_info+='                        <div class = "form-group col-sm-4">';
+	course_info+='                            <label><span class="required">*</span>Offered Language:</label>';
+	course_info+='                            <input type = "text" class = "form-control" name = "course_language1" id = "course_language1" required>';
+	course_info+='                        </div>';
+	course_info+='                    </div>';
+	course_info+='                    <div class = "row" id="languageMods">';
+	course_info+='                        <div class = "form-group col-sm-2">';
+	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="addLanguages()">Add Another Language</button>';
+	course_info+='                        </div>';
+	course_info+='                        <div class = "form-group col-sm-2">';
+	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="removeLanguages()">Remove Language</button>';
+	course_info+='                        </div>';
+	course_info+='                    </div>';
+	course_info+='                    <div class = "row">';
+	course_info+='                        <div class = "form-group col-sm-8">';
+	course_info+='                            <label><span class="required">*</span>Target Audience:</label>';
+	course_info+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
+	course_info+='                        </div>';
+	course_info+='                    </div>';
+	course_info+='                    <div class = "row">';
+	course_info+='                        <div class = "form-group col-sm-8">';
+	course_info+='                            <label><span class="required">*</span>Description:</label>';
+	course_info+='                            <textarea class = "form-control" rows = "6" name = "adddescription" id = "adddescription"></textarea>';
+	course_info+='                        </div>';
+	course_info+='                  	</div>';
+	course_info+='					</div>';
+
+	//Instructor Info Tab
+	var instructor_info = '';
+	instructor_info+='				<div class="tab-pane" id="instructor-tab">';
+	instructor_info+='					 <div class = "row">';
+	instructor_info+='					 	 <div class = "form-group col-sm-4">';
+	instructor_info+='					 		 <label><span class="required">*</span>Instructor\'s Name:</label>';
+	instructor_info+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name" required>';
+	instructor_info+='					 	 </div>';
+	instructor_info+='					 	 <div class = "form-group col-sm-4">';
+	instructor_info+='					 		 <label>Instructor\'s Username:</label>';
+	instructor_info+='                            <input type = "text" class = "form-control" name = "instructor_username" id = "instructor_username" required>';
+	instructor_info+='					 	 </div>';
+	instructor_info+='					 </div>';
+	instructor_info+='                    <div class = "row">';
+	instructor_info+='                        <div class = "form-group col-sm-8">';
+	instructor_info+='                            <label><span class="required">*</span>Instructor Biography:</label>';
+	instructor_info+='                            <textarea class = "form-control" rows = "6" name = "instructor_bio" id = "instructor_bio"></textarea>';
+	instructor_info+='                        </div>';
+	instructor_info+='                    </div>';
+	instructor_info+='              </div>';
+
+	//Set Course Days Tab
+	var set_date = '';
+	set_date+='               <div class="tab-pane" id="time-tab">';
+	set_date+='                   <div class = "row">';
+	set_date+='                    <div class = "form-group col-sm-8">';
+	set_date+='                        <label><span class="required">*</span>Date:</label><br>';
+	set_date+='                        <div class="input-daterange input-group rangedatepicker">';
+	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	set_date+='                            <span class="input-group-addon">to</span>';
+	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	set_date+='                        </div>';
+	set_date+='                    </div>';
+	set_date+='                   </div>';
+	set_date+='                    <div class = "row">';
+	set_date+='                        <div class = "form-group col-sm-4" required>';
+	set_date+='                            <label><span class="required">*</span>Class Interval:</label><br>';
+	set_date+='                            <label class="radio-inline">';
+	set_date+='                              <input type="radio" name="addinterval" value="weekly">Weekly';
+	set_date+='                            </label>';
+	set_date+='                            <label class="radio-inline">';
+	set_date+='                              <input type="radio" name="addinterval" value="bi-weekly">Bi-Weekly';
+	set_date+='                            </label>';
+	set_date+='                        </div>';
+	set_date+='                    </div>';
+	set_date+='                    <div class = "row" name="day0" id="day0">';	//Cannot be delete tag for reference
+	set_date+='                        <div>';
+	set_date+='                        	<label class="form-group col-sm-4">Course Days:</label>';
+	set_date+='                        	<label class="form-group col-sm-2">Start Time:</label>';
+	set_date+='                        	<label class="form-group col-sm-2">End Time:</label><br>';
+	set_date+='                    	   </div>';	
+	set_date+='                    </div>';	
+	set_date+='                    <div class = "row" name="day1" id="day1">';
+	set_date+='                        <div class = "form-group col-sm-4" required>';
+	set_date+='                        	<select class="form-control" name="day-of-week1">';
+	set_date+='								<option value="">Select a day</option>';
+	set_date+='								<option value="Monday">Monday</option>';
+	set_date+='								<option value="Tuesday">Tuesday</option>';
+	set_date+='								<option value="Wednesday">Wednesday</option>';
+	set_date+='								<option value="Thursday">Thursday</option>';
+	set_date+='								<option value="Friday">Friday</option>';
+	set_date+='								<option value="Saturday">Saturday</option>';
+	set_date+='								<option value="Sunday">Sunday</option>';
+	set_date+='                        	</select>';
+	set_date+='                        </div>';
+	set_date+='                    	   <div class = "form-group col-sm-2" required>';
+	set_date+='								<input type = "text" class = "form-control" name = "starttime1" id = "starttime1" required>';
+	set_date+='                        </div>';
+	set_date+='                    	   <div class = "form-group col-sm-2" required>';
+	set_date+='								<input type = "text" class = "form-control" name = "endtime1" id = "endtime1" required>';
+	set_date+='                        </div>'; 
+	set_date+='                    </div>';
+	set_date+='                    <div class = "row" id="scheduleMods">';
+	set_date+='                        <div class = "form-group col-sm-2">';
+	set_date+='                            <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
+	set_date+='                        </div>';
+	set_date+='                        <div class = "form-group col-sm-2">';
+	set_date+='                            <button type = "button" class= "btn btn-default" id = "addlschedule" onClick="removeTime()">Remove schedule</button>';
+	set_date+='                        </div>';
+	set_date+='                    </div>';
+	set_date+='                    <div class = "row" name="adhoc0" id="adhoc0">';
+	set_date+='                    	<div>';
+	set_date+='							<label class = "form-group col-sm-4">Ad-Hoc Days:</label>';
+	set_date+='							<label class = "form-group col-sm-2">Start Time:</label>';
+	set_date+='							<label class = "form-group col-sm-2">End Time:</label>';
+	set_date+='                    	</div>';
+	set_date+='                    </div>';
+	set_date+='                   <div class = "row" id="adhoc1">';
+	set_date+='                    <div class = "form-group col-sm-4">';
+	set_date+='                        <div class="input-daterange input-group rangedatepicker">';
+	set_date+='                            <input type="text" class="input-sm-4 form-control" name="adhocstartdate1" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	set_date+='                        </div>';
+	set_date+='                    </div>';
+	set_date+='                    <div class = "form-group col-sm-2" required>';
+	set_date+='						   <input type = "text" class = "form-control" name = "startadhoc1" id = "startadhoc1" required>';
+	set_date+='                    </div>';
+	set_date+='                    <div class = "form-group col-sm-2" required>';
+	set_date+='						   <input type = "text" class = "form-control" name = "endadhoc1" id = "endadhoc1" required>';
+	set_date+='                    </div>'; 
+	set_date+='                   </div>';
+	set_date+='                    <div class = "row" id="adhocMods">';
+	set_date+='                        <div class = "form-group col-sm-2">';
+	set_date+='                            <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="addAdhocTime()">Add a custom schedule</button>';
+	set_date+='                        </div>';
+	set_date+='                        <div class = "form-group col-sm-2">';
+	set_date+='                            <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="removeAdhocTime()">Remove schedule</button>';
+	set_date+='                        </div>';
+	set_date+='                    </div>';
+	set_date+='                </div>';
+
+	//Insert all tabs
+	addcourses+=course_info;
+	addcourses+=instructor_info;
+	addcourses+=set_date;
+
+	//Submit Tab
+	addcourses+='				  	 </div>';	//closing tab div
 	addcourses+='                    <div class="row form-group">';
 	addcourses+='                        <div class = "col-sm-8">';
-	addcourses+='                            <button type = "submit" class= "btn btn-default col-sm-2" id = "addcourse">Add Course</button>';
+	addcourses+='                            <button type = "button" class= "btn btn-default" id = "validate" onClick="validateCourse()">Validate!</button>';
 	addcourses+='                        </div>';
 	addcourses+='                    </div>';
 	addcourses+='                </form>';
+
+	$('#addcourses').append(nav);
 	$('#addcourses').append(addcourses);
-	$('#rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
+	$('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
+}
+
+//==============================
+//ADD/REMOVE Languages
+//==============================
+//==============================
+//reset onpage refresh
+var COUNTLANGUAGE=1;
+
+function addLanguages(){
+	console.log("Adding " + COUNTLANGUAGE + " languages.");
+
+	var newLanguage=COUNTLANGUAGE+1;
+
+	var language='';
+	language+='                    <div class = "row" id="language' + newLanguage +'" style="display:none;">';
+	language+='                        <div class = "form-group col-sm-4">';
+	language+='                            <label><span class="required">*</span>Offered Language:</label>';
+	language+='                            <input type = "text" class = "form-control" name = "course_language' + newLanguage + '" id = "course_language' + newLanguage + '" required>';
+	language+='                        </div>';
+	language+='                    </div>';
+
+	$('#language'+COUNTLANGUAGE).after(language);
+	$('#language'+newLanguage).slideToggle();
+	COUNTLANGUAGE++;
+}
+
+function removeLanguages(){
+	if(COUNTLANGUAGE > 1){
+		console.log("Removing " + COUNTLANGUAGE + " languages.");
+		$('#language'+COUNTLANGUAGE).slideToggle(function(){
+			$('#language'+COUNTLANGUAGE).remove();
+			COUNTLANGUAGE--;
+		});
+	}
+
+	else{
+		console.log("Cannot Remove Default Language");
+	}
+
+}
+
+//==============================
+//ADD/REMOVE Scheduled Days
+//==============================
+//==============================
+//reset onpage refresh
+var COUNTCOURSEDAYS=1;
+
+function addTime(){
+	console.log("Adding " + COUNTCOURSEDAYS + " Course Time.");
+
+	var newCourseDay=COUNTCOURSEDAYS+1;
+
+	var day='';
+	day+='                    <div class = "row" name="day'+ newCourseDay +'" id="day'+ newCourseDay +'" style="display:none;">';
+	day+='                        <div class = "form-group col-sm-4" required>';
+	//day+='                        	<label><span class="required">*</span>Course Days:</label><br>';
+	day+='                        	<select class="form-control" name="day-of-week'+ newCourseDay +'" id="day-of-week'+ newCourseDay +'">';
+	day+='								<option value="">Select a day</option>';
+	day+='								<option value="Monday">Monday</option>';
+	day+='								<option value="Tuesday">Tuesday</option>';
+	day+='								<option value="Wednesday">Wednesday</option>';
+	day+='								<option value="Thursday">Thursday</option>';
+	day+='								<option value="Friday">Friday</option>';
+	day+='								<option value="Saturday">Saturday</option>';
+	day+='								<option value="Sunday">Sunday</option>';
+	day+='                        	</select>';
+	day+='                        </div>';
+	day+='                    	   <div class = "form-group col-sm-2" required>';
+	//day+='                        		<label><span class="required">*</span>Start Time:</label><br>';
+	day+='								<input type = "text" class = "form-control" name = "starttime'+ newCourseDay +'" id = "starttime'+ newCourseDay +'" required>';
+	day+='                        </div>';
+	day+='                    	   <div class = "form-group col-sm-2" required>';
+	//day+='                        		<label><span class="required">*</span>End Time:</label><br>';
+	day+='								<input type = "text" class = "form-control" name = "endtime'+ newCourseDay +'" id = "endtime'+ newCourseDay +'" required>';
+	day+='                        </div>'; 
+	day+='                    </div>';
+
+	$('#day'+ COUNTCOURSEDAYS).after(day);
+	$('#day'+ newCourseDay).slideToggle();
+	COUNTCOURSEDAYS++;
+}
+
+function removeTime(){
+	if(COUNTCOURSEDAYS > 0){
+		console.log("Removing " + COUNTCOURSEDAYS + " Course Time.");
+		$('#day'+COUNTCOURSEDAYS).slideToggle(function(){
+			$('#day'+COUNTCOURSEDAYS).remove();
+			COUNTCOURSEDAYS--;
+		});
+	}
+
+	else{
+		console.log("Cannot Remove Default Time.");
+	}
+}
+
+//==============================
+//ADD/REMOVE Scheduled Days
+//==============================
+//==============================
+//reset onpage refresh
+var COUNTADHOCDAYS=1;
+
+function addAdhocTime(){
+	console.log("Adding " + COUNTADHOCDAYS + " AD-HOC Course Time.");
+
+	var newAdhocDay=COUNTADHOCDAYS+1;
+
+	var adhoc='';
+	adhoc+='                   <div class = "row" id="adhoc'+ newAdhocDay +'" style="display:none;">';
+	adhoc+='                    <div class = "form-group col-sm-4">';
+	adhoc+='                        <div class="input-daterange input-group rangedatepicker">';
+	adhoc+='                            <input type="text" class="input-sm-4 form-control" name="adhocstartdate'+ newAdhocDay +'" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	adhoc+='                        </div>';
+	adhoc+='                    </div>';
+	adhoc+='                    <div class = "form-group col-sm-2" required>';
+	adhoc+='						   <input type = "text" class = "form-control" name = "startadhoc'+ newAdhocDay +'" id = "startadhoc'+ newAdhocDay +'" required>';
+	adhoc+='                    </div>';
+	adhoc+='                    <div class = "form-group col-sm-2" required>';
+	adhoc+='						   <input type = "text" class = "form-control" name = "endadhoc'+ newAdhocDay +'" id = "endadhoc'+ newAdhocDay +'" required>';
+	adhoc+='                    </div>'; 
+	adhoc+='                   </div>';
+
+	$('#adhoc'+COUNTADHOCDAYS).after(adhoc);
+	$('#adhoc'+newAdhocDay).slideToggle();
+	$('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
+	COUNTADHOCDAYS++;
+}
+
+function removeAdhocTime(){
+	if(COUNTADHOCDAYS > 0){
+		console.log("Removing " + COUNTADHOCDAYS + " Course Time.");
+		$('#adhoc'+COUNTADHOCDAYS).slideToggle(function(){
+			$('#adhoc'+COUNTADHOCDAYS).remove();
+			COUNTADHOCDAYS--;
+		});
+	}
+
+	else{
+		console.log("Cannot Remove Default Adhoc Schedule.");
+	}
+}
+
+function validateCourse(){
+	$("#courseform").slideToggle();
+	$.post("/validateCourse",{
+		course_name: $('#addcoursename').val(),
+		course_code: $('#addcoursecode').val(),
+		_csrf: $('#_csrf').val()
+	})
+	.done(function (res){
+		alert(res);
+	})
+	.fail(function (err){
+		$("#courseform").slideToggle();
+		alert(err);
+	});
 }
