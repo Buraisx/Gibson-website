@@ -56,6 +56,7 @@ function register(course_register){
 		console.log("You're registered yay");
 		console.log(res);
 		alert("You have successfully signed up!");
+		listcourses();
 	})
 	.fail(function (err){
 		console.log("Already registered course.");
