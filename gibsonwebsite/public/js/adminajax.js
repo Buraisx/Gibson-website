@@ -384,7 +384,7 @@ function courseform(){
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="addLanguages()">Add Another Language</button>';
 	course_info+='                        </div>';
 	course_info+='                        <div class = "form-group col-sm-2">';
-	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="removeLanguages()">Remove Language</button>';
+	course_info+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
 	course_info+='                        </div>';
 	course_info+='                    </div>';
 	course_info+='                    <div class = "row">';
@@ -529,6 +529,75 @@ function courseform(){
 	$('#addcourses').append(addcourses);
 	$('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
 	$('.time_element').timepicki();
+	$.validator.setDefaults({ 
+	    ignore: [],
+	});
+	$.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "Invalid username."
+	);
+	$('#courseform').validate({
+		rules: {
+			addcoursename: {
+				required: true,
+				minlength: 3,
+				maxlength: 40,
+			},
+			addcoursecode: {
+				required: true,
+				maxlength: 20
+			},
+			addcost: {
+				required: true,
+				number: true
+			},
+			course_limit: {
+				maxlength: 4
+			}/*,
+			course_language1 { ///////////////
+				required: true,
+				minlength: 1,
+				maxlength: 20
+			}*/,
+			addtarget: {
+				required: true,
+				minlength: 1,
+				maxlength: 100
+			},
+			adddescription: {
+				required: true
+				// also sanitize
+			},
+			instructor_name: {
+				required: true
+				// also sanitize
+			},
+			instructor_username: {
+				regex: "^\\w+$"
+			},
+			instructor_bio: {
+				required: true
+				// desc
+			},
+			addstartdate: {
+				required: true
+			},
+			addenddate: {
+				required: true
+			},
+			addinterval: {
+				required: true
+			}
+			// dayofweek1 etc.
+			// starttime1
+			// endtime1
+			// adhoc1 etc.
+		}
+	});
 }
 
 //==============================
@@ -677,7 +746,7 @@ function removeAdhocTime(){
 }
 
 function validateCourse(){
-	$("#courseform").slideToggle();
+	//$("#courseform").slideToggle();
 	$.post("/validateCourse",{
 		course_name: $('#addcoursename').val(),
 		course_code: $('#addcoursecode').val(),
