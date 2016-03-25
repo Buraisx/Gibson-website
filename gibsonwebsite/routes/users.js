@@ -66,13 +66,9 @@ router.post('/user/profile/changepassword', function(req, res, next){
 										return err;
 									}
 									else {
-										console.log("User has successfully changed their password");
-										//res.send(200, 'Password has successfully been changed!');
-										token.refreshAccessToken(decode.id, res);
+										res.send(200, 'Password has successfully been changed!');
 									}
-
 								});
-
 						}
 
 						else {
@@ -172,7 +168,6 @@ router.get('/user/profile/info', function(req, res, next) {
 					if(err){
 						return err;
 					}
-					console.log(response);
 					res.send(response);
 				}
 			);
@@ -181,8 +176,6 @@ router.get('/user/profile/info', function(req, res, next) {
 });
 
 router.get('/user/profile/courses', function(req, res, callback) {
-
-	console.log("Getting registered courses");
 
 	var decode = jwt.decode(req.cookies.access_token);
 	//id of user
@@ -228,7 +221,6 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 
 router.get('/user/profile/schedule', function(req, res, callback) {
-	console.log("Getting schedule");
 	var decode = jwt.decode(req.cookies.access_token);
 	var sql = "SELECT c.course_id, course_code, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.start_date, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
 	var inserts = decode.id;
@@ -255,8 +247,6 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 			}
 
 			//send all course info to client
-
-			console.log(results);
 			res.json(results);
 
 		});
@@ -287,7 +277,6 @@ router.post('/register', function(req, res, next){
 			function(next){
 				query_course_exists = mysql.format(query_course_exists, inserts);
 
-				console.log(query_course_exists);
 				con.query(query_course_exists, function(err, results){
 					if (err)
 					{
@@ -312,7 +301,6 @@ router.post('/register', function(req, res, next){
 				inserts = [decode.id, course_id];
 				query_not_already_registered = mysql.format(query_not_already_registered, inserts);
 
-				console.log(query_not_already_registered);
 				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
 						console.log('Failed to query for registered courses');
@@ -331,7 +319,6 @@ router.post('/register', function(req, res, next){
 					inserts = [decode.id, course_id, 'Enrolled', 'Registered for course ID ' + course_id, course_id];
 					query_register = mysql.format(query_register, inserts);
 
-					console.log(query_register);
 					con.query(query_register, function(err, reg_res){
 						if (err){
 							console.log('Error occured during registration query');
