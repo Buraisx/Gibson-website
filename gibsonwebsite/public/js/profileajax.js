@@ -261,7 +261,7 @@ function load_profile(){
 		//mix in one div form-group
 		var label2 = $("<label></label>").append("New Password:");
 		var input2 = $("<input></input>", {type : "password", class : "form-control", name : "newpass", id : "password", placeholder:"Enter New Password", minlength: "6", 
-										   required:""});
+										   onkeyup:"checkPass(); return false;", required:""});
 		
 		//mix in one div form-group
 		var label3 = $("<label></label>").append("Confirm New Password:");
