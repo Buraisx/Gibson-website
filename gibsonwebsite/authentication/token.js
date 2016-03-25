@@ -161,9 +161,7 @@ function generateToken(req, res, next) {
                 lastLoggedIn: req.user.last_login_time
               },
                 req.user.adminSecretKey, {
-                  expiresIn: 12*60*60
-          // 12 hours 12 * 60 * 60
-
+                  expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
               });
               console.log("ADMIN TOKEN:" + req.adminToken);
               next();
@@ -179,6 +177,59 @@ function generateToken(req, res, next) {
   });
 }
 
+
+
+// USED WHEN USER CHANGES PASSWORD
+function refreshAccessToken(userId){
+
+  // GET CONNECTION
+  connection.getConnection(function(err, con){
+    if (err){
+      console.log('token.js: Error connecting to database; refreshAccessToken');
+      return(new Error('Error refreshing access_token'));
+    }
+    else{
+
+      // QUERY DATABASE FOR USER INFO
+      con.query('SELECT password, username, rank_id, last_login_time FROM gibson.user WHERE user_id = ?;', [userId], function(err, results){
+        if(err){
+          console.log('token.js: Error querying for user information; refreshAccessToken');
+          return(new Error('Error querying for user information.'));
+        }
+        else{
+          var userInfo = results[0];
+
+          // QUERYING DATABASE FOR RANK'S SECRET KEY
+          con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = ?;', [userInfo.rank_id], function(err, results){
+            if(err){
+              console.log('token.js: Error querying for rank specific secret key; refreshAccessToken');
+              return(new Error('Error querying for secret key.'));
+            }
+            else{
+              var secretKey = results[0].secret_key;
+
+              var token = jwt.sign({
+                iss: config.jwt.issuer,
+                id: userId,
+                user: userInfo.username,
+                rank: userInfo.rank_id,
+                lastLoggedIn: userInfo.last_login_time
+              },
+              secretKey, {
+                expiresIn: 14*24*60*60 // 14 day
+              });
+
+              return token;
+            }
+          });
+        }
+      });
+    }
+  });
+}
+
+
+
 // PLACING THE TOKEN IN A COOKIE (MaxAge in MILLISECONDS)
 function respond(req, res, next) {
 	res.clearCookie('access_token');
@@ -193,7 +244,7 @@ function adminRespond(req,res,next){
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
   if (req.user.rank_id > 1) {
     res.clearCookie('privilege');
-    res.cookie('privilege', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60*1000});
+    res.cookie('privilege', req.adminToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
   }
   next();
 }
@@ -204,6 +255,7 @@ function sendUsername(req,res,next) {
   next();
 }
 
+module.exports.refreshAccessToken = refreshAccessToken;
 module.exports.forgotPasswordToken = forgotPasswordToken;
 module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
