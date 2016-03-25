@@ -479,7 +479,7 @@ function listcourses(){
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
 			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code: ", data[i].course_code);
+			var courseid = $("<div></div>", {class: "col-sm-offset-2 col-sm-4"}).append("Course Code: ", data[i].course_code);
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
@@ -560,7 +560,7 @@ function listschedule(){
 			schedule += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#scollapse' + i + '">'
 			schedule += '                    <div class="row">'
 			schedule += '                        <div class="col-sm-6">' + data[i].course_name +'</div>'
-			schedule += '                        <div class="col-sm-offset-3 col-sm-3">Course Code: ' + data[i].course_code + '</div>'
+			schedule += '                        <div class="col-sm-offset-2 col-sm-4">Course Code: ' + data[i].course_code + '</div>'
 			schedule += '                    </div>'
 			schedule += '                </a>'
 			schedule += '            </h4>'
