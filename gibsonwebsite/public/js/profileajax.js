@@ -279,22 +279,21 @@ function load_profile(){
 		//===============
 		//Change Password
 		$('#profile').append(changePassword);
-		$('#profile').append(cpHidden);
-		cpHidden.append($("<div></div>").append(
-			pText, formInline));
 
-		//Using Closure Structure
-		formInline.append(csrf);
-
-		formInline.append($("<div></div>", {class:"form-group"}).append(
-			label1, input1));
-
-		formInline.append($("<div></div>", {class:"form-group"}).append(
-			label2, input2));
-
-		formInline.append($("<div></div>", {class:"form-group"}).append(
-			label3, input3, button3));
 		//================
+		$('#change_password_form').validate({
+			rules: {
+				currentpass: {
+					required: true
+				},
+				newpass: {
+					required: true
+				},
+				confirmnewpass: {
+					required: true
+				}
+			}
+		});
 	});
 }
 
@@ -488,7 +487,7 @@ function listcourses(){
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
 			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code: ", data[i].course_code);
+			var courseid = $("<div></div>", {class: "col-sm-offset-2 col-sm-4"}).append("Course Code: ", data[i].course_code);
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
