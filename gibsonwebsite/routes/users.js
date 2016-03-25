@@ -6,6 +6,8 @@ var token = require('../authentication/token');
 var mysql = require('mysql');
 var connection = require('../mysqlpool');
 var async = require('async');
+var bcrypt = require('bcrypt-nodejs');
+var sanitizer = require('sanitizer');
 
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
@@ -13,6 +15,79 @@ router.get('/user/profile', function(req, res, next) {
 	res.render('userProfile', {title: "Your Profile"}, function(err, html){
 		res.send(html);
 	});
+});
+
+router.post('/user/profile/changepassword', function(req, res, next){
+
+	var decode = jwt.decode(req.cookies.access_token);
+  	// SANITIZES EVERYTHING COMING IN FROM REQ
+  	for(var i in req.body){
+
+    	req.body[i] = sanitizer.sanitize(req.body[i]);
+  	}
+
+	if(req.body.newpass == req.body.confirmnewpass){
+
+		connection.getConnection(function(err, con){
+
+			if(err){
+				connection.end();
+				console.log("user.js: Cannot get connection to the database.");
+				return err;
+			}
+			else{
+
+				var getPassword = "SELECT password FROM gibson.user WHERE user_id = ?;"
+				getPassword = mysql.format(getPassword, [decode.id]);
+
+				con.query(getPassword, function(err, userPassword){
+
+					if(err){
+						console.log("Cannot query the user's password");
+						return err;
+
+					}
+					else if(!userPassword.length){
+						console.log("Password for the user does not exist");
+						return (new Error("Password for the user does not exist"));
+					}
+					else{
+
+						if(bcrypt.compareSync(req.body.currentpass, userPassword[0].password)){
+								//change user password
+								var newPassword = bcrypt.hashSync(req.body.newpass, bcrypt.genSaltSync(Math.floor(3*Math.random())+10));
+								var changePassword = "UPDATE gibson.user SET password = ? WHERE user_id = ?";
+								changePassword = mysql.format(changePassword, [newPassword, decode.id]);
+
+								con.query(changePassword, function(err, changedorNot){
+
+									if(err){
+										console.log("Could not query to change the password");
+										return err;
+									}
+									else {
+										console.log("User has successfully changed their password");
+										//res.send(200, 'Password has successfully been changed!');
+										res.redirect("/");
+									}
+
+								});
+
+						}							
+
+						else {
+							console.log("Current Password entered is incorrect.");
+							return (new Error("Current Password entered is incorrect."));
+						}
+					}
+				});
+			}
+		});
+	}
+	else{
+		console.log("New password and confirm password is not the same.");
+		return err;
+	}
 });
 
 router.get('/user/profile/info', function(req, res, next) {

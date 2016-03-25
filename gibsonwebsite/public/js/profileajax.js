@@ -250,8 +250,8 @@ function load_profile(){
 		var cpHidden = $("<div></div>", {id:'change_password', class:'hidden changepassdesign form-group form-group-sm row col-sm-12'});
 		var pText = $("<p></p>", {class: "small"}).append("Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.");
 
-		var formInline = $("<form></form>", {class:"form-inline", role : "form"});
-
+		var formInline = $("<form></form>", {class:"form-inline", action:"/user/profile/changepassword", method:"post", role : "form"});
+		var csrf = '<input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">'
 		
 		//mix in one div form-group
 		var label1 = $("<label></label>").append("Current Password:");
@@ -261,14 +261,14 @@ function load_profile(){
 		//mix in one div form-group
 		var label2 = $("<label></label>").append("New Password:");
 		var input2 = $("<input></input>", {type : "password", class : "form-control", name : "newpass", id : "password", placeholder:"Enter New Password", minlength: "6", 
-										   required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
+										   required:""});
 		
 		//mix in one div form-group
 		var label3 = $("<label></label>").append("Confirm New Password:");
 		var input3 = $("<input></input>", {type : "password", class : "form-control", name : "confirmnewpass", id : "passwordhashed",
 										   placeholder:"Confirm New Password", onkeyup:"checkPass(); return false;",
-										   minlength: "6", required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
-		var button3 = $("<button></button>", {type : "button", class : "btn btn-default", onclick:"", id : "changepassbutton"}).append("Change");
+										   minlength: "6", required:""});
+		var button3 = $("<button></button>", {type : "submit", class : "btn btn-default", id : "changepassbutton"}).append("Change");
 
 		//Add E-Contacts, Edit Info
 		$('#profile').append($("<div></div>", {id: "addecontact", class: "hidden"}).append(newcontact, einputrow1, einputrow2));
@@ -284,6 +284,8 @@ function load_profile(){
 			pText, formInline));
 
 		//Using Closure Structure
+		formInline.append(csrf);
+
 		formInline.append($("<div></div>", {class:"form-group"}).append(
 			label1, input1));
 
