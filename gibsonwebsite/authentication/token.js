@@ -180,7 +180,7 @@ function generateToken(req, res, next) {
 
 
 // USED WHEN USER CHANGES PASSWORD
-function refreshAccessToken(userId){
+function refreshAccessToken(userId, res){
 
   // GET CONNECTION
   connection.getConnection(function(err, con){
@@ -219,7 +219,10 @@ function refreshAccessToken(userId){
                 expiresIn: 14*24*60*60 // 14 day
               });
 
-              return token;
+              console.log(userId);
+              res.clearCookie('access_token');
+              res.cookie('access_token', token, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+              res.redirect('/');
             }
           });
         }

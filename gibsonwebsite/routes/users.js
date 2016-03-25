@@ -37,7 +37,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 			}
 			else{
 
-				var getPassword = "SELECT password FROM gibson.user WHERE user_id = ?;"
+				var getPassword = "SELECT password FROM gibson.user WHERE user_id = ?;";
 				getPassword = mysql.format(getPassword, [decode.id]);
 
 				con.query(getPassword, function(err, userPassword){
@@ -68,13 +68,12 @@ router.post('/user/profile/changepassword', function(req, res, next){
 									else {
 										console.log("User has successfully changed their password");
 										//res.send(200, 'Password has successfully been changed!');
-										token.refreshAccessToken(decode.id);
-										res.redirect("/");
+										token.refreshAccessToken(decode.id, res);
 									}
 
 								});
 
-						}							
+						}
 
 						else {
 							console.log("Current Password entered is incorrect.");
@@ -107,7 +106,7 @@ router.get('/user/profile/info', function(req, res, next) {
 				function(next){
 					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
 					var inserts = decode.id;
-			
+
 					sql = mysql.format(sql, inserts);
 					con.query(sql, function(err, results){
 						if(err){
@@ -170,7 +169,7 @@ router.get('/user/profile/info', function(req, res, next) {
 			],
 				function(err){
 					con.release();
-					if(err){	
+					if(err){
 						return err;
 					}
 					console.log(response);
@@ -256,10 +255,10 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 			}
 
 			//send all course info to client
-			
+
 			console.log(results);
 			res.json(results);
-			
+
 		});
 	});
 });
