@@ -467,10 +467,10 @@ function courseform(){
 	set_date+='                        	</select>';
 	set_date+='                        </div>';
 	set_date+='                    	   <div class = "form-group col-sm-2" required>';
-	set_date+='								<input type = "text" class = "form-control" name = "starttime1" id = "starttime1" required>';
+	set_date+='								<input type = "text" class = "form-control time_element" name = "starttime1" id = "starttime1" required>';
 	set_date+='                        </div>';
 	set_date+='                    	   <div class = "form-group col-sm-2" required>';
-	set_date+='								<input type = "text" class = "form-control" name = "endtime1" id = "endtime1" required>';
+	set_date+='								<input type = "text" class = "form-control time_element" name = "endtime1" id = "endtime1" required>';
 	set_date+='                        </div>'; 
 	set_date+='                    </div>';
 	set_date+='                    <div class = "row" id="scheduleMods">';
@@ -478,7 +478,7 @@ function courseform(){
 	set_date+='                            <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
 	set_date+='                        </div>';
 	set_date+='                        <div class = "form-group col-sm-2">';
-	set_date+='                            <button type = "button" class= "btn btn-default" id = "addlschedule" onClick="removeTime()">Remove schedule</button>';
+	set_date+='                            <button type = "button" class= "btn btn-default" id = "removeschedule" onClick="removeTime()">Remove schedule</button>';
 	set_date+='                        </div>';
 	set_date+='                    </div>';
 	set_date+='                    <div class = "row" name="adhoc0" id="adhoc0">';
@@ -495,10 +495,10 @@ function courseform(){
 	set_date+='                        </div>';
 	set_date+='                    </div>';
 	set_date+='                    <div class = "form-group col-sm-2" required>';
-	set_date+='						   <input type = "text" class = "form-control" name = "startadhoc1" id = "startadhoc1" required>';
+	set_date+='						   <input type = "text" class = "form-control time_element" name = "startadhoc1" id = "startadhoc1" required>';
 	set_date+='                    </div>';
 	set_date+='                    <div class = "form-group col-sm-2" required>';
-	set_date+='						   <input type = "text" class = "form-control" name = "endadhoc1" id = "endadhoc1" required>';
+	set_date+='						   <input type = "text" class = "form-control time_element" name = "endadhoc1" id = "endadhoc1" required>';
 	set_date+='                    </div>'; 
 	set_date+='                   </div>';
 	set_date+='                    <div class = "row" id="adhocMods">';
@@ -506,7 +506,7 @@ function courseform(){
 	set_date+='                            <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="addAdhocTime()">Add a custom schedule</button>';
 	set_date+='                        </div>';
 	set_date+='                        <div class = "form-group col-sm-2">';
-	set_date+='                            <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="removeAdhocTime()">Remove schedule</button>';
+	set_date+='                            <button type = "button" class= "btn btn-default" id = "removeadhoc" onClick="removeAdhocTime()">Remove schedule</button>';
 	set_date+='                        </div>';
 	set_date+='                    </div>';
 	set_date+='                </div>';
@@ -528,6 +528,7 @@ function courseform(){
 	$('#addcourses').append(nav);
 	$('#addcourses').append(addcourses);
 	$('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
+	$('.time_element').timepicki();
 }
 
 //==============================
@@ -599,16 +600,17 @@ function addTime(){
 	day+='                        </div>';
 	day+='                    	   <div class = "form-group col-sm-2" required>';
 	//day+='                        		<label><span class="required">*</span>Start Time:</label><br>';
-	day+='								<input type = "text" class = "form-control" name = "starttime'+ newCourseDay +'" id = "starttime'+ newCourseDay +'" required>';
+	day+='								<input type = "text" class = "form-control time_element" name = "starttime'+ newCourseDay +'" id = "starttime'+ newCourseDay +'" required>';
 	day+='                        </div>';
 	day+='                    	   <div class = "form-group col-sm-2" required>';
 	//day+='                        		<label><span class="required">*</span>End Time:</label><br>';
-	day+='								<input type = "text" class = "form-control" name = "endtime'+ newCourseDay +'" id = "endtime'+ newCourseDay +'" required>';
+	day+='								<input type = "text" class = "form-control time_element" name = "endtime'+ newCourseDay +'" id = "endtime'+ newCourseDay +'" required>';
 	day+='                        </div>'; 
 	day+='                    </div>';
 
 	$('#day'+ COUNTCOURSEDAYS).after(day);
 	$('#day'+ newCourseDay).slideToggle();
+	$('.time_element').timepicki();
 	COUNTCOURSEDAYS++;
 }
 
@@ -646,15 +648,16 @@ function addAdhocTime(){
 	adhoc+='                        </div>';
 	adhoc+='                    </div>';
 	adhoc+='                    <div class = "form-group col-sm-2" required>';
-	adhoc+='						   <input type = "text" class = "form-control" name = "startadhoc'+ newAdhocDay +'" id = "startadhoc'+ newAdhocDay +'" required>';
+	adhoc+='						   <input type = "text" class = "form-control time_element" name = "startadhoc'+ newAdhocDay +'" id = "startadhoc'+ newAdhocDay +'" required>';
 	adhoc+='                    </div>';
 	adhoc+='                    <div class = "form-group col-sm-2" required>';
-	adhoc+='						   <input type = "text" class = "form-control" name = "endadhoc'+ newAdhocDay +'" id = "endadhoc'+ newAdhocDay +'" required>';
+	adhoc+='						   <input type = "text" class = "form-control time_element" name = "endadhoc'+ newAdhocDay +'" id = "endadhoc'+ newAdhocDay +'" required>';
 	adhoc+='                    </div>'; 
 	adhoc+='                   </div>';
 
 	$('#adhoc'+COUNTADHOCDAYS).after(adhoc);
 	$('#adhoc'+newAdhocDay).slideToggle();
+	$('.time_element').timepicki();
 	$('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
 	COUNTADHOCDAYS++;
 }
