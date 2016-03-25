@@ -68,6 +68,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 									else {
 										console.log("User has successfully changed their password");
 										//res.send(200, 'Password has successfully been changed!');
+										token.refreshAccessToken(decode.id);
 										res.redirect("/");
 									}
 
