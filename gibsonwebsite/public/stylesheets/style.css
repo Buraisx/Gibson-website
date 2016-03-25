@@ -127,10 +127,6 @@ a {
 	font-size: 12pt;
 }
 
-.rentalheader {
-	font-size: 24pt;
-}
-
 .centeredtext {
 	text-align: center;
 }
@@ -248,10 +244,6 @@ hr {
 .fieldval {
 	text-align: left;
 	padding-left: 100px;
-}
-
-.rentaltablemargin {
-	margin-bottom: 0px;
 }
 
 .footer-left {
