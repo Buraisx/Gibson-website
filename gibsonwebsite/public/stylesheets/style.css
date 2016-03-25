@@ -272,3 +272,8 @@ hr {
 	    margin-bottom: 40px;
 	}
 }
+
+.error-pic {
+    height: 100%;
+    width: 100%
+}
