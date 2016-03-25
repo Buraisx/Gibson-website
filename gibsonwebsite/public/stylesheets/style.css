@@ -262,7 +262,7 @@ hr {
 	text-align: left;
 }
 
-@media (max-width: 815px)
+@media (max-width: 991px)
 {
 	.footer-left {
 		text-align: center;
