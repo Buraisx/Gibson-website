@@ -76,6 +76,7 @@ function usernameReminder(email, username, next){
   fs.readFile('../gibsonwebsite/email_templates/username_reminder/text.txt', 'utf-8', function(err, data){
     if(err){
       console.log('auto_email.js: Cannot read text.txt for usernameReminder');
+      return err;
     }
     else{
       // CREATE TEMPLATE BASE SENDER FUNCTION
@@ -97,8 +98,9 @@ function usernameReminder(email, username, next){
       function(err, info){
         if (err){
           console.log('auto_email.js: Error sending username reminder.');
+          return err;
         }
-        next();
+        //next();
       });
     }
   });
@@ -110,6 +112,7 @@ function forgotpassword(email, username, token, next){
   fs.readFile('../gibsonwebsite/email_templates/forgot_password/text.txt', 'utf-8', function(err, data){
     if(err){
       console.log('auto_email.js: Cannot read text.txt for forgot password.');
+      return err;
     }
     else{
 
@@ -136,6 +139,7 @@ function forgotpassword(email, username, token, next){
       function(err, info){
         if (err){
           console.log('auto_email.js: Error sending forgot password email.');
+          return err;
         }
       });
     }

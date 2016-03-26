@@ -31,7 +31,8 @@ router.post('/user/profile/changepassword', function(req, res, next){
 		connection.getConnection(function(err, con){
 
 			if(err){
-				connection.end();
+				
+				con.release();
 				console.log("user.js: Cannot get connection to the database.");
 				return err;
 			}
@@ -43,11 +44,13 @@ router.post('/user/profile/changepassword', function(req, res, next){
 				con.query(getPassword, function(err, userPassword){
 
 					if(err){
+						con.release();
 						console.log("Cannot query the user's password");
 						return err;
 
 					}
 					else if(!userPassword.length){
+						con.release();
 						console.log("Password for the user does not exist");
 						return (new Error("Password for the user does not exist"));
 					}
@@ -60,7 +63,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 								changePassword = mysql.format(changePassword, [newPassword, decode.id]);
 
 								con.query(changePassword, function(err, changedorNot){
-
+									con.release();
 									if(err){
 										console.log("Could not query to change the password");
 										return err;
@@ -72,6 +75,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 						}
 
 						else {
+							con.release();
 							console.log("Current Password entered is incorrect.");
 							return (new Error("Current Password entered is incorrect."));
 						}

@@ -10,7 +10,7 @@ router.get('/forgotusername', function(req,res,next){
 });
 
 
-router.post('/forgotusername', function(req,res,next){
+router.post('/forgotusername', function(req,res){
 	connection.getConnection(function(err,con){
 		if (err){
       console.log('forgotcredentials.js: Error connecting to the DB.');
@@ -21,7 +21,7 @@ router.post('/forgotusername', function(req,res,next){
     var userquery = 'SELECT username FROM gibson.user WHERE email = ?;';
     var inserts = req.body.email;
     userquery = mysql.format(userquery, inserts);
-
+    
     con.query(userquery, function(err, results){
      con.release();
 
@@ -29,13 +29,15 @@ router.post('/forgotusername', function(req,res,next){
       	return (new Error("forgotcredentials.js: Query error for forgot username"));
       }
       else if (!results.length){
-      	return (new Error("forgotcredentials.js: No user with this email found."));
+        res.status(404).send("Username does not exist.");
+      	//return (new Error("forgotcredentials.js: No user with this email found."));
       }
+      else{
 
-			email.usernameReminder(req.body.email, results[0].username);
-      //send user the email with the username
-      res.redirect('/forgotpassword'); // TODO: change this!
-
+			   email.usernameReminder(req.body.email, results[0].username);
+        //send user the email with the username
+        res.status(200).send("Sent email with username successfully.");
+      }
     });
 	});
 });
@@ -69,12 +71,15 @@ router.post('/forgotpassword', function(req,res,next){
       		return (new Error("forgotcredentials.js: Query error for forgot password"));
       	}
       	else if (!results.length){
-      		return (new Error("forgotcredentials.js: No email with this username found."));
-      	}
 
-      	//send user the email with the username
-        token.forgotPasswordToken(results[0].email, req.body.username);
-        res.redirect('/forgotusername'); // TODO: change this!
+          res.status(404).send("No email with this username found.");
+      		//return (new Error("forgotcredentials.js: No email with this username found."));
+      	}
+        else{
+          //send user the email with the password
+          token.forgotPasswordToken(results[0].email, req.body.username);
+          res.status(200).send("Successfully send the email with the changepassword link."); 
+        }
       });
     }
 	});
