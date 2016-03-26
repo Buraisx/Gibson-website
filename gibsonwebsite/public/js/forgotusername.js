@@ -1,5 +1,5 @@
 function forgotusername(){
-	console.log($('#_csrf').val());
+
 	$.post("/forgotusername", {
 			email: $('#email').val(),
 			_csrf: $('#_csrf').val()

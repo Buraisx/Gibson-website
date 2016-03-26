@@ -21,7 +21,7 @@ router.post('/forgotusername', function(req,res){
     var userquery = 'SELECT username FROM gibson.user WHERE email = ?;';
     var inserts = req.body.email;
     userquery = mysql.format(userquery, inserts);
-    console.log(req.body.email);
+    
     con.query(userquery, function(err, results){
      con.release();
 
@@ -72,13 +72,14 @@ router.post('/forgotpassword', function(req,res,next){
       	}
       	else if (!results.length){
 
-          res.send(404, "No email with this username found.");
+          res.status(404).send("No email with this username found.");
       		//return (new Error("forgotcredentials.js: No email with this username found."));
       	}
-
-      	//send user the email with the username
-        token.forgotPasswordToken(results[0].email, req.body.username);
-        res.redirect('/login'); 
+        else{
+          //send user the email with the password
+          token.forgotPasswordToken(results[0].email, req.body.username);
+          res.status(200).send("Successfully send the email with the changepassword link."); 
+        }
       });
     }
 	});
