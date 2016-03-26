@@ -75,6 +75,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 						}
 
 						else {
+							con.release();
 							console.log("Current Password entered is incorrect.");
 							return (new Error("Current Password entered is incorrect."));
 						}
