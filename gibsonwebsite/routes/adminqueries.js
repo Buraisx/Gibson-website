@@ -7,6 +7,7 @@ var mysql = require('mysql');
 var connection = require('../mysqlpool');
 var async = require('async');
 var adminFunctions = require('../public/js/bulkQueries');
+var readSQL = require('../public/js/readSQL');
 
 
 router.get('/admin/profile', function(req, res, next) {
@@ -117,11 +118,44 @@ router.post('/validateCourse', function(req, res){
     });
 });
 
+router.post('/v2', function(req, res){
+    req.body["languages[]"].shift();
+    req.body["course_days[]"].shift();
+    req.body["adhoc_days[]"].shift();
+
+    console.log(readSQL.getSQL('dml_addcourse.txt'));
+    console.log(req.body["languages[]"]);
+    console.log(req.body["course_days[]"]);
+    console.log(req.body["adhoc_days[]"]);
+
+    res.send("DONE");
+});
+
 router.post('/admin/profile/addCourse', function(req, res){
 	// instructor_username is set to null
-    var sql = "INSERT INTO gibson.course (course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, payment_period_id, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, notes) VALUES (?,?,?,?,?,?,2,?,?,?,?,?,?,?,?,?);" 
+    var sql = readSQL.getSQL('dml_addcourse.txt');
+    // make json dml for course days because gay
+    var a = req.body["course_days[]"];
+    var b = req.body["languages[]"];
+    a.shift();
+    b.shift();
+    var lang_dml = "JSON_ARRAY(";
+    var days_dml = "JSON_ARRAY(";
+    
+    console.log(lang_dml);
+    for (k in a) {
+        var obj = JSON.parse(k);
+        
+
+    }
+    days_dml = days_dml.slice(0, -1) + ")";
+    console.log(days_dml);
+
+
+
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
-				   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.languages, req.body.course_days, req.body.addtarget, req.body.adddescription, req.body.instructor_bio, req.body.notes];
+				   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["languages[]"], req.body["course_days[]"], req.body.addtarget, req.body.adddescription, 
+                   req.body.instructor_bio, req.body.notes];
 
     sql = mysql.format(sql, inserts);
 
@@ -147,17 +181,19 @@ router.post('/admin/profile/addCourse', function(req, res){
             },
 
             function (next){
+                console.log("DML statement addcourse");
                 con.query(sql, function(err, results){
                     if(err){
                         console.log("adminqueries.js: Query error for inserting course to database");
                         return next(err);
                     }
-
+                    console.log(results.insertId);
                     next(results.insertId);        
                 });
             },
 
             function (course_id, next){
+                console.log("DML statement add course days");
                 var all_days = adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.course_days);
                 for(i = 0; i < all_days.length; i++){
                     con.query(all_days[i], function(err, results){
@@ -167,9 +203,11 @@ router.post('/admin/profile/addCourse', function(req, res){
                         }
                     });
                 }
+                next(null, null);
             }
         ],
         function (err, results){
+            console.log("END");
             if(err){
                 con.query("ROLLBACK;", function(err, results){
                     con.release();
