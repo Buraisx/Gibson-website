@@ -1,23 +1,31 @@
 {
 
   "db_config": {
-    "connectionLimit":3,
-    "host": "localhost",
+    "connectionLimit": 10,
+    "host": "192.168.1.47",
     "user": "root",
     "password": "Sabad@th!s1234567",
     "database": "gibson",
+    "multipleStatements": true,
     "port": 3306
   },
 
   "jwt": {
     "issuer": "https://www.105gibson.com",
-    "oneUseSecret": "WylgaodajkdOx5nP*0@AZ1z+?EC3v7v*I4^fFkjAUySJPb2CoaOkAh88LaTHvBO$4Apv1!_e7OTKhkT5owiYDlY6Uz5A0c^#4ExaG*OmOH#EKUr+QokT2nBaj-PJ&TPn",
+    "oneUseSecret": "GflV0X@WQi5qF?SNUMXp574bn%iz?f9jnR_Ug!NBC8e+tPzl5gvxSYMT6PivA$|W#TpFYh$We5V*SFSEFfMgVO1zef$j*a=tjJp6%AhVZlf2GZHXN718N%&QpsdGq2u-*%%4l4AZk&M^V5hGo?N3?X?IG_G-hgRDU??PHIl%SM6VK8D$9zse!$P1ILKXf7Cq@*#T$q8XaiTXLHKBQCG@5+Sh?QB+r&cHuv8Hebcd@L*14?G%%&|U+C%77!MQ_osG",
     "type": {
-      "signup": "signup confirmation"
+      "signup": "signup confirmation",
+      "forgotpassword": "password reset"
     }
   },
 
-  "sendEmail": false,
+  "domains": [
+    "https://localhost:3000",
+    "https://www.105gibson.com",
+    "https://www.105gibson.ca"
+  ],
+
+  "sendEmail": true,
 
   "transport": {
     "host": "smtp.gmail.com",

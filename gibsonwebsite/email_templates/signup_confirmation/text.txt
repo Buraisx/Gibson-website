@@ -1,0 +1,13 @@
+Hello {{username}},
+
+Thank you for registering with 105 Gibson Community Centre.
+To complete the registration process, please click on the following link:
+
+{{confirmation_url}}?token={{token}}
+
+If you did not register, and received this email by mistake, please ignore and delete this email.
+This is an automated message, please do not reply to this email as this address is not monitored.
+
+Thank you,
+105 Gibson Team
+https://www.105gibson.com

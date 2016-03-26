@@ -46,4 +46,16 @@ router.get('/theteam', function(req, res, next) {
   res.render('Theteam', { title: 'Gibson' });
 });
 
+router.get('/forgotpassword', function(req, res, next) {
+  res.render('forgotpassword', { title: 'Forgotten Password' });
+});
+
+router.get('/newpassword', function(req, res, next) {
+  res.render('newpassword', { title: 'New Password' });
+});
+
+router.get('/hardcodedprofile', function(req, res, next) {
+  res.render('hardcodeduserProfile', { title: 'hardcode masters' });
+});
+
 module.exports = router;

@@ -1,0 +1,12 @@
+Hello {{username}},
+
+It appears that you have forgotten your password. You can reset it by clicking the link below and following the instructions:
+
+{{domain}}/resetpassword?token={{token}}
+
+If you did not request for your password, please ignore and delete this email.
+Please do not reply to this message, as this email address is not monitored.
+
+Thank you,
+105 Gibson Team
+https://www.105gibson.com

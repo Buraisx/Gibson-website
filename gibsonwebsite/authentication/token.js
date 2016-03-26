@@ -1,9 +1,8 @@
 var config = require('../server_config');
 var mysql = require('mysql');
 var jwt = require('jsonwebtoken');
-
-// SETUP POOLING CONNECTION
-var connection = mysql.createPool(config.db_config);
+var connection = require('../mysqlpool');
+var autoemail = require('./auto_email');
 
 // ONE-TIME TOKEN
 function generateOneUse(req, res, next){
@@ -29,15 +28,13 @@ function generateOneUse(req, res, next){
       con.release();
 
       if (err){
-        console.log(query);
         console.log('token.js: Error inserting one use token');
         res.redirect ('/error');
         return;
       }
 
       // MAKE TOKEN AND STORE IN req.oneUseToken
-      req.oneUseToken = 'https://localhost:3000/confirm?token=';
-      req.oneUseToken += jwt.sign({
+      req.oneUseToken = jwt.sign({
         token_id: results.insertId,
         iss: config.jwt.issuer,
         user: req.user.username,
@@ -53,6 +50,52 @@ function generateOneUse(req, res, next){
 }
 
 
+// FORGOT PASSWORD JWT
+function forgotPasswordToken (email, username){
+
+  connection.getConnection(function(err, con){
+    if (err){
+      console.log('token.js: Error connecting to the database.');
+      return;
+    }
+
+    else{
+
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      // GENERATING QUERY TO INSERT AN ACTIVE ONE-USE TOKEN
+      var query =  'INSERT INTO gibson.active_tokens (username, expiry_date, \`desc\`) VALUES (?, ?, ?);';
+      var inserts = [username, tomorrow.toISOString().slice(0, 19).replace('T', ' '), config.jwt.type.forgotpassword];
+      query = mysql.format(query, inserts);
+
+      // INSERTING A NEW TOKEN INTO
+      con.query(query, function(err, results){
+        con.release();
+
+        if (err){
+          console.log('token.js: Error inserting one use token');
+          res.redirect ('/error');
+          return;
+        }
+
+        // MAKE TOKEN AND STORE IN req.oneUseToken
+         var forgotPasswordToken = jwt.sign({
+          token_id: results.insertId,
+          iss: config.jwt.issuer,
+          user: username,
+          type: config.jwt.type.forgotpassword
+        },
+        config.jwt.oneUseSecret, {
+          expiresIn: 24*60*60
+        });
+
+      // SENDS EMAIL WITH URL TO RESET PASSWORD
+      autoemail.forgotpassword(email, username, forgotPasswordToken);
+      });
+    }
+  });
+}
 
 
 // GENERATING JSON WEB TOKEN
@@ -89,11 +132,8 @@ function generateToken(req, res, next) {
           req.user.secretKey, {
             expiresIn: 14*24*60*60 // 14 day
           });
-          console.log("user token:" + req.token);
 
           // IF ADMIN, GET THE ADMIN's secret_key
-          console.log(typeof(req.user.rank_id));
-          //console.log(4>1);
           if (req.user.rank_id > 1){
 
             var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?';
@@ -119,11 +159,8 @@ function generateToken(req, res, next) {
                 lastLoggedIn: req.user.last_login_time
               },
                 req.user.adminSecretKey, {
-                  expiresIn: 12*60*60
-          // 12 hours 12 * 60 * 60
-
+                  expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
               });
-              console.log("ADMIN TOKEN:" + req.adminToken);
               next();
             });
             //next();
@@ -136,6 +173,7 @@ function generateToken(req, res, next) {
     }
   });
 }
+
 
 // PLACING THE TOKEN IN A COOKIE (MaxAge in MILLISECONDS)
 function respond(req, res, next) {
@@ -150,13 +188,21 @@ function adminRespond(req,res,next){
 
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
   if (req.user.rank_id > 1) {
-    res.clearCookie('priviledge');
-    res.cookie('priviledge', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60*1000});
+    res.clearCookie('privilege');
+    res.cookie('privilege', req.adminToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
   }
   next();
 }
 
+function sendUsername(req,res,next) {
+  res.clearCookie('gibson_user');
+  res.cookie('gibson_user', req.user.username, {maxAge: 14*24*60*60*1000});
+  next();
+}
+
+module.exports.forgotPasswordToken = forgotPasswordToken;
 module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
 module.exports.respond = respond;
 module.exports.adminRespond = adminRespond;
+module.exports.sendUsername = sendUsername;

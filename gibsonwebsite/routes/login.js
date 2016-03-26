@@ -10,7 +10,15 @@ module.exports = function(passport){
 //load login page
 router.get('/login', function(req,res,next){
 
-	res.render('login', { title: 'Login'});
+	 var token = req.cookies.access_token;
+
+	 if(token){
+	 	res.redirect('/user/profile');
+	 }
+	 else
+	 {
+	 	res.render('login', { title: 'Login'});
+	 }
 
 });
 
@@ -37,7 +45,7 @@ router.post('/login', passport.authenticate('local-login', {
 	//successRedirect: '/user/profile',		// Redirect to main page when login complete
 	failureRedirect: '/login'	// Return to login when fail, and flash error
 
-}), token.generateToken, token.respond, token.adminRespond, redirect);
+}), token.generateToken, token.respond, token.adminRespond, token.sendUsername, redirect);
 
 // REDIRECT FOR LOGIN
 function redirect(req, res){

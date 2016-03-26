@@ -14,6 +14,7 @@ var dnsPrefetchControl = require('dns-prefetch-control');
 var jwt = require('jsonwebtoken');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
+var connection = require('./mysqlpool');
 
 //CSRF Protection
 var csrf = require('csurf');
@@ -53,7 +54,6 @@ app.use(csrfProtection);
 
 app.use(function (req, res, next)
 {
-  console.log(req.csrfToken());
   res.locals.csrfToken = req.csrfToken();
   next();
 });
@@ -95,12 +95,16 @@ var test_profile = require('./routes/test_profile');
 var confirm = require('./routes/confirm');
 var error = require('./routes/error');
 var adminPages = require('./routes/adminqueries');
+var forgotcreds = require('./routes/forgotcredentials');
+var resetpassword = require('./routes/resetpassword');
 
 app.use('/', routes);
 app.use('/', signup);
 app.use('/', login);
 app.use('/', confirm);
 app.use('/', error);
+app.use('/', forgotcreds);
+app.use('/', resetpassword);
 
 // ================================================
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
@@ -112,12 +116,11 @@ app.use(function (req, res, next){
   // LOOKING FOR TOKEN IN COOKIES
   var token = req.cookies.access_token;
   var decoded = jwt.decode(token);
-  //console.log(decoded);
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
     // CREATING CONNECTION
-    var connection = mysql.createPool(config.db_config);
+    //// var connection = mysql.createPool(config.db_config);
     connection.getConnection(function(err, con){
   		if (err){
         console.log('app.js: Error connecting to the DB.');
@@ -165,7 +168,7 @@ app.use(function (req, res, next){
             else{
               con.release();
               req.decoded = userInfo;
-              next(); 
+              next();
             }
           });
 
@@ -191,14 +194,13 @@ app.use('/', users);
 app.use(function (req, res, next){
 
   // LOOKING FOR TOKEN IN COOKIES
-  var token = req.cookies.priviledge;
+  var token = req.cookies.privilege;
   var decoded = jwt.decode(token);
-  //console.log(decoded);
 
   // TOKEN FOUND, TRYING TO VALIDATE
   if (token){
     // CREATING CONNECTION
-    var connection = mysql.createPool(config.db_config);
+    // var connection = mysql.createPool(config.db_config);
     connection.getConnection(function(err, con){
       if (err){
         console.log('app.js: Error connecting to the DB.');
@@ -232,10 +234,10 @@ app.use(function (req, res, next){
             }
             else{
               con.release();
-              next(); 
+              next();
             }
           });
-       
+
         });
       }
       else{

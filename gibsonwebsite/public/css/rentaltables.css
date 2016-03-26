@@ -1,0 +1,33 @@
+.rentaltablemargin {
+	margin-bottom: 0px;
+}
+
+.table {
+  border: 0.5px solid #000000;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+   border: 0.5px solid #000000;
+}
+
+h1 {
+	margin-bottom: 30px;
+}
+
+h4 {
+	margin-top: 40px;
+}
+
+.sectionmargin {
+	margin-top: 35px;
+}
+
+.nonscheduledheader {
+	margin-top: 35px;
+	margin-bottom: 5px;
+	font-size: 24pt;
+}

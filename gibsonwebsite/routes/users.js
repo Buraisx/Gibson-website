@@ -4,8 +4,10 @@ var config = require('../server_config');
 var jwt = require('jsonwebtoken');
 var token = require('../authentication/token');
 var mysql = require('mysql');
-var connection = mysql.createPool(config.db_config);
+var connection = require('../mysqlpool');
 var async = require('async');
+var bcrypt = require('bcrypt-nodejs');
+var sanitizer = require('sanitizer');
 
 /* GET users listing. */
 router.get('/user/profile', function(req, res, next) {
@@ -13,6 +15,79 @@ router.get('/user/profile', function(req, res, next) {
 	res.render('userProfile', {title: "Your Profile"}, function(err, html){
 		res.send(html);
 	});
+});
+
+router.post('/user/profile/changepassword', function(req, res, next){
+
+	var decode = jwt.decode(req.cookies.access_token);
+  	// SANITIZES EVERYTHING COMING IN FROM REQ
+  	for(var i in req.body){
+
+    	req.body[i] = sanitizer.sanitize(req.body[i]);
+  	}
+
+	if(req.body.newpass == req.body.confirmnewpass){
+
+		connection.getConnection(function(err, con){
+
+			if(err){
+				
+				con.release();
+				console.log("user.js: Cannot get connection to the database.");
+				return err;
+			}
+			else{
+
+				var getPassword = "SELECT password FROM gibson.user WHERE user_id = ?;";
+				getPassword = mysql.format(getPassword, [decode.id]);
+
+				con.query(getPassword, function(err, userPassword){
+
+					if(err){
+						con.release();
+						console.log("Cannot query the user's password");
+						return err;
+
+					}
+					else if(!userPassword.length){
+						con.release();
+						console.log("Password for the user does not exist");
+						return (new Error("Password for the user does not exist"));
+					}
+					else{
+
+						if(bcrypt.compareSync(req.body.currentpass, userPassword[0].password)){
+								//change user password
+								var newPassword = bcrypt.hashSync(req.body.newpass, bcrypt.genSaltSync(Math.floor(3*Math.random())+10));
+								var changePassword = "UPDATE gibson.user SET password = ? WHERE user_id = ?";
+								changePassword = mysql.format(changePassword, [newPassword, decode.id]);
+
+								con.query(changePassword, function(err, changedorNot){
+									con.release();
+									if(err){
+										console.log("Could not query to change the password");
+										return err;
+									}
+									else {
+										res.send(200, 'Password has successfully been changed!');
+									}
+								});
+						}
+
+						else {
+							con.release();
+							console.log("Current Password entered is incorrect.");
+							return (new Error("Current Password entered is incorrect."));
+						}
+					}
+				});
+			}
+		});
+	}
+	else{
+		console.log("New password and confirm password is not the same.");
+		return err;
+	}
 });
 
 router.get('/user/profile/info', function(req, res, next) {
@@ -31,7 +106,7 @@ router.get('/user/profile/info', function(req, res, next) {
 				function(next){
 					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
 					var inserts = decode.id;
-			
+
 					sql = mysql.format(sql, inserts);
 					con.query(sql, function(err, results){
 						if(err){
@@ -94,10 +169,9 @@ router.get('/user/profile/info', function(req, res, next) {
 			],
 				function(err){
 					con.release();
-					if(err){	
+					if(err){
 						return err;
 					}
-					console.log(response);
 					res.send(response);
 				}
 			);
@@ -107,10 +181,19 @@ router.get('/user/profile/info', function(req, res, next) {
 
 router.get('/user/profile/courses', function(req, res, callback) {
 
-	console.log("Getting registered courses");
+	var decode = jwt.decode(req.cookies.access_token);
+	//id of user
+	var inserts = decode.id;
 
-	var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC";
-	console.log(sql);
+	//var sql = "CREATE VIEW allcourses AS (SELECT course_id, course_code, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY);";
+	//console.log(sql);
+	//var alreadyRegCourses = "CREATE VIEW registeredcourses AS (SELECT gibson.course.course_id, course_code, course_name, default_fee, gibson.course.start_date, gibson.course.end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = ? AND gibson.course.course_id = gibson.user_course.course_id AND gibson.course.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY gibson.course.course_id DESC);";
+	//alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
+	//console.log(alreadyRegCourses);
+
+	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_days, a.default_fee FROM (SELECT * FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC) AS A LEFT JOIN (SELECT gibson.course.course_id, course_code, course_name, default_fee, gibson.course.start_date, gibson.course.end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = ? AND gibson.course.course_id = gibson.user_course.course_id AND gibson.course.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY gibson.course.course_id DESC) AS B ON A.course_id = B.course_id WHERE B.course_id is NULL;";
+	nonRegCourses = mysql.format(nonRegCourses, inserts);
+	//console.log(nonRegCourses);
 
 	connection.getConnection(function(err, con){
 		if(err){
@@ -119,7 +202,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			return err;
 		}
 
-		con.query(sql, function(err, results){
+		con.query(nonRegCourses, function(err, results){
 			con.release();
 
 			if(err){
@@ -131,6 +214,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 			if(!results.length){
 				console.log("No courses");
 			}
+			//console.log(results);
 
 			//send all course info to client
 			//console.log(results);
@@ -141,9 +225,8 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 
 router.get('/user/profile/schedule', function(req, res, callback) {
-	console.log("Getting schedule");
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = "SELECT c.course_id, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
+	var sql = "SELECT c.course_id, course_code, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_days, c.start_date, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
 	var inserts = decode.id;
 	sql = mysql.format(sql, inserts);
 
@@ -168,10 +251,8 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 			}
 
 			//send all course info to client
-			
-			console.log(results);
 			res.json(results);
-			
+
 		});
 	});
 });
@@ -200,7 +281,6 @@ router.post('/register', function(req, res, next){
 			function(next){
 				query_course_exists = mysql.format(query_course_exists, inserts);
 
-				console.log(query_course_exists);
 				con.query(query_course_exists, function(err, results){
 					if (err)
 					{
@@ -225,7 +305,6 @@ router.post('/register', function(req, res, next){
 				inserts = [decode.id, course_id];
 				query_not_already_registered = mysql.format(query_not_already_registered, inserts);
 
-				console.log(query_not_already_registered);
 				con.query(query_not_already_registered, function(err, results) {
 					if (err) {
 						console.log('Failed to query for registered courses');
@@ -244,7 +323,6 @@ router.post('/register', function(req, res, next){
 					inserts = [decode.id, course_id, 'Enrolled', 'Registered for course ID ' + course_id, course_id];
 					query_register = mysql.format(query_register, inserts);
 
-					console.log(query_register);
 					con.query(query_register, function(err, reg_res){
 						if (err){
 							console.log('Error occured during registration query');
@@ -280,8 +358,8 @@ router.post('/register', function(req, res, next){
 router.get('/logout', function(req,res,next){
 	//clears cookie of account from browser
 	res.clearCookie('access_token');
-	browser
 	res.clearCookie('priviledge');
+	res.clearCookie('gibson_user');
 
 	res.redirect('/');
 });

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <%- include standardnavbar.ejs %>
 
 <head>
     <link rel="stylesheet" type="text/css" href="/css/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="/css/tabstyles6.css" />
+    <link rel="stylesheet" type="text/css" href="/css/tabstylesadmin.css" />
+    <link rel="stylesheet" type="text/css" href="/css/timepicki.css" />
     <meta name="_csrf" content="<%= csrfToken %>" />
     <!-- datepicker CSS -->
     <link href="/css/datepicker.css" rel="stylesheet">
+    <link href="/css/validation.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
                     <li><a href="#profile"><i class="fa fa-user tabicon"></i><span>Users</span></a></li>
                     <li><a href="#courses"><i class="fa fa-list tabicon"></i><span>Courses</span></a></li>
                     <li><a href="#addcourses"><i class="fa fa-plus-square-o tabicon"></i><span>Add Courses</span></a></li>
-                    <li><a href="#vol"><i class="fa fa-square tabicon"></i><span>Volunteers</span></a></li>
+                    <li><a href="#vol"><i class="fa fa-users tabicon"></i><span>Volunteers</span></a></li>
                     <li><a href="#rental"><i class="fa fa-square tabicon"></i><span>Rental View</span></a></li>
                     <li><a href="#report"><i class="fa fa-square tabicon"></i><span>Report View</span></a></li>
                 </ul>
@@ -61,7 +62,7 @@
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
-    <script src="/js/rangedatepicker.js"></script>
+    <script src="/js/timepicki.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
@@ -80,6 +81,9 @@
     <script src="/js/adminajax.js"></script>
     <!-- Set Background Javascript -->
     <script src="/js/setBackgroundImage.js"></script>
+    
+    <!-- Form Validation -->
+    <script src="/js/jquery.validate.js"></script>
 </body>
 
 <%- include standardfooter %>
