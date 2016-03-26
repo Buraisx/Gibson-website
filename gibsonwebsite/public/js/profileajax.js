@@ -279,6 +279,21 @@ function load_profile(){
 		//===============
 		//Change Password
 		$('#profile').append(changePassword);
+		$('#profile').append(cpHidden);
+ 		cpHidden.append($("<div></div>").append(
+ 			pText, formInline));
+
+ 		//Using Closure Structure
+ 		formInline.append(csrf);
+
+ 		formInline.append($("<div></div>", {class:"form-group"}).append(
+ 			label1, input1));
+
+ 		formInline.append($("<div></div>", {class:"form-group"}).append(
+ 			label2, input2));
+
+ 		formInline.append($("<div></div>", {class:"form-group"}).append(
+ 			label3, input3, button3));
 
 		//================
 		$('#change_password_form').validate({
