@@ -29,12 +29,13 @@ router.post('/forgotusername', function(req,res,next){
       	return (new Error("forgotcredentials.js: Query error for forgot username"));
       }
       else if (!results.length){
-      	return (new Error("forgotcredentials.js: No user with this email found."));
+        res.send(404, "Username does not exist.");
+      	//return (new Error("forgotcredentials.js: No user with this email found."));
       }
 
 			email.usernameReminder(req.body.email, results[0].username);
       //send user the email with the username
-      res.redirect('/forgotpassword'); // TODO: change this!
+      res.redirect('/login'); 
 
     });
 	});
@@ -69,12 +70,14 @@ router.post('/forgotpassword', function(req,res,next){
       		return (new Error("forgotcredentials.js: Query error for forgot password"));
       	}
       	else if (!results.length){
-      		return (new Error("forgotcredentials.js: No email with this username found."));
+
+          res.send(404, "No email with this username found.");
+      		//return (new Error("forgotcredentials.js: No email with this username found."));
       	}
 
       	//send user the email with the username
         token.forgotPasswordToken(results[0].email, req.body.username);
-        res.redirect('/forgotusername'); // TODO: change this!
+        res.redirect('/login'); 
       });
     }
 	});
