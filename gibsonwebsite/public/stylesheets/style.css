@@ -127,6 +127,10 @@ a {
 	font-size: 12pt;
 }
 
+.righttext {
+	text-align: right;
+}
+
 .centeredtext {
 	text-align: center;
 }

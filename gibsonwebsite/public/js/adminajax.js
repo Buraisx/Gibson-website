@@ -253,7 +253,7 @@ function listcourses(){
 		
 		var courses = $("<div></div>", {class: "panel-group", id: "accordion"});
 
-		for(i = 0; i < data.length; i++){
+		for(var i = 0; i < data.length; i++){
 			//A Course Accordion Panel
 			var panel_default = $("<div></div>", {class: "panel panel-primary"});
 			
@@ -343,7 +343,7 @@ function courseform(){
 
 	var csrfmeta = $("meta[name=_csrf]");
 	var addcourses='';
-	addcourses+='                <form name="frm" action = "/admin/profile/addCourse" method = "POST" role = "form" id="courseform">';
+	addcourses+='                <form name="frm" role = "form" id="courseform">';
 	addcourses+='                     <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
 	addcourses+='						<div class="tab-content">';
 	addcourses+='						<br>';
@@ -427,9 +427,9 @@ function courseform(){
 
 
 	set_date+='                        <div class="input-daterange input-group rangedatepicker">';
-	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
-	set_date+='                            <span name="to" class="input-group-addon">to</span>';
-	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addstartdate" id="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	set_date+='                            <span class="input-group-addon">to</span>';
+	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addenddate" id="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
 	set_date+='                        </div>';
 
 	set_date+='                        <label id="addstartdate-error" class="error" for="addstartdate"></label>';
@@ -443,10 +443,10 @@ function courseform(){
 	set_date+='                        <div class = "form-group col-sm-4" required>';
 	set_date+='                            <label class="addcoursepadding"><span class="required">*</span>Class Interval:</label><label id="addinterval-error" class="error" for="addinterval"></label><br>';
 	set_date+='                            <label class="radio-inline">';
-	set_date+='                                <input type="radio" name="addinterval" value="weekly">Weekly';
+	set_date+='                              <input type="radio" name="addinterval" id="addinterval" value="weekly">Weekly';
 	set_date+='                            </label>';
 	set_date+='                            <label class="radio-inline">';
-	set_date+='                                <input type="radio" name="addinterval" value="bi-weekly">Bi-Weekly';
+	set_date+='                              <input type="radio" name="addinterval" id="addinterval" value="bi-weekly">Bi-Weekly';
 	set_date+='                            </label>';
 	set_date+='                        </div>';
 	set_date+='                    </div>';
@@ -460,7 +460,7 @@ function courseform(){
 	set_date+='                    </div>';	
 	set_date+='                    <div class = "row" name="day1" id="day1">';
 	set_date+='                        <div class = "form-group col-sm-4" required>';
-	set_date+='                        	<select class="form-control" name="day-of-week1" required>';
+	set_date+='                        	<select class="form-control" name="day-of-week1" id="day-of-week1">';
 	set_date+='								<option value="">Select a day</option>';
 	set_date+='								<option value="Monday">Monday</option>';
 	set_date+='								<option value="Tuesday">Tuesday</option>';
@@ -492,7 +492,7 @@ function courseform(){
 	set_date+='                   <div class = "row" id="adhoc1">';
 	set_date+='                    <div class = "form-group col-sm-4">';
 	set_date+='                        <div class="input-daterange input-group rangedatepicker">';
-	set_date+='                            <input type="text" class="input-sm-4 form-control" name="adhocstartdate1" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	set_date+='                            <input type="text" class="input-sm-4 form-control" name="adhocstartdate1" id="adhocstartdate1" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
 	set_date+='                        </div>';
 	set_date+='                    </div>';
 	set_date+='                    <div class = "form-group col-sm-2" required>';
@@ -716,7 +716,7 @@ function addAdhocTime(){
 	adhoc+='                   <div class = "row" id="adhoc'+ newAdhocDay +'" style="display:none;">';
 	adhoc+='                    <div class = "form-group col-sm-4">';
 	adhoc+='                        <div class="input-daterange input-group rangedatepicker">';
-	adhoc+='                            <input type="text" class="input-sm-4 form-control" name="adhocstartdate'+ newAdhocDay +'" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
+	adhoc+='                            <input type="text" class="input-sm-4 form-control" name="adhocstartdate'+ newAdhocDay +'" id="adhocstartdate'+ newAdhocDay +'" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
 	adhoc+='                        </div>';
 	adhoc+='                    </div>';
 	adhoc+='                    <div class = "form-group col-sm-2" required>';
@@ -752,16 +752,83 @@ function removeAdhocTime(){
 function validateCourse(){
 	//$("#courseform").slideToggle();
 	$.post("/validateCourse",{
-		course_name: $('#addcoursename').val(),
-		course_code: $('#addcoursecode').val(),
-		_csrf: $('#_csrf').val()
+		"course_name": $('#addcoursename').val(),
+		"course_code": $('#addcoursecode').val(),
+		"_csrf": $('#_csrf').val()
 	})
 	.done(function (res){
 		alert(res);
+		submitCourse();
 	})
 	.fail(function (err){
 		$("#courseform").slideToggle();
 		alert(err);
 	});
 	$("#courseform").submit();
+}
+
+function submitCourse(){
+	var languages = [""];
+	var scheduled_days = [""];
+	var adhoc_days = [""];
+
+	for(var i=1; i<=COUNTLANGUAGE; i++){
+		languages.push($("#course_language"+i).val());
+	}
+
+	for(var i=1; i<=COUNTCOURSEDAYS; i++){
+		var day_of_week = $('#day-of-week'+i).val();
+		var start_time = $('#starttime'+i).val();
+		var end_time = $('#endtime'+i).val();
+
+		var day = {
+			"day":day_of_week,
+			"start_time":start_time,
+			"end_time":end_time
+		}
+
+		scheduled_days.push(JSON.stringify(day));
+	}
+
+
+	for(var i=1; i<=COUNTADHOCDAYS; i++){
+		var date = $('#adhocstartdate'+i).val();
+		var start_time = $('#startadhoc'+i).val();
+		var end_time = $('#endadhoc'+i).val();
+
+		var day = {
+			"day":date,
+			"start_time":start_time,
+			"end_time":end_time
+		}
+
+		adhoc_days.push(JSON.stringify(day));
+	}
+
+	console.log(languages);
+	console.log(scheduled_days);
+	console.log(adhoc_days);
+
+	$.post("/admin/profile/addCourse",{
+		"addcoursecode":$('#addcoursecode').val(),
+		"addcoursename":$('#addcoursename').val(),
+		"addcost":$('#addcost').val(),
+		"course_limit":$('#course_limit').val(),
+		"languages": languages,
+		"addtarget": $('#addtarget').val(),
+		"adddescription":$('#adddescription').val(),
+		"instructor_name":$('#instructor_name').val(),
+		"instructor_username":$('#instructor_username').val(),
+		"instructor_bio":$('#instructor_bio').val(),
+		"addstartdate":$('#addstartdate').val(),
+		"addenddate":$('#addenddate').val(),
+		"addinterval":$('#addinterval').val(),
+		"notes":"Placeholder note",
+		"course_days": scheduled_days,
+		"adhoc_days": adhoc_days,
+		"_csrf": $('#_csrf').val()
+	})
+	.done(function (res){
+		alert(res);
+	});
 }

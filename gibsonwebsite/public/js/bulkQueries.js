@@ -25,7 +25,7 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 		course_day += getInterval(interval);
 	}
 	return commit;
-}
+};
 	
 
 function getInterval(interval){
