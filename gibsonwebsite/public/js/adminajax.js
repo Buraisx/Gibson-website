@@ -520,7 +520,7 @@ function courseform(){
 	addcourses+='				  	 </div>';	//closing tab div
 	addcourses+='                    <div class="row form-group">';
 	addcourses+='                        <div class = "col-sm-8">';
-	addcourses+='                            <button type = "button" class= "btn btn-default" id = "validate" onClick="validateCourse()">Validate!</button>';
+	addcourses+='                            <button type = "submit" class= "btn btn-default" id = "validate" onClick="validateCourse()">Validate!</button>';
 	addcourses+='                        </div>';
 	addcourses+='                    </div>';
 	addcourses+='                </form>';

@@ -127,10 +127,6 @@ a {
 	font-size: 12pt;
 }
 
-.rentalheader {
-	font-size: 24pt;
-}
-
 .centeredtext {
 	text-align: center;
 }
@@ -250,10 +246,6 @@ hr {
 	padding-left: 100px;
 }
 
-.rentaltablemargin {
-	margin-bottom: 0px;
-}
-
 .footer-left {
 	text-align: right;
 }
@@ -262,7 +254,7 @@ hr {
 	text-align: left;
 }
 
-@media (max-width: 815px)
+@media (max-width: 991px)
 {
 	.footer-left {
 		text-align: center;
@@ -279,4 +271,9 @@ hr {
 	footer .footer-col {
 	    margin-bottom: 40px;
 	}
+}
+
+.error-pic {
+    height: 100%;
+    width: 100%
 }

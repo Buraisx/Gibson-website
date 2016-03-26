@@ -28,7 +28,6 @@ function generateOneUse(req, res, next){
       con.release();
 
       if (err){
-        console.log(query);
         console.log('token.js: Error inserting one use token');
         res.redirect ('/error');
         return;
@@ -133,7 +132,6 @@ function generateToken(req, res, next) {
           req.user.secretKey, {
             expiresIn: 14*24*60*60 // 14 day
           });
-          console.log("user token:" + req.token);
 
           // IF ADMIN, GET THE ADMIN's secret_key
           if (req.user.rank_id > 1){
@@ -161,11 +159,8 @@ function generateToken(req, res, next) {
                 lastLoggedIn: req.user.last_login_time
               },
                 req.user.adminSecretKey, {
-                  expiresIn: 12*60*60
-          // 12 hours 12 * 60 * 60
-
+                  expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
               });
-              console.log("ADMIN TOKEN:" + req.adminToken);
               next();
             });
             //next();
@@ -178,6 +173,7 @@ function generateToken(req, res, next) {
     }
   });
 }
+
 
 // PLACING THE TOKEN IN A COOKIE (MaxAge in MILLISECONDS)
 function respond(req, res, next) {
@@ -193,7 +189,7 @@ function adminRespond(req,res,next){
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
   if (req.user.rank_id > 1) {
     res.clearCookie('privilege');
-    res.cookie('privilege', req.adminToken, {secure: true, httpOnly: true, maxAge: 12*60*60*1000});
+    res.cookie('privilege', req.adminToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
   }
   next();
 }

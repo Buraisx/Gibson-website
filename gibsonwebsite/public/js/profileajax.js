@@ -34,7 +34,7 @@ $("a[href$='#courses']").click(function() {
 		url: '/user/profile/courses',
 		success: $.getJSON('/user/profile/courses', function(data){
 			console.log(data);
-		}), 
+		}),
 		error: function() {
 			console.log("Error getting courses");
 		},
@@ -218,15 +218,15 @@ function load_profile(){
 		//Add Emergency Contacts
 		var newcontact = $("<h4></h4>").append("New Contact");
 		var efnameinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
-			"*")).append("First Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "efname", id: "efname", placeholder: "e.g. Alice", pattern: 
+			"*")).append("First Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "efname", id: "efname", placeholder: "e.g. Alice", pattern:
 		"[a-zA-Z0-9. ]+", oninvalid: "setCustomValidity('Invalid name.')", onchange: "try{setCustomValidity('')}catch(e){}"}));
 		var elnameinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
-			"*")).append("Last Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "elname", id: "elname", placeholder: "e.g. Smith", pattern: 
+			"*")).append("Last Name:")).append($("<input></input>", {type: "text", class: "form-control", name: "elname", id: "elname", placeholder: "e.g. Smith", pattern:
 		"[a-zA-Z0-9. ]+", oninvalid: "setCustomValidity('Invalid name.')", onchange: "try{setCustomValidity('')}catch(e){}"}));
 		var erelationshipinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
 			"*")).append("Relationship:")).append($("<input></input>", {type: "text", class: "form-control", pattern: "[a-zA-Z0-9. ]+", name: "erelationship"}));
 		var ephoneinput = $("<div></div>", {class: "form-group col-sm-6"}).append($("<label></label>").append($("<span></span>", {class: "required"}).append(
-			"*")).append("Phone:")).append($("<input></input>", {type: "text", class: "form-control", maxlength: "16", pattern: "\w+", oninvalid: 
+			"*")).append("Phone:")).append($("<input></input>", {type: "text", class: "form-control", maxlength: "16", pattern: "\w+", oninvalid:
 		"setCustomValidity('Invalid phone number.')", onchange: "try{setCustomValidity('')}catch(e){}" }));
 		// Hidden emergency contact input
 		var einputrow1 = $("<div></div>", {class:"row"}).append(efnameinput, elnameinput);
@@ -241,7 +241,7 @@ function load_profile(){
 				"Edit Information"));
 
 		//===============
-		//Change Password 
+		//Change Password
 		var changePassword = $("<div></div>", {class:"row form-group form-group-sm col-sm-12"}).append(
 			$("<button></button>", {type : "button", class: "btn btn-default", onclick:"togglepassworddropdown()", id : "changepassbutton"}).append(
 				"Change Password"));
@@ -250,9 +250,9 @@ function load_profile(){
 		var cpHidden = $("<div></div>", {id:'change_password', class:'hidden changepassdesign form-group form-group-sm row col-sm-12'});
 		var pText = $("<p></p>", {class: "small"}).append("Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.");
 
-		var formInline = $("<form></form>", {class:"form-inline", role : "form"});
+		var formInline = $("<form></form>", {class:"form-inline", action:"/user/profile/changepassword", method:"post", role : "form"});
+		var csrf = '<input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
 
-		
 		//mix in one div form-group
 		var label1 = $("<label></label>").append("Current Password:");
 		var input1 = $("<input></input>", {type:"password", class:"form-control", name:"currentpass", id:"currentpass", placeholder:"Enter Current Password", required:"",
@@ -260,15 +260,15 @@ function load_profile(){
 
 		//mix in one div form-group
 		var label2 = $("<label></label>").append("New Password:");
-		var input2 = $("<input></input>", {type : "password", class : "form-control", name : "newpass", id : "password", placeholder:"Enter New Password", minlength: "6", 
-										   required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
-		
+		var input2 = $("<input></input>", {type : "password", class : "form-control", name : "newpass", id : "password", placeholder:"Enter New Password", minlength: "6",
+										   onkeyup:"checkPass(); return false;", required:""});
+
 		//mix in one div form-group
 		var label3 = $("<label></label>").append("Confirm New Password:");
 		var input3 = $("<input></input>", {type : "password", class : "form-control", name : "confirmnewpass", id : "passwordhashed",
 										   placeholder:"Confirm New Password", onkeyup:"checkPass(); return false;",
-										   minlength: "6", required:"", pattern:'(?=.*\d)(?=.*[a-zA-Z])([a-zA-Z0-9!@_]+){6,}'});
-		var button3 = $("<button></button>", {type : "button", class : "btn btn-default", onclick:"", id : "changepassbutton"}).append("Change");
+										   minlength: "6", required:""});
+		var button3 = $("<button></button>", {type : "button", class : "btn btn-default", id : "changepassbutton", onClick: "changepassword()"}).append("Change");
 
 		//Add E-Contacts, Edit Info
 		$('#profile').append($("<div></div>", {id: "addecontact", class: "hidden"}).append(newcontact, einputrow1, einputrow2));
@@ -280,19 +280,35 @@ function load_profile(){
 		//Change Password
 		$('#profile').append(changePassword);
 		$('#profile').append(cpHidden);
-		cpHidden.append($("<div></div>").append(
-			pText, formInline));
+ 		cpHidden.append($("<div></div>").append(
+ 			pText, formInline));
 
-		//Using Closure Structure
-		formInline.append($("<div></div>", {class:"form-group"}).append(
-			label1, input1));
+ 		//Using Closure Structure
+ 		formInline.append(csrf);
 
-		formInline.append($("<div></div>", {class:"form-group"}).append(
-			label2, input2));
+ 		formInline.append($("<div></div>", {class:"form-group"}).append(
+ 			label1, input1));
 
-		formInline.append($("<div></div>", {class:"form-group"}).append(
-			label3, input3, button3));
+ 		formInline.append($("<div></div>", {class:"form-group"}).append(
+ 			label2, input2));
+
+ 		formInline.append($("<div></div>", {class:"form-group"}).append(
+ 			label3, input3, button3));
+
 		//================
+		$('#change_password_form').validate({
+			rules: {
+				currentpass: {
+					required: true
+				},
+				newpass: {
+					required: true
+				},
+				confirmnewpass: {
+					required: true
+				}
+			}
+		});
 	});
 }
 
@@ -308,7 +324,7 @@ function editinfo () {
 		$('#profile').contents().remove();
 		var editinfo='';
 		editinfo+='    <hr>';
-		editinfo+='    <h3>Basic Information</h3>'
+		editinfo+='    <h3>Basic Information</h3>';
 		editinfo+='    <form class="form-inline" name="editinformation" role="form">';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-6">';
@@ -343,7 +359,7 @@ function editinfo () {
 		editinfo+='            <label>';
 		editinfo+='                <p><strong>Phone (Home): </strong></p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" oninvalid = "editsetCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity(\'\')}catch(e){}" value = "' + user_info.user.primary_phone + '">';;
+		editinfo+='            <input class = "form-control" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" oninvalid = "editsetCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity(\'\')}catch(e){}" value = "' + user_info.user.primary_phone + '">';
 		editinfo+='        </div>';
 		editinfo+='        <div class="col-sm-6">';
 		editinfo+='            <label>';
@@ -359,13 +375,13 @@ function editinfo () {
 		editinfo+='            </label>';
 		editinfo+='            <select class = "form-control" name = "gender" id = "editgender" placeholder="Gender" required>';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
-		editinfo+='                <option '
+		editinfo+='                <option ';
 		if (user_info.user.gender == "Male") { editinfo+= 'selected="selected" '; }
 		editinfo+='value = "Male">Male</option>';
-		editinfo+='                <option '
+		editinfo+='                <option ';
 		if (user_info.user.gender == "Female") { editinfo+= 'selected="selected" '; }
 		editinfo+='value = "Female">Female</option>';
-		editinfo+='                <option '
+		editinfo+='                <option ';
 		if (user_info.user.gender == "Other") { editinfo+= 'selected="selected" '; }
 		editinfo+='value = "Other">Other</option>';
 		editinfo+='            </select>';
@@ -472,21 +488,21 @@ function returntoprofile(){
 //Display list of registerable courses
 function listcourses(){
 	jQuery.getJSON("/user/profile/courses", function(data){
-		
+
 		$('#courses').contents().remove();
-		
+
 		var courses = $("<div></div>", {class: "panel-group", id: "accordion"});
 
 		for(i = 0; i < data.length; i++){
 			//A Course Accordion Panel
 			var panel_default = $("<div></div>", {class: "panel panel-primary"});
-			
+
 			var panel_heading = $("<div></div>", {class: "panel-heading"});
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#collapse"+i});
 			collapse.attr("data-toggle", "collapse");
 			var coursename = $("<div></div>", {class: "col-sm-6"}).append(data[i].course_name);
-			var courseid = $("<div></div>", {class: "col-sm-offset-3 col-sm-3"}).append("Course Code: ", data[i].course_code);
+			var courseid = $("<div></div>", {class: "col-sm-offset-2 col-sm-4"}).append("Course Code: ", data[i].course_code);
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
@@ -502,7 +518,6 @@ function listcourses(){
 			var coursetarget = $("<p></p>", {id: "coursetarget"}).append("<strong>Target: </strong>" + data[i].course_target);
 			var coursecost = $("<p></p>", {id: "cost"}).append("<strong>Cost: </strong>$" + data[i].default_fee);
 			var button = $("<button></button>", {type: "submit", class: "btn btn-default course-submit", onclick: "register(this)", method:'POST', id:"submit"+data[i].course_id}).append("Register Now!!");
-			var row = $("<div></div>", {class: "row"});
 
 			//=============================
 			//Top Down compilation hierarchy
@@ -523,7 +538,7 @@ function listcourses(){
 			//DESCRIPTION
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
 										 	$("<div></div>", {class:"form-group col-sm-12"}).append(
-										 		description)));		//escaping closures	
+										 		description)));		//escaping closures
 
 			//STARTDATE & ENDDATE
 			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
@@ -546,7 +561,7 @@ function listcourses(){
 										 	$("<div></div>", {class:"form-group col-sm-6"}).append(
 										 		button)));			//escaping closures
 
-			
+
 			courses.append(panel_default);
 		}
 
@@ -559,38 +574,55 @@ function listschedule(){
 	jQuery.getJSON("/user/profile/schedule", function(data){
 		$('#schedule').contents().remove();
 		var schedule = '';
-		schedule += '<div id="scheduleaccordion" class="panel-group">'
+		schedule += '<div id="scheduleaccordion" class="panel-group">';
 		for(i = 0; i < data.length; i++) {
-			schedule += '    <div class="panel panel-primary">'
-			schedule += '        <div class="panel-heading">'
-			schedule += '            <h4 class="panel-title">'
-			schedule += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#scollapse' + i + '">'
-			schedule += '                    <div class="row">'
-			schedule += '                        <div class="col-sm-6">' + data[i].course_name +'</div>'
-			schedule += '                        <div class="col-sm-offset-3 col-sm-3">Course Code: ' + data[i].course_code + '</div>'
-			schedule += '                    </div>'
-			schedule += '                </a>'
-			schedule += '            </h4>'
-			schedule += '        </div>'
-			schedule += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="scollapse' + i + '">'
-			schedule += '            <div class="panel-body">'
-			schedule += '                <div class="col-sm-offset-1">'
-			schedule += '                    <p id="description' + i + '">' + data[i].course_description + '</p>'
-			schedule += '                    <div class="row">'
-			schedule += '                        <div class="col-sm-6">'
-			schedule += '                            <p id="coursestartdate' + i + '"><strong>Start Date: </strong>' + String(data[i].start_date).substring(0, 10) + '</p>'
-			schedule += '                    	 </div>'
-			schedule += '                        <div class="col-sm-6">'
-			schedule += '                            <p id="courseenddate' + i + '"><strong>End Date: </strong>' + String(data[i].end_date).substring(0, 10) + '</p>'
-			schedule += '                        </div>'
-			schedule += '                        <div class="col-sm-3"><strong>Days of Week: </strong>' + data[i].course_days + '</div>'
-			schedule += '                    </div>'
-			schedule += '                </div>'
-			schedule += '            </div>'
-			schedule += '        </div>'
-			schedule += '    </div>'
+			schedule += '    <div class="panel panel-primary">';
+			schedule += '        <div class="panel-heading">';
+			schedule += '            <h4 class="panel-title">';
+			schedule += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#scollapse' + i + '">';
+			schedule += '                    <div class="row">';
+			schedule += '                        <div class="col-sm-6">' + data[i].course_name +'</div>';
+			schedule += '                        <div class="col-sm-offset-3 col-sm-3">Course Code: ' + data[i].course_code + '</div>';
+			schedule += '                    </div>';
+			schedule += '                </a>';
+			schedule += '            </h4>';
+			schedule += '        </div>';
+			schedule += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="scollapse' + i + '">';
+			schedule += '            <div class="panel-body">';
+			schedule += '                <div class="col-sm-offset-1">';
+			schedule += '                    <p id="description' + i + '">' + data[i].course_description + '</p>';
+			schedule += '                    <div class="row">';
+			schedule += '                        <div class="col-sm-6">';
+			schedule += '                            <p id="coursestartdate' + i + '"><strong>Start Date: </strong>' + String(data[i].start_date).substring(0, 10) + '</p>';
+			schedule += '                    	 </div>';
+			schedule += '                        <div class="col-sm-6">';
+			schedule += '                            <p id="courseenddate' + i + '"><strong>End Date: </strong>' + String(data[i].end_date).substring(0, 10) + '</p>';
+			schedule += '                        </div>';
+			schedule += '                        <div class="col-sm-3"><strong>Days of Week: </strong>' + data[i].course_days + '</div>';
+			schedule += '                    </div>';
+			schedule += '                </div>';
+			schedule += '            </div>';
+			schedule += '        </div>';
+			schedule += '    </div>';
 		}
-		schedule += '</div>'
+		schedule += '</div>';
 		$('#schedule').append(schedule);
+	});
+}
+
+function changepassword(){
+	$.post("/user/profile/changepassword", {
+			currentpass: $('#currentpass').val(),
+			newpass: $('#password').val(),
+			confirmnewpass: $('#passwordhashed').val(),
+			_csrf: $('#_csrf').val()
+	})
+	.done(function (res){
+		alert("Password changed successfully.");
+		$.post("/login", {
+			username: getCookie('gibson_user'),
+			password: $('#password').val(),
+			_csrf: $('#_csrf').val()
+		});
 	});
 }

@@ -10,6 +10,7 @@
     <script src = "/js/changepassword.js"></script>
     <!-- datepicker CSS -->
     <link href="/css/datepicker.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/rentaltables.css" />
 </head>
 
 <body>
@@ -40,23 +41,22 @@
               
                 <section id="rental">
                     <h1>Facility Rates from 2016 January</h1>
-                    <br>
                     <h4>Venue Rental</h4>
-                    <table class = "table table-bordered rentaltablemargin rentaltablemargin">
+                    <table class = "table table-bordered rentaltablemargin">
                         <thead>
                             <tr>
-                                <th>Venues<br>(includes limited chairs and tables)</th>
-                                <th>Capacity</th>
-                                <th>Rental Fee/Hour</th>
-                                <th>Refundable Security Deposit</th>
+                                <th class = "rentalborder">Venues<br>(includes limited chairs and tables)</th>
+                                <th class = "rentalborder">Capacity</th>
+                                <th class = "rentalborder">Rental Fee/Hour</th>
+                                <th class = "rentalborder">Refundable Security Deposit</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Carpet Area<br>(10 chairs +1 table)</td>
-                                <td>20 people</td>
-                                <td>$30.00</td>
-                                <td>$50.00</td>
+                                <td class = "rentalborder">Carpet Area<br>(10 chairs +1 table)</td>
+                                <td class = "rentalborder">20 people</td>
+                                <td class = "rentalborder">$30.00</td>
+                                <td class = "rentalborder">$50.00</td>
                             </tr>
                             <tr>
                                 <td>Room 102<br>(40 chairs +3 tables)</td>
@@ -90,7 +90,6 @@
                         </tbody>
                     </table>
                     <p><i>Note: Rental fees includes provision of certain number of tables and chairs, additional furniture and all other equipment and services may have charges applied.</i></p>
-                    <br>
 
                     <h4>AV Equipment Rental (For inside Centre Only)</h4>
                     <table class = "table table-bordered rentaltablemargin">
@@ -134,7 +133,6 @@
                         </tbody>
                     </table>
                     <p><i>Note: Refundable security deposit is refundable with condition after the last day of rental stated in the agreement, please refer to Rental Application Form.</i></p>
-                    <br>
 
                     <h4>Other Equipment and Furniture Rental (For inside Centre Only)</h4>
                     <table class = "table table-bordered rentaltablemargin">
@@ -160,11 +158,10 @@
                         </tbody>
                     </table>
 
-                    <br>
-                    <p><b><u>Insurance Requirement</u></b><br>
+                    <p class = "sectionmargin"><b><u>Insurance Requirement</u></b><br>
                     All applicants are required to provide a proof of liability/event insurance and put Toronto Christian Church, o/a105 Gibson Centre as the additional insured. Please refer to the Rental Agreement for more details.</p>
                     
-                    <p><b><u>Additional Charge</u></b><br>
+                    <p class = "sectionmargin"><b><u>Additional Charge</u></b><br>
                     105 Gibson Centre will charge the applicant before or after the agreement is signed to cover some extra operational expenses if the following situation applied:</p>
                     <table class = "table table-bordered">
                         <thead>
@@ -203,7 +200,7 @@
                         </tbody>
                     </table>
 
-                    <p class="rentalheader">Non-Scheduled Drop-in Fees</p>
+                    <p class = "nonscheduledheader">Non-Scheduled Drop-in Fees</p>
                     <p>Reservations are only allowed 24 hours in advance and subject to availability.  These fees are available when there is no scheduled program in the gym and when equipment is available.  Users are required to setup and take down any equipment required under the supervision of Gibson staff.</p>
                     <table class = "table table-bordered rentaltablemargin">
                         <thead>
@@ -255,9 +252,8 @@
                     </table>
                     <p><b><u>Sport Equipment Charge:</u></b><br>
                     Centre encourages participants to use their own balls. Additional charge may be applied if Centre offers the equipment.</p>
-                    <br>
 
-                    <p>The above amount is before all applicable taxes. If you have any enquiries, please contact 105 Gibson Centre at 905.946.8787</p>
+                    <p class = "sectionmargin">The above amount is before all applicable taxes. If you have any enquiries, please contact 105 Gibson Centre at 905.946.8787</p>
                 </section>
                 <section id="account-history">Account History</section>
             </div><!-- /content -->
@@ -281,6 +277,7 @@
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/jquery.validate.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
