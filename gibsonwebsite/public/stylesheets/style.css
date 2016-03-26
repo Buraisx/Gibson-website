@@ -291,6 +291,6 @@ hr {
 	float: right;
 }
 
-.targetmargin {
+.targetmargin, .submitbutton {
 	margin-top: 10px;
 }

@@ -258,7 +258,7 @@ function load_profile(){
 		changePassword+='            <input onkeyup="checkPass(); return false;" minlength="6" placeholder="Enter New Password" id="password" name="newpass" class="form-control" type="password">';
 		changePassword+='            <label>Confirm New Password:</label>';
 		changePassword+='            <input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">';
-		changePassword+='            <button id="changepassbutton" class="btn btn-default" type="submit">Change</button>';
+		changePassword+='            <button id="changepassbutton" class="btn btn-default submitbutton" type="submit">Change</button>';
 		changePassword+='        </form>';
 		changePassword+='    </div>';
 		changePassword+='</div>';
