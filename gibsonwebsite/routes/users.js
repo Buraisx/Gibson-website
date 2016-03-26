@@ -31,7 +31,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 		connection.getConnection(function(err, con){
 
 			if(err){
-				
+
 				con.release();
 				console.log("user.js: Cannot get connection to the database.");
 				return err;
@@ -351,6 +351,83 @@ router.post('/register', function(req, res, next){
 
 			}
 		);
+	});
+});
+
+router.post('/user/profile/edit', function(req, res, next){
+	// GETTING CONNECTION
+	connection.getConnection(function(err, con){
+		if (err){
+			console.log('users.js: Unable to get connection; user/profile/edit');
+			return err;
+		}
+		else{
+
+			// QUERYING FOR USER ID
+			con.query('SELECT user_id FROM gibson.user WHERE username = ?;', [req.body.username], function(err, results){
+				if(err){
+					con.release();
+					console.log('users.js: Unable to query for user_id; user/profile/edit');
+					return err;
+				}
+				else{
+					var userId = results[0].user_id;
+
+					// START TRANSACTION
+					con.query('START TRANSACTION;', function(err, results){
+						if(err){
+							con.release();
+							console.log('user.js: Error starting transaction; user/profile/edit');
+							return err;
+						}
+						else{
+
+							// QUERYING TO UPDATE USER PROFILE
+							var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, secondary_phone = ?, gender = ?, birth_date = ?, address = ? WHERE user_id = ?;';
+							var inserts = [req.body.fname, req.body.lname, req.body.primary_phone, req.body.secondary_phone, req.body.gender, req.body.birth_date, req.body.address, userId];
+							query = mysql.format(query, inserts);
+
+							con.query(query, function(err, results){
+								if(err){
+									// ROLLING BACK CHANGES
+									con.query('ROLLBACK;', function(err, results){
+										con.release();
+										console.log('user.js: Error updating profile information.; user/profile/edit');
+										return err;
+									});
+								}
+								else{
+
+									// QUERYING TO UPDATE STUDENT INFORMATION
+									var studentQuery = 'UPDATE gibson.student SET school_name = ?, grade = ?, major = ?, esl_level = ? WHERE user_id = ?;';
+									var studentInsert = [req.body.schoolname, req.body.grade, req.body.major, req.body.esl, userId];
+									studentQuery = mysql.format(studentQuery, studentInsert);
+
+									con.query(studentQuery, function(err, results){
+										if (err){
+											// ROLLING BACK CHANGES
+											con.query('ROLLBACK;', function(err, results){
+												con.release();
+												console.log('user.js: Error updating student information.; user/profile/edit');
+												return err;
+											});
+										}
+										else{
+
+											// NO ERROR -> COMMIT CHANGES
+											con.query('COMMIT;', function(err, results){
+												con.release();
+												res.status(200).send('Profile info updated.');
+											});
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		}
 	});
 });
 

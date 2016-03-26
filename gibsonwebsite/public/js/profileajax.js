@@ -242,7 +242,7 @@ function load_profile(){
 
 		//===============
 		var csrf = '<input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
-		//Change Password 
+		//Change Password
 		var changePassword = '';
 		changePassword+='<div class="row form-group form-group-sm col-sm-12">';
 		changePassword+='    <button id="changepassbutton" onclick="togglepassworddropdown()" class="btn btn-default" type="button">Change Password</button>';
@@ -273,7 +273,7 @@ function load_profile(){
 		//===============
 		//Change Password
 		$('#profile').append(changePassword);
-		
+
 		//================
 		$('#change_password_form').validate({
 			rules: {
@@ -304,7 +304,9 @@ function editinfo () {
 		var editinfo='';
 		editinfo+='    <hr>';
 		editinfo+='    <h3>Basic Information</h3>';
-		editinfo+='    <form class="form-inline" name="editinformation" role="form">';
+		editinfo+='    <form class="form-inline" name="editinformation" action="/user/profile/edit" method="POST" role="form">';
+		editinfo+='    <input type="hidden" name="username" id="username" value="' +user_info.user.username +'">';
+		editinfo+='    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
 		editinfo+='            <label class="fieldname col-sm-4">';
@@ -319,22 +321,6 @@ function editinfo () {
 		editinfo+='                <p>Last Name: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "lname" id = "editlname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
-		editinfo+='        </div>';
-		editinfo+='    </div>';
-		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
-		editinfo+='                <p>Username: </p>';
-		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-4" type="text" name ="username" id = "editusername" required pattern="\\w+" value = "' + user_info.user.username + '">';
-		editinfo+='        </div>';
-		editinfo+='    </div>';
-		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
-		editinfo+='                <p>Email: </p>';
-		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-4" type="email" name = "email" id = "editemail" placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\\b" value = "' + user_info.user.email + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
@@ -426,10 +412,46 @@ function editinfo () {
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 		}
-		editinfo+='</form>';
+		else{
+			editinfo+='    <hr>';
+			editinfo+='    <h3>Student Information</h3>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-12">';
+			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='                <p>School Name: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-12">';
+			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='                <p>Grade: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-12">';
+			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='                <p>Major: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "major" id = "editmajor" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='    	  </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-12">';
+			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='                <p>ESL Level: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "esl" id = "editesl" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+		}
 		editinfo+='<div class="row form-group col-sm-12">';
 		editinfo+='    <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
 		editinfo+='</div>';
+		editinfo+='</form>';
 		editinfo+='<div class="row form-group col-sm-12">';
 		editinfo+='    <button type="button" class="btn btn-default" onclick="returntoprofile()">Return</button>';
 		editinfo+='</div>';
@@ -439,7 +461,28 @@ function editinfo () {
 }
 
 function savechanges() {
-	alert("not yet implemented");
+	$.post("/user/profile/edit", {
+			_csrf: $('#_csrf').val(),
+			username: $('#username').val(),
+			fname: $('#editfname').val(),
+			lname: $('#editlname').val(),
+			primary_phone: $('#editprimary_phone').val(),
+			secondary_phone: $('#editsecondary_phone').val(),
+			gender: $('#editgender').val(),
+			birth_date: $('#datepicker').val(),
+			address: $('#editaddress').val(),
+			schoolname: $('#editschoolname').val(),
+			grade: $('#editgrade').val(),
+			major: $('#editmajor').val(),
+			esl: $('#editesl').val()
+	})
+	.done(function (res){
+		alert("Profile updated.");
+		load_profile();
+	})
+	.fail(function (err){
+		alert("Failed to save changes.");
+	});
 }
 
 function returntoprofile(){
@@ -476,7 +519,7 @@ function listcourses(){
 			courses += '            		<div class="form-group col-sm-12">';
 			courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 			courses += '        			</div>';
-			courses += '        		</div>';			
+			courses += '        		</div>';
 			courses += '        		<div class="row">';
 			courses += '            		<div class="col-sm-6">';
 			courses += '               		 	 <p id="coursestartdate' + i + '">Start Date: ' + String(data[i].start_date).substring(0, 10) + '</p>';
