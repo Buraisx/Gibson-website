@@ -277,3 +277,16 @@ hr {
     height: 100%;
     width: 100%
 }
+
+.addcoursepadding {
+	padding-right: 10px;
+}
+
+.alignparent {
+	margin:0 auto;
+	float: right;
+}
+
+.targetmargin {
+	margin-top: 10px;
+}

@@ -379,17 +379,11 @@ function courseform(){
 	course_info+='                            <input type = "text" class = "form-control" name = "course_language1" id = "course_language1" required>';
 	course_info+='                        </div>';
 	course_info+='                    </div>';
-	course_info+='                    <div class = "row" id="languageMods">';
-	course_info+='                        <div class = "form-group col-sm-2">';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="addLanguages()">Add Another Language</button>';
-	course_info+='                        </div>';
-	course_info+='                        <div class = "form-group col-sm-2">';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
-	course_info+='                        </div>';
-	course_info+='                    </div>';
 	course_info+='                    <div class = "row">';
 	course_info+='                        <div class = "form-group col-sm-8">';
-	course_info+='                            <label><span class="required">*</span>Target Audience:</label>';
+	course_info+='                            <label class = "targetmargin"><span class="required">*</span>Target Audience:</label>';
 	course_info+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
 	course_info+='                        </div>';
 	course_info+='                    </div>';
@@ -427,25 +421,36 @@ function courseform(){
 	set_date+='               <div class="tab-pane" id="time-tab">';
 	set_date+='                   <div class = "row">';
 	set_date+='                    <div class = "form-group col-sm-8">';
-	set_date+='                        <label><span class="required">*</span>Date:</label><br>';
+	set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><br>';
+	//set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><label id="addstartdate-error" id="addenddate-error" class="error" for="addstartdate addenddate"></label><br>';
+	//set_date+='<label id="addenddate-error" class="error hidden" for="addenddate">This field is required.</label>';
+
+
 	set_date+='                        <div class="input-daterange input-group rangedatepicker">';
 	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
-	set_date+='                            <span class="input-group-addon">to</span>';
+	set_date+='                            <span name="to" class="input-group-addon">to</span>';
 	set_date+='                            <input type="text" class="input-sm-4 form-control" name="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
 	set_date+='                        </div>';
+
+	set_date+='                        <label id="addstartdate-error" class="error" for="addstartdate"></label>';
+	set_date+='                        <label id="addenddate-error" class="error alignparent" for="addenddate"></label>';
+
+
+
 	set_date+='                    </div>';
 	set_date+='                   </div>';
 	set_date+='                    <div class = "row">';
 	set_date+='                        <div class = "form-group col-sm-4" required>';
-	set_date+='                            <label><span class="required">*</span>Class Interval:</label><br>';
+	set_date+='                            <label class="addcoursepadding"><span class="required">*</span>Class Interval:</label><label id="addinterval-error" class="error" for="addinterval"></label><br>';
 	set_date+='                            <label class="radio-inline">';
-	set_date+='                              <input type="radio" name="addinterval" value="weekly">Weekly';
+	set_date+='                                <input type="radio" name="addinterval" value="weekly">Weekly';
 	set_date+='                            </label>';
 	set_date+='                            <label class="radio-inline">';
-	set_date+='                              <input type="radio" name="addinterval" value="bi-weekly">Bi-Weekly';
+	set_date+='                                <input type="radio" name="addinterval" value="bi-weekly">Bi-Weekly';
 	set_date+='                            </label>';
 	set_date+='                        </div>';
 	set_date+='                    </div>';
+	
 	set_date+='                    <div class = "row" name="day0" id="day0">';	//Cannot be delete tag for reference
 	set_date+='                        <div>';
 	set_date+='                        	<label class="form-group col-sm-4">Course Days:</label>';
@@ -455,7 +460,7 @@ function courseform(){
 	set_date+='                    </div>';	
 	set_date+='                    <div class = "row" name="day1" id="day1">';
 	set_date+='                        <div class = "form-group col-sm-4" required>';
-	set_date+='                        	<select class="form-control" name="day-of-week1">';
+	set_date+='                        	<select class="form-control" name="day-of-week1" required>';
 	set_date+='								<option value="">Select a day</option>';
 	set_date+='								<option value="Monday">Monday</option>';
 	set_date+='								<option value="Tuesday">Tuesday</option>';
@@ -468,19 +473,15 @@ function courseform(){
 	set_date+='                        </div>';
 	set_date+='                    	   <div class = "form-group col-sm-2" required>';
 	set_date+='								<input type = "text" class = "form-control time_element" name = "starttime1" id = "starttime1" required>';
+	set_date+='								<label id="starttime1-error" class="error smalltext" for="starttime1" style="display:none;"></label>';
 	set_date+='                        </div>';
 	set_date+='                    	   <div class = "form-group col-sm-2" required>';
 	set_date+='								<input type = "text" class = "form-control time_element" name = "endtime1" id = "endtime1" required>';
+	set_date+='								<label id="endtime1-error" class="error smalltext" for="endtime1" style="display:none;"></label>';
 	set_date+='                        </div>'; 
 	set_date+='                    </div>';
-	set_date+='                    <div class = "row" id="scheduleMods">';
-	set_date+='                        <div class = "form-group col-sm-2">';
-	set_date+='                            <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
-	set_date+='                        </div>';
-	set_date+='                        <div class = "form-group col-sm-2">';
-	set_date+='                            <button type = "button" class= "btn btn-default" id = "removeschedule" onClick="removeTime()">Remove schedule</button>';
-	set_date+='                        </div>';
-	set_date+='                    </div>';
+	set_date+='                    <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
+	set_date+='                    <button type = "button" class= "btn btn-default" id = "removeschedule" onClick="removeTime()">Remove schedule</button>';
 	set_date+='                    <div class = "row" name="adhoc0" id="adhoc0">';
 	set_date+='                    	<div>';
 	set_date+='							<label class = "form-group col-sm-4">Ad-Hoc Days:</label>';
@@ -496,19 +497,15 @@ function courseform(){
 	set_date+='                    </div>';
 	set_date+='                    <div class = "form-group col-sm-2" required>';
 	set_date+='						   <input type = "text" class = "form-control time_element" name = "startadhoc1" id = "startadhoc1" required>';
+	set_date+='						   <label id="startadhoc1-error" class="error smalltext" for="startadhoc1" style="display:none;"></label>';
 	set_date+='                    </div>';
 	set_date+='                    <div class = "form-group col-sm-2" required>';
 	set_date+='						   <input type = "text" class = "form-control time_element" name = "endadhoc1" id = "endadhoc1" required>';
+	set_date+='						   <label id="endadhoc1-error" class="error smalltext" for="endadhoc1" style="display:none;"></label>';
 	set_date+='                    </div>'; 
-	set_date+='                   </div>';
-	set_date+='                    <div class = "row" id="adhocMods">';
-	set_date+='                        <div class = "form-group col-sm-2">';
-	set_date+='                            <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="addAdhocTime()">Add a custom schedule</button>';
-	set_date+='                        </div>';
-	set_date+='                        <div class = "form-group col-sm-2">';
-	set_date+='                            <button type = "button" class= "btn btn-default" id = "removeadhoc" onClick="removeAdhocTime()">Remove schedule</button>';
-	set_date+='                        </div>';
 	set_date+='                    </div>';
+	set_date+='                    <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="addAdhocTime()">Add a custom schedule</button>';
+	set_date+='                    <button type = "button" class= "btn btn-default" id = "removeadhoc" onClick="removeAdhocTime()">Remove schedule</button>';
 	set_date+='                </div>';
 
 	//Insert all tabs
@@ -519,8 +516,9 @@ function courseform(){
 	//Submit Tab
 	addcourses+='				  	 </div>';	//closing tab div
 	addcourses+='                    <div class="row form-group">';
-	addcourses+='                        <div class = "col-sm-8">';
-	addcourses+='                            <button type = "submit" class= "btn btn-default" id = "validate" onClick="validateCourse()">Validate!</button>';
+	//addcourses+='                    <br>';
+	addcourses+='                        <div class = "col-sm-8 reducepadding">';
+	addcourses+='                            <button type = "button" class= "btn btn-default" id = "validate" onClick="validateCourse()">Validate!</button>';
 	addcourses+='                        </div>';
 	addcourses+='                    </div>';
 	addcourses+='                </form>';
@@ -538,7 +536,7 @@ function courseform(){
             var re = new RegExp(regexp);
             return this.optional(element) || re.test(value);
         },
-        "Invalid username."
+        "Invalid symbols."
 	);
 	$('#courseform').validate({
 		rules: {
@@ -557,31 +555,34 @@ function courseform(){
 			},
 			course_limit: {
 				maxlength: 4
-			}/*,
-			course_language1 { ///////////////
+			},
+			course_language1: {
 				required: true,
-				minlength: 1,
 				maxlength: 20
-			}*/,
+			},
 			addtarget: {
 				required: true,
 				minlength: 1,
 				maxlength: 100
+				// sanitize/escape symbols
 			},
 			adddescription: {
 				required: true
-				// also sanitize
+				// sanitize
 			},
 			instructor_name: {
-				required: true
+				required: true,
+				regex: "^[\\w'. \-]+$", // Alphanumeric and '.- and space
+				maxlength: 64
 				// also sanitize
 			},
 			instructor_username: {
+				maxlength: 15,
 				regex: "^\\w+$"
 			},
 			instructor_bio: {
 				required: true
-				// desc
+				// sanitize
 			},
 			addstartdate: {
 				required: true
@@ -591,11 +592,10 @@ function courseform(){
 			},
 			addinterval: {
 				required: true
+			},
+			starttime: {
+				required: true
 			}
-			// dayofweek1 etc.
-			// starttime1
-			// endtime1
-			// adhoc1 etc.
 		}
 	});
 }
@@ -616,12 +616,19 @@ function addLanguages(){
 	language+='                    <div class = "row" id="language' + newLanguage +'" style="display:none;">';
 	language+='                        <div class = "form-group col-sm-4">';
 	language+='                            <label><span class="required">*</span>Offered Language:</label>';
-	language+='                            <input type = "text" class = "form-control" name = "course_language' + newLanguage + '" id = "course_language' + newLanguage + '" required>';
+	language+='                            <input type = "text" class = "form-control" name = "course_language' + newLanguage + '" id = "course_language' + newLanguage + '">';
 	language+='                        </div>';
 	language+='                    </div>';
 
 	$('#language'+COUNTLANGUAGE).after(language);
 	$('#language'+newLanguage).slideToggle();
+
+	// Adds rules to the new language
+	$("#course_language" + newLanguage).rules("add", {
+		required: true,
+		minlength: 1,
+		maxlength: 20
+	});
 	COUNTLANGUAGE++;
 }
 
@@ -633,11 +640,9 @@ function removeLanguages(){
 			COUNTLANGUAGE--;
 		});
 	}
-
 	else{
 		console.log("Cannot Remove Default Language");
 	}
-
 }
 
 //==============================
@@ -654,9 +659,8 @@ function addTime(){
 
 	var day='';
 	day+='                    <div class = "row" name="day'+ newCourseDay +'" id="day'+ newCourseDay +'" style="display:none;">';
-	day+='                        <div class = "form-group col-sm-4" required>';
-	//day+='                        	<label><span class="required">*</span>Course Days:</label><br>';
-	day+='                        	<select class="form-control" name="day-of-week'+ newCourseDay +'" id="day-of-week'+ newCourseDay +'">';
+	day+='                        <div class = "form-group col-sm-4">';
+	day+='                        	<select class="form-control" name="day-of-week'+ newCourseDay +'" id="day-of-week'+ newCourseDay +'" required>';
 	day+='								<option value="">Select a day</option>';
 	day+='								<option value="Monday">Monday</option>';
 	day+='								<option value="Tuesday">Tuesday</option>';
@@ -667,13 +671,13 @@ function addTime(){
 	day+='								<option value="Sunday">Sunday</option>';
 	day+='                        	</select>';
 	day+='                        </div>';
-	day+='                    	   <div class = "form-group col-sm-2" required>';
-	//day+='                        		<label><span class="required">*</span>Start Time:</label><br>';
-	day+='								<input type = "text" class = "form-control time_element" name = "starttime'+ newCourseDay +'" id = "starttime'+ newCourseDay +'" required>';
+	day+='                    	   <div class = "form-group col-sm-2">';
+	day+='								<input type = "text" class = "form-control time_element" name = "starttime'+ newCourseDay + '" id = "starttime'+ newCourseDay +'" required>';
+	day+='								<label id="starttime' + newCourseDay + '-error" class="error smalltext" for="starttime' + newCourseDay + '" style="display:none;"></label>';
 	day+='                        </div>';
-	day+='                    	   <div class = "form-group col-sm-2" required>';
-	//day+='                        		<label><span class="required">*</span>End Time:</label><br>';
+	day+='                    	   <div class = "form-group col-sm-2">';
 	day+='								<input type = "text" class = "form-control time_element" name = "endtime'+ newCourseDay +'" id = "endtime'+ newCourseDay +'" required>';
+	day+='								<label id="endtime' + newCourseDay + '-error" class="error smalltext" for="endtime' + newCourseDay + '" style="display:none;"></label>';
 	day+='                        </div>'; 
 	day+='                    </div>';
 
@@ -691,7 +695,6 @@ function removeTime(){
 			COUNTCOURSEDAYS--;
 		});
 	}
-
 	else{
 		console.log("Cannot Remove Default Time.");
 	}
@@ -718,10 +721,12 @@ function addAdhocTime(){
 	adhoc+='                    </div>';
 	adhoc+='                    <div class = "form-group col-sm-2" required>';
 	adhoc+='						   <input type = "text" class = "form-control time_element" name = "startadhoc'+ newAdhocDay +'" id = "startadhoc'+ newAdhocDay +'" required>';
+	adhoc+='						   <label id="startadhoc' + newAdhocDay + '-error" class="error smalltext" for="startadhoc' + newAdhocDay + '" style="display:none;"></label>';
 	adhoc+='                    </div>';
 	adhoc+='                    <div class = "form-group col-sm-2" required>';
 	adhoc+='						   <input type = "text" class = "form-control time_element" name = "endadhoc'+ newAdhocDay +'" id = "endadhoc'+ newAdhocDay +'" required>';
-	adhoc+='                    </div>'; 
+	adhoc+='						   <label id="endadhoc' + newAdhocDay + '-error" class="error smalltext" for="endadhoc' + newAdhocDay + '" style="display:none;"></label>';
+	adhoc+='                    </div>';
 	adhoc+='                   </div>';
 
 	$('#adhoc'+COUNTADHOCDAYS).after(adhoc);
@@ -739,7 +744,6 @@ function removeAdhocTime(){
 			COUNTADHOCDAYS--;
 		});
 	}
-
 	else{
 		console.log("Cannot Remove Default Adhoc Schedule.");
 	}
@@ -759,4 +763,5 @@ function validateCourse(){
 		$("#courseform").slideToggle();
 		alert(err);
 	});
+	$("#courseform").submit();
 }
