@@ -132,29 +132,58 @@ router.post('/v2', function(req, res){
 });
 
 router.post('/admin/profile/addCourse', function(req, res){
+    console.log(req.body.adddescription);
+
 	// instructor_username is set to null
+    
     var sql = readSQL.getSQL('dml_addcourse.txt');
     // make json dml for course days because gay
     var a = req.body["course_days[]"];
     var b = req.body["languages[]"];
+    console.log(a);
     a.shift();
     b.shift();
+    var course_days = [];
+    var languages = b;
     var lang_dml = "JSON_ARRAY(";
     var days_dml = "JSON_ARRAY(";
     
-    console.log(lang_dml);
+    
     for (k in a) {
-        var obj = JSON.parse(k);
-        
+        //lang_dml += "JSON_OBJECT(";
+        console.log(a[k]);
+        course_days.push(JSON.parse(a[k]));
+        /*for (o in obj) {
+            lang_dml += o + "," + obj.o + ",";
+        }*/
+        //lang_dml = lang_dml.slice(0, -1) + "),";
 
+    }
+    //days_dml = days_dml.slice(0, -1) + ")";
+    console.log(course_days);
+    console.log(languages);
+
+    for (l in languages){
+        lang_dml += "\'" + languages[l] + "\',";
+    }
+    lang_dml = lang_dml.slice(0, -1) + ")";
+    console.log(lang_dml);
+
+    for(c in course_days){
+        days_dml += "JSON_OBJECT(";
+        for (d in course_days[c]) {
+            days_dml += "\"" + d + "\",\"" + course_days[c][d] + "\",";
+            console.log(d + " -> " + course_days[c][d]);
+        }
+        days_dml = days_dml.slice(0, -1) + "),";
+        console.log(days_dml);
     }
     days_dml = days_dml.slice(0, -1) + ")";
     console.log(days_dml);
 
 
-
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
-				   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["languages[]"], req.body["course_days[]"], req.body.addtarget, req.body.adddescription, 
+				   req.body.addstartdate, req.body.addenddate, req.body.addinterval, lang_dml, days_dml, req.body.addtarget, req.body.adddescription, 
                    req.body.instructor_bio, req.body.notes];
 
     sql = mysql.format(sql, inserts);

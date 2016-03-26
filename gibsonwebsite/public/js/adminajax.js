@@ -343,7 +343,7 @@ function courseform(){
 
 	var csrfmeta = $("meta[name=_csrf]");
 	var addcourses='';
-	addcourses+='                <form name="frm" action = "/admin/profile/addCourse" method = "POST" role = "form" id="courseform">';
+	addcourses+='                <form name="frm" role = "form" id="courseform">';
 	addcourses+='                     <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
 	addcourses+='						<div class="tab-content">';
 	addcourses+='						<br>';
