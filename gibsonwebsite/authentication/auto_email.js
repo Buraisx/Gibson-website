@@ -11,7 +11,8 @@ function signupConfEmail (req, res, next){
 
   // IF config.sendEmail = false, DISABLE OUTGOING EMAIL
   if (!config.sendEmail){
-    console.log(req.oneUseToken);
+    console.log('\nE-MAIL CONFIRMATION URL:');
+    console.log(config.domains[0] +'/confirm?token=' +req.oneUseToken +'\n');
     next();
   }
   // config.sendEmail = true, DO SEND EMAIL
