@@ -10,7 +10,7 @@
     <script src = "/js/serializecontacts.js"></script>
     <script src = "/js/passwordvalidation.js"></script>
     <script src = "/js/studentinputboxes.js"></script>
-    
+
     <script src = "/js/submitbutton.js"></script>
     <script src = 'https://www.google.com/recaptcha/api.js'></script>
     <!--script src = "/js/captcha.js"></script-->
@@ -19,7 +19,7 @@
 <body class="index" >
 <form name="frm" action = "/signup" method = "post" role = "form">
 <!--sending csrf token-->
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
     <div id="myCarousel" class="carousel slide" style="height:700px;" data-interval="false">
 
         <!-- Wrapper for Slides -->
@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group col-sm-5">
                                 <label class="control-label"><span class="required">*</span>Confirm Password:</label>
-                                
+
                                 <input type="password" class = "form-control" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" onkeyup="checkPass(); return false;" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
                                 <!--Character restrictions-->
                             </div>
@@ -195,7 +195,7 @@
                 </div><!--panel-default-->
             </div><!--panel div-->
                 </div>
-                
+
             </div>
             <div class="item">
                 <!-- Set the third background image using inline CSS below. -->
@@ -260,7 +260,7 @@
                         <button type = "button" class= "btn btn-info col-sm-0 hidden" onclick="removecontact()" id = "remove">Remove a contact</button>
                     </div>
                 </div>
-                
+
                                 </div>
                                 <div class = "row">
                                 <br>
@@ -269,7 +269,8 @@
                             </div>
 
                             <div class = "col-sm-offset-1 col-sm-6">
-                                <button type = "submit" class = "btn btn-success btn-block" name="submit" onclick="return submitbutton()" id="submit">Success!</button>
+                                <button type = "button" class = "btn btn-success btn-block" name="submit" id="submit" onclick="signup()">Register!</button>
+                                <!-- onclick="return submitbutton()" -->
                             </div>
                                 </div>
 
@@ -288,7 +289,7 @@
 
 
 <!--<div class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0"></div>-->
-              
+
 </form>
 
 
@@ -306,10 +307,11 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
     <script src="/js/datepicker.js"></script>
-<script src = "/js/signupdesign.js"></script>
-<script src = "/js/emergencycontacts.js"></script>
+    <script src = "/js/signupdesign.js"></script>
+    <script src = "/js/emergencycontacts.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/signupajax.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>

@@ -45,18 +45,18 @@ router.post('/signup', function(req, res, next) {
 			next();
 		}
 		else {
-			res.redirect('/signup');
+			next();
+			//res.redirect('/signup');
 		}
 	});
 } ,passport.authenticate('local-signup', {
 	session: false,
-	failureRedirect: '/lol',	// Return to login when fail, and flash error
 	failureFlash: true
 }),token.generateOneUse, email.signupConfEmail , redirect);
 
 // REDIRECT FOR SIGNUP PAGE
 function redirect(req, res){
-	res.redirect('/signup/success');
+	res.status(200).send('Successfully signed up.');
 }
 
 //show signup success page

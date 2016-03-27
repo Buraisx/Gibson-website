@@ -251,7 +251,7 @@ function load_profile(){
 		changePassword+='    <div>';
 		changePassword+='        <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>';
 		changePassword+='        <form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id = "change_password_form">';
-		changePassword+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">'
+		changePassword+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
 		changePassword+='            <label>Current Password:</label>';
 		changePassword+='            <input type="password" pattern="\\w+" placeholder="Enter Current Password" id="currentpass" name="currentpass" class="form-control">';
 		changePassword+='            <label>New Password:</label>';

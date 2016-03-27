@@ -6,10 +6,6 @@ var sanitizer = require('sanitizer');
 var async = require('async');
 var connection = require('../mysqlpool');
 
-// SETUP POOLING CONNECTION
-config.db_config.multipleStatements = true;
-
-
 // TESTING THE CONNECTION TO THE DB
 connection.getConnection(function(err, con){
     if(err)
