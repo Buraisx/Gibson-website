@@ -236,6 +236,8 @@ function load_profile(){
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 		}
+		profileinfo+='    <hr>';
+
 		$('#profile').append(profileinfo);
 
 		var editInfo = '';
@@ -291,6 +293,7 @@ function load_profile(){
 }
 
 function editinfo () {
+	$("html, body").animate({ scrollTop: 0 }, "slow");
 	jQuery.getJSON("/user/profile/info", function(user_info){
 		window.onbeforeunload = function () {
 			return 'Your changes have not been saved.';
@@ -400,6 +403,9 @@ function editinfo () {
 		editinfo+='            </label>';
 		editinfo+='            <select class = "form-control col-sm-4" name = "gender" id = "editprovince">';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
+		for (var i = 0; i < user_info.provinces_list.length; i++) {
+			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';	
+		}
 		editinfo+='            </select>';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
@@ -567,8 +573,8 @@ function editinfo () {
 		editinfo+='" onclick="removecontact()" id = "removebutton">Remove a contact</button>';
 		editinfo+='    </div>';
 		editinfo+='</div>';
-
-		editinfo+='<div class="row form-group col-sm-12 editinfobuttons">';
+		editinfo+='<hr>';
+		editinfo+='<div class="row form-group col-sm-12">';
 		editinfo+='    <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
 		editinfo+='    <button type="button" class="btn btn-default" onclick="returntoprofile()">Return</button>';
 		editinfo+='</div>';
@@ -636,8 +642,11 @@ function savechanges() {
 		.fail(function (err){
 			alert("Failed to save changes.");
 		});
+		window.onbeforeunload = null;
+		setTimeout(function(){
+	    	$("html, body").animate({ scrollTop: 0 }, "slow");
+		}, 300);
     }
-    window.onbeforeunload = null;
 }
 
 function returntoprofile() {
@@ -645,6 +654,7 @@ function returntoprofile() {
 	if (confirmation) {
 		load_profile();
     	window.onbeforeunload = null;
+    	$("html, body").animate({ scrollTop: 0 }, "slow");
 	}
 }
 
