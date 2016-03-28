@@ -15,7 +15,7 @@ function addcontact() {
     document.getElementById("relationship" + i).required = true;
     document.getElementById("ephone" + i).required = true;
   }
-  // If after this there are the maximum number of contacts, disable the add button
+  // If after this there is the maximum number of contacts, disable the add button
   if (i >= MAX) {
      $('#addbutton').prop('disabled', true);
   }
