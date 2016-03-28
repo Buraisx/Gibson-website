@@ -47,19 +47,15 @@ $("a[href$='#courses']").click(function() {
 //Send POST request on Register of Courses
 //========================================
 function register(course_register){
-	console.log("Clicked button " + $('#_csrf').val());
 	$.post("/register", {
-			course_id: course_register.id.substring(6),
+			course_id: course_register.value,
 			_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
-		console.log("You're registered yay");
-		console.log(res);
-		alert("You have successfully signed up!");
+		alert("Course added to Cart.");
 		listcourses();
 	})
 	.fail(function (err){
-		console.log("Already registered course.");
 		alert("You have already registered for this course!");
 	});
 }
@@ -717,7 +713,7 @@ function listcourses(){
 			courses += '        		</div>';
 			courses += '        		<div class="row">';
 			courses += '            		<div class="col-sm-6">';
-			courses += '            			<button type="submit" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="data[i].course_id">Register Now!!</button>';
+			courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' +data[i].course_id +'">Add to Cart</button>';
 			courses += '            		</div>';
 			courses += '       			</div>';
 			courses += '        	</div>';

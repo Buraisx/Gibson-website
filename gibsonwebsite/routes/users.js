@@ -273,9 +273,9 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 //waterfall this
 router.post('/register', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
-	//console.log(decode);
 
 	// get courseid and parse for course_id
+	console.log('req.body.course_id: ' +req.body.course_id);
 	var course_id = Number(req.body.course_id);
 
 	// how to compare dates?
@@ -293,6 +293,7 @@ router.post('/register', function(req, res, next){
 		async.waterfall([
 			function(next){
 				query_course_exists = mysql.format(query_course_exists, inserts);
+				console.log(query_course_exists);
 
 				con.query(query_course_exists, function(err, results){
 					if (err)
@@ -330,24 +331,46 @@ router.post('/register', function(req, res, next){
 						//res.send(400, 'User registered for same course already!.');
 						return next(new Error('User already registered for course'));
 					}
+					else{
 
-					//user not in course, so register the user in the course
-					var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?";
-					inserts = [decode.id, course_id, 'Enrolled', 'Registered for course ID ' + course_id, course_id];
-					query_register = mysql.format(query_register, inserts);
+						//user not in course, so add course to cart
+						var courseCart = {};
 
-					con.query(query_register, function(err, reg_res){
-						if (err){
-							console.log('Error occured during registration query');
-							//res.send(400, 'Registration failed.');
-							return next(err);
+						// CART IS NULL -> INITIALIZE CART
+						if(!req.cookies.cart){
+							courseCart = {
+								course_list: [
+									course_id
+								]
+							};
 						}
-
+						// CART NOT NULL -> UPDATE CART
 						else{
-							next(null, {message: "Registration Complete!"});
+							console.log(req.cookies.cart);
+							courseCart = JSON.parse(req.cookies.cart);
+							courseCart.course_list.push(course_id);
 						}
 
-					});
+						next(null, courseCart);
+					}
+
+
+					// var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?";
+					// inserts = [decode.id, course_id, 'Enrolled', 'Registered for course ID ' + course_id, course_id];
+					// query_register = mysql.format(query_register, inserts);
+					//
+					// con.query(query_register, function(err, reg_res){
+					// 	if (err){
+					// 		console.log('Error occured during registration query');
+					// 		//res.send(400, 'Registration failed.');
+					// 		return next(err);
+					// 	}
+					//
+					// 	else{
+					// 		next(null, {message: "Registration Complete!"});
+					// 	}
+					//
+					// });
 				});
 
 			}],
@@ -355,13 +378,14 @@ router.post('/register', function(req, res, next){
 				con.release();
 
 				if(err){
-					res.send(400, 'Failed to signup course!');
+					res.status(400).send('Failed to signup course!');
 					return err;
 				}
 
-				console.log("User ID " + decode.id + " registered for course ID " + course_id);
-				res.send(200, 'Registration Complete!');
-
+				console.log(results);
+				res.clearCookie('cart');
+				res.cookie('cart', results, {maxAge: 14*24*60*60*1000});
+				res.status(200).send('Course added to cart.');
 			}
 		);
 	});

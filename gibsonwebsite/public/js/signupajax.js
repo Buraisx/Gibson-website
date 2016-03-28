@@ -33,6 +33,9 @@ function signup() {
       ephone2: $('#ephone2').val(),
       ephone3: $('#ephone3').val()
 	})
+	.done(function(res){
+		$.get("signup/success");
+	})
 	.fail(function (err){
 		alert('Registration failed.');
 	});
