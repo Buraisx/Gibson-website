@@ -275,7 +275,6 @@ router.post('/register', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
 
 	// get courseid and parse for course_id
-	console.log('req.body.course_id: ' +req.body.course_id);
 	var course_id = Number(req.body.course_id);
 
 	// how to compare dates?
@@ -293,7 +292,6 @@ router.post('/register', function(req, res, next){
 		async.waterfall([
 			function(next){
 				query_course_exists = mysql.format(query_course_exists, inserts);
-				console.log(query_course_exists);
 
 				con.query(query_course_exists, function(err, results){
 					if (err)
@@ -346,7 +344,6 @@ router.post('/register', function(req, res, next){
 						}
 						// CART NOT NULL -> UPDATE CART
 						else{
-							console.log(req.cookies.cart);
 							courseCart = JSON.parse(req.cookies.cart);
 							courseCart.course_list.push(course_id);
 						}
