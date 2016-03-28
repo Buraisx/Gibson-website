@@ -157,13 +157,26 @@ router.get('/user/profile/info', function(req, res, next) {
 							console.log("Cannot query for student info.");
 							return next(err);
 						}
-
-						else if(!results.length){
-							console.log("Not a student.");
+						else if(results.length){
+							response.student_info = results[0];
 						}
 
-						response.student_info = results[0];
 						next(null);
+					});
+				},
+
+				function(next){
+
+					// QUERYING FOR A LIST OF PROVINCES
+					con.query('SELECT province_id, province_name FROM gibson.province;', function(err, results){
+						if(err){
+							console.log('user.js: Unable to query for provinces; /user/profile/info');
+							return next(err);
+						}
+						else{
+							response.provinces_list = results;
+							next(null);
+						}
 					});
 				}
 			],
