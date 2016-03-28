@@ -1,8 +1,8 @@
  $(document).ready(function(){
-    $('#add').click(function(){
+    $('#addbutton').click(function(){
         $('#myCarousel').animate({height: '+=300'});
     });
-    $('#remove').click(function(){
+    $('#removebutton').click(function(){
         $('#myCarousel').animate({height: '-=300'});
     });
     $('#student').click(function(){

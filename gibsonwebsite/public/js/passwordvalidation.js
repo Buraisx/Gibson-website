@@ -16,6 +16,8 @@ function checkPass()
     var pass2 = document.getElementById('passwordhashed');
     //Store the Confimation Message Object
     var message = document.getElementById('confirmpass');
+    // For change password form
+    var passwordentered = false;
     //Colour red and green
     var greenColor = "#85FF89";
     var redColor = "#FF6262";
@@ -24,32 +26,43 @@ function checkPass()
     // 1. pass2's been changed to non-empty or
     // 2. the message's been changed (i.e., pass2's been
     // changed before)
-    if(pass2.value != '' || message.innerHTML != '') {
+    if(pass2.value != '' || passwordentered) {
         var passValidity = passValid(pass1.value);
         if(pass1.value == pass2.value && passValidity == 1) {
             // The passwords match and are valid.
             pass2.style.backgroundColor = greenColor;
-            message.style.color = greenColor;
-            message.innerHTML = "<strong>OK!</strong>"
+            if(message != null) {
+                message.style.color = greenColor;
+                message.innerHTML = "<strong>OK!</strong>"
+            }
         } else {
             if (pass1.value != pass2.value) {
                 // The passwords do not match.
                 pass2.style.backgroundColor = redColor;
-                message.style.color = redColor;
-                message.innerHTML = "<strong>Passwords do not match!</strong>";
+                if(message != null) {
+                    message.style.color = redColor;
+                    message.innerHTML = "<strong>Passwords do not match!</strong>";
+                }
             }
             else {
                 // The passwords match but are invalid.
                 pass2.style.backgroundColor = redColor;
-                message.style.color = redColor;
+                if(message != null) {
+                    message.style.color = redColor;
+                }
                 if (passValidity == -1) {
-                    message.innerHTML = "<strong>Password is too short!</strong>";
+                    if(message != null) {
+                        message.innerHTML = "<strong>Password is too short!</strong>";
+                    }
                 }
                 else {
-                    message.innerHTML = "<strong>Password has invalid symbols!</strong>";
+                    if(message != null) {
+                        message.innerHTML = "<strong>Password has invalid symbols!</strong>";
+                    }
                 }
             }
         }
+        passwordentered = true;
     }
 }
 

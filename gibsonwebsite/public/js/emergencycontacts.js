@@ -15,12 +15,12 @@ function addcontact() {
     document.getElementById("relationship" + i).required = true;
     document.getElementById("ephone" + i).required = true;
   }
-  // If after this there is the maximum number of contacts, hide the add button
+  // If after this there are the maximum number of contacts, disable the add button
   if (i >= MAX) {
-     $('#add').prop('disabled', true);
+     $('#addbutton').prop('disabled', true);
   }
   // Reveals the show button
-  $("#remove").removeClass("hidden");
+  $("#removebutton").removeClass("hidden");
 }
 
 function removecontact() {
@@ -42,14 +42,14 @@ function removecontact() {
     document.getElementById("relationship" + i).required = false;
     document.getElementById("relationship" + i).value = "";
     document.getElementById("ephone" + i).required = false;
-    document.getElementById("ephone" + i).value == "";
-    // If we were at the maximum number of contacts and now we are not, show the hidden add button
+    document.getElementById("ephone" + i).value = "";
+    // If we were at the maximum number of contacts and now we are not, re-enable the hidden add button
     if (i == MAX) {
-          $('#add').prop('disabled', false);
+          $('#addbutton').prop('disabled', false);
     }
     // If we are now at the minimum number of contacts, hide the remove button
     else if (i == 2) {
-          $("#remove").addClass("hidden");
+          $("#removebutton").addClass("hidden");
     }
   }
 }
