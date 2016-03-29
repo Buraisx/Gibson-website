@@ -6,6 +6,8 @@ body{
 	background-color: transparent;
 }
 
+/* BACKGROUND STYLING - The following section includes all syling using for backgrounds */
+
 
 .absolute-background::before {
 	background-image:url("/img/gibsonpic.jpg");
