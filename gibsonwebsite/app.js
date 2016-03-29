@@ -97,6 +97,7 @@ var error = require('./routes/error');
 var adminPages = require('./routes/adminqueries');
 var forgotcreds = require('./routes/forgotcredentials');
 var resetpassword = require('./routes/resetpassword');
+var cart = require('./routes/cart');
 
 app.use('/', routes);
 app.use('/', signup);
@@ -187,6 +188,7 @@ app.use(function (req, res, next){
 // ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // =============================================
 app.use('/', users);
+app.use('/', cart);
 
 
 //======↓↓↓↓↓AUTHENTICATION FOR ADMIN =========

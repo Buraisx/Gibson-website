@@ -31,8 +31,6 @@ router.post('/user/profile/changepassword', function(req, res, next){
 		connection.getConnection(function(err, con){
 
 			if(err){
-
-				con.release();
 				console.log("user.js: Cannot get connection to the database.");
 				return err;
 			}
@@ -344,8 +342,16 @@ router.post('/register', function(req, res, next){
 						}
 						// CART NOT NULL -> UPDATE CART
 						else{
-							courseCart = JSON.parse(req.cookies.cart);
-							courseCart.course_list.push(course_id);
+							courseCart = req.cookies.cart;
+							var alreadyAdded = false;
+
+							for(var i = 0; i < courseCart.course_list.length; i++){
+								if (courseCart.course_list[i] == course_id)
+									alreadyAdded = true;
+							}
+
+							if (!alreadyAdded)
+								courseCart.course_list.push(course_id);
 						}
 
 						next(null, courseCart);
@@ -379,9 +385,8 @@ router.post('/register', function(req, res, next){
 					return err;
 				}
 
-				console.log(results);
 				res.clearCookie('cart');
-				res.cookie('cart', results, {maxAge: 14*24*60*60*1000});
+				res.cookie('cart', results, {maxAge: 30*24*60*60*1000});
 				res.status(200).send('Course added to cart.');
 			}
 		);
