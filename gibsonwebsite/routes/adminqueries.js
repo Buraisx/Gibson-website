@@ -102,7 +102,6 @@ router.post('/validateCourse', function(req, res){
     connection.getConnection(function(err, con){
         con.query(sql, function(err, results){
             con.release();
-            console.log(results);
             if(err){
                 res.send(new Error("err querying"));
             }
@@ -118,85 +117,78 @@ router.post('/validateCourse', function(req, res){
     });
 });
 
-router.post('/v2', function(req, res){
-    req.body["languages[]"].shift();
-    req.body["course_days[]"].shift();
-    req.body["adhoc_days[]"].shift();
+router.post('/admin/profile/v2', function(req, res){
+   var sql = readSQL.getSQL('dml_addcourse.txt');
 
-    console.log(readSQL.getSQL('dml_addcourse.txt'));
-    console.log(req.body["languages[]"]);
-    console.log(req.body["course_days[]"]);
-    console.log(req.body["adhoc_days[]"]);
+    language_dml = createLanguageDML(req.body["languages[]"]);
+    course_days_dml = createCourseDaysDML(req.body["course_days[]"]);
+     adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
 
+    console.log(language_dml);
+    console.log(course_days_dml);
+    console.log(adhoc_days_dml);
+
+    var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
+                   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription, 
+                   req.body.instructor_bio, ''];
+
+    sql = mysql.format(sql, inserts);
+    sql = sql.replace('language_dml', language_dml);
+    sql = sql.replace('course_days_dml', course_days_dml);
+    console.log(sql);
+    
+    connection.getConnection(function(err,con){
+        if(err){
+            con.release();
+            console.log("adminqueries.js: cannot get connection");
+            return err;
+        }
+        
+        //execute add course DML
+        console.log("DML statement addcourse");
+        con.query(sql, function(err, results){
+            con.release();
+            if(err){
+                console.log("adminqueries.js: Query error for inserting course to database");
+                return next(err);
+            }
+            console.log(results.insertId);       
+        });
+    });
+
+    var all_days = adminFunctions.getScheduledDays(1, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);
+    console.log(all_days);
     res.send("DONE");
 });
 
 router.post('/admin/profile/addCourse', function(req, res){
-    console.log(req.body.adddescription);
-
-	// instructor_username is set to null
-    
     var sql = readSQL.getSQL('dml_addcourse.txt');
-    // make json dml for course days because gay
-    var a = req.body["course_days[]"];
-    var b = req.body["languages[]"];
-    console.log(a);
-    a.shift();
-    b.shift();
-    var course_days = [];
-    var languages = b;
-    var lang_dml = "JSON_ARRAY(";
-    var days_dml = "JSON_ARRAY(";
-    
-    
-    for (k in a) {
-        //lang_dml += "JSON_OBJECT(";
-        console.log(a[k]);
-        course_days.push(JSON.parse(a[k]));
-        /*for (o in obj) {
-            lang_dml += o + "," + obj.o + ",";
-        }*/
-        //lang_dml = lang_dml.slice(0, -1) + "),";
 
-    }
-    //days_dml = days_dml.slice(0, -1) + ")";
-    console.log(course_days);
-    console.log(languages);
+    //Note: *create DML closures apply .shift() on to req.body*
+    language_dml = createLanguageDML(req.body["languages[]"]);
+    course_days_dml = createCourseDaysDML(req.body["course_days[]"]);
+    adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
 
-    for (l in languages){
-        lang_dml += "\'" + languages[l] + "\',";
-    }
-    lang_dml = lang_dml.slice(0, -1) + ")";
-    console.log(lang_dml);
-
-    for(c in course_days){
-        days_dml += "JSON_OBJECT(";
-        for (d in course_days[c]) {
-            days_dml += "\"" + d + "\",\"" + course_days[c][d] + "\",";
-            console.log(d + " -> " + course_days[c][d]);
-        }
-        days_dml = days_dml.slice(0, -1) + "),";
-        console.log(days_dml);
-    }
-    days_dml = days_dml.slice(0, -1) + ")";
-    console.log(days_dml);
-
+    console.log(language_dml);
+    console.log(course_days_dml);
+    console.log(adhoc_days_dml);
 
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
-				   req.body.addstartdate, req.body.addenddate, req.body.addinterval, lang_dml, days_dml, req.body.addtarget, req.body.adddescription, 
-                   req.body.instructor_bio, req.body.notes];
+                   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription, 
+                   req.body.instructor_bio, ''];
 
     sql = mysql.format(sql, inserts);
-
+    sql = sql.replace('language_dml', language_dml);
+    sql = sql.replace('course_days_dml', course_days_dml);
     console.log(sql);
+    
     connection.getConnection(function(err,con){
-
         if(err){
             con.release();
             console.log("adminqueries.js: cannot get connection");
-            return next(err);
+            return err;
         }
-
+        
         async.waterfall([
             function (next){
                 con.query("START TRANSACTION;", function(err, results){
@@ -256,5 +248,77 @@ router.post('/admin/profile/addCourse', function(req, res){
     });
 });
 
+function createLanguageDML(languages){
+    var language_dml='';
+
+    languages.shift();
+
+    //Make JSON array for Languages
+    language_dml+='JSON_ARRAY(';
+    for(var i=0; i < languages.length; i++){
+        language_dml+=mysql.escape(languages[i]) + ',';
+    }
+    //remove last , for languages array
+    language_dml=language_dml.slice(0, -1);
+    language_dml+=')';
+    
+    return language_dml;
+}
+
+function createCourseDaysDML(course_days){
+    var course_days_dml='';
+
+    course_days.shift();
+
+    //Make JSON array for course days
+    course_days_dml='JSON_ARRAY(';
+    for(var i=0; i < course_days.length; i++){
+        var json = JSON.parse(course_days[i]);
+        var schedule='JSON_OBJECT(';
+        var day = json.day;
+        var start_time = json.start_time;
+        var end_time = json.end_time;
+
+        schedule+= '\'day\',' +  mysql.escape(day) + ',';
+        schedule+= '\'start_time\',' + mysql.escape(start_time) + ',';  
+        schedule+= '\'end_time\',' + mysql.escape(end_time);
+        schedule+= '),';
+        
+        course_days_dml+=schedule;
+    }
+    //remove last , for course days array
+    course_days_dml=course_days_dml.slice(0, -1);
+    course_days_dml+=')';
+    
+    return course_days_dml;
+}
+
+function createAdhocDaysDML(adhoc_days){
+    var adhoc_days_dml='';
+
+    adhoc_days.shift();
+
+    //Make JSON array for adhoc days
+    adhoc_days_dml='JSON_ARRAY(';
+    for(var i=0; i < adhoc_days.length; i++){
+        var json = JSON.parse(adhoc_days[i]);
+        var schedule='JSON_OBJECT(';
+        var day = json.day;
+        var start_time = json.start_time;
+        var end_time = json.end_time;
+
+        schedule+= '\'day\',' + mysql.escape(day) + ',';
+        schedule+= '\'start_time\',' + mysql.escape(start_time) + ',';  
+        schedule+= '\'end_time\',' + mysql.escape(end_time);
+        schedule+= '),';
+        
+        adhoc_days_dml+=schedule;
+    }
+    //remove last , for adhoc days array
+    adhoc_days_dml=adhoc_days_dml.slice(0, -1);
+    adhoc_days_dml+=')';
+
+    return adhoc_days_dml;
+}
 
 module.exports = router;

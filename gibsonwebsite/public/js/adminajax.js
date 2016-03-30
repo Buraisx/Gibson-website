@@ -809,7 +809,7 @@ function submitCourse(){
 	console.log(scheduled_days);
 	console.log(adhoc_days);
 
-	$.post("/admin/profile/addCourse",{
+	$.post("/admin/profile/v2",{
 		"addcoursecode":$('#addcoursecode').val(),
 		"addcoursename":$('#addcoursename').val(),
 		"addcost":$('#addcost').val(),
@@ -819,7 +819,7 @@ function submitCourse(){
 		"adddescription":$('#adddescription').val(),
 		"instructor_name":$('#instructor_name').val(),
 		"instructor_username":$('#instructor_username').val(),
-		"instructor_bio":$('#instructor_bio').val(),
+		"instructor_bio":$('#instructor_bio').val(),	
 		"addstartdate":$('#addstartdate').val(),
 		"addenddate":$('#addenddate').val(),
 		"addinterval":$('#addinterval').val(),

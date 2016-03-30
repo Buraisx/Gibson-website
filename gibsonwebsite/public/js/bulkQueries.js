@@ -14,12 +14,21 @@ var BIWEEKLY = 14;
 exports.getScheduledDays = function (course_id, start_date, end_date, interval, days) {
 	
 	var commit = [];
-	for (i = 0; i < days.length(); i++){
-		var day_of_week = parseDay(days[i].day);
-		var course_day = start_date.setDate(start_date.getDate() + (day_of_week - start_date.getDay() + 7) % 7);
+
+	start_date = new Date(start_date);
+	end_date = new Date(end_date);
+	console.log(start_date.getDate());
+
+	for (var i = 0; i < days.length(); i++){
+		var course_day;
+		var this_day=JSON.parse(days[i]);
+		var day_of_week = parseDay(this_day.day);
+		course_day.setDate(start_date.getDate() + (day_of_week - start_date.getDay() + 7) % 7);
+
 		var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
 		while(course_day < end_date){
-			commit.push(mysql.format(template, [course_id, course_day, days[i].start_time, days[i].end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
+			console.log(mysql.format(template, [course_id, course_day, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
+			commit.push(mysql.format(template, [course_id, course_day, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
 		// query ();
 		}
 		course_day += getInterval(interval);
