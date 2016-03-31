@@ -61,7 +61,7 @@ function register(course_register){
 }
 
 //FUNCTION TO LOAD HTML OF USER PROFILE
-function load_profile(){
+function load_profile(){	
 	jQuery.getJSON("/user/profile/info", function(user_info){
 		$('#profile').contents().remove();
 		var profileinfo='';

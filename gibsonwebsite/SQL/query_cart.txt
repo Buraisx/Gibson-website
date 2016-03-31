@@ -1,0 +1,13 @@
+SELECT 
+course_id, 
+course_code, 
+course_name, 
+instructor_name, 
+default_fee, 
+course_limit, 
+start_date,
+end_date, 
+course_language, 
+course_description 
+FROM 
+gibson.course WHERE course_id IN (course_list);

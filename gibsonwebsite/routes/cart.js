@@ -5,6 +5,7 @@ var mysql = require('mysql');
 var connection = require('../mysqlpool');
 var async = require('async');
 var sanitizer = require('sanitizer');
+var readSQL = require('../public/js/readSQL');
 
 router.get('/cart', function(req, res, next){
   res.render('cart', {title: 'Your Cart'});
@@ -25,27 +26,29 @@ router.get('/cart/view', function(req, res, next){
       if(req.cookies.cart){
 
         // CREATING QUERY FOR LIST OF COURSES IN CART
-        var query = '';
+        var query = readSQL.getSQL('query_cart.txt');;
+        var courses = '';
 
         for (var i = 0; i < req.cookies.cart.course_list.length; i++){
-          query += mysql.format('SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, payment_period_id, start_date, end_date, course_time, course_interval, course_language, course_days, course_tags, course_target, course_description, instructor_bio, notes FROM gibson.course WHERE course_id = ?;', [req.cookies.cart.course_list[i]]);
+          courses += mysql.escape(req.cookies.cart.course_list[i]);
+          courses += ','; 
         }
+
+        //Remove ending ,
+        courses=courses.slice(0, -1);
+        query = query.replace('course_list', courses); 
 
         // QUERYING DATABASE FOR COURSE INFORMATION
         con.query(query, function(err, results){
 
-          // FORMATTING THE OUTPUT
-          for (var j = 0; j < results.length; j++){
-              course_info.push(results[j][0]);
-          }
-
-          res.JSON(course_info);
+          console.log(results);
+          res.send(results);
         });
       }
 
       // CART IS EMPTY
       else{
-        res.JSON(course_info);
+        res.send(results);
       }
     }
   });
