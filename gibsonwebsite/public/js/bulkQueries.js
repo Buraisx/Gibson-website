@@ -1,3 +1,5 @@
+var mysql = require('mysql');
+
 /* Return days scheduled for course course_id between start_date and end_date
  Input: course_id  	course_id
 		start_date 	start of date interval
@@ -18,20 +20,24 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 	start_date = new Date(start_date);
 	end_date = new Date(end_date);
 	console.log(start_date.getDate());
+	var a = start_date.getDate() + (day_of_week - start_date.getDay() + 7) % 7;
+	console.log('HERE WE GO' + a);
 
-	for (var i = 0; i < days.length(); i++){
+	for (var i = 0; i < days.length; i++){
 		var course_day;
 		var this_day=JSON.parse(days[i]);
+		console.log(this_day);
 		var day_of_week = parseDay(this_day.day);
 		course_day.setDate(start_date.getDate() + (day_of_week - start_date.getDay() + 7) % 7);
+		console.log("HERE WE GO" + course_day);
 
 		var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
 		while(course_day < end_date){
 			console.log(mysql.format(template, [course_id, course_day, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
 			commit.push(mysql.format(template, [course_id, course_day, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
+			course_day.setDate(course_day.getDate()+getInterval(interval));
 		// query ();
 		}
-		course_day += getInterval(interval);
 	}
 	return commit;
 };
