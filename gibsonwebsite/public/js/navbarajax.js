@@ -4,7 +4,7 @@ $(document).ready(function(){
 	$('#userdisplay').contents().remove();
 	var userdisplay = '';
 	if(user != null) {
-		userdisplay = '<a class = "dropdown-toggle" href="/user/profile">' + user + '</a>';
+		userdisplay = '<a class = "dropdown-toggle" href="/user/profile">' + "Welcome, " + user + '</a>';
 		userdisplay += '<ul class = "dropdown-menu">';
 		userdisplay += '	<li><a href="/logout">Logout</a></li>';
 		userdisplay += '</ul>';
@@ -14,7 +14,6 @@ $(document).ready(function(){
 	}
 	$('#userdisplay').append(userdisplay);
 });
-
 
 
 //Get cookie Values

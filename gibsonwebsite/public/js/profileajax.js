@@ -155,7 +155,7 @@ function load_profile(){
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Province:</span><span class="col-sm-5 fieldval">' + user_info.user.province_id + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-4 fieldname">Province:</span><span class="col-sm-5 fieldval">' + user_info.user.prov_abb + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//check if user is a student
