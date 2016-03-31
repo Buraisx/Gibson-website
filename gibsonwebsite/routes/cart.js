@@ -6,6 +6,10 @@ var connection = require('../mysqlpool');
 var async = require('async');
 var sanitizer = require('sanitizer');
 
+router.get('/cart', function(req, res, next){
+  res.render('cart', {title: 'Your Cart'});
+});
+
 router.get('/cart/view', function(req, res, next){
 
   // GETTING CONNECTION TO DATABASE
@@ -35,13 +39,13 @@ router.get('/cart/view', function(req, res, next){
               course_info.push(results[j][0]);
           }
 
-          res.render('cart', {title: 'Your Cart', courses: course_info});
+          res.JSON(course_info);
         });
       }
 
       // CART IS EMPTY
       else{
-        res.render('cart', {title: 'Your Cart', courses: course_info});
+        res.JSON(course_info);
       }
     }
   });
