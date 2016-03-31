@@ -102,7 +102,7 @@ router.get('/user/profile/info', function(req, res, next) {
 		else{
 			async.waterfall([
 				function(next){
-					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, province_id, primary_phone, secondary_phone, student FROM gibson.user WHERE user_id = ?;";
+					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
