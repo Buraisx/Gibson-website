@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var async = require('async');
 
 /* Return days scheduled for course course_id between start_date and end_date
  Input: course_id  	course_id
@@ -14,40 +15,56 @@ var WEEKLY = 7;
 var BIWEEKLY = 14;
 
 exports.getScheduledDays = function (course_id, start_date, end_date, interval, days) {
-	
-	var commit = [];
 
-	start_date = new Date(start_date);
-	end_date = new Date(end_date);
-	console.log(start_date.getDate());
-	var a = start_date.getDate() + (1 - start_date.getDay() + 7) % 7;
-	console.log('HERE WE GO' + a);
+	//Get Full list of Scheduled Day
+	var commit = scheduleSetup(course_id, start_date, end_date, interval, days);
 
-	for (var i = 0; i < days.length; i++){
-		var course_day;
-		var this_day=JSON.parse(days[i]);
-		console.log(this_day);
-		var day_of_week = parseDay(this_day.day);
-		course_day.setDate(start_date.getDate() + (day_of_week - start_date.getDay() + 7) % 7);
-		console.log("HERE WE GO" + course_day);
-
-		var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
-		while(course_day < end_date){
-			console.log(mysql.format(template, [course_id, course_day, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
-			commit.push(mysql.format(template, [course_id, course_day, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
-			course_day.setDate(course_day.getDate()+getInterval(interval));
-		// query ();
-		}
-	}
 	return commit;
 };
 	
 
+function scheduleSetup(course_id, start_date, end_date, interval, days){
+
+	async.map(days, function(this_day, callback){
+				var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
+				var commit = [];
+
+				var start = new Date(start_date);
+				var course_date = new Date(start_date);
+				var end = new Date(end_date);
+				this_day = JSON.parse(this_day);
+
+				course_date.setDate(start.getDate() + (parseDay(this_day.day) - start.getDay() + 7) % 7);
+
+				(function loop_schedule(course_date, start, end, interval, this_day){
+					if(course_date <= end){
+						commit.push(mysql.format(template, [course_id, course_date, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
+						setTimeout(function(){
+							//var next_date = course_date.getDate() + getInterval(interval);
+							course_date.setDate(course_date.getDate() + getInterval(interval));
+							loop_schedule(course_date, start, end, interval, this_day);
+						}, 0);
+					}
+
+					else{
+						callback(null, commit);
+					}
+				})(course_date, start, end, interval, this_day);
+			},
+
+			function(err, results){
+				console.log(results);
+				return results;
+		});
+}
+
+
+
 function getInterval(interval){
-	switch (interval){
-		case 'Weekly':
+	switch (interval.toLowerCase()){
+		case 'weekly':
 			return WEEKLY;
-		case 'Bi-weekly':
+		case 'bi-weekly':
 			return BIWEEKLY;
 
 	}
@@ -56,18 +73,18 @@ function getInterval(interval){
 function parseDay (day) {
 	switch(day.toLowerCase()){
 	case "sunday":
-        return 6;
+        return 7;
     case "monday":
-        return 0;
-    case "tuesday":
         return 1;
-    case "wednesday":
+    case "tuesday":
         return 2;
-    case "thursday":
+    case "wednesday":
         return 3;
+    case "thursday":
+        return 4;
     case "friday":
-		return 4;
+		return 5;
     case "saturday":
-        return 5;
+        return 6;
 	}
 }

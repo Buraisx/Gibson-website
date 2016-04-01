@@ -122,11 +122,7 @@ router.post('/admin/profile/v2', function(req, res){
 
     language_dml = createLanguageDML(req.body["languages[]"]);
     course_days_dml = createCourseDaysDML(req.body["course_days[]"]);
-     adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
-
-    console.log(language_dml);
-    console.log(course_days_dml);
-    console.log(adhoc_days_dml);
+    adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
 
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
                    req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription, 
@@ -156,8 +152,7 @@ router.post('/admin/profile/v2', function(req, res){
         });
     });
 
-    var all_days = adminFunctions.getScheduledDays(1, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);
-    console.log(all_days);
+    adminFunctions.getScheduledDays(1, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);
     res.send("DONE");
 });
 
