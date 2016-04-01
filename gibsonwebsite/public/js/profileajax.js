@@ -170,7 +170,7 @@ function load_profile(){
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Grade:</span><span class="col-sm-5 fieldval">' + user_info.student_info.grade + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-4 fieldname">Grade/Year:</span><span class="col-sm-5 fieldval">' + user_info.student_info.grade + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			if(user_info.student_info.major||user_info.student_info.esl_level)
@@ -421,7 +421,7 @@ function editinfo () {
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
 			editinfo+='            <label class="fieldname col-sm-4">';
-			editinfo+='                <p>Grade: </p>';
+			editinfo+='                <p>Grade/Year: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.grade + '">';
 			editinfo+='        </div>';
