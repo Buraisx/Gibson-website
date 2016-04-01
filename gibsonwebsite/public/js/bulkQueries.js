@@ -20,7 +20,7 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 	start_date = new Date(start_date);
 	end_date = new Date(end_date);
 	console.log(start_date.getDate());
-	var a = start_date.getDate() + (day_of_week - start_date.getDay() + 7) % 7;
+	var a = start_date.getDate() + (1 - start_date.getDay() + 7) % 7;
 	console.log('HERE WE GO' + a);
 
 	for (var i = 0; i < days.length; i++){
