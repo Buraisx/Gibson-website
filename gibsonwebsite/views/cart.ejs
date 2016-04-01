@@ -5,11 +5,39 @@
   <head>
     <title><%= title %></title>
     <script src="/js/getcart.js"></script>
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
         <div class = "page-wrap">
             <p>Please someone on the front-end put some code in here!</p> <br>
             <p>The array name is "courses"</p>
+            <div id="shoppingcart" class="rcorners">
+                <p>Shopping Cart </p>
+                <table id="cart-table">
+                    <tr id="cart-header">
+                        <td>Course Name</td>
+                        <td>Course Code</td>
+                        <td>Cost</td>
+                        <td>Delete</td>
+                    </tr>
+                    <tr class="cart-item">
+                        <td class="cart-item-name">Course 1</td>
+                        <td class="cart-item-code">Code  1</td>
+                        <td class="cart-item-cost">$150</td>
+                        <td class="cart-delete">X</td>
+                    </tr>
+                    <tr class="cart-item">
+                        <td class="cart-item-name">Course 2</td>
+                        <td class="cart-item-code">Code 2</td>
+                        <td class="cart-item-cost">$200</td>
+                        <td class="cart-delete">X</td>
+                    </tr>
+                </table>
+            
+            </div>
+            
         </div>
     <h3>
       <a href="http://puu.sh/nXBn3/a20e56ac65.png"> pic </a>

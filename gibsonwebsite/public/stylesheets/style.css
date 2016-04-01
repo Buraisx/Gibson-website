@@ -296,3 +296,26 @@ hr {
 .targetmargin, .submitbutton, .smallmargin {
 	margin-top: 10px;
 }
+
+/** Shopping Cart Styles **/
+
+#shoppingcart{
+    width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#cart-table{
+    width: 95%;
+    margin-right: 2.5%;
+    border: 1px solid black;
+}
+
+#cart-header{
+    background-color: #888888;
+    color: #FFFFFF;
+}
+
+td{
+    padding: 5px;
+}
