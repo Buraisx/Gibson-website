@@ -316,6 +316,26 @@ hr {
     color: #FFFFFF;
 }
 
+
+#cart-header-name, #cart-header-code, #cart-header-cost, #cart-header-delete{
+    text-align: center;
+}
+
+.cart-item-name{
+    padding-left: 10px;
+    text-align: left;
+}
+
+.cart-item-code{
+    padding-left: 10px;
+    text-align: left;
+    background-color: #d9d9d9;
+}
+
+.cart-item-cost{
+    text-align: center;
+}
+
 td{
     padding: 5px;
 }
