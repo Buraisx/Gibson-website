@@ -26,17 +26,17 @@ router.get('/cart/view', function(req, res, next){
       if(req.cookies.cart){
 
         // CREATING QUERY FOR LIST OF COURSES IN CART
-        var query = readSQL.getSQL('query_cart.txt');;
+        var query = readSQL.getSQL('query_cart.txt');
         var courses = '';
 
         for (var i = 0; i < req.cookies.cart.course_list.length; i++){
           courses += mysql.escape(req.cookies.cart.course_list[i]);
-          courses += ','; 
+          courses += ',';
         }
 
         //Remove ending ,
         courses=courses.slice(0, -1);
-        query = query.replace('course_list', courses); 
+        query = query.replace('course_list', courses);
 
         // QUERYING DATABASE FOR COURSE INFORMATION
         con.query(query, function(err, results){
