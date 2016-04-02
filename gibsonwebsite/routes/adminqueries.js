@@ -148,11 +148,11 @@ router.post('/admin/profile/v2', function(req, res){
                 console.log("adminqueries.js: Query error for inserting course to database");
                 return next(err);
             }
-            console.log(results.insertId);       
+            adminFunctions.getScheduledDays(results.insertId, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);       
         });
     });
 
-    adminFunctions.getScheduledDays(1, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);
+
     res.send("DONE");
 });
 

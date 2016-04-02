@@ -1,5 +1,7 @@
 var mysql = require('mysql');
 var async = require('async');
+var mysql = require('mysql');
+var connection = require('../../mysqlpool');
 
 /* Return days scheduled for course course_id between start_date and end_date
  Input: course_id  	course_id
@@ -15,19 +17,13 @@ var WEEKLY = 7;
 var BIWEEKLY = 14;
 
 exports.getScheduledDays = function (course_id, start_date, end_date, interval, days) {
+	connection.getConnection(function (err, con){
+		if(err){
+			return err;
+		}
 
-	//Get Full list of Scheduled Day
-	var commit = scheduleSetup(course_id, start_date, end_date, interval, days);
-
-	return commit;
-};
-	
-
-function scheduleSetup(course_id, start_date, end_date, interval, days){
-
-	async.map(days, function(this_day, callback){
+		async.map(days, function(this_day, callback){
 				var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
-				var commit = [];
 
 				var start = new Date(start_date);
 				var course_date = new Date(start_date);
@@ -38,7 +34,10 @@ function scheduleSetup(course_id, start_date, end_date, interval, days){
 
 				(function loop_schedule(course_date, start, end, interval, this_day){
 					if(course_date <= end){
-						commit.push(mysql.format(template, [course_id, course_date, this_day.start_time, this_day.end_time, 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']));
+						con.query(mysql.format(template, [course_id, course_date, parseTime(this_day.start_time), parseTime(this_day.end_time), 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']), function(err, results){
+							console.log("INSERTED " + course_date);
+						});
+
 						setTimeout(function(){
 							//var next_date = course_date.getDate() + getInterval(interval);
 							course_date.setDate(course_date.getDate() + getInterval(interval));
@@ -47,18 +46,34 @@ function scheduleSetup(course_id, start_date, end_date, interval, days){
 					}
 
 					else{
-						callback(null, commit);
+						callback(null);
 					}
 				})(course_date, start, end, interval, this_day);
 			},
 
-			function(err, results){
-				console.log(results);
-				return results;
+			function(err){
+				con.release();
+				if(err){
+					return err;
+				}
+				else{
+					return null;
+				}
 		});
+	});
+};
+
+function parseTime(time){
+	var values = time.match(/[0-9]+/g);
+	var meridiem = time.match(/[PA][M]/g);
+
+	if(meridiem[0] === 'PM'){
+	    var toTwentyFour = Number(values[0]) + 12;
+		values[0] = toTwentyFour.toString();
+	}
+
+	return (values[0] + ':' + values[1] + ':' + '00');  
 }
-
-
 
 function getInterval(interval){
 	switch (interval.toLowerCase()){
