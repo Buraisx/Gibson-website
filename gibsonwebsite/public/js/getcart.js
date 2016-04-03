@@ -25,8 +25,22 @@ function load_cart(){
 			cart_table.append(item);
 		}
 		var cart_total_html = '';
-			cart_total_html+= '<tr><td colspan="4">Total: ' + cart_total + '</td></tr>';
+			cart_total_html+= '<tr class="cart-total">';
+			cart_total_html+= 		'<td class="cart-total-name cart-item-name">Total</td>';
+			cart_total_html+= 		'<td class="cart-total-cost cart-item-cost">$' + cart_total + '</td>';
+			cart_total_html+= '</tr>'
 
 		cart_table.append(cart_total_html);
+
+		//this is alternative total placed on bottom
+		var cart_end = $('#cart-total');
+
+		var cart_total_html_2 = '';
+			cart_total_html_2+= '<p>';
+			cart_total_html_2+= '<span class="cart-total-name2">Total: </span>';
+			cart_total_html_2+= '<span class="cart-total-cost2">$' + cart_total + '</span>';
+			cart_total_html_2+= '</p>';
+
+		cart_end.append(cart_total_html_2);
 	});
 }

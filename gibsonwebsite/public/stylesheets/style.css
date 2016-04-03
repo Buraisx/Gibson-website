@@ -336,6 +336,26 @@ hr {
     text-align: center;
 }
 
+.cart-total{
+	padding-top: 15px;
+	font-weight: bold;
+}
+
 td{
     padding: 5px;
+}
+
+/** alternate shopping cart total **/
+#shopping-total{
+	text-align: right;
+	font-weight: bold;
+	padding-top: 15px;
+}
+
+.cart-total-name2{
+	color: #111;
+}
+
+.cart-total-cost2{
+	color: #b12704;
 }
