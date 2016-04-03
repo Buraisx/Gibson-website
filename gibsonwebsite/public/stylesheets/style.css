@@ -180,18 +180,18 @@ a {
 
 
 .panel-primary > .panel-heading {
-	background-color: #6378A0;
+	background-color: #6BC3E9;
 }
 
 
 .btn-primary {
-	background-color: #8BC43F;
-	border-color: #8BC43F;
+	background-color: #3AAADA;
+	border-color: #3AAADA;
 }
 
 .btn-primary:hover {
-	background-color: #50860B;
-	border-color: #50860B;
+	background-color: #1B90C2;
+	border-color: #1B90C2;
 }
 
 @media (max-width: 1190px) {
@@ -245,12 +245,10 @@ hr {
 
 .fieldname {
 	text-align: left;
-	padding-left: 0px;
 }
 
 .fieldval {
 	text-align: left;
-	padding-left: 100px;
 }
 
 .footer-left {
