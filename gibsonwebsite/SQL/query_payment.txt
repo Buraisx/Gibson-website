@@ -1,0 +1,2 @@
+SELECT default_fee, course_code, course_name, course_id
+FROM gibson.course WHERE course_id IN (course_list);

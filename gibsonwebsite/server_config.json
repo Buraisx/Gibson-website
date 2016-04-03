@@ -2,7 +2,7 @@
 
   "db_config": {
     "connectionLimit": 10,
-    "host": "localhost",
+    "host": "192.168.1.33",
     "user": "root",
     "password": "Sabad@th!s1234567",
     "database": "gibson",
@@ -37,7 +37,7 @@
     }
   },
 
-  "paypal": {
+  "paypal_config": {
     "mode": "sandbox",
     "client_id": "AQqJTzv6DzGDkMEMld5p-ytdfhhmTJRytvKv2SHKR9XvgV_BmxA1W9OseaIeQUyyF3D_25GQatGGYHpV",
     "client_secret": "EOQABxF7z3Jo80uJr2ATP--NzZS1LCzzvkKKgnY2Y36HIHM8e18bTxKLKGoU7SdoO_Ju8wvZDqbhRW1R"

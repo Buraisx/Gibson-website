@@ -40,8 +40,6 @@ router.get('/cart/view', function(req, res, next){
 
         // QUERYING DATABASE FOR COURSE INFORMATION
         con.query(query, function(err, results){
-
-          console.log(results);
           res.send(results);
         });
       }
