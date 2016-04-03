@@ -19,13 +19,13 @@ function load_cart(){
 			item+='    <td class="cart-item-name">'+ course_info[i].course_name +'</td>';
 			item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
 			item+='    <td class="cart-item-cost">$'+ course_info[i].default_fee +'</td>';
-			item+='    <td class="cart-delete"><button>X</button></td>';
+			item+='    <td class="cart-delete"><button class = "btn-sm btn-danger">X</button></td>';
 			item+='</tr>';
 
 			cart_table.append(item);
 		}
 		var cart_total_html = '';
-			cart_total_html+= 'Total:' + cart_total;
+			cart_total_html+= '<tr><td colspan="4">Total: ' + cart_total + '</td></tr>';
 
 		cart_table.append(cart_total_html);
 	});
