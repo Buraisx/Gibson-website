@@ -74,22 +74,22 @@ function load_profile(){
 		profileinfo+='    <h3>Basic Information</h3>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">First Name:</span><span class="col-sm-5 fieldval">' + user_info.user.fname + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.user.fname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Last Name:</span><span class="col-sm-5 fieldval">' + user_info.user.lname + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.user.lname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Username:</span><span class="col-sm-5 fieldval">' + user_info.user.username + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Username:</span><span class="col-sm-9 fieldval">' + user_info.user.username + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Email:</span><span class="col-sm-5 fieldval">' + user_info.user.email + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Email:</span><span class="col-sm-9 fieldval">' + user_info.user.email + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//Checks if phone number exist
@@ -99,12 +99,12 @@ function load_profile(){
 			{
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Phone (Home):</span><span class="col-sm-5 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Phone (Cell):</span><span class="col-sm-5 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			}
@@ -112,7 +112,7 @@ function load_profile(){
 			{
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Phone (Home):</span><span class="col-sm-5 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			}
@@ -120,47 +120,47 @@ function load_profile(){
 			{
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Phone (Cell):</span><span class="col-sm-5 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			}
 		}
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Gender:</span><span class="col-sm-5 fieldval">' + user_info.user.gender + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Gender:</span><span class="col-sm-9 fieldval">' + user_info.user.gender + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Date of Birth:</span><span class="col-sm-5 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Date of Birth:</span><span class="col-sm-9 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Address:</span><span class="col-sm-5 fieldval">' + user_info.user.address + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Address:</span><span class="col-sm-9 fieldval">' + user_info.user.address + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		if (user_info.user.unit_no != "") {
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Apt/Unit #:</span><span class="col-sm-5 fieldval">' + user_info.user.unit_no + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Apt/Unit #:</span><span class="col-sm-9 fieldval">' + user_info.user.unit_no + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 		}
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Postal Code:</span><span class="col-sm-5 fieldval">' + user_info.user.postal_code + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Postal Code:</span><span class="col-sm-9 fieldval">' + user_info.user.postal_code + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">City:</span><span class="col-sm-5 fieldval">' + user_info.user.city + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">City:</span><span class="col-sm-9 fieldval">' + user_info.user.city + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-4 fieldname">Province:</span><span class="col-sm-5 fieldval">' + user_info.user.prov_abb + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.prov_abb + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//check if user is a student
@@ -170,12 +170,12 @@ function load_profile(){
 			profileinfo+='    <h3>Student Information</h3>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">School Name:</span><span class="col-sm-5 fieldval">' + user_info.student_info.school_name + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">School Name:</span><span class="col-sm-9 fieldval">' + user_info.student_info.school_name + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Grade/Year:</span><span class="col-sm-5 fieldval">' + user_info.student_info.grade + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Grade/Year:</span><span class="col-sm-9 fieldval">' + user_info.student_info.grade + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			if(user_info.student_info.major||user_info.student_info.esl_level)
@@ -184,12 +184,12 @@ function load_profile(){
 				{
 					profileinfo+='    <div class="row">';
 					profileinfo+='        <div class="form-group col-sm-12">';
-					profileinfo+='            <p><span class="col-sm-4 fieldname">Major:</span><span class="col-sm-5 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
 					profileinfo+='    	  </div>';
 					profileinfo+='    </div>';
 					profileinfo+='    <div class="row">';
 					profileinfo+='        <div class="form-group col-sm-12">';
-					profileinfo+='            <p><span class="col-sm-4 fieldname">ESL Level:</span><span class="col-sm-5 fieldval">' + user_info.student_info.esl_level + '</span></p>';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='        </div>';
 					profileinfo+='    </div>';
 				}
@@ -197,7 +197,7 @@ function load_profile(){
 				{
 					profileinfo+='  <div class="row">';
 					profileinfo+='      <div class="form-group col-sm-12">';
-					profileinfo+='           <p><span class="col-sm-4 fieldname">Major:</span><span class="col-sm-5 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
@@ -205,7 +205,7 @@ function load_profile(){
 				{
 					profileinfo+='  <div class="row">';
 					profileinfo+='      <div class="form-group col-sm-12">';
-					profileinfo+='           <p><span class="col-sm-4 fieldname">ESL Level:</span><span class="col-sm-5 fieldval">' + user_info.student_info.esl_level + '</span></p>';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
@@ -218,22 +218,22 @@ function load_profile(){
 			profileinfo+='    <h4>Contact #'+(i+1)+':</h4>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">First Name:</span><span class="col-sm-5 fieldval">' + user_info.emergency_contacts[i].fname + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].fname + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Last Name:</span><span class="col-sm-5 fieldval">' + user_info.emergency_contacts[i].lname + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].lname + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Relationship:</span><span class="col-sm-5 fieldval">' + user_info.emergency_contacts[i].relationship + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Relationship:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].relationship + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-4 fieldname">Phone:</span><span class="col-sm-5 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 		}
@@ -308,42 +308,42 @@ function editinfo () {
 		editinfo+='    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>First Name: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "fname" id = "editfname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.fname + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "fname" id = "editfname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.fname + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Last Name: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "lname" id = "editlname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "lname" id = "editlname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Phone (Home): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-3" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Phone (Cell): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-3" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Gender: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <select class = "form-control col-sm-4" name = "gender" id = "editgender">';
+		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editgender">';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		editinfo+='                <option ';
 		if (user_info.user.gender == "Male") { editinfo+= 'selected="selected" '; }
@@ -359,7 +359,7 @@ function editinfo () {
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Date of Birth: </p>';
 		editinfo+='            </label>';
   		editinfo+='            <input type="text" class = "form-control datepicker" name="birth_date" id = "datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" value = "' + String(user_info.user.birth_date).substring(0, 10).replace(/-/g, "\/") + '">';
@@ -367,15 +367,15 @@ function editinfo () {
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Address: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "address" id = "editaddress" pattern="^[a-zA-Z0-9._ ]*$" value = "' + user_info.user.address + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "address" id = "editaddress" pattern="^[a-zA-Z0-9._ ]*$" value = "' + user_info.user.address + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Postal Code: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <input type = "text" class = "form-control" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="A1A1A1" pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" value = "' + user_info.user.postal_code + '">';
@@ -383,7 +383,7 @@ function editinfo () {
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Apt/Unit #: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <input type = "number" class = "form-control" name = "apt" id = "apt" value = "' + user_info.user.unit_no + '">';
@@ -391,7 +391,7 @@ function editinfo () {
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>City: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <input type = "text" class = "form-control" name = "city" id = "city" pattern="[a-zA-Z. ]+">';
@@ -399,10 +399,10 @@ function editinfo () {
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-4">';
+		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Province: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <select class = "form-control col-sm-4" name = "gender" id = "editprovince">';
+		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editprovince">';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		for (var i = 0; i < user_info.provinces_list.length; i++) {
 			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';	
@@ -417,34 +417,34 @@ function editinfo () {
 			editinfo+='    <h3>Student Information</h3>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>School Name: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.school_name + '">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.school_name + '">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Grade/Year: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.grade + '">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.grade + '">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Major: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "major" id = "editmajor" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.major + '">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "major" id = "editmajor" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.major + '">';
 			editinfo+='    	  </div>';
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>ESL Level: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "esl" id = "editesl" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.esl_level + '">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "esl" id = "editesl" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.esl_level + '">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 		}
@@ -453,34 +453,34 @@ function editinfo () {
 			editinfo+='    <h3>Student Information</h3>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>School Name: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Grade: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Major: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "major" id = "editmajor" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "major" id = "editmajor" pattern="[a-zA-Z0-9. ]+" value = "">';
 			editinfo+='    	  </div>';
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>ESL Level: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "esl" id = "editesl" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "esl" id = "editesl" pattern="[a-zA-Z0-9. ]+" value = "">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 		}
@@ -493,7 +493,7 @@ function editinfo () {
 			editinfo+='    <h4>Contact #'+(i+1)+':</h4>';
 			editinfo+='    <div class="row" id = "contact' + (i+1) + '">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>First Name: </p>';
 			editinfo+='            </label>';
         	editinfo+='            <input type = "text" class = "form-control" name = "emergencyfname' + (i+1) + '"  id = "emergencyfname' + (i+1) + '"  placeholder= "" pattern= "[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].fname + '" required>';
@@ -501,7 +501,7 @@ function editinfo () {
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Last Name: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control" name = "emergencylname' + (i+1) + '"  id = "emergencylname' + (i+1) + '"  placeholder="" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].lname + '" required>';
@@ -509,7 +509,7 @@ function editinfo () {
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Relationship: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control" name =  "relationship' + (i+1) + '" id = "relationship' + (i+1) + '" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].relationship + '" required>';
@@ -517,7 +517,7 @@ function editinfo () {
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
         	editinfo+='            <input type = "text" class = "form-control" name =  "ephone' + (i+1) + '" id = "ephone' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone + '" required>';
@@ -531,7 +531,7 @@ function editinfo () {
 	        editinfo+='    <h4>Contact #'+ i +':</h4>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>First Name: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control" name = "emergencyfname' + i + '"  id = "emergencyfname' + i + '"  placeholder= "" pattern= "[a-zA-Z0-9. ]+">';
@@ -539,7 +539,7 @@ function editinfo () {
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Last Name: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control" name = "emergencylname' + i + '"  id = "emergencylname' + i + '"  placeholder="" pattern="[a-zA-Z0-9. ]+">';
@@ -547,7 +547,7 @@ function editinfo () {
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Relationship: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control" name =  "relationship' + i + '" id = "relationship' + i + '" pattern="[a-zA-Z0-9. ]+">';
@@ -555,7 +555,7 @@ function editinfo () {
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-12">';
-			editinfo+='            <label class="fieldname col-sm-4">';
+			editinfo+='            <label class="fieldname col-sm-3">';
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control" name =  "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="\w+">';
