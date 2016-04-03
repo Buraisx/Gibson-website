@@ -61,13 +61,21 @@ router.post('/user/profile/changepassword', function(req, res, next){
 								changePassword = mysql.format(changePassword, [newPassword, decode.id]);
 
 								con.query(changePassword, function(err, changedorNot){
-									con.release();
 									if(err){
+										con.release();
 										console.log("Could not query to change the password");
 										return err;
 									}
 									else {
-										res.send('Password has successfully been changed!');
+										con.query(mysql.format("SELECT username FROM gibson.user WHERE user_id = ?", [decode.id]), function(err, results){
+											con.release();
+											if(err){
+												return (err);
+											}
+											else{
+												res.send(results);
+											}	
+										});
 									}
 								});
 						}

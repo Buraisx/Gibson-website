@@ -797,9 +797,8 @@ function changepassword(){
 	})
 	.done(function (res){
 		alert("Password changed successfully.");
-		console.log(getCookie('user_info').username);
 		$.post("/login", {
-			username: getCookie('user_info').username,
+			username: res[0].username,
 			password: $('#password').val(),
 			_csrf: $('#_csrf').val()
 		});
