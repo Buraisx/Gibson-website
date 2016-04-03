@@ -164,7 +164,7 @@ app.use(function (req, res, next){
               con.release();
               console.log('app.js: Error verifying token.');
               //res.end();
-              return err;
+              res.redirect(401, '/logout');
             }
             else{
               con.release();
@@ -180,7 +180,11 @@ app.use(function (req, res, next){
   // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
   else {
     //res.end();
-    return err;
+	console.log('No Token');
+	res.clearCookie('access_token');
+	res.clearCookie('privilege');
+	res.clearCookie('user_info');
+    res.redirect('/login');
   }
 
 });
