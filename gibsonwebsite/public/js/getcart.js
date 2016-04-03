@@ -19,7 +19,7 @@ function load_cart(){
 			item+='    <td class="cart-item-name">'+ course_info[i].course_name +'</td>';
 			item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
 			item+='    <td class="cart-item-cost">$'+ course_info[i].default_fee +'</td>';
-			item+='    <td class="cart-delete"><button class = "btn-sm btn-danger">X</button></td>';
+			item+='    <td class="cart-delete"><button class = "btn-xsm btn-danger">X</button></td>';
 			item+='</tr>';
 
 			cart_table.append(item);
