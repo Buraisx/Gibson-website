@@ -52,11 +52,16 @@ function register(course_register){
 			_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
-		alert("Course added to Cart.");
+		swal({
+			title: "Course added to Cart.",
+			type: "success"
+		});
 		listcourses();
 	})
 	.fail(function (err){
-		alert("You have already registered for this course!");
+		swal({
+			title: "You have already registered for this course!"
+		});
 	});
 }
 
@@ -632,11 +637,17 @@ function savechanges() {
 															////////////////////////////////////////////////////////////////// emergency contacts
 		})
 		.done(function (res){
-			alert("Profile updated.");
+			swal({
+				title: "Profile updated.",
+				type: "success"
+			});
 			load_profile();
 		})
 		.fail(function (err){
-			alert("Failed to save changes.");
+			swal({
+				title: "Failed to save changes.", 
+				type: "error"
+			});
 		});
 		window.onbeforeunload = null;
 		setTimeout(function(){
@@ -646,12 +657,22 @@ function savechanges() {
 }
 
 function returntoprofile() {
-	var confirmation = confirm('Are you sure you wish to discard all changes?');
-	if (confirmation) {
-		load_profile();
-    	window.onbeforeunload = null;
-    	$("html, body").animate({ scrollTop: 0 }, "slow");
-	}
+	swal({
+		title: "Are you sure?", 
+		text: 'Are you sure you wish to discard all changes?', 
+		type: "warning", 
+		showCancelButton: true, 
+		confirmButtonColor: "#DD6B55", 
+		confirmButtonText: "Yes", 
+		cancelButtonText: "No"
+	},
+	function(isConfirm){ 
+		if (isConfirm) { 
+			load_profile();
+			window.onbeforeunload = null;
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		}
+	});
 }
 
 var preventUser = function() {
