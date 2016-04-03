@@ -10,7 +10,7 @@
     <script src = "/js/serializecontacts.js"></script>
     <script src = "/js/passwordvalidation.js"></script>
     <script src = "/js/studentinputboxes.js"></script>
-
+    
     <script src = "/js/submitbutton.js"></script>
     <script src = 'https://www.google.com/recaptcha/api.js'></script>
     <!--script src = "/js/captcha.js"></script-->
@@ -19,7 +19,7 @@
 <body class="index" >
 <form name="frm" action = "/signup" method = "post" role = "form">
 <!--sending csrf token-->
-    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <div id="myCarousel" class="carousel slide" style="height:700px;" data-interval="false">
 
         <!-- Wrapper for Slides -->
@@ -28,7 +28,7 @@
                 <!-- Set the first background image using inline CSS below. -->
                 <div class="fill" style="background-image:url(/img/cat-1044750_960_720.jpg);">
             <div class = "col-sm-offset-3 col-sm-6"><!--panel div-->
-                <div class = "panel panel-default shadowy  signuppanel"><!-- panel start-->
+                <div class = "panel panel-default shadowy signuppanel"><!-- panel start-->
                    <div class = "panel-heading">
                    <h2 class = "text-center">Step 1: Create Your Account</h2>
                    </div>
@@ -39,7 +39,7 @@
                             <div class="form-group col-sm-offset-1 col-sm-10">
                                 <label class="control-label"><span class="required">*</span>Username:</label>
                                 <span id = "confirmuser"></span>
-                                <input class = "form-control" type="text" name ="username" id="username" placeholder = "Enter Username"onkeyup="checkSpecialChars(); return false;" required pattern="\w+">
+                                <input class = "form-control reqIn" type="text" name ="username" id="username" placeholder = "Enter Username"onkeyup="checkSpecialChars(); return false;" required pattern="\w+">
                                 <!--Character restrictions-->
                             </div>
                         </div>
@@ -48,13 +48,13 @@
                         <div class = "row">
                             <div class="form-group col-sm-offset-1 col-sm-5">
                                 <label class="control-label"><span class="required">*</span>Password:</label>
-                                <input type="password" class = "form-control" name = "password" id="password" placeholder="Enter Password"  onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
+                                <input type="password" class = "form-control reqIn" name = "password" id="password" placeholder="Enter Password"  onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
                                 <!--Character restrictions-->
                             </div>
                             <div class="form-group col-sm-5">
                                 <label class="control-label"><span class="required">*</span>Confirm Password:</label>
-
-                                <input type="password" class = "form-control" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" onkeyup="checkPass(); return false;" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
+                                
+                                <input type="password" class = "form-control reqIn" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" onkeyup="checkPass(); return false;" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
                                 <!--Character restrictions-->
                             </div>
                         </div>
@@ -64,12 +64,12 @@
                             </div>
                             <div class="form-group col-sm-offset-1 col-sm-10">
                                 <label class="control-label"><span class="required">*</span>Email:</label>
-                                <input class = "form-control" type="email" name = "email" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
+                                <input class = "form-control reqIn" type="email" name = "email" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
                             </div>
                         </div>
                         <div class = "row">
                             <div class = "col-sm-offset-8 col-sm-4">
-                                <button type = "button" class = "btn btn-success " href="#myCarousel" data-slide="next" onclick="progress(30,$('#progressBar'))">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
+                                <button type = "button" class = "btn btn-success" href="#myCarousel" data-slide="next">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
                             </div>
                         </div>
 
@@ -92,11 +92,11 @@
                         <div class = "row">
                                     <div class = "form-group col-sm-offset-1 col-sm-5">
                                 <label><span class="required">*</span>First Name:</label>
-                                <input type = "text" class = "form-control" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                <input type = "text" class = "form-control reqIn" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                      </div>
                     <div class = "form-group col-sm-5">
                         <label><span class="required">*</span>Last Name:</label>
-                        <input type = "text" class = "form-control" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                        <input type = "text" class = "form-control reqIn" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                     </div>
                         </div>
 
@@ -104,7 +104,7 @@
                         <div class = "row">
                                     <div class = "form-group col-sm-offset-1 col-sm-5">
                                 <label><span class="required">*</span>Birthdate:</label>
-                                <input type="text" class = "form-control datepicker" name="birth_date" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
+                                <input type="text" class = "form-control datepicker reqIn" name="birth_date" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
                             </div>
                             <div class = "form-group col-sm-5">
                                 <label class = "control-label"><span class="required">*</span>Gender:</label>
@@ -119,17 +119,17 @@
                         <div class = "row">
                             <div class = "form-group col-sm-offset-1 col-sm-7">
                                 <label class = "control-label"><span class="required">*</span>Address:</label>
-                                <input type = "text" class = "form-control" name = "address" id = "address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity('Invalid address.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
+                                <input type = "text" class = "form-control reqIn" name = "address" id = "address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity('Invalid address.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
                             </div>
                             <div class = "form-group col-sm-3">
                                 <label class = "control-label"><span class="required">*</span>Postal Code:</label>
-                                <input type = "text" class = "form-control" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity('Invalid postal code.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
+                                <input type = "text" class = "form-control reqIn" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity('Invalid postal code.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
                             </div>
                         </div>
                         <div class = "row">
                             <div class = "form-group col-sm-offset-1 col-sm-3">
-                                <label class = "control-label">Apt/Unit #:</label>
-                                <input type = "number" class = "form-control" name = "apt" id = "apt">
+                                <label class = "control-label">Apt/Unit#:</label>
+                                <input type = "number" class = "form-control" name = "apt" id = "apt" max="6">
                             </div>
                             <div class = "form-group col-sm-3">
                                 <label class = "control-label"><span class="required">*</span>City:</label>
@@ -161,11 +161,11 @@
                                 <div class="row">
                                     <div class = "form-group col-sm-5">
                                         <label><span class="required">*</span>School Name:</label>
-                                        <input type = "text" class = "form-control" name = "schoolname" id = "schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                        <input type = "text" class = "form-control  reqIn" name = "schoolname" id = "schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
                                     <div class = "form-group col-sm-5">
                                         <label><span class="required">*</span>Grade/Year:</label>
-                                        <input type = "text" class = "form-control" name = "grade" id = "grade" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                        <input type = "text" class = "form-control reqIn" name = "grade" id = "grade" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
                                 </div>
                                 <div class="row">
@@ -184,10 +184,10 @@
                 </div>
                         <div class = "row">
                             <div class = "col-sm-offset-1 col-sm-4">
-                                <button type = "button" class = "btn btn-warning " href="#myCarousel" id="back" data-slide="prev"onclick="progress(0,$('#progressBar'))">&larr; &nbsp;&nbsp; &nbsp; Back </button>
+                                <button type = "button" class = "btn btn-warning " href="#myCarousel" id="back" data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>
                             </div>
                             <div class = "col-sm-offset-3 col-sm-4">
-                                <button type = "button" class = "btn btn-success " href="#myCarousel" data-slide="next" onclick="progress(60,$('#progressBar'))">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
+                                <button type = "button" class = "btn btn-success " href="#myCarousel" data-slide="next">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
                             </div>
                         </div>
 
@@ -195,7 +195,7 @@
                 </div><!--panel-default-->
             </div><!--panel div-->
                 </div>
-
+                
             </div>
             <div class="item">
                 <!-- Set the third background image using inline CSS below. -->
@@ -256,21 +256,20 @@
                 <% } %>
                 <div class="row">
                     <div class = "col-sm-offset-1 col-sm-5">
-                        <button type = "button" class= "btn btn-info col-sm-0" onclick="addcontact()" id = "addbutton">Add another contact</button>
-                        <button type = "button" class= "btn btn-info col-sm-0 hidden smallmargin" onclick="removecontact()" id = "removebutton">Remove a contact</button>
+                        <button type = "button" class= "btn btn-info col-sm-0" onclick="addcontact()" id = "add">Add another contact</button>
+                        <button type = "button" class= "btn btn-info col-sm-0 hidden" onclick="removecontact()" id = "remove">Remove a contact</button>
                     </div>
                 </div>
-
+                
                                 </div>
                                 <div class = "row">
                                 <br>
                                     <div class = "col-sm-offset-1 col-sm-3">
-                                <button type = "button" class = "btn btn-warning " id="back"href="#myCarousel" data-slide="prev" onclick="progress(30,$('#progressBar'))">&larr; &nbsp;&nbsp; &nbsp; Back </button>
+                                <button type = "button" class = "btn btn-warning " id="back" href="#myCarousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>
                             </div>
 
                             <div class = "col-sm-offset-1 col-sm-6">
-                                <button type = "button" class = "btn btn-success btn-block" name="submit" id="submit" onclick="signup()">Register!</button>
-                                <!-- onclick="return submitbutton()" -->
+                                <button type = "submit" class = "btn btn-success btn-block" name="submit" onclick="return submitbutton()" id="submit">Success!</button>
                             </div>
                                 </div>
 
@@ -280,16 +279,11 @@
                 </div>
             </div>
         </div>
-
-            <div class = "absolute progressdisp" id="progressBar">
-                <div>
-                </div>
-            </div>
     </div><!--carousel-->
 
 
 <!--<div class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0"></div>-->
-
+              
 </form>
 
 
@@ -307,11 +301,10 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
     <script src="/js/datepicker.js"></script>
-    <script src = "/js/signupdesign.js"></script>
-    <script src = "/js/emergencycontacts.js"></script>
+<script src = "/js/signupdesign.js"></script>
+<script src = "/js/emergencycontacts.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/signupajax.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
