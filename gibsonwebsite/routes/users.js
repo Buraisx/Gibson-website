@@ -67,7 +67,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 										return err;
 									}
 									else {
-										res.send(200, 'Password has successfully been changed!');
+										res.send('Password has successfully been changed!');
 									}
 								});
 						}

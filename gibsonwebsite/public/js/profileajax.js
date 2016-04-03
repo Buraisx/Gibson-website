@@ -264,7 +264,7 @@ function load_profile(){
 		changePassword+='            <input onkeyup="checkPass(); return false;" minlength="6" placeholder="Enter New Password" id="password" name="newpass" class="form-control" type="password">';
 		changePassword+='            <label>Confirm New Password:</label>';
 		changePassword+='            <input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">';
-		changePassword+='            <button id="changepassbutton" class="btn btn-default submitbutton" type="submit">Change</button>';
+		changePassword+='            <button id="changepassbutton" class="btn btn-default submitbutton" type="button" onClick="changepassword()">Change</button>';
 		changePassword+='        </form>';
 		changePassword+='    </div>';
 		changePassword+='</div>';
@@ -797,8 +797,9 @@ function changepassword(){
 	})
 	.done(function (res){
 		alert("Password changed successfully.");
+		console.log(getCookie('user_info').username);
 		$.post("/login", {
-			username: getCookie('gibson_user'),
+			username: getCookie('user_info').username,
 			password: $('#password').val(),
 			_csrf: $('#_csrf').val()
 		});
