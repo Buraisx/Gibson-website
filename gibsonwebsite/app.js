@@ -164,7 +164,10 @@ app.use(function (req, res, next){
               con.release();
               console.log('app.js: Error verifying token.');
               //res.end();
-              res.redirect(401, '/logout');
+			  res.clearCookie('access_token');
+			  res.clearCookie('privilege');
+			  res.clearCookie('user_info');
+              res.status(401).send("BAD TOKEN");
             }
             else{
               con.release();
@@ -184,7 +187,8 @@ app.use(function (req, res, next){
 	res.clearCookie('access_token');
 	res.clearCookie('privilege');
 	res.clearCookie('user_info');
-    res.redirect('/login');
+	res.status(401).send("NO TOKEN");
+    //window.location.replace('/login');
   }
 
 });
