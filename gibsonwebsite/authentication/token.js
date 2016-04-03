@@ -194,9 +194,9 @@ function adminRespond(req,res,next){
   next();
 }
 
-function sendUsername(req,res,next) {
-  res.clearCookie('gibson_user');
-  res.cookie('gibson_user', req.user.username, {maxAge: 14*24*60*60*1000});
+function sendInfo(req,res,next) {
+  res.clearCookie('user_info');
+  res.cookie('user_info', {username: req.user.username, rank: req.user.rank_id}, {maxAge: 14*24*60*60*1000});
   next();
 }
 
@@ -205,4 +205,4 @@ module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
 module.exports.respond = respond;
 module.exports.adminRespond = adminRespond;
-module.exports.sendUsername = sendUsername;
+module.exports.sendInfo = sendInfo;
