@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
 <%- include standardnavbar.ejs %>
-    
+
   <head>
     <title><%= title %></title>
     <script src="/js/getcart.js"></script>
-    
+
     <!-- Custom Style Sheet -->
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
         <div class = "page-wrap">
-            <p>Please someone on the front-end put some code in here!</p> <br>
-            <p>The array name is "courses"</p>
             <div id="shoppingcart" class="rcorners">
                 <p>Shopping Cart </p>
                 <table id="cart-table">
@@ -23,16 +21,16 @@
                         <td>Delete</td>
                     </tr>
                 </table>
-            
+
             </div>
             <!-- this is an alternative total, outside of the table -->
 
             <div id="shopping-total">
             </div>
             <!-- end of alt. total -->
+            <a href="/payment/paypal"><button type="button" class="btn-primary">Paypal Placeholder</button></a>
 
-            <button type="button" class="btn-primary">Paypal Placeholder</button>
-            
+          
         </div>
     <h3>
       <a href="http://puu.sh/nXBn3/a20e56ac65.png"> pic </a>

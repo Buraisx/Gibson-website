@@ -98,6 +98,7 @@ var adminPages = require('./routes/adminqueries');
 var forgotcreds = require('./routes/forgotcredentials');
 var resetpassword = require('./routes/resetpassword');
 var cart = require('./routes/cart');
+var payment = require('./routes/payment');
 
 app.use('/', routes);
 app.use('/', signup);
@@ -197,6 +198,7 @@ app.use(function (req, res, next){
 // =============================================
 app.use('/', users);
 app.use('/', cart);
+app.use('/', payment);
 
 
 //======↓↓↓↓↓AUTHENTICATION FOR ADMIN =========
