@@ -796,7 +796,10 @@ function changepassword(){
 			_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
-		alert("Password changed successfully.");
+		swal({
+				title: "Password changed successfully.",
+				type: "success"
+		});
 		$.post("/login", {
 			username: res[0].username,
 			password: $('#password').val(),
