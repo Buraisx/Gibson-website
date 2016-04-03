@@ -1,15 +1,15 @@
 //On ready load get cookie and create login or logout button
 $(document).ready(function(){
-	// Gets JSON from the cookie
-	var user_info = unescape(getCookie('user_info')).substring(2);
-	// Converts the string to JSON object
-	var json = JSON.parse(user_info);
-	// Gets data from the JSON
-	var user = json.username;
-	var rank = json.rank;
-	$('#userdisplay').contents().remove();
+	var user_info = getCookie('user_info');
 	var userdisplay = '';
-	if(user != null) {
+	if (user_info != null) {
+		// Gets JSON from the cookie
+		user_info = unescape(user_info).substring(2);
+		// Converts the string to JSON object
+		var json = JSON.parse(user_info);
+		// Gets data from the JSON
+		var user = json.username;
+		var rank = json.rank;
 		userdisplay = '<a class = "dropdown-toggle" href="/user/profile">' + "Welcome, " + user + '</a>';
 		userdisplay += '<ul class = "dropdown-menu">';
 		// Adds link to admin views if user is an admin
