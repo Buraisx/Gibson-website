@@ -99,6 +99,7 @@ var forgotcreds = require('./routes/forgotcredentials');
 var resetpassword = require('./routes/resetpassword');
 var cart = require('./routes/cart');
 var payment = require('./routes/payment');
+var invoice = require('./routes/invoice');
 
 app.use('/', routes);
 app.use('/', signup);
@@ -199,6 +200,7 @@ app.use(function (req, res, next){
 app.use('/', users);
 app.use('/', cart);
 app.use('/', payment);
+app.use('/', invoice);
 
 
 //======↓↓↓↓↓AUTHENTICATION FOR ADMIN =========

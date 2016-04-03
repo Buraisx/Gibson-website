@@ -74,7 +74,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 											}
 											else{
 												res.send(results);
-											}	
+											}
 										});
 									}
 								});
@@ -484,6 +484,7 @@ router.get('/logout', function(req,res,next){
 	res.clearCookie('access_token');
 	res.clearCookie('privilege');
 	res.clearCookie('user_info');
+	res.clearCookie('gibson_user');
 
 	res.redirect('/');
 });
