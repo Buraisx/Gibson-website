@@ -210,15 +210,10 @@ router.post('/admin/profile/addCourse', function(req, res){
 
             function (course_id, next){
                 console.log("DML statement add course days");
-                var all_days = adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.course_days);
-                for(i = 0; i < all_days.length; i++){
-                    con.query(all_days[i], function(err, results){
-                        if(err){
-                            console.log("adminqueries.js: " + all_days[i] + " FAILED!");
-                            return next(err);
-                        }
-                    });
+                if(adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.course_days)){
+                    return new Error('Error adding course schedule');
                 }
+                
                 next(null, null);
             }
         ],

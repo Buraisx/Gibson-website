@@ -809,7 +809,7 @@ function submitCourse(){
 	console.log(scheduled_days);
 	console.log(adhoc_days);
 
-	$.post("/admin/profile/v2",{
+	$.post("/admin/profile/addCourse",{
 		"addcoursecode":$('#addcoursecode').val(),
 		"addcoursename":$('#addcoursename').val(),
 		"addcost":$('#addcost').val(),
