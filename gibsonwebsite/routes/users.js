@@ -110,7 +110,7 @@ router.get('/user/profile/info', function(req, res, next) {
 		else{
 			async.waterfall([
 				function(next){
-					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
+					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
@@ -430,8 +430,8 @@ router.post('/user/profile/edit', function(req, res, next){
 						else{
 
 							// QUERYING TO UPDATE USER PROFILE
-							var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, secondary_phone = ?, gender = ?, birth_date = ?, address = ? WHERE user_id = ?;';
-							var inserts = [req.body.fname, req.body.lname, req.body.primary_phone, req.body.secondary_phone, req.body.gender, req.body.birth_date, req.body.address, userId];
+							var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, secondary_phone = ?, gender = ?, birth_date = ?, address = ?, city = ?, unit_no = ?, postal_code = ? WHERE user_id = ?;';
+							var inserts = [req.body.fname, req.body.lname, req.body.primary_phone, req.body.secondary_phone, req.body.gender, req.body.birth_date, req.body.address, req.body.city, req.body.unit_no, req.body.postal_code, userId];
 							query = mysql.format(query, inserts);
 
 							con.query(query, function(err, results){
