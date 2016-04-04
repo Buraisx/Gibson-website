@@ -2,8 +2,8 @@
 $(document).ready(function(){
 	load_cart();
 });
-/*
-function delete(cart_course){
+
+function delete_course(cart_course){
 
 	$.post("/cart/course/delete", {
 			course_id: cart_course.value,
@@ -13,9 +13,7 @@ function delete(cart_course){
 		
 		swal({
 			title: "Course deleted from the cart.",
-			type: "success"
 		});
-
 	})
 	.fail(function (err){
 		
@@ -23,7 +21,8 @@ function delete(cart_course){
 			title: "You can not delete this course."
 		});
 	});
-}*/
+}
+
 
 function load_cart(){
 	jQuery.getJSON("/cart/view", function(course_info){
@@ -41,7 +40,7 @@ function load_cart(){
 			item+='    <td class="cart-item-name">'+ course_info[i].course_name +'</td>';
 			item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
 			item+='    <td class="cart-item-cost">$'+ course_info[i].default_fee +'</td>';
-			item+='    <td class="cart-delete"> <button type="button" class = "btn-xsm btn-danger" action="/cart/course/delete" onclick="delete(this)" method="POST" id="submit" value="' + course_info[i].course_id +'">X</button> </td>';
+			item+='    <td class="cart-delete"> <button type="button" class = "btn-xsm btn-danger" action="/cart/course/delete" onclick="delete_course(this)" method="POST" id="submit" value="' + course_info[i].course_id +'">X</button> </td>';
 			item+='</tr>';
 
 			cart_table.append(item);

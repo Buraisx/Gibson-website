@@ -5,14 +5,16 @@
   <head>
     <title><%= title %></title>
     <script src="/js/getcart.js"></script>
-    <meta name="_csrf" id="_csrf" content="<%= csrfToken %>" />
 
     <!-- Custom Style Sheet -->
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
         <div class = "page-wrap">
+            
             <div id="shoppingcart" class="rcorners">
+                <!--GET csrf token-->
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
                 <p>Shopping Cart </p>
                 <table id="cart-table">
                     <tr id="cart-header">
