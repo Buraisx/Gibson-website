@@ -160,11 +160,22 @@ router.post('/admin/profile/v2', function(req, res){
 
 router.post('/admin/profile/addCourse', function(req, res){
     var sql = readSQL.getSQL('dml_addcourse.txt');
-
-    //Note: *create DML closures apply .shift() on to req.body*
-    language_dml = createLanguageDML(req.body["languages[]"]);
-    course_days_dml = createCourseDaysDML(req.body["course_days[]"]);
-    adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
+	//Note: *create DML closures apply .shift() on to req.body*
+	
+	// HAVE TO SANITIZE days here since used in helper function AND bulk queries
+	var languages, course_days, adhoc_days;
+	
+	languages = sanitizeJSONArray(req.body["languages[]"]);
+	course_days = sanitizeJSONArray(req.body["course_days[]"]);
+	adhoc_days = sanitizeJSONArray(req.body["adhoc_days[]"]);
+	
+	console.log(languages);
+	console.log(course_days);
+	console.log(adhoc_days);
+	
+    language_dml = createLanguageDML(languages);
+	course_days_dml = createCourseDaysDML(course_days);
+    adhoc_days_dml = createAdhocDaysDML(adhoc_days);
 
     console.log(language_dml);
     console.log(course_days_dml);
@@ -212,12 +223,19 @@ router.post('/admin/profile/addCourse', function(req, res){
 
             function (course_id, next){
                 console.log("DML statement add course days");
-                if(adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"])){
+                if(adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, course_days)){
                     return new Error('Error adding course schedule');
                 }
                 
-                next(null, null);
-            }
+                next(null, course_id);
+            },
+			function (course_id, next) {
+				console.log("DML statement add adhoc days");
+				if (adminFunctions.getAdhocDays(course_id, adhoc_days)){
+					return new Error('Error adding individual days');
+				}
+				next(null, null);
+			}
         ],
         function (err, results){
             console.log("END");
@@ -242,10 +260,25 @@ router.post('/admin/profile/addCourse', function(req, res){
     });
 });
 
-function createLanguageDML(languages){
-    var language_dml='';
+function sanitizeJSONArray (a) {
+	if (a == null)
+		return [];
+	else if (a.constructor === Array)
+		return a;
+	else return [a];
+}
 
-    languages.shift();
+function createLanguageDML(languages){
+	/* if (languages == null) {
+		return "";
+	}
+	else if (!(languages.constructor === Array)){
+			languages = [languages];
+	} */
+	if (languages.length == 0) {
+		return 'JSON_ARRAY()';
+	}
+    var language_dml='';
 
     //Make JSON array for Languages
     language_dml+='JSON_ARRAY(';
@@ -260,10 +293,18 @@ function createLanguageDML(languages){
 }
 
 function createCourseDaysDML(course_days){
+	
+	/* if (course_days == null) {
+		return 'JSON_ARRAY()';
+	}
+	else if (!(course_days.constructor === Array)){
+			course_days = [course_days];
+	} */
+	if (course_days.length == 0) {
+		return 'JSON_ARRAY()';
+	}
     var course_days_dml='';
-
-    course_days.shift();
-
+	console.log(course_days);
     //Make JSON array for course days
     course_days_dml='JSON_ARRAY(';
     for(var i=0; i < course_days.length; i++){
@@ -283,15 +324,22 @@ function createCourseDaysDML(course_days){
     //remove last , for course days array
     course_days_dml=course_days_dml.slice(0, -1);
     course_days_dml+=')';
-    
+    console.log(course_days_dml);
     return course_days_dml;
 }
 
 function createAdhocDaysDML(adhoc_days){
+	/* if (adhoc_days == null) {
+		return mysql.escape('');
+	}
+	else if (!(adhoc_days.constructor === Array)){
+			adhoc_days = [adhoc_days];
+	} */
+	if (adhoc_days.length == 0) {
+		return 'JSON_ARRAY()';
+	}
     var adhoc_days_dml='';
-
-    adhoc_days.shift();
-
+	console.log("after: " + adhoc_days);
     //Make JSON array for adhoc days
     adhoc_days_dml='JSON_ARRAY(';
     for(var i=0; i < adhoc_days.length; i++){
@@ -311,7 +359,7 @@ function createAdhocDaysDML(adhoc_days){
     //remove last , for adhoc days array
     adhoc_days_dml=adhoc_days_dml.slice(0, -1);
     adhoc_days_dml+=')';
-
+	console.log(adhoc_days_dml);
     return adhoc_days_dml;
 }
 
