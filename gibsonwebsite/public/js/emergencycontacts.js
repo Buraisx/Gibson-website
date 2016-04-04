@@ -35,6 +35,9 @@ function removecontact() {
   if (i !== 1) {
     // Hides previous contact
     $("#contact" + i).slideUp();
+    setTimeout(function(){
+      $("#contact" + i).addClass("hidden");
+    }, 500);
     document.getElementById("emergencyfname" + i).required = false;
     document.getElementById("emergencyfname" + i).value = "";
     document.getElementById("emergencylname" + i).required = false;

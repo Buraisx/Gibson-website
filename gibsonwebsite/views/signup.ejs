@@ -59,9 +59,11 @@
                             </div>
                         </div>
                         <div class = "row">
-                            <div class = "col-sm-offset-2">
+                            <div class = "col-sm-offset-1 col-sm-10">
                                 <span id="confirmpass" class="confirmpass"></span>
                             </div>
+                        </div>
+                        <div class = "row">
                             <div class="form-group col-sm-offset-1 col-sm-10">
                                 <label class="control-label"><span class="required">*</span>Email:</label>
                                 <input class = "form-control reqIn" type="email" name = "email" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
@@ -69,7 +71,7 @@
                         </div>
                         <div class = "row">
                             <div class = "col-sm-offset-8 col-sm-4">
-                                <button type = "button" class = "btn btn-success" href="#myCarousel" data-slide="next">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
+                                <button type = "button" class = "btn btn-success topage2" href="#myCarousel" data-slide="next">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
                             </div>
                         </div>
 
@@ -90,14 +92,14 @@
 
                         <!--Input Username-->
                         <div class = "row">
-                                    <div class = "form-group col-sm-offset-1 col-sm-5">
+                            <div class = "form-group col-sm-offset-1 col-sm-5">
                                 <label><span class="required">*</span>First Name:</label>
                                 <input type = "text" class = "form-control reqIn" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
-                                     </div>
-                    <div class = "form-group col-sm-5">
-                        <label><span class="required">*</span>Last Name:</label>
-                        <input type = "text" class = "form-control reqIn" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
-                    </div>
+                            </div>
+                            <div class = "form-group col-sm-5">
+                                <label><span class="required">*</span>Last Name:</label>
+                                <input type = "text" class = "form-control reqIn" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                            </div>
                         </div>
 
                         <!--Input Password-->
@@ -151,15 +153,14 @@
                             </div>
                         </div>
 
-                        <div class = "row">
-                    <div class="form-group col-sm-offset-1">
-                        <div>
-                            <div>
-                                <label for='student'><input type="checkbox" id="student" name = "student" value="1"> I am a student</label>
+                            <div class = "row">
+                                <div class = "col-sm-offset-1  col-sm-5">
+                                    <label for='student'><input type="checkbox" id="student" name = "student"> I am a student</label>
+                                </div>
                             </div>
                             <div id='student_info' class='hidden'>
                                 <div class="row">
-                                    <div class = "form-group col-sm-5">
+                                    <div class = "form-group col-sm-offset-1 col-sm-5">
                                         <label><span class="required">*</span>School Name:</label>
                                         <input type = "text" class = "form-control " name = "schoolname" id = "schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
@@ -169,7 +170,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class = "form-group col-sm-5">
+                                    <div class = "form-group col-sm-offset-1 col-sm-5">
                                         <label>Major:</label>
                                         <input type = "text" class = "form-control" name = "major" id = "major" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
@@ -179,19 +180,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+
                         <div class = "row">
                             <div class = "col-sm-offset-1 col-sm-4">
-                                <button type = "button" class = "btn btn-warning " href="#myCarousel" id="back" data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>
+                                <button type = "button" class = "btn btn-warning " href="#myCarousel" id="back2" data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>
                             </div>
                             <div class = "col-sm-offset-3 col-sm-4">
-                                <button type = "button" class = "btn btn-success " href="#myCarousel" data-slide="next">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
+                                <button type = "button" class = "btn btn-success " href="#myCarousel" id="next2" data-slide="next">Next Step &nbsp;&nbsp; &nbsp; &rarr;</button>
                             </div>
                         </div>
 
-                     </div><!--panelbody-->
+                    </div><!--panelbody-->
                 </div><!--panel-default-->
             </div><!--panel div-->
                 </div>
@@ -221,58 +220,55 @@
 
                                 <!--emergency contacts-->
                                 <div class = "row">
-                                   <div class= "col-sm-offset-1">
-                    <br>
-                    <label>Emergency Contacts <span class = "normalfont">(Minimum 1)</span></label>
-                </div>
-
-                <% for(var i=1; i <= MAX; i++) { %>
-                <div id = <%= "contact" + i %> <% if (i != 1) { %> class = "hidden" <% } %> >
-                    <div class = "col-sm-offset-1">
-                        <br>
-                        <label>Emergency Contact <%= i %>:</label>
-                    </div>
-                    <div class="row">
-                        <div class = "form-group col-sm-offset-1 col-sm-5">
-                            <label><span class="required">*</span>First Name:</label>
-                            <input type = "text" class = "form-control" name = <%= "emergencyfname" + i %> id = <%= "emergencyfname" + i %> placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %> ><!--Character restrictions-->
-                        </div>
-                        <div class = "form-group col-sm-5">
-                            <label><span class="required">*</span>Last Name:</label>
-                            <input type = "text" class = "form-control" name = <%= "emergencylname" + i %> id = <%= "emergencylname" + i %> placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class = "form-group col-sm-offset-1 col-sm-5">
-                            <label><span class="required">*</span>Relationship:</label>
-                            <input type = "text" class = "form-control" name = <%= "relationship" + i %> id = <%= "relationship" + i %> pattern="[a-zA-Z0-9. ]+" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
-                        </div>
-                        <div class = "form-group col-sm-5">
-                            <label><span class="required">*</span>Phone:</label>
-                            <input type = "text" class = "form-control" name = <%= "ephone" + i %> id = <%= "ephone" + i %> maxlength="16" pattern="\w+" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
-                        </div>
-                    </div>
-                </div>
-                <% } %>
-                <div class="row">
-                    <div class = "col-sm-offset-1 col-sm-5">
-                        <button type = "button" class= "btn btn-info col-sm-0" onclick="addcontact()" id = "add">Add another contact</button>
-                        <button type = "button" class= "btn btn-info col-sm-0 hidden" onclick="removecontact()" id = "remove">Remove a contact</button>
-                    </div>
-                </div>
-                
+                                   <div class = "col-sm-offset-1 col-sm-5">
+                                        <h4>Emergency Contacts <span class = "normalfont">(Minimum 1)</span></h4>
+                                    </div>
                                 </div>
-                                <div class = "row">
-                                <br>
-                                    <div class = "col-sm-offset-1 col-sm-3">
-                                <button type = "button" class = "btn btn-warning " id="back" href="#myCarousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>
-                            </div>
+                                    <% for(var i=1; i <= MAX; i++) { %>
+                                    <div id = <%= "contact" + i %> <% if (i != 1) { %> class = "hidden" <% } %> >
+                                        <div class = "row">
+                                            <div class = "col-sm-offset-1 col-sm-5">
+                                                <label>Emergency Contact <%= i %>:</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class = "form-group col-sm-offset-1 col-sm-5">
+                                                <label><span class="required">*</span>First Name:</label>
+                                                <input type = "text" class = "form-control" name = <%= "emergencyfname" + i %> id = <%= "emergencyfname" + i %> placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %> ><!--Character restrictions-->
+                                            </div>
+                                            <div class = "form-group col-sm-5">
+                                                <label><span class="required">*</span>Last Name:</label>
+                                                <input type = "text" class = "form-control" name = <%= "emergencylname" + i %> id = <%= "emergencylname" + i %> placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class = "form-group col-sm-offset-1 col-sm-5">
+                                                <label><span class="required">*</span>Relationship:</label>
+                                                <input type = "text" class = "form-control" name = <%= "relationship" + i %> id = <%= "relationship" + i %> pattern="[a-zA-Z0-9. ]+" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
+                                            </div>
+                                            <div class = "form-group col-sm-5">
+                                                <label><span class="required">*</span>Phone:</label>
+                                                <input type = "text" class = "form-control" name = <%= "ephone" + i %> id = <%= "ephone" + i %> maxlength="16" pattern="\w+" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                    <div class="row">
+                                        <div class = "col-sm-offset-1 col-sm-5">
+                                            <button type = "button" class= "btn btn-info" onclick="addcontact()" id = "addbutton">Add another contact</button>
+                                            <button type = "button" class= "btn btn-info hidden" onclick="removecontact()" id = "removebutton">Remove a contact</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class = "row signupbuttons">
+                                        <div class = "col-sm-offset-1 col-sm-3">
+                                            <button type = "button" class = "btn btn-warning topage2" id="back" href="#myCarousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>
+                                        </div>
 
-                            <div class = "col-sm-offset-1 col-sm-6">
-                             
-                                <button type = "submit" class = "btn btn-success btn-block" name="submit" onclick="return submitbutton()" id="submit">Success!</button>
-                            </div>
-                                </div>
+                                        <div class = "col-sm-offset-1 col-sm-6">
+                                            <button type = "submit" class = "btn btn-success btn-block" name="submit" onclick="return submitbutton()" id="submit">Success!</button>
+                                        </div>
+                                    </div>
 
                              </div><!--panelbody-->
                         </div><!--panel-default-->
