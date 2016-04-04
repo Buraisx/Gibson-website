@@ -1,12 +1,12 @@
 
 //On ready load profile info
 $("a[href$='#profile']").ready(function(){
-	load_profile();
+	editinfo();
 });
 
 //On Click profile tab load profile info
 $("a[href$='#profile']").click(function(){
-	load_profile();
+	editinfo();
 });
 
 //On Click course tab load a list of viewable courses
@@ -72,9 +72,12 @@ function load_profile(){
 		var profileinfo='';
 		profileinfo+='    <hr>';
 		profileinfo+='    <h3>Basic Information</h3>';
-		profileinfo+='    <div class="row centeredtext">';
-		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-3 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.user.fname + '</span></p>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-5">';
+		profileinfo+='            <p><span class="col-sm-4 fieldname"><strong>First Name:</strong></span><span class="col-sm-3 fieldval">' + user_info.user.fname + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='        <div class="form-group col-sm-6">';
+		profileinfo+='            <p><span class="col-sm-4 fieldname">Last Name:</span><span class="col-sm-3 fieldval">' + user_info.user.lname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
@@ -307,43 +310,39 @@ function editinfo () {
 		editinfo+='    <input type="hidden" name="username" id="username" value="' + user_info.user.username + '">';
 		editinfo+='    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">';
 		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>First Name: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "fname" id = "editfname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.fname + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "fname" id = "editfname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.fname + '">';
 		editinfo+='        </div>';
-		editinfo+='    </div>';
-		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='			   <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Last Name: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "lname" id = "editlname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "lname" id = "editlname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Phone (Home): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-3" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
 		editinfo+='        </div>';
-		editinfo+='    </div>';
-		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Phone (Cell): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-3" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Gender: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editgender">';
+		editinfo+='            <select class = "form-control col-sm-4" name = "gender" id = "editgender">';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		editinfo+='                <option ';
 		if (user_info.user.gender == "Male") { editinfo+= 'selected="selected" '; }
