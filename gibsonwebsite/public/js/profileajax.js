@@ -163,7 +163,7 @@ function load_profile(){
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-3 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.prov_abb + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.province_name + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//check if user is a student
@@ -653,7 +653,7 @@ function savechanges() {
 				postal_code: $('#postal_code').val(),
 				city: $('#city').val(),
 				unit_no: $('#apt').val(),
-															////////////////////////////////////////////////////////////////// province
+				province: $('#editprovince option:selected').text(),
 				schoolname: $('#editschoolname').val(),
 				grade: $('#editgrade').val(),
 				major: $('#editmajor').val(),
