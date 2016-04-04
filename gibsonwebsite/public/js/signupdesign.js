@@ -91,21 +91,6 @@ $('#next2').click(function() {
     }, WAITTIME);
 });
 
-// Back button of Step 3
-$('#back2').click(function() {
-    var contactheight = getContactInfoHeight();
-    setTimeout(function(){
-        $('#myCarousel').animate({height: contactheight});
-    }, WAITTIME);
-
-
-    if (document.getElementById('student').checked) {
-        setTimeout(function(){
-            $('#myCarousel').animate({height: 700});
-        }, WAITTIME);
-    }
-});
-
 // Finds the appropriate height for Step 3
 function getContactInfoHeight() {
     var contacts = 0; // Number of contacts visible
