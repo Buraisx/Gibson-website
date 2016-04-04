@@ -66,7 +66,7 @@ function register(course_register){
 }
 
 //FUNCTION TO LOAD HTML OF USER PROFILE
-function load_profile(){	
+function load_profile(){
 	jQuery.getJSON("/user/profile/info", function(user_info){
 		$('#profile').contents().remove();
 		var profileinfo='';
@@ -404,7 +404,7 @@ function editinfo () {
 		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editprovince">';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		for (var i = 0; i < user_info.provinces_list.length; i++) {
-			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';	
+			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';
 		}
 		editinfo+='            </select>';
 		editinfo+='        </div>';
@@ -632,8 +632,21 @@ function savechanges() {
 				schoolname: $('#editschoolname').val(),
 				grade: $('#editgrade').val(),
 				major: $('#editmajor').val(),
-				esl: $('#editesl').val()
+				esl: $('#editesl').val(),
 															////////////////////////////////////////////////////////////////// emergency contacts
+				emergencyfname1: $('#emergencyfname1').val(),
+				emergencyfname2: $('#emergencyfname2').val(),
+				emergencyfname3: $('#emergencyfname3').val(),
+				emergencylname1: $('#emergencylname1').val(),
+				emergencylname2: $('#emergencylname2').val(),
+				emergencylname3: $('#emergencylname3').val(),
+				relationship1: $('#relationship1').val(),
+				relationship2: $('#relationship2').val(),
+				relationship3: $('#relationship3').val(),
+				ephone1: $('#ephone1').val(),
+				ephone2: $('#ephone2').val(),
+				ephone3: $('#ephone3').val()
+
 		})
 		.done(function (res){
 			swal({
@@ -644,7 +657,7 @@ function savechanges() {
 		})
 		.fail(function (err){
 			swal({
-				title: "Failed to save changes.", 
+				title: "Failed to save changes.",
 				type: "error"
 			});
 		});
@@ -657,16 +670,16 @@ function savechanges() {
 
 function returntoprofile() {
 	swal({
-		title: "Are you sure?", 
-		text: 'Are you sure you wish to discard all changes?', 
-		type: "warning", 
-		showCancelButton: true, 
-		confirmButtonColor: "#DD6B55", 
-		confirmButtonText: "Yes", 
+		title: "Are you sure?",
+		text: 'Are you sure you wish to discard all changes?',
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Yes",
 		cancelButtonText: "No"
 	},
-	function(isConfirm){ 
-		if (isConfirm) { 
+	function(isConfirm){
+		if (isConfirm) {
 			load_profile();
 			window.onbeforeunload = null;
 			$("html, body").animate({ scrollTop: 0 }, "slow");
@@ -676,7 +689,7 @@ function returntoprofile() {
 
 var preventUser = function() {
     return "Your work will be lost";
-}
+};
 
 //Display list of registerable courses
 function listcourses(){
