@@ -2,9 +2,9 @@
 
   "db_config": {
     "connectionLimit": 10,
-    "host": "192.168.1.33",
+    "host": "localhost",
     "user": "root",
-    "password": "Sabad@th!s1234567",
+    "password": "local123",
     "database": "gibson",
     "multipleStatements": true,
     "port": 3306

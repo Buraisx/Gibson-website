@@ -179,11 +179,9 @@ a {
 	max-width: 800px;
 }
 
-
 .panel-primary > .panel-heading {
 	background-color: #6BC3E9;
 }
-
 
 .btn-primary {
 	background-color: #3AAADA;
@@ -297,6 +295,10 @@ hr {
 	margin-top: 10px;
 }
 
+.signupbuttons {
+	margin-top: 20px;
+}
+
 /** Shopping Cart Styles **/
 
 #shoppingcart{
@@ -358,4 +360,9 @@ td{
 
 .cart-total-cost2{
 	color: #b12704;
+}
+
+.confirmpass {
+	position:relative; 
+	bottom: 10px;
 }

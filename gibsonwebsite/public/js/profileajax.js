@@ -163,7 +163,7 @@ function load_profile(){
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-3 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.prov_abb + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.province_name + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//check if user is a student
@@ -400,9 +400,12 @@ function editinfo () {
 		editinfo+='                <p>Province: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editprovince">';
-		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		for (var i = 0; i < user_info.provinces_list.length; i++) {
-			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';
+			editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+			if (user_info.user.province_name == user_info.provinces_list[i].province_name) {
+				editinfo+=' selected';
+			}
+			editinfo+='>' + user_info.provinces_list[i].province_name + '</option>';
 		}
 		editinfo+='            </select>';
 		editinfo+='        </div>';
@@ -581,22 +584,21 @@ function editinfo () {
 		changePassword+='    <button id="changepassbutton" onclick="togglepassworddropdown()" class="btn btn-default" type="button">Change Password</button>';
 		changePassword+='</div>';
 		changePassword+='<div style="display: block;" class="changepassdesign hidden form-group form-group-sm row col-sm-12" id="change_password">';
-		changePassword+='        <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>';
-		changePassword+='        <form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id = "change_password_form">';
-		changePassword+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
-		changePassword+='            <label>Current Password:</label>';
-		changePassword+='            <input type="password" pattern="\\w+" placeholder="Enter Current Password" id="currentpass" name="currentpass" class="form-control">';
-		changePassword+='            <label>New Password:</label>';
-		changePassword+='            <input onkeyup="checkPass(); return false;" minlength="6" placeholder="Enter New Password" id="password" name="newpass" class="form-control" type="password">';
-		changePassword+='            <label>Confirm New Password:</label>';
-		changePassword+='            <input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">';
-		changePassword+='            <button id="changepassbutton" class="btn btn-default submitbutton smallmargin" type="button" onClick="changepassword()">Change</button>';
-		changePassword+='        </form>';
+		changePassword+='    <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>';
+		changePassword+='    <form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id = "change_password_form">';
+		changePassword+='        <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
+		changePassword+='        <label>Current Password:</label>';
+		changePassword+='        <input type="password" pattern="\\w+" placeholder="Enter Current Password" id="currentpass" name="currentpass" class="form-control">';
+		changePassword+='        <label>New Password:</label>';
+		changePassword+='        <input onkeyup="checkPass(); return false;" minlength="6" placeholder="Enter New Password" id="password" name="newpass" class="form-control" type="password">';
+		changePassword+='        <label>Confirm New Password:</label>';
+		changePassword+='        <input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">';
+		changePassword+='        <button id="changepassbutton" class="btn btn-default submitbutton smallmargin" type="button" onClick="changepassword()">Change</button>';
+		changePassword+='    </form>';
 		changePassword+='</div>';
 		changePassword+='<hr>';
 
 		editinfo += changePassword;
-
 
 		//=============================================================
 
@@ -654,7 +656,7 @@ function savechanges() {
 				postal_code: $('#postal_code').val(),
 				city: $('#city').val(),
 				unit_no: $('#apt').val(),
-															////////////////////////////////////////////////////////////////// province
+				province: $('#editprovince option:selected').text(),
 				schoolname: $('#editschoolname').val(),
 				grade: $('#editgrade').val(),
 				major: $('#editmajor').val(),
@@ -834,7 +836,10 @@ function changepassword(){
 			_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
-		alert("Password changed successfully.");
+		swal({
+				title: "Password changed successfully.",
+				type: "success"
+		});
 		$.post("/login", {
 			username: res[0].username,
 			password: $('#password').val(),

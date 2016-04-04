@@ -1,48 +1,40 @@
- $(document).ready(function(){
-        $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-        })
-        var contacts = 0;
+var page = 1;
+var WAITTIME = 150; // Wait time before page shrinks
+var ECONTACTHEIGHT = 250; // Height added when a single econtact is added
+var ECONTACTHEIGHTSTR = ECONTACTHEIGHT.toString();
+
+$(document).ready(function(){
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
     //CONTACT INFO HEIGHT
-    $('#add').click(function(){
-        contacts ++;
-        $('#myCarousel').animate({height: '+=300'});
+    $('#addbutton').click(function(){
+        $('#myCarousel').animate({height: '+=' + ECONTACTHEIGHTSTR});
     });
 
     //STUDENT CHECKBOX HEIGHT
-    var isStudent = true;
     $('#student').click(function(){
-        if(!isStudent)
+        if(document.getElementById('student').checked)
         {
             //set heightt 1000.log
             console.log('student false')
-            //isstundet = true
-            isStudent = true
-            $('#myCarousel').animate({height: 700});
+            $('#myCarousel').animate({height: 1000});
         }
         else
         {
             console.log('student true')
-            isStudent = false
-            $('#myCarousel').animate({height: 1000});
+            $('#myCarousel').animate({height: 700});
         }
-
-        
     });
 
-    
-    $('#remove').click(function(){
-        $('#myCarousel').animate({height: '-=300'});
+    $('#removebutton').click(function(){
+        $('#myCarousel').animate({height: '-=' + ECONTACTHEIGHTSTR});
     });
 
-$('#back').click(function(){
-        $('#myCarousel').animate({height: 700});
-    });
-
-//CHECK EVERY TEXTBOX FILLED IN
- $('.btn-success').click(function (){ 
-    var count = 0;
-    var butparents = $(this).parent().parent().parent();
+    //CHECK EVERY TEXTBOX FILLED IN
+    $('.btn-success').click(function (){ 
+        var count = 0;
+        var butparents = $(this).parent().parent().parent();
 
         butparents.find('input.reqIn').each(function (){
             if ($.trim($(this).val()).length == 0)
@@ -63,6 +55,54 @@ $('#back').click(function(){
     });
 
 });//END
+
+// Next Step button of Step 1 and Back button of Step 3
+$('.topage2').click(function() {
+    if (document.getElementById('student').checked) {
+        $("#student_info").removeClass("hidden").hide().slideDown();
+        document.getElementById("schoolname").required = true;
+        document.getElementById("grade").required = true;
+        setTimeout(function() {
+            $('#myCarousel').animate({height: 1000});
+        }, WAITTIME);
+
+    }
+    else {
+        setTimeout(function() {
+            $('#myCarousel').animate({height: 700});
+        }, WAITTIME);
+    }
+});
+
+// Back button of Step 2
+$('#back2').click(function() {
+    if (document.getElementById('student').checked) {
+        setTimeout(function(){
+            $('#myCarousel').animate({height: 700});
+        }, WAITTIME);
+    }
+});
+
+// Next Step button of Step 2
+$('#next2').click(function() {
+    var contactheight = getContactInfoHeight();
+    setTimeout(function(){
+        $('#myCarousel').animate({height: contactheight});
+    }, WAITTIME);
+});
+
+// Finds the appropriate height for Step 3
+function getContactInfoHeight() {
+    var contacts = 0; // Number of contacts visible
+    var i = 1;
+    // Increments contacts while contact i exists and is not hidden
+    while((document.getElementById('contact' + i) != null) && (!$('#contact' + i).hasClass('hidden'))) { //
+        i++;
+        contacts++;
+    }
+    return 700 + ECONTACTHEIGHT*(contacts-1);
+}
+
 function progress(percent, $element) 
 {
     var progressBarWidth = percent * $element.width() / 100;
