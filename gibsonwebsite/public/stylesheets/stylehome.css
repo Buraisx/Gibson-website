@@ -161,6 +161,10 @@ hr.star-green:after {
     background-color: #F39C37;
 }
 
+.bluecolour{
+	color: #3AAADA;
+}
+
 /*p text colour*/
 p {
 	color: #fff;

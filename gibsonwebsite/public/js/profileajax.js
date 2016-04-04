@@ -72,24 +72,24 @@ function load_profile(){
 		var profileinfo='';
 		profileinfo+='    <hr>';
 		profileinfo+='    <h3>Basic Information</h3>';
-		profileinfo+='    <div class="row">';
+		profileinfo+='    <div class="row centeredtext">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.user.fname + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.user.fname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.user.lname + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.user.lname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Username:</span><span class="col-sm-9 fieldval">' + user_info.user.username + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Username:</span><span class="col-sm-9 fieldval">' + user_info.user.username + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Email:</span><span class="col-sm-9 fieldval">' + user_info.user.email + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Email:</span><span class="col-sm-9 fieldval">' + user_info.user.email + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//Checks if phone number exist
@@ -99,12 +99,12 @@ function load_profile(){
 			{
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			}
@@ -112,7 +112,7 @@ function load_profile(){
 			{
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			}
@@ -120,47 +120,47 @@ function load_profile(){
 			{
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			}
 		}
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Gender:</span><span class="col-sm-9 fieldval">' + user_info.user.gender + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Gender:</span><span class="col-sm-9 fieldval">' + user_info.user.gender + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Date of Birth:</span><span class="col-sm-9 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Date of Birth:</span><span class="col-sm-9 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Address:</span><span class="col-sm-9 fieldval">' + user_info.user.address + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Address:</span><span class="col-sm-9 fieldval">' + user_info.user.address + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		if (user_info.user.unit_no != "") {
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Apt/Unit #:</span><span class="col-sm-9 fieldval">' + user_info.user.unit_no + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Apt/Unit #:</span><span class="col-sm-9 fieldval">' + user_info.user.unit_no + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 		}
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Postal Code:</span><span class="col-sm-9 fieldval">' + user_info.user.postal_code + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Postal Code:</span><span class="col-sm-9 fieldval">' + user_info.user.postal_code + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">City:</span><span class="col-sm-9 fieldval">' + user_info.user.city + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">City:</span><span class="col-sm-9 fieldval">' + user_info.user.city + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.prov_abb + '</span></p>';
+		profileinfo+='            <p><span class="col-sm-3 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.prov_abb + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		//check if user is a student
@@ -170,12 +170,12 @@ function load_profile(){
 			profileinfo+='    <h3>Student Information</h3>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">School Name:</span><span class="col-sm-9 fieldval">' + user_info.student_info.school_name + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">School Name:</span><span class="col-sm-9 fieldval">' + user_info.student_info.school_name + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Grade/Year:</span><span class="col-sm-9 fieldval">' + user_info.student_info.grade + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Grade/Year:</span><span class="col-sm-9 fieldval">' + user_info.student_info.grade + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			if(user_info.student_info.major||user_info.student_info.esl_level)
@@ -184,12 +184,12 @@ function load_profile(){
 				{
 					profileinfo+='    <div class="row">';
 					profileinfo+='        <div class="form-group col-sm-12">';
-					profileinfo+='            <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='            <p><span class="col-sm-3 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
 					profileinfo+='    	  </div>';
 					profileinfo+='    </div>';
 					profileinfo+='    <div class="row">';
 					profileinfo+='        <div class="form-group col-sm-12">';
-					profileinfo+='            <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
+					profileinfo+='            <p><span class="col-sm-3 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='        </div>';
 					profileinfo+='    </div>';
 				}
@@ -197,7 +197,7 @@ function load_profile(){
 				{
 					profileinfo+='  <div class="row">';
 					profileinfo+='      <div class="form-group col-sm-12">';
-					profileinfo+='           <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='           <p><span class="col-sm-3 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
@@ -205,7 +205,7 @@ function load_profile(){
 				{
 					profileinfo+='  <div class="row">';
 					profileinfo+='      <div class="form-group col-sm-12">';
-					profileinfo+='           <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
+					profileinfo+='           <p><span class="col-sm-3 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 					profileinfo+='      </div>';
 					profileinfo+='  </div>';
 				}
@@ -218,22 +218,22 @@ function load_profile(){
 			profileinfo+='    <h4>Contact #'+(i+1)+':</h4>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].fname + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].fname + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].lname + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].lname + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Relationship:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].relationship + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Relationship:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].relationship + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
-			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
+			profileinfo+='            <p><span class="col-sm-3 fieldname">Phone:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
 			profileinfo+='        </div>';
 			profileinfo+='    </div>';
 		}
@@ -796,10 +796,7 @@ function changepassword(){
 			_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
-		swal({
-				title: "Password changed successfully.",
-				type: "success"
-		});
+		alert("Password changed successfully.");
 		$.post("/login", {
 			username: res[0].username,
 			password: $('#password').val(),
