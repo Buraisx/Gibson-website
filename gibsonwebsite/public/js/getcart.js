@@ -14,7 +14,6 @@ function delete_course(cart_course){
 		swal({
 			title: "Course deleted from the cart.",
 		});
-
 	})
 	.fail(function (err){
 		

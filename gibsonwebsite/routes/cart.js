@@ -20,8 +20,6 @@ router.get('/cart/view', function(req, res, next){
       return err;
     }
     else{
-      var course_info = [];
-
       // CART IS NOT EMPTY
       if(req.cookies.cart){
 
@@ -41,12 +39,13 @@ router.get('/cart/view', function(req, res, next){
         // QUERYING DATABASE FOR COURSE INFORMATION
         con.query(query, function(err, results){
           res.send(results);
+          con.release();
         });
       }
 
       // CART IS EMPTY
       else{
-        res.send(results);
+        res.send([]);
       }
     }
   });
