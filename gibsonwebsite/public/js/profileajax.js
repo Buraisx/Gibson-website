@@ -393,7 +393,7 @@ function editinfo () {
 		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>City: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control" name = "city" id = "city" pattern="[a-zA-Z. ]+">';
+		editinfo+='            <input type = "text" class = "form-control" name = "city" id = "city" pattern="[a-zA-Z. ]+" value = "' + user_info.user.city + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
@@ -625,9 +625,9 @@ function savechanges() {
 				gender: $('#editgender').val(),
 				birth_date: $('#datepicker').val(),
 				address: $('#editaddress').val(),
-				postal_code: $('#postal_code').val(),		////////////////////////////////////////////////////////////////// doesn't work
-				city: $('#city').val(),						////////////////////////////////////////////////////////////////// doesn't work
-				unit_no: $('#apt').val(),					////////////////////////////////////////////////////////////////// doesn't work
+				postal_code: $('#postal_code').val(),
+				city: $('#city').val(),
+				unit_no: $('#apt').val(),
 															////////////////////////////////////////////////////////////////// province
 				schoolname: $('#editschoolname').val(),
 				grade: $('#editgrade').val(),
