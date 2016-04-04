@@ -399,7 +399,7 @@ function editinfo () {
 		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>Province: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editprovince">';
+		editinfo+='            <select class = "form-control col-sm-3" name = "editprovince" id = "editprovince">';
 		for (var i = 0; i < user_info.provinces_list.length; i++) {
 			//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
 			editinfo+='                <option';
