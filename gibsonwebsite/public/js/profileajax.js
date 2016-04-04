@@ -1,12 +1,12 @@
 
 //On ready load profile info
 $("a[href$='#profile']").ready(function(){
-	load_profile();
+	editinfo();
 });
 
 //On Click profile tab load profile info
 $("a[href$='#profile']").click(function(){
-	load_profile();
+	editinfo();
 });
 
 //On Click course tab load a list of viewable courses
@@ -66,15 +66,18 @@ function register(course_register){
 }
 
 //FUNCTION TO LOAD HTML OF USER PROFILE
-function load_profile(){	
+function load_profile(){
 	jQuery.getJSON("/user/profile/info", function(user_info){
 		$('#profile').contents().remove();
 		var profileinfo='';
 		profileinfo+='    <hr>';
 		profileinfo+='    <h3>Basic Information</h3>';
-		profileinfo+='    <div class="row centeredtext">';
-		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-3 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.user.fname + '</span></p>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-5">';
+		profileinfo+='            <p><span class="col-sm-4 fieldname"><strong>First Name:</strong></span><span class="col-sm-3 fieldval">' + user_info.user.fname + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='        <div class="form-group col-sm-6">';
+		profileinfo+='            <p><span class="col-sm-4 fieldname">Last Name:</span><span class="col-sm-3 fieldval">' + user_info.user.lname + '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
@@ -307,43 +310,39 @@ function editinfo () {
 		editinfo+='    <input type="hidden" name="username" id="username" value="' + user_info.user.username + '">';
 		editinfo+='    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">';
 		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>First Name: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "fname" id = "editfname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.fname + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "fname" id = "editfname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.fname + '">';
 		editinfo+='        </div>';
-		editinfo+='    </div>';
-		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='			   <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Last Name: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-3" name = "lname" id = "editlname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "lname" id = "editlname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Phone (Home): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-3" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
 		editinfo+='        </div>';
-		editinfo+='    </div>';
-		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Phone (Cell): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-3" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
-		editinfo+='        <div class="form-group col-sm-12">';
-		editinfo+='            <label class="fieldname col-sm-3">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="fieldname col-sm-5">';
 		editinfo+='                <p>Gender: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editgender">';
+		editinfo+='            <select class = "form-control col-sm-4" name = "gender" id = "editgender">';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		editinfo+='                <option ';
 		if (user_info.user.gender == "Male") { editinfo+= 'selected="selected" '; }
@@ -394,7 +393,7 @@ function editinfo () {
 		editinfo+='            <label class="fieldname col-sm-3">';
 		editinfo+='                <p>City: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control" name = "city" id = "city" pattern="[a-zA-Z. ]+">';
+		editinfo+='            <input type = "text" class = "form-control" name = "city" id = "city" pattern="[a-zA-Z. ]+" value = "' + user_info.user.city + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
@@ -405,7 +404,7 @@ function editinfo () {
 		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editprovince">';
 		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		for (var i = 0; i < user_info.provinces_list.length; i++) {
-			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';	
+			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';
 		}
 		editinfo+='            </select>';
 		editinfo+='        </div>';
@@ -626,15 +625,28 @@ function savechanges() {
 				gender: $('#editgender').val(),
 				birth_date: $('#datepicker').val(),
 				address: $('#editaddress').val(),
-				postal_code: $('#postal_code').val(),		////////////////////////////////////////////////////////////////// doesn't work
-				city: $('#city').val(),						////////////////////////////////////////////////////////////////// doesn't work
-				unit_no: $('#apt').val(),					////////////////////////////////////////////////////////////////// doesn't work
+				postal_code: $('#postal_code').val(),
+				city: $('#city').val(),
+				unit_no: $('#apt').val(),
 															////////////////////////////////////////////////////////////////// province
 				schoolname: $('#editschoolname').val(),
 				grade: $('#editgrade').val(),
 				major: $('#editmajor').val(),
-				esl: $('#editesl').val()
+				esl: $('#editesl').val(),
 															////////////////////////////////////////////////////////////////// emergency contacts
+				emergencyfname1: $('#emergencyfname1').val(),
+				emergencyfname2: $('#emergencyfname2').val(),
+				emergencyfname3: $('#emergencyfname3').val(),
+				emergencylname1: $('#emergencylname1').val(),
+				emergencylname2: $('#emergencylname2').val(),
+				emergencylname3: $('#emergencylname3').val(),
+				relationship1: $('#relationship1').val(),
+				relationship2: $('#relationship2').val(),
+				relationship3: $('#relationship3').val(),
+				ephone1: $('#ephone1').val(),
+				ephone2: $('#ephone2').val(),
+				ephone3: $('#ephone3').val()
+
 		})
 		.done(function (res){
 			swal({
@@ -645,7 +657,7 @@ function savechanges() {
 		})
 		.fail(function (err){
 			swal({
-				title: "Failed to save changes.", 
+				title: "Failed to save changes.",
 				type: "error"
 			});
 		});
@@ -658,16 +670,16 @@ function savechanges() {
 
 function returntoprofile() {
 	swal({
-		title: "Are you sure?", 
-		text: 'Are you sure you wish to discard all changes?', 
-		type: "warning", 
-		showCancelButton: true, 
-		confirmButtonColor: "#DD6B55", 
-		confirmButtonText: "Yes", 
+		title: "Are you sure?",
+		text: 'Are you sure you wish to discard all changes?',
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Yes",
 		cancelButtonText: "No"
 	},
-	function(isConfirm){ 
-		if (isConfirm) { 
+	function(isConfirm){
+		if (isConfirm) {
 			load_profile();
 			window.onbeforeunload = null;
 			$("html, body").animate({ scrollTop: 0 }, "slow");
@@ -677,7 +689,7 @@ function returntoprofile() {
 
 var preventUser = function() {
     return "Your work will be lost";
-}
+};
 
 //Display list of registerable courses
 function listcourses(){
