@@ -768,9 +768,9 @@ function validateCourse(){
 }
 
 function submitCourse(){
-	var languages = [""];
-	var scheduled_days = [""];
-	var adhoc_days = [""];
+	var languages = [];
+	var scheduled_days = [];
+	var adhoc_days = [];
 
 	for(var i=1; i<=COUNTLANGUAGE; i++){
 		languages.push($("#course_language"+i).val());

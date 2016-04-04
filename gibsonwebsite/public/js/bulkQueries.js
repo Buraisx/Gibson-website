@@ -21,13 +21,14 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 		if(err){
 			return err;
 		}
-
+		console.log(days);
 		async.map(days, function(this_day, callback){
 				var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
 
 				var start = new Date(start_date);
 				var course_date = new Date(start_date);
 				var end = new Date(end_date);
+				console.log(this_day);
 				this_day = JSON.parse(this_day);
 
 				course_date.setDate(start.getDate() + (parseDay(this_day.day) - start.getDay() + 7) % 7);
@@ -60,6 +61,36 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 					return null;
 				}
 		});
+	});
+};
+
+exports.getAdhocDays = function (course_id, days){
+	connection.getConnection(function(err, con){
+		if(err){
+			return err;
+		}
+		
+		async.map(days, function (this_day, callback){
+			var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
+			this_day = JSON.parse(this_day);
+			
+			template = mysql.format(template, [course_id, this_day.day, parseTime(this_day.start_time), parseTime(this_day.end_time), 'ADHOC', 'SCHEDULED', 'AD-HOC COURSE TIME']);
+			
+			con.query(template, function (err, results){
+				console.log("INSERTED AD-HOC " + this_day.day);
+			});
+			callback(null);
+		}, 
+		function(err){
+			con.release();
+			if (err) {
+				return err;
+			}
+			else {
+				return null;
+			}
+		});
+		
 	});
 };
 
