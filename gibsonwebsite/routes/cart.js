@@ -52,4 +52,33 @@ router.get('/cart/view', function(req, res, next){
   });
 });
 
+router.post('/cart/course/delete', function(req, res, next){
+
+      if(req.cookies.cart.course_list.indexOf(req.body.course_id) == -1){
+
+        console.log("cart.js: Cannot delete the course because does not exist in shopping cart list.");
+        res.status(500).send("Cannot delete the course because does not exist in shopping cart list.");
+
+      }
+      else{
+        
+        var course_list = [];
+
+        for(var i = 0; i < req.cookies.cart.course_list; i++){
+          //iterate through the courses in the shopping cart and delete the one that is pressed
+          if(req.cookies.cart.course_list[i] != req.body.course_id){
+            course_list.push(req.cookies.cart.course_list[i]);
+          }
+        }
+
+        console.log(course_list);
+        //
+        res.clearCookie('cart');
+        res.cookie('cart', course_list , {maxAge: 30*24*60*60*1000});
+        res.status(200).send('Course deleted from the cart.');
+        //
+        
+      }
+});
+
 module.exports = router;
