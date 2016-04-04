@@ -118,11 +118,12 @@ router.post('/validateCourse', function(req, res){
 });
 
 router.post('/admin/profile/v2', function(req, res){
+	console.log("HELLO WORLD");
    var sql = readSQL.getSQL('dml_addcourse.txt');
 
-    language_dml = createLanguageDML(req.body["languages[]"]);
-    course_days_dml = createCourseDaysDML(req.body["course_days[]"]);
-    adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
+    var language_dml = createLanguageDML(req.body["languages[]"]);
+    var course_days_dml = createCourseDaysDML(req.body["course_days[]"]);
+    var adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
 
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
                    req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription, 
@@ -148,7 +149,8 @@ router.post('/admin/profile/v2', function(req, res){
                 console.log("adminqueries.js: Query error for inserting course to database");
                 return next(err);
             }
-            adminFunctions.getScheduledDays(results.insertId, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);       
+            adminFunctions.getScheduledDays(results.insertId, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);
+			
         });
     });
 
@@ -204,13 +206,13 @@ router.post('/admin/profile/addCourse', function(req, res){
                         return next(err);
                     }
                     console.log(results.insertId);
-                    next(results.insertId);        
+                    next(null, results.insertId);        
                 });
             },
 
             function (course_id, next){
                 console.log("DML statement add course days");
-                if(adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.course_days)){
+                if(adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"])){
                     return new Error('Error adding course schedule');
                 }
                 
@@ -223,6 +225,7 @@ router.post('/admin/profile/addCourse', function(req, res){
                 con.query("ROLLBACK;", function(err, results){
                     con.release();
                     console.log("adminqueries.js: Rollbacked because " + err);
+					res.end();
                     return err;
                 });
             }
@@ -231,7 +234,8 @@ router.post('/admin/profile/addCourse', function(req, res){
                 con.query("COMMIT;", function(err, results){
                     con.release();
                     console.log("adminqueries.js: Commited course!");
-                    res.redirect('/admin/profile');
+					res.send("Add course complete!");
+                    //res.redirect('/admin/profile');
                 });
             }
         });

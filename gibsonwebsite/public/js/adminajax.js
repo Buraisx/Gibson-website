@@ -764,7 +764,7 @@ function validateCourse(){
 		$("#courseform").slideToggle();
 		alert(err);
 	});
-	$("#courseform").submit();
+	//$("#courseform").submit();
 }
 
 function submitCourse(){
