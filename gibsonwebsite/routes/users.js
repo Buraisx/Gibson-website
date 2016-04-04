@@ -495,15 +495,11 @@ router.post('/user/profile/edit', function(req, res, next){
 													var query = '';
 
 													for (var i = 0; i < emContacts.length; i++){
-														if (i < results.length){
+														if (i < results.length)
 															query += mysql.format('UPDATE gibson.emergency_contact SET user_id = ?, fname = ?, lname = ?, relationship = ?, contact_phone = ? WHERE contact_id = ?;', emContacts[i]);
-														}
-
 														else
 															query += mysql.format('INSERT INTO gibson.emergency_contact (user_id, fname, lname, relationship, contact_phone) VALUES (?, ?, ?, ?, ?);', emContacts[i]);
 													}
-
-													console.log(query);
 
 													con.query(query, function(err, results){
 														if (err){
