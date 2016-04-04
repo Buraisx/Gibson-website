@@ -54,7 +54,7 @@ router.get('/cart/view', function(req, res, next){
 
 router.post('/cart/course/delete', function(req, res, next){
 
-      if(req.cookies.cart.course_list.indexOf(req.body.course_id) == -1){
+      if(req.cookies.cart.course_list.indexOf(Number(req.body.course_id)) == -1){
 
         console.log("cart.js: Cannot delete the course because does not exist in shopping cart list.");
         res.status(500).send("Cannot delete the course because does not exist in shopping cart list.");
@@ -62,19 +62,20 @@ router.post('/cart/course/delete', function(req, res, next){
       }
       else{
         
-        var course_list = [];
+        var courseCart = {
+                course_list: []};
 
-        for(var i = 0; i < req.cookies.cart.course_list; i++){
+        for(var i = 0; i < req.cookies.cart.course_list.length; i++){
           //iterate through the courses in the shopping cart and delete the one that is pressed
-          if(req.cookies.cart.course_list[i] != req.body.course_id){
-            course_list.push(req.cookies.cart.course_list[i]);
+          if(req.cookies.cart.course_list[i] != Number(req.body.course_id)){
+            courseCart.course_list.push(req.cookies.cart.course_list[i]);
           }
         }
 
-        console.log(course_list);
+        console.log(courseCart);
         //
         res.clearCookie('cart');
-        res.cookie('cart', course_list , {maxAge: 30*24*60*60*1000});
+        res.cookie('cart', courseCart , {maxAge: 30*24*60*60*1000});
         res.status(200).send('Course deleted from the cart.');
         //
         
