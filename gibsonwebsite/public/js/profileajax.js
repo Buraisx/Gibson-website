@@ -400,9 +400,12 @@ function editinfo () {
 		editinfo+='                <p>Province: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <select class = "form-control col-sm-3" name = "gender" id = "editprovince">';
-		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		for (var i = 0; i < user_info.provinces_list.length; i++) {
-			editinfo+='                <option value="user_info.provinces_list[i].province_id">' + user_info.provinces_list[i].province_name + '</option>';
+			editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+			if (user_info.user.province_name == user_info.provinces_list[i].province_name) {
+				editinfo+=' selected';
+			}
+			editinfo+='>' + user_info.provinces_list[i].province_name + '</option>';
 		}
 		editinfo+='            </select>';
 		editinfo+='        </div>';
