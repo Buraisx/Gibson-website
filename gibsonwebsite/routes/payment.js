@@ -132,7 +132,7 @@ router.get('/payment/paypal', function(req, res, next){
           res.redirect(redirectUrl);
           //---------------------------------------//*/
 
-          res.redirect('/registersucess');
+          res.redirect('/registersuccess');
         }
       });
   });
