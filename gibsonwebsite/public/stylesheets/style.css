@@ -243,12 +243,10 @@ hr {
 }
 
 .fieldname {
-	/*text-align: right;*/
     color: #8c8c8c;
 }
 
 .editfieldname {
-    /*text-align: right;*/
     padding-top: 7px;
     padding-bottom: 3px;
 }
