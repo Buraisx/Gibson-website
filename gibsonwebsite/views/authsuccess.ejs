@@ -1,57 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+  </head>
+  <body>
 
-<head>
-	<title>Course Registration Success</title> <!--is just a variable-->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, intial-scale=1">
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/stylesheets/style.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<!-- Plugin JavaScript -->
-   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-   <script src="/js/classie.js"></script>
-   <script src="/js/cbpAnimatedHeader.js"></script>
-</head>
-<%- include standardnavbar.ejs %>
+    <p id="result">HI</p>
+    <script type="text/javascript">
 
-<body>
-<div class="container">
-	<div style = "margin-top:100px; margin-bottom: 100px;" class="row text-center centermid">
-		<h1 class="jumbotron">You Have Successfully Registered for your courses!</h1>
-		<div id="result">
-</div>
-		<p><a href="/">Click Here</a> to redirect to the home page.</p>
-	</div>
+        // CHECKING BROWSER COMPATABILITY
+        if (window["localStorage"]) {
+          localstorage.setItem("access_token", <%= token %>);
+          var value=localstorage.getItem("access_token");
+          alert(value);
+        }
 
-</div>
- <%- include standardfooter %>
-
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top page-scroll visible-xs visible-sm">
-        <a class="btn btn-primary" href="#page-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
-    </div>
-
-    <!-- jQuery -->
-    <script src="/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="/js/classie.js"></script>
-    <script src="/js/cbpAnimatedHeader.js"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="/js/jqBootstrapValidation.js"></script>
-    <script src="/js/contact_me.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/js/freelancer.js"></script>
-</body>
+    </script>
+  </body>
 </html>
