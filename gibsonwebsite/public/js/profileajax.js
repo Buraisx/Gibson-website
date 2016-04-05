@@ -457,9 +457,9 @@ function savechanges() {
 			});
 		});
 		window.onbeforeunload = null;
-		setTimeout(function(){
-	    	$("html, body").animate({ scrollTop: 0 }, "slow");
-		}, 300);
+		// setTimeout(function(){
+		// 	$("html, body").animate({ scrollTop: 0 }, "slow");
+		// }, 300);
     }
 }
 
