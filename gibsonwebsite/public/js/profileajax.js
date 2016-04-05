@@ -600,8 +600,8 @@ function changepassword(){
 function deletecontact(contactno) {
 	// Checks that the contact actually exists (protection against HTML editing)
 	if (document.getElementById('contact' + contactno) != null) {
-		var fname = $('#displayECfname' + contactno).text();
-		var lname = $('#displayEClname' + contactno).text();
+		var fname = $('#emergencyfname' + contactno).text();
+		var lname = $('#emergencylname' + contactno).text();
 		swal({
 			title: "Are you sure?",
 			text: 'Are you sure you want to remove '+fname+' '+lname+' as an emergency contact?',
