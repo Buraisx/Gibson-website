@@ -1,12 +1,12 @@
 
 //On ready load profile info
 $("a[href$='#profile']").ready(function(){
-	editinfo();
+	load_profile();
 });
 
 //On Click profile tab load profile info
 $("a[href$='#profile']").click(function(){
-	editinfo();
+	load_profile();
 });
 
 //On Click course tab load a list of viewable courses
@@ -61,6 +61,233 @@ function register(course_register){
 	.fail(function (err){
 		swal({
 			title: "You have already registered for this course!"
+		});
+	});
+}
+
+function load_profile(){	
+	jQuery.getJSON("/user/profile/info", function(user_info){
+		$('#profile').contents().remove();
+		var profileinfo='';
+		profileinfo+='    <hr>';
+		profileinfo+='    <h3>Basic Information</h3>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.user.fname + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.user.lname + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Username:</span><span class="col-sm-9 fieldval">' + user_info.user.username + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Email:</span><span class="col-sm-9 fieldval">' + user_info.user.email + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		//Checks if phone number exist
+		if(user_info.user.primary_phone||user_info.user.secondary_phone)
+		{
+			if(user_info.user.primary_phone&&user_info.user.secondary_phone)
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+			else if(user_info.user.primary_phone)
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Home):</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+			else
+			{
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone (Cell):</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			}
+		}
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Gender:</span><span class="col-sm-9 fieldval">' + user_info.user.gender + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Date of Birth:</span><span class="col-sm-9 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Address:</span><span class="col-sm-9 fieldval">' + user_info.user.address + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		if (user_info.user.unit_no != "") {
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Apt/Unit #:</span><span class="col-sm-9 fieldval">' + user_info.user.unit_no + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+		}
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Postal Code:</span><span class="col-sm-9 fieldval">' + user_info.user.postal_code + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">City:</span><span class="col-sm-9 fieldval">' + user_info.user.city + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		profileinfo+='    <div class="row">';
+		profileinfo+='        <div class="form-group col-sm-12">';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Province:</span><span class="col-sm-9 fieldval">' + user_info.user.prov_abb + '</span></p>';
+		profileinfo+='        </div>';
+		profileinfo+='    </div>';
+		//check if user is a student
+		if(user_info.user.student==1)
+		{
+			profileinfo+='    <hr>';
+			profileinfo+='    <h3>Student Information</h3>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">School Name:</span><span class="col-sm-9 fieldval">' + user_info.student_info.school_name + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Grade/Year:</span><span class="col-sm-9 fieldval">' + user_info.student_info.grade + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			if(user_info.student_info.major||user_info.student_info.esl_level)
+			{
+				if(user_info.student_info.major&&user_info.student_info.esl_level)
+				{
+					profileinfo+='    <div class="row">';
+					profileinfo+='        <div class="form-group col-sm-12">';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='    	  </div>';
+					profileinfo+='    </div>';
+					profileinfo+='    <div class="row">';
+					profileinfo+='        <div class="form-group col-sm-12">';
+					profileinfo+='            <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
+					profileinfo+='        </div>';
+					profileinfo+='    </div>';
+				}
+				else if(user_info.student_info.major)
+				{
+					profileinfo+='  <div class="row">';
+					profileinfo+='      <div class="form-group col-sm-12">';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">Major:</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
+					profileinfo+='      </div>';
+					profileinfo+='  </div>';
+				}
+				else
+				{
+					profileinfo+='  <div class="row">';
+					profileinfo+='      <div class="form-group col-sm-12">';
+					profileinfo+='           <p><span class="col-sm-2 fieldname">ESL Level:</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
+					profileinfo+='      </div>';
+					profileinfo+='  </div>';
+				}
+			}
+		}
+		profileinfo+='    <hr>';
+		profileinfo+='    <h3>Emergency Contacts</h3>';
+		for(var i=0; i<user_info.emergency_contacts.length; i++)
+		{
+			profileinfo+='    <h4>Contact #'+(i+1)+':</h4>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">First Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].fname + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Last Name:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].lname + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Relationship:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].relationship + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+			profileinfo+='    <div class="row">';
+			profileinfo+='        <div class="form-group col-sm-12">';
+			profileinfo+='            <p><span class="col-sm-2 fieldname">Phone:</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
+			profileinfo+='        </div>';
+			profileinfo+='    </div>';
+		}
+		profileinfo+='    <hr>';
+
+		$('#profile').append(profileinfo);
+
+		var editInfo = '';
+		editInfo+='<div class="row form-group col-sm-12">';
+		editInfo+='    <button type="button" class="btn btn-default" onclick="editinfo()" id="editinfo">Edit Information</button>';
+		editInfo+='</div>';
+
+		//===============
+		var csrf = '<input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
+		//Change Password
+		var changePassword = '';
+		changePassword+='<div class="row form-group form-group-sm col-sm-12">';
+		changePassword+='    <button id="changepassbutton" onclick="togglepassworddropdown()" class="btn btn-default" type="button">Change Password</button>';
+		changePassword+='</div>';
+		changePassword+='<div style="display: block;" class="changepassdesign hidden form-group form-group-sm row col-sm-12" id="change_password">';
+		changePassword+='    <div>';
+		changePassword+='        <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>';
+		changePassword+='        <form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id = "change_password_form">';
+		changePassword+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
+		changePassword+='            <label>Current Password:</label>';
+		changePassword+='            <input type="password" pattern="\\w+" placeholder="Enter Current Password" id="currentpass" name="currentpass" class="form-control">';
+		changePassword+='            <label>New Password:</label>';
+		changePassword+='            <input onkeyup="checkPass(); return false;" minlength="6" placeholder="Enter New Password" id="password" name="newpass" class="form-control" type="password">';
+		changePassword+='            <label>Confirm New Password:</label>';
+		changePassword+='            <input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">';
+		changePassword+='            <button id="changepassbutton" class="btn btn-default submitbutton" type="button" onClick="changepassword()">Change</button>';
+		changePassword+='        </form>';
+		changePassword+='    </div>';
+		changePassword+='</div>';
+
+		//Add Edit Info
+		$('#profile').append(editInfo);
+
+		//===============
+		//Change Password
+		$('#profile').append(changePassword);
+
+		//================
+		$('#change_password_form').validate({
+			rules: {
+				currentpass: {
+					required: true
+				},
+				newpass: {
+					required: true
+				},
+				confirmnewpass: {
+					required: true
+				}
+			}
 		});
 	});
 }
@@ -126,7 +353,6 @@ function editinfo () {
 		editinfo+='                <p>Gender: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <select class = "form-control col-sm-4" name = "gender" id = "editgender">';
-		editinfo+='                <option value="" disabled selected>Please Select</option>';
 		editinfo+='                <option ';
 		if (user_info.user.gender == "Male") { editinfo+= 'selected="selected" '; }
 		editinfo+='value = "Male">Male</option>';
@@ -369,7 +595,10 @@ function editinfo () {
 		changePassword+='</div>';
 
 		editinfo += changePassword;
-		editinfo+='    <button type="button" class="btn btn-default savechanges" onclick="savechanges()">Save Changes</button>';
+		editinfo+='<div class="row form-group col-sm-12 savechanges">';
+		editinfo+='    <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+		editinfo+='    <button type="button" class="btn btn-default" onclick="returntoprofile()">Return</button>';
+		editinfo+='</div>';
 		editinfo+='</form>';
 		$('#profile').append(editinfo);
 		$('#editinformation').validate({
@@ -633,4 +862,23 @@ function deletecontact(contactno) {
 		}
 	});
 	}
+}
+
+function returntoprofile() {
+	swal({
+		title: "Are you sure?",
+		text: 'Are you sure you wish to discard all changes?',
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Yes",
+		cancelButtonText: "No"
+	},
+	function(isConfirm){
+		if (isConfirm) {
+			load_profile();
+			window.onbeforeunload = null;
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		}
+	});
 }
