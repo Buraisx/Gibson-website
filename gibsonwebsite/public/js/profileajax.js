@@ -268,13 +268,13 @@ function editinfo () {
 			editinfo+='            <label class="fieldname col-sm-5">';
 			editinfo+='                <p>First Name: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <p id = "emergencyfname' + (i+1) + '">' + user_info.emergency_contacts[i].fname + '</p>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "emergencyfname' + (i+1) + '"  id = "emergencyfname' + (i+1) + '" placeholder= "" pattern= "[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].fname + '" >';
 			editinfo+='        </div>';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="fieldname col-sm-5">';
 			editinfo+='                <p>Last Name: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <p id = "emergencylname' + (i+1) + '">' + user_info.emergency_contacts[i].lname + '</p>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "emergencylname' + (i+1) + '"  id = "emergencylname' + (i+1) + '" placeholder="" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].lname + '" >';
 			editinfo+='        </div>';
 			// No delete button for the first contact
 			if (i != 0) {
@@ -286,13 +286,13 @@ function editinfo () {
 			editinfo+='            <label class="fieldname col-sm-5">';
 			editinfo+='                <p>Relationship: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <p id = "relationship' + (i+1) + '">' + user_info.emergency_contacts[i].relationship + '</p>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "relationship' + (i+1) + '" id = "relationship' + (i+1) + '" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].relationship + '">';
 			editinfo+='        </div>';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="fieldname col-sm-5">';
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <p id = "ephone' + (i+1) + '">' + user_info.emergency_contacts[i].contact_phone + '</p>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + (i+1) + '" id = "ephone' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone + '">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='</div>';
