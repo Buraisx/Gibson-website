@@ -299,20 +299,30 @@ hr {
 	margin-top: 20px;
 }
 
+/** LOGIN BUTTONS **/
+
+#forgotuser, #forgotpw, #registerhere{
+    color: #3aaada;
+}
+
+
 /** Shopping Cart Styles **/
 
 #shoppingcart{
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
+    min-width: 400px;
     margin-right: auto;
     margin-left: auto;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #cart-table{
-    width: 95%;
-    margin-right: 2.5%;
+    width: 100%;
     border: 1px solid black;
 }
 
+/** Shopping Cart - Header **/
 #cart-header{
     background-color: #888888;
     color: #FFFFFF;
@@ -323,6 +333,7 @@ hr {
     text-align: center;
 }
 
+/** Shopping Cart - Items **/
 .cart-item-name{
     padding-left: 10px;
     text-align: left;
@@ -338,31 +349,52 @@ hr {
     text-align: center;
 }
 
+.cart-item-delete{
+    text-align: center;
+}
+
+/** Shopping Cart - Total **/
+
 .cart-total{
+    border: 1px solid black;
+}
+
+.cart-total-name{
 	padding-top: 15px;
 	font-weight: bold;
+}
+
+.cart-total-code{
+    text-align: left; 
+    padding-left: 10px;
+    font-weight: bold;
+    color: #b12704;
+}
+
+.cart-total-cost{
+    text-align: center;
+    font-weight: bold;
+    color: #b12704;
+
+}
+.cart-total-delete{
 }
 
 td{
     padding: 5px;
 }
 
-/** alternate shopping cart total **/
-#shopping-total{
-	text-align: right;
-	font-weight: bold;
-	padding-top: 15px;
+/** Shopping Cart - Buttons **/
+
+#shoppingcart-buttons{
+    margin-top:10px;
 }
 
-.cart-total-name2{
-	color: #111;
+#paypal-button{
+    float: right;
 }
 
-.cart-total-cost2{
-	color: #b12704;
-}
-
-.confirmpass {
-	position:relative; 
-	bottom: 10px;
+.fa-shopping-cart{
+    font-size: 1.3em;
+    margin: 0 0.4em 0 0;
 }

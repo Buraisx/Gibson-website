@@ -18,26 +18,20 @@
                 <p>Shopping Cart </p>
                 <table id="cart-table">
                     <tr id="cart-header">
-                        <td>Course Name</td>
-                        <td>Course Code</td>
-                        <td>Cost</td>
-                        <td>Delete</td>
+                        <td id="cart-header-name">Course Name</td>
+                        <td id="cart-header-code">Course Code</td>
+                        <td id="cart-header-cost">Cost</td>
+                        <td id="cart-header-delete">Delete</td>
                     </tr>
                 </table>
-
+                <div id="shoppingcart-buttons">
+                    <span>
+                        <a href="/user/profile#courses"><button type="button" class="btn-primary">Back to Profile</button></a>
+                    </span>
+                    <a href="/payment/paypal"><button type="button" class="btn-primary" id="paypal-button">Paypal Placeholder</button></a> 
+                </div>
             </div>
-            <!-- this is an alternative total, outside of the table -->
-
-            <div id="shopping-total">
-            </div>
-            <!-- end of alt. total -->
-            <a href="/payment/paypal"><button type="button" class="btn-primary">Paypal Placeholder</button></a>
-
-          
         </div>
-    <h3>
-      <a href="http://puu.sh/nXBn3/a20e56ac65.png"> pic </a>
-    </h3>
   </body>
 
 <%- include standardfooter %>

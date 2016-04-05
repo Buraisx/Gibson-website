@@ -10,11 +10,9 @@ function delete_course(cart_course){
 			_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
-		
-		swal({
-			title: "Course deleted from the cart.",
-		});
+        location.reload();
 	})
+    
 	.fail(function (err){
 		
 		swal({
@@ -32,36 +30,34 @@ function load_cart(){
 		var cart_table = $('#cart-table');
 
 		var cart_total = 0;
+        
+        var cart_empty = true;
 
 		for(var i = 0; i < course_info.length; i++){
 			cart_total += course_info[i].default_fee;
+            cart_empty = false;
+            
 			var item='';
 			item+='<tr class="cart-item">';
 			item+='    <td class="cart-item-name">'+ course_info[i].course_name +'</td>';
 			item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
 			item+='    <td class="cart-item-cost">$'+ course_info[i].default_fee +'</td>';
-			item+='    <td class="cart-delete"> <button type="button" class = "btn-xsm btn-danger" action="/cart/course/delete" onclick="delete_course(this)" method="POST" id="submit" value="' + course_info[i].course_id +'">X</button> </td>';
+			item+='    <td class="cart-item-delete"> <button type="button" class = "btn-xsm btn-danger" action="/cart/course/delete" onclick="delete_course(this)" method="POST" id="submit" value="' + course_info[i].course_id +'">X</button> </td>';
 			item+='</tr>';
 
 			cart_table.append(item);
 		}
-		var cart_total_html = '';
-			cart_total_html+= '<tr class="cart-total">';
-			cart_total_html+= 		'<td class="cart-total-name cart-item-name">Total</td>';
-			cart_total_html+= 		'<td class="cart-total-cost cart-item-cost">$' + cart_total + '</td>';
-			cart_total_html+= '</tr>'
+        
+        if (!cart_empty){
+            var cart_total_html = '';
+                cart_total_html+= '<tr class="cart-total">';
+                cart_total_html+= 		'<td class="cart-total-name"></td>';
+                cart_total_html+=       '<td class="cart-total-code">TOTAL</td>';
+                cart_total_html+= 		'<td class="cart-total-cost">$' + cart_total + '</td>';
+                cart_total_html+=       '<td class="cart-total-delete"></td>';
+                cart_total_html+= '</tr>'
 
-		cart_table.append(cart_total_html);
-
-		//this is alternative total placed on bottom
-		var cart_end = $('#cart-total');
-
-		var cart_total_html_2 = '';
-			cart_total_html_2+= '<p>';
-			cart_total_html_2+= '<span class="cart-total-name2">Total: </span>';
-			cart_total_html_2+= '<span class="cart-total-cost2">$' + cart_total + '</span>';
-			cart_total_html_2+= '</p>';
-
-		cart_end.append(cart_total_html_2);
+            cart_table.append(cart_total_html);
+        }
 	});
 }
