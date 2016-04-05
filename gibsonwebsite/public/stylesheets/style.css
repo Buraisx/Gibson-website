@@ -246,6 +246,26 @@ hr {
 	text-align: right;
 }
 
+.editfieldname {
+    text-align: right;
+    padding-top: 7px;
+    padding-bottom: 3px;
+}
+
+.editinfotext {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: #2c3e50;
+    background-color: #ffffff;
+    padding-top: 12px;
+    padding-left: 200px;
+}
+
+.editselect {
+    width: 50% !important;
+}
+
 .fieldval {
 	text-align: left;
 }
