@@ -121,7 +121,8 @@ router.get('/payment/paypal', function(req, res, next){
           res.status(err.errno).send(err.msg);
         }
         else{
-          /*//-------Paypal's Success Payment?---------//
+
+          //-------Paypal's Payment Page---------//
           var redirectUrl = '';
 
           for (var i = 0; i < payment.links.length; i++){
@@ -129,10 +130,9 @@ router.get('/payment/paypal', function(req, res, next){
               redirectUrl = payment.links[i].href;
           }
 
+          
           res.redirect(redirectUrl);
-          //---------------------------------------//*/
-
-          res.redirect('/registersuccess');
+          //---------------------------------------//
         }
       });
   });
@@ -235,7 +235,8 @@ router.get('/payment/execute', function(req,res,next){
             con.query('COMMIT;', function(err, results){
               con.release();
               res.clearCookie('cart');
-              res.status(200).send("User signed up successfully.");
+              //res.status(200).send("User signed up successfully.");
+              res.redirect('/registersuccess');
             });
           }
         }
