@@ -610,8 +610,8 @@ function deletecontact(contactno) {
 	// Checks that the contact actually exists && and that the contact being 
 	// deleted isn't the first one (protection against HTML editing)
 	if (document.getElementById('contact' + contactno) != null && contactno != 1) {
-		var fname = $('#emergencyfname' + contactno).text();
-		var lname = $('#emergencylname' + contactno).text();
+		var fname = $('#emergencyfname' + contactno).val();
+		var lname = $('#emergencylname' + contactno).val();
 		swal({
 			title: "Are you sure?",
 			text: 'Are you sure you want to remove '+fname+' '+lname+' as an emergency contact?',
