@@ -243,11 +243,12 @@ hr {
 }
 
 .fieldname {
-	text-align: right;
+	/*text-align: right;*/
+    color: #8c8c8c;
 }
 
 .editfieldname {
-    text-align: right;
+    /*text-align: right;*/
     padding-top: 7px;
     padding-bottom: 3px;
 }
@@ -268,6 +269,10 @@ hr {
 
 .fieldval {
 	text-align: left;
+    right: 25px;
+    font-weight: 600;
+    color: #000000;
+
 }
 
 .footer-left {
