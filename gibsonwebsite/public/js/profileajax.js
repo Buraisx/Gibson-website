@@ -276,7 +276,10 @@ function editinfo () {
 			editinfo+='            </label>';
 			editinfo+='            <p id = "emergencylname' + (i+1) + '">' + user_info.emergency_contacts[i].lname + '</p>';
 			editinfo+='        </div>';
-			editinfo+='        <button type = "button" class= "btn btn-danger" id = "remove' + (i+1) + '" onclick="deletecontact(' + (i+1) +')">Delete</button>';
+			// No delete button for the first contact
+			if (i != 0) {
+				editinfo+='        <button type = "button" class= "btn btn-danger" id = "delete' + (i+1) + '" onclick="deletecontact(' + (i+1) +')">Delete</button>';
+			}
 			editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
@@ -331,7 +334,13 @@ function editinfo () {
 		// Add and remove contacts buttons
 		editinfo+='<div class="row">';
 		editinfo+='    <div class = "form-group col-sm-12 smallmargin">';
-		editinfo+='        <button type = "button" class = "btn btn-default" onclick="addcontact()" id = "addbutton">Add another contact</button>';
+		editinfo+='        <button type = "button" class = "btn btn-default" onclick="addcontact()" id = "addbutton"';
+		// Disables add contact button if user is at max
+		if (user_info.emergency_contacts.length == 3)
+		{
+			editinfo+=' disabled';
+		}
+		editinfo+='>Add another contact</button>';
 		editinfo+='        <button type = "button" class = "btn btn-default';
 		if (user_info.emergency_contacts.length == 1) {
 			editinfo+=' hidden';
@@ -598,8 +607,9 @@ function changepassword(){
 
 // Removes the contact specified by contact no
 function deletecontact(contactno) {
-	// Checks that the contact actually exists (protection against HTML editing)
-	if (document.getElementById('contact' + contactno) != null) {
+	// Checks that the contact actually exists && and that the contact being 
+	// deleted isn't the first one (protection against HTML editing)
+	if (document.getElementById('contact' + contactno) != null && contactno != 1) {
 		var fname = $('#emergencyfname' + contactno).text();
 		var lname = $('#emergencylname' + contactno).text();
 		swal({
