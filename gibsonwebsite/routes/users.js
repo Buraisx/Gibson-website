@@ -134,7 +134,7 @@ router.get('/user/profile/info', function(req, res, next) {
 				},
 
 				function(next){
-					var sql = 'SELECT lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;';
+					var sql = 'SELECT contact_id, lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;';
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
