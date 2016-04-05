@@ -15,7 +15,7 @@ $(document).ready(function(){
 		// Adds link to profile views
 		userdisplay += '	<li><a href="/user/profile">Profile</a></li>';
 		// Adds link to admin views if user is an admin
-		if (rank > 1) {
+		if (rank == 4) {
 			userdisplay += '	<li><a href="/admin/profile">Admin Menu</a></li>';
 		}
 		userdisplay += '	<li><a href="/logout">Logout</a></li>';
