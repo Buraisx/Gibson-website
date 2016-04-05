@@ -121,6 +121,7 @@ router.get('/payment/paypal', function(req, res, next){
           res.status(err.errno).send(err.msg);
         }
         else{
+          /*//-------Paypal's Success Payment?---------//
           var redirectUrl = '';
 
           for (var i = 0; i < payment.links.length; i++){
@@ -129,6 +130,9 @@ router.get('/payment/paypal', function(req, res, next){
           }
 
           res.redirect(redirectUrl);
+          //---------------------------------------//*/
+
+          res.redirect('/registersucess');
         }
       });
   });
