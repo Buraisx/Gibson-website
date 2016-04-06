@@ -30,14 +30,12 @@ $(document).ready(function(){
 $('#cart').ready(function(){
 	var num_courses = getNumCourses();
 	var cart_text =  " (" + num_courses + ")";
-	console.log(cart_text);
 	// Prepend / Append number to cart, depending on style choices
 	$('a[href$="/cart"]').append(cart_text);
 });
 
-
+// Unused
 $('#cart').on('cookieUpdate', function(){
-	console.log("YES YOU DID IT SHINJI");
     var num_courses = getNumCourses();
 	$('a[href$="/cart"]').text(" (" + num_courses + ")");
 });
@@ -47,7 +45,6 @@ function getNumCourses(){
 	var cart = getCookie('cart');
 	if (cart != null) {
 		cart = unescape(cart).substring(2);
-		console.log(cart);
 		return num_courses = JSON.parse(cart).course_list.length;
 	}
 	return 0;
