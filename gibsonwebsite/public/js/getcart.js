@@ -59,5 +59,6 @@ function load_cart(){
 
             cart_table.append(cart_total_html);
         }
+        
 	});
 }
