@@ -5,12 +5,13 @@
 
 <head>
 	<script src="/js/escapeHtml.js"></script>
+	<script src="/js/loginajax.js"></script>
 </head>
 
 <body>
 <div class="container page-wrap absolute-background" data-background="/img/gibsonpic.jpg">
 	<div class="row text-center centermid logindesign">
-		
+
 	<div class = "col-sm-offset-3 col-sm-6">
 		<div class = "panel panel-default fadedIn"><!--PanelStart-->
 			<div class = "panel-heading">
@@ -18,7 +19,7 @@
 			</div>
 			<div class = "panel-body">
 				<form action="/login" method="POST" class="form-horizontal" role="form">
-					
+
 				<!--sending csrf token-->
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
@@ -40,12 +41,12 @@
 
 				<!--Remember me Checkbox
 				<div class = "form-group">
-					
+
 					<div class = "col-sm-offset-1 col-sm-8">
 						<div class="checkbox">
                                 <label><input type="checkbox" id = "remember_me" value ="1" checked/>Remember me</label>
                         </div>
-					</div>				
+					</div>
 				</div>
 				-->
 
@@ -61,7 +62,7 @@
 				<!--Submit Button-->
 				<div class="form-group">
 					<div class="col-sm-7 col-sm-offset-3">
-						<button onclick="escapeHtml('username'); escapeHtml('password');" type="submit" id="login" name="login" class="btn  btn-block btn-primary">Login</button>
+						<button type="button" id="submit" name="login" onClick="loginajax()" class="btn  btn-block btn-primary">Login</button>
 					</div>
 				</div>
 
@@ -107,12 +108,12 @@
 
     <!-- Set Background Javascript -->
     <script src="/js/setBackgroundImage.js"></script>
-    
+
     <!-- Hide Navbar Items -->
     <script src="/js/login.js"></script>
 
 </body>
 <%- include standardfooter %>
-    
-    
+
+
 </html>
