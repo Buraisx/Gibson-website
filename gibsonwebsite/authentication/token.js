@@ -105,7 +105,6 @@ function generateToken(req, res, next) {
   connection.getConnection(function(err, con){
     if(err){
       console.log('token.js: Error connecting to the database.');
-      //res.redirect('/login');
       return err;
     }
     else{
@@ -114,7 +113,6 @@ function generateToken(req, res, next) {
         if (err){
           con.release();
           console.log('token.js: Error while querying the database for common secret_key.');
-          //res.redirect('/login');
           return err;
         }
         // RETRIEVED secret_key
@@ -144,7 +142,6 @@ function generateToken(req, res, next) {
 
               if (err){
                 console.log('token.js: Error while querying the database for admin secret_key');
-                //res.redirect('/login');
                 return err;
               }
 
@@ -163,7 +160,6 @@ function generateToken(req, res, next) {
               });
               next();
             });
-            //next();
           }
           else{
             next();
@@ -181,7 +177,6 @@ function respond(req, res, next) {
 	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
 
   next();
-	//res.redirect('/');
 }
 
 function adminRespond(req,res,next){

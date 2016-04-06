@@ -10,12 +10,12 @@
 		var defaults = {
 			format_output: function(tim, mini, meri) {
 				if(settings.show_meridian){
-					return tim + " : " + mini + " : " + meri;
+					return tim + " : " + mini + " " + meri;
 				}else{
 					return tim + " : " + mini;
 				}
 			},
-			increase_direction: 'down',
+			increase_direction: 'up',
 			custom_classes: '',
 			min_hour_value: 1,
 			max_hour_value: 12,

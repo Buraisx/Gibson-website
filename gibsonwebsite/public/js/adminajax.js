@@ -526,7 +526,7 @@ function courseform(){
 	$('#addcourses').append(nav);
 	$('#addcourses').append(addcourses);
 	$('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
-	$('.time_element').timepicki();
+	$('.time_element').timepicki({start_time: ["12", "00", "PM"]});
 	$.validator.setDefaults({ 
 	    ignore: [],
 	});
@@ -683,7 +683,7 @@ function addTime(){
 
 	$('#day'+ COUNTCOURSEDAYS).after(day);
 	$('#day'+ newCourseDay).slideToggle();
-	$('.time_element').timepicki();
+	$('.time_element').timepicki({start_time: ["12", "00", "PM"]});
 	COUNTCOURSEDAYS++;
 }
 
@@ -731,7 +731,7 @@ function addAdhocTime(){
 
 	$('#adhoc'+COUNTADHOCDAYS).after(adhoc);
 	$('#adhoc'+newAdhocDay).slideToggle();
-	$('.time_element').timepicki();
+	$('.time_element').timepicki({start_time: ["12", "00", "PM"]});
 	$('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
 	COUNTADHOCDAYS++;
 }

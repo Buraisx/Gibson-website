@@ -42,14 +42,13 @@ function updateOrCreate (user, cb){
 //login
 router.post('/login', passport.authenticate('local-login', {
 	session: false,
-	//successRedirect: '/user/profile',		// Redirect to main page when login complete
-	failureRedirect: '/login'	// Return to login when fail, and flash error
+	//failureRedirect: '/login'	// Return to login when fail, and flash error
 
 }), token.generateToken, token.respond, token.adminRespond, token.sendInfo, redirect);
 
 // REDIRECT FOR LOGIN
 function redirect(req, res){
-	res.redirect('/user/profile');
+	res.status(200).send('User logged in.');
 }
 
 	return router;

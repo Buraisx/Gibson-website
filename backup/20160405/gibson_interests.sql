@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: gibson
+-- Host: 127.0.0.1    Database: gibson
 -- ------------------------------------------------------
 -- Server version	5.7.11-log
 
@@ -16,20 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `payment_period`
+-- Table structure for table `interests`
 --
 
-DROP TABLE IF EXISTS `payment_period`;
+DROP TABLE IF EXISTS `interests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `payment_period` (
-  `payment_period_id` int(10) unsigned NOT NULL,
-  `payment_start_date` date NOT NULL,
-  `payment_end_date` date NOT NULL,
-  PRIMARY KEY (`payment_period_id`),
-  UNIQUE KEY `payment_period_id_UNIQUE` (`payment_period_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Payment periods for courses';
+CREATE TABLE `interests` (
+  `interest_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `interest_name` varchar(64) NOT NULL,
+  `weight` int(11) DEFAULT '1' COMMENT 'For weighted searching',
+  `update_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`interest_id`),
+  UNIQUE KEY `interest_id_UNIQUE` (`interest_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='An interesting table';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `interests`
+--
+
+LOCK TABLES `interests` WRITE;
+/*!40000 ALTER TABLE `interests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `interests` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -40,4 +50,4 @@ CREATE TABLE `payment_period` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-21 23:08:21
+-- Dump completed on 2016-04-05 21:57:05

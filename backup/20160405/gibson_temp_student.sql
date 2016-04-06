@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: gibson
+-- Host: 127.0.0.1    Database: gibson
 -- ------------------------------------------------------
 -- Server version	5.7.11-log
 
@@ -39,6 +39,7 @@ CREATE TABLE `temp_student` (
 
 LOCK TABLES `temp_student` WRITE;
 /*!40000 ALTER TABLE `temp_student` DISABLE KEYS */;
+INSERT INTO `temp_student` VALUES (1,'University','Of','Water','lol'),(3,'eqwewq','12e','wqewqe',''),(4,'University of Waterloo','30','Never Graduating','9001'),(9,'University Of Toronto','3','Konpyuuta Kagaku','');
 /*!40000 ALTER TABLE `temp_student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-22 18:29:52
+-- Dump completed on 2016-04-05 21:57:06
