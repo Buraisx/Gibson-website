@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: gibson
+-- Host: 127.0.0.1    Database: gibson
 -- ------------------------------------------------------
 -- Server version	5.7.11-log
 
@@ -16,20 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `payment_period`
+-- Table structure for table `rank`
 --
 
-DROP TABLE IF EXISTS `payment_period`;
+DROP TABLE IF EXISTS `rank`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `payment_period` (
-  `payment_period_id` int(10) unsigned NOT NULL,
-  `payment_start_date` date NOT NULL,
-  `payment_end_date` date NOT NULL,
-  PRIMARY KEY (`payment_period_id`),
-  UNIQUE KEY `payment_period_id_UNIQUE` (`payment_period_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Payment periods for courses';
+CREATE TABLE `rank` (
+  `rank_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rank_name` varchar(45) NOT NULL,
+  `secret_key` varchar(256) NOT NULL,
+  PRIMARY KEY (`rank_id`),
+  UNIQUE KEY `rank_id_UNIQUE` (`rank_id`),
+  UNIQUE KEY `rank_name_UNIQUE` (`rank_name`),
+  UNIQUE KEY `secret_key_UNIQUE` (`secret_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rank`
+--
+
+LOCK TABLES `rank` WRITE;
+/*!40000 ALTER TABLE `rank` DISABLE KEYS */;
+INSERT INTO `rank` VALUES (1,'user','user_key'),(2,'volunteer','volunteer_key'),(3,'staff','staff_key'),(4,'admin','admin_key');
+/*!40000 ALTER TABLE `rank` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -40,4 +52,4 @@ CREATE TABLE `payment_period` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-21 23:08:21
+-- Dump completed on 2016-04-05 21:47:33

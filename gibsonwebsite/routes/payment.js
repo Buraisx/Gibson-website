@@ -185,9 +185,13 @@ router.get('/payment/execute', function(req,res,next){
 
         // INSERTING INTO PAYMENT INFORMATION INTO gibson.transaction_history
         function(payment, next){
-
-          var sql = "INSERT into gibson.transaction_history (paypal_id, create_time, state, intent, payment_method, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
-          var inserts = [payment.id, payment.create_time.replace('T', ' ').replace('Z', ''), payment.state, payment.intent, payment.payer.payment_method, payment.payer.payer_info.email, payment.payer.payer_info.first_name, payment.payer.payer_info.last_name, payment.payer.payer_info.payer_id, payment.transactions[0].amount.total, payment.transactions[0].amount.currency, payment.transactions[0].amount.details.tax, payment.transactions[0].description];
+          var decode = jwt.decode(req.cookies.access_token); 
+          var sql = "INSERT into gibson.transaction_history (paypal_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+          var inserts = [payment.id, payment.create_time.replace('T', ' ').replace('Z', ''), payment.state, 
+                        payment.intent, payment.payer.payment_method, decode.id,
+                        payment.payer.payer_info.email, payment.payer.payer_info.first_name, payment.payer.payer_info.last_name, 
+                        payment.payer.payer_info.payer_id, payment.transactions[0].amount.total, payment.transactions[0].amount.currency, 
+                        payment.transactions[0].amount.details.tax, payment.transactions[0].description];
           sql = mysql.format(sql, inserts);
 
           con.query(sql, function(err, results){
@@ -195,29 +199,29 @@ router.get('/payment/execute', function(req,res,next){
               return next({errno: 500, msg:"Error inserting into transaction_history"}, null);
             }
             else{
-              next(null, payment);
+              next(null, payment, results.insertId);
             }
           });
         },
 
         // INSERTING USER INTO gibson.user_course
-        function(payment, next){
+        function(payment, transaction_id, next){
 
           var decode = jwt.decode(req.cookies.access_token);
-          var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?;";
+          var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, transaction_id, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, ?, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?;";
           var query = '';
 
           for (var i = 0; i < payment.transactions[0].item_list.items.length; i++){
             var course_id = payment.transactions[0].item_list.items[i].sku;
-            query += mysql.format(query_register, [decode.id, course_id, 'Enrolled', 'Registered for course ID: ' + course_id, course_id]);
+            query += mysql.format(query_register, [decode.id, course_id, transaction_id, 'Enrolled', 'Registered for course ID: ' + course_id, course_id]);
           }
 
           con.query(query, function(err, reg_res){
             if (err){
-            	return next({errno:500, msg:"Error inserting user into course."}, null);
+              return next({errno:500, msg:"Error inserting user into course."}, null);
             }
             else{
-            	next(null, {message: "Registration Complete!"});
+              next(null, {message: "Course Registration Successful!"});
             }
           });
         }],

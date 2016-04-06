@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: gibson
+-- Host: 127.0.0.1    Database: gibson
 -- ------------------------------------------------------
 -- Server version	5.7.11-log
 
@@ -16,46 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `temp_user`
+-- Table structure for table `fee_history`
 --
 
-DROP TABLE IF EXISTS `temp_user`;
+DROP TABLE IF EXISTS `fee_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `temp_user` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `rank_id` int(10) unsigned NOT NULL,
-  `username` varchar(32) NOT NULL,
-  `password` varchar(60) NOT NULL,
-  `lname` varchar(128) NOT NULL,
-  `fname` varchar(128) NOT NULL,
-  `birth_date` date NOT NULL,
-  `gender` varchar(64) NOT NULL,
-  `address` varchar(128) NOT NULL,
-  `unit_no` varchar(8) DEFAULT NULL,
-  `city` varchar(64) NOT NULL,
-  `province_id` int(13) unsigned NOT NULL,
-  `postal_code` varchar(6) NOT NULL,
-  `primary_phone` varchar(16) DEFAULT NULL,
-  `secondary_phone` varchar(16) DEFAULT NULL,
-  `email` varchar(128) NOT NULL,
-  `send_notification` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `student` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_id_UNIQUE` (`user_id`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
-  KEY `province_id` (`province_id`)
+CREATE TABLE `fee_history` (
+  `fee_history_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_course_id` int(10) unsigned NOT NULL,
+  `status` varchar(45) NOT NULL DEFAULT 'pending',
+  `previous_balance` decimal(16,2) NOT NULL COMMENT 'Flat Number. If change is in percent please calculate amount beforehand',
+  `new_balance` decimal(16,2) NOT NULL COMMENT 'Flat Number. If change is in percent please calculate amount beforehand',
+  `balance_change` decimal(16,2) NOT NULL COMMENT 'Flat Number. If change is in percent please calculate amount beforehand',
+  `issue_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `notes` text,
+  PRIMARY KEY (`fee_history_id`),
+  UNIQUE KEY `fee_history_id_UNIQUE` (`fee_history_id`),
+  KEY `user_course_id` (`user_course_id`),
+  CONSTRAINT `enrollment_id` FOREIGN KEY (`user_course_id`) REFERENCES `user_course` (`enrollment_id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `temp_user`
+-- Dumping data for table `fee_history`
 --
 
-LOCK TABLES `temp_user` WRITE;
-/*!40000 ALTER TABLE `temp_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `temp_user` ENABLE KEYS */;
+LOCK TABLES `fee_history` WRITE;
+/*!40000 ALTER TABLE `fee_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fee_history` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -67,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-22 18:29:52
+-- Dump completed on 2016-04-05 21:47:33
