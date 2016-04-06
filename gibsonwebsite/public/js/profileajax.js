@@ -57,7 +57,6 @@ function register(course_register){
 			title: "Course added to Cart.",
 			type: "success"
 		});
-		console.log($('a[href$="/cart"]').text());
 		$('#cart').trigger('cookieUpdate');
 		listcourses();
 		
@@ -915,7 +914,6 @@ function getNumCourses(){
 	var cart = getCookie('cart');
 	if (cart != null) {
 		cart = unescape(cart).substring(2);
-		console.log(cart);
 		return num_courses = JSON.parse(cart).course_list.length;
 	}
 	return 0;
