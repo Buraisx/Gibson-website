@@ -18,7 +18,7 @@ function load_history(){
 
 			history+='<table class = "table table-bordered">';
 			history+='    <thead>';
-			history+='        <tr>';
+			history+='        <tr class = "tableheader">';
 			history+='            <th>Description</th>';
 			history+='            <th>Date</th>';
 			history+='            <th>ID</th>';

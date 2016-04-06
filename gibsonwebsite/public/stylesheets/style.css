@@ -356,7 +356,7 @@ hr {
 
 #cart-table{
     width: 100%;
-        border: 1px solid black;
+    border: 1px solid black;
 }
 
 /** Shopping Cart - Header **/
@@ -413,6 +413,11 @@ tr:nth-child(odd){
 
 tr:nth-child(even){
     background-color:#ffffff; 
+}
+
+.tableheader {
+    background-color:#373A3C !important;
+    color: white;
 }
 
 /** Shopping Cart - Total **/
