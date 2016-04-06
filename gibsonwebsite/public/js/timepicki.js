@@ -10,7 +10,7 @@
 		var defaults = {
 			format_output: function(tim, mini, meri) {
 				if(settings.show_meridian){
-					return tim + " : " + mini + " : " + meri;
+					return tim + " : " + mini + " " + meri;
 				}else{
 					return tim + " : " + mini;
 				}
