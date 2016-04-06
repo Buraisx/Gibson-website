@@ -423,13 +423,13 @@ function editinfo () {
 			editinfo+='    <h3>Student Information</h3>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
-			editinfo+='            <label class="fieldname col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-5">';
 			editinfo+='                <p>School Name: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.school_name + '">';
 			editinfo+='        </div>';
 			editinfo+='        <div class="form-group col-sm-5">';
-			editinfo+='            <label class="fieldname col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-5">';
 			editinfo+='                <p>Grade/Year: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.grade + '">';
