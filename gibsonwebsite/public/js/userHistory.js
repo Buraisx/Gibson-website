@@ -21,8 +21,8 @@ function load_history(){
 			history+='        <tr>';
 			history+='            <th>Description</th>';
 			history+='            <th>Date</th>';
-			history+='            <th>Transaction ID</th>';
-			history+='            <th>Paypal ID</th>';
+			history+='            <th>ID</th>';
+			// history+='            <th>Paypal ID</th>';
 			history+='            <th>State</th>';
 			history+='            <th>Payer Name</th>';
 			history+='            <th>Total</th>';
@@ -30,10 +30,10 @@ function load_history(){
 			history+='    </thead>';
 			history+='    <tbody>';
 			history+='        <tr>';
-			history+='            <td class = "col-sm-4">' + res[i].description + '</td>';
-			history+='            <td class = "col-sm-2">' + date + '</td>';
+			history+='            <td>' + res[i].description + '</td>';
+			history+='            <td>' + date + '</td>';
 			history+='            <td>' + res[i].transaction_id + '</td>';
-			history+='            <td>' + res[i].paypal_id + '</td>';
+			// history+='            <td>' + res[i].paypal_id + '</td>';
 			history+='            <td>' + state + '</td>';
 			history+='            <td>' + res[i].payer_first_name + ' ' + res[i].payer_last_name + '</td>';
 			history+='            <td>' + res[i].total + '</td>';
