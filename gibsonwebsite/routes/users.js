@@ -531,13 +531,13 @@ router.post('/user/profile/edit', function(req, res, next){
 });
 
 //GET TRANSACTION HISTORY
-router.get('/user/history', function(req, res, next){
+router.post('/user/profile/history', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = 'SELECT transaction_id, paypal_id, create_time, status, payer_first_name, payer_last_name, currency, total, tax, description FROM gibson.transaction_history th WHERE th.user_id = ? ORDER BY create_time DESC LIMIT ?';
-	var inserts = [decode.id, sanitizer.sanitize(req.body.query_limit)];
+	var sql = 'SELECT transaction_id, paypal_id, create_time, state, payer_first_name, payer_last_name, currency, total, tax, description FROM gibson.transaction_history th WHERE th.user_id = ? ORDER BY create_time DESC LIMIT ?';
+	var inserts = [decode.id, Number(sanitizer.sanitize(req.body.query_limit))];
 	
 	sql=mysql.format(sql, inserts);
-
+	console.log(sql);
 	connection.getConnection(function(err, con){
 		if(err){
 			console.log('users.js: Could not connect to DB');

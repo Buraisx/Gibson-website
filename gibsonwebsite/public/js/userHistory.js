@@ -4,7 +4,10 @@ $("a[href$='#account-history']").click(function(){
 });
 
 function load_history(){
-	jQuery.getJSON("/user/history", function(user_history){
-		console.log(user_history);
+	$.post("/user/profile/history", {
+		query_limit: 20,
+		_csrf: $('#_csrf').val()
+	}).done(function(res){
+		console.log(res);
 	});
 }
