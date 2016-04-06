@@ -853,12 +853,19 @@ function deletecontact(contactno) {
 	},
 	function(isConfirm){
 		if (isConfirm) {
-			// delete emergency contact here
+			// Gets the contact_id of the contact to be deleted
+			jQuery.getJSON("/user/profile/info", function(user_info){
+				var contact_id = user_info.emergency_contacts[contactno-1].contact_id;
+			});
+			//// POST
+			//// do this on success:
 			swal({
 				title: "Contact removed.",
 				text: '(but not really)',
 				type: "success"
-		});
+			});
+
+
 		}
 	});
 	}
