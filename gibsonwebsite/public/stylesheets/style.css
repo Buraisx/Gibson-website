@@ -318,6 +318,10 @@ hr {
 	margin-top: 10px;
 }
 
+.largemargin {
+    margin-top: 20px;
+}
+
 .signupbuttons, .savechanges {
 	margin-top: 20px;
 }
@@ -338,21 +342,27 @@ hr {
     margin-right: auto;
     margin-left: auto;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    border: 1px solid black;
 }
 
 #cart-table{
     width: 100%;
-    border: 1px solid black;
+        border: 1px solid black;
 }
 
 /** Shopping Cart - Header **/
 #cart-header{
-    background-color: #888888;
+    background-color: #d9d9d9;
     color: #FFFFFF;
 }
 
 
-#cart-header-name, #cart-header-code, #cart-header-cost, #cart-header-delete{
+#cart-header-name, #cart-header-code{
+    text-align:left;
+    padding: 10px;
+} 
+
+#cart-header-cost, #cart-header-delete{
     text-align: center;
 }
 
@@ -365,21 +375,29 @@ hr {
 .cart-item-code{
     padding-left: 10px;
     text-align: left;
-    background-color: #d9d9d9;
 }
 
 .cart-item-cost{
-    text-align: center;
+    text-align: right;
+    width: 100px;
 }
 
 .cart-item-delete{
     text-align: center;
+    width: 150px;
+}
+
+tr:nth-child(odd){
+    background-color:#d9d9d9; 
+}
+
+tr:nth-child(even){
+    background-color:#ffffff; 
 }
 
 /** Shopping Cart - Total **/
 
 .cart-total{
-    border: 1px solid black;
 }
 
 .cart-total-name{
@@ -388,19 +406,23 @@ hr {
 }
 
 .cart-total-code{
-    text-align: left; 
+    text-align: right; 
     padding-left: 10px;
     font-weight: bold;
     color: #b12704;
 }
 
 .cart-total-cost{
-    text-align: center;
+    text-align: right;
     font-weight: bold;
     color: #b12704;
-
 }
+
 .cart-total-delete{
+}
+
+.dollar{
+    float:left;
 }
 
 td{
@@ -410,11 +432,12 @@ td{
 /** Shopping Cart - Buttons **/
 
 #shoppingcart-buttons{
-    margin-top:10px;
+    width: 150px;
+    float: right;
 }
 
-#paypal-button{
-    float: right;
+#paypal-button, #backtoprofile{
+    width: 150px;
 }
 
 .fa-shopping-cart{

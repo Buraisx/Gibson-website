@@ -41,7 +41,7 @@ function load_cart(){
 			item+='<tr class="cart-item">';
 			item+='    <td class="cart-item-name">'+ course_info[i].course_name +'</td>';
 			item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
-			item+='    <td class="cart-item-cost">$'+ course_info[i].default_fee +'</td>';
+			item+='    <td class="cart-item-cost"><span class="dollar">$</span>'+ course_info[i].default_fee +'.00</td>';
 			item+='    <td class="cart-item-delete"> <button type="button" class = "btn-xsm btn-danger" action="/cart/course/delete" onclick="delete_course(this)" method="POST" id="submit" value="' + course_info[i].course_id +'">X</button> </td>';
 			item+='</tr>';
 
@@ -53,7 +53,7 @@ function load_cart(){
                 cart_total_html+= '<tr class="cart-total">';
                 cart_total_html+= 		'<td class="cart-total-name"></td>';
                 cart_total_html+=       '<td class="cart-total-code">TOTAL</td>';
-                cart_total_html+= 		'<td class="cart-total-cost">$' + cart_total + '</td>';
+                cart_total_html+= 		'<td class="cart-total-cost"><span class="dollar">$</span>' + cart_total + '.00</td>';
                 cart_total_html+=       '<td class="cart-total-delete"></td>';
                 cart_total_html+= '</tr>'
 
