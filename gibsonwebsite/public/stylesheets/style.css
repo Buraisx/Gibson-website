@@ -333,6 +333,14 @@ hr {
 }
 
 
+/** admin profile styles **/
+#courseid {
+    float: right;
+}
+#coursecap {
+    text-align: right;
+}
+
 /** Shopping Cart Styles **/
 
 #shoppingcart{
@@ -343,6 +351,7 @@ hr {
     margin-left: auto;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     border: 1px solid black;
+
 }
 
 #cart-table{
@@ -356,6 +365,17 @@ hr {
     color: #000000;
 }
 
+#empty-cart {
+    padding-top: 15px;
+}
+
+#empty-cart a{
+    color: #3aaada;
+}
+
+#empty-cart-text2{
+    font-size: 17px;
+}
 
 #cart-header-name, #cart-header-code{
     text-align:left;
@@ -431,9 +451,10 @@ td{
 
 /** Shopping Cart - Buttons **/
 
-#shoppingcart-buttons{
+#shoppingcart-buttons div{
     width: 150px;
-    float: right;
+    margin-left:auto; 
+    margin-right:0;
 }
 
 #paypal-button, #backtoprofile{

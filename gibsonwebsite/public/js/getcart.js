@@ -25,7 +25,8 @@ function delete_course(cart_course){
 function load_cart(){
 	jQuery.getJSON("/cart/view", function(course_info){
 		console.log(course_info);
-		//$('#cart-table').contents().remove();
+		//remove empty cart text
+		$('#empty-cart').contents().remove();
 		
 		var cart_table = $('#cart-table');
 
@@ -47,8 +48,8 @@ function load_cart(){
 
 			cart_table.append(item);
 		}
-        
-        if (!cart_empty){
+        if (!cart_empty){ 
+        	//add total
             var cart_total_html = '';
                 cart_total_html+= '<tr class="cart-total">';
                 cart_total_html+= 		'<td class="cart-total-name"></td>';
@@ -58,7 +59,19 @@ function load_cart(){
                 cart_total_html+= '</tr>'
 
             cart_table.append(cart_total_html);
-        }
-        
+
+            //add buttons
+        	var button_div = $('#shoppingcart-buttons');
+        	var button_content = '';
+        		button_content+= '<div>';
+                button_content+=	'<a href="/user/profile#courses"><button type="button" class="btn-primary smallmargin" id="backtoprofile">Back to Profile</button></a>';
+                button_content+= '</div>';
+                button_content+= '<div>';
+                button_content+=    '<a href="/payment/paypal"><button type="button" class="btn-primary smallmargin" id="paypal-button">Checkout</button></a>';
+                button_content+= '</div>';
+
+        	    button_div.append(button_content);
+        }           
+
 	});
 }
