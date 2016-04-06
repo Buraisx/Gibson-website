@@ -21,7 +21,7 @@
 				<form action="/login" method="POST" class="form-horizontal" role="form">
 
 				<!--sending csrf token-->
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
 
 				<!--Username input-->
 				<div class="form-group">
