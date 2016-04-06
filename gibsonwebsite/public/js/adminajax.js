@@ -260,9 +260,12 @@ function listcourses(){
 			var panel_heading = $("<div></div>", {class: "panel-heading"});
 			var panel_title = $("<h4></h4>", {class: "panel-title"});
 			var collapse = $("<a></a>", {href: "#collapse"+i});
-			collapse.attr("data-toggle", "collapse");
-			var coursename = $("<p></p>", {id: "coursename"}).append(data[i].course_name);
-			var courseid = $("<p></p>", {id: "courseid"}).append("Course ID:", data[i].course_id);
+			collapse.attr("data-toggle", "collapse");			
+			var coursename = $("<span></span>", {id: "coursename"}).append(data[i].course_name);			
+			var courseid = $("<span></span>", {id: "courseid"}).append("Course ID:", data[i].course_id);
+			var course_name_id = $("<p></p>", {id: "course_name_id"}).append(coursename, courseid);
+
+			var coursecap = $("<p></p>", {id: "coursecap"}).append(data[i].enroll_count, "/", data[i].course_limit, " Enrolled");
 
 			var collapse2 = $("<div></div>", {id: "collapse" + i, class: "panel-collapse collapse"});
 			var panelbody = $("<div></div>", {class: "panel-body"});
@@ -288,7 +291,7 @@ function listcourses(){
 			//First div of panel-default
 			panel_heading = panel_heading.append(panel_title);
 			panel_title = panel_title.append(collapse);
-			collapse = collapse.append(coursename, courseid);
+			collapse = collapse.append(course_name_id, coursecap);
 
 			//--------------------------
 			//Second div of panel-default
