@@ -570,6 +570,7 @@ router.get('/logout', function(req,res,next){
 	res.clearCookie('privilege');
 	res.clearCookie('user_info');
 	res.clearCookie('gibson_user');
+	res.clearCookie('cart');
 
 	res.redirect('/');
 });
