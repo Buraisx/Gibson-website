@@ -56,7 +56,10 @@ function register(course_register){
 			title: "Course added to Cart.",
 			type: "success"
 		});
+		console.log($('a[href$="/cart"]').text());
+		$('#cart').trigger('cookieUpdate');
 		listcourses();
+		
 	})
 	.fail(function (err){
 		swal({
@@ -881,4 +884,31 @@ function returntoprofile() {
 			$("html, body").animate({ scrollTop: 0 }, "slow");
 		}
 	});
+}
+
+
+// Migrated from navbarajax
+
+$('#cart').on('cookieUpdate', function(){
+    var num_courses = getNumCourses();
+	var number_string = " (" + num_courses + ")";
+	$('a[href="/cart"]').contents().filter(function(){ return this.nodeType == 3; })[1].nodeValue = number_string;
+	
+	//Alternate attempt; cart icon disappears on update
+	//var current_text = $('a[href="/cart"]').text();
+	//current_text = current_text.slice(0, current_text.indexOf('(') + 1) + num_courses + ")";
+	//$('a[href="/cart"]').text(current_text);
+});
+ 
+ 
+
+// Get number of courses
+function getNumCourses(){
+	var cart = getCookie('cart');
+	if (cart != null) {
+		cart = unescape(cart).substring(2);
+		console.log(cart);
+		return num_courses = JSON.parse(cart).course_list.length;
+	}
+	return 0;
 }
