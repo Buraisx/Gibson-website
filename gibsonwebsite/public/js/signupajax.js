@@ -1,3 +1,44 @@
+//Check username availability
+function checkusername(){
+      $.post("/signup/username", {
+            _csrf: $('#_csrf').val(),
+            username: $('#username').val()
+      })
+      .done(function (res){
+            if(res === 0){
+                 console.log('USERNAME ' + $('#username').val() + ' OK!'); 
+            }
+
+            else{
+                console.log('Username already taken.'); 
+            }
+      })
+      .fail(function (err){
+            console.log('Bad username');
+      });
+}
+
+//check email availability
+function checkemail(){
+      $.post("/signup/email", {
+            _csrf: $('#_csrf').val(),
+            email: $('#email').val()
+      })
+      .done(function (res){
+            if(res === 0){
+                 console.log('EMAIL ' + $('#email').val() + ' OK!');
+            }
+
+            else{
+                console.log('Email already taken.'); 
+            }
+      })
+      .fail(function (err){
+            console.log('Bad email');
+      });
+}
+
+//AJAX Signup Post
 function signup() {
 	$.post("/signup", {
 			_csrf: $('#_csrf').val(),

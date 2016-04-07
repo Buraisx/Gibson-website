@@ -64,5 +64,51 @@ router.get('/signup/success', function(req,res){
 	res.render('SuccessSignup', {title: 'Success Sign Up!'});
 });
 
+// ==============================================================
+// ↓↓↓↓↓Intermediate post requests↓↓↓↓↓
+// ==============================================================
+//Check Available Username
+router.post('/signup/username', function(req, res, next){
+	var sql = "SELECT COUNT(*) FROM gibson.user WHERE username = ?";
+	var inserts = [req.body.username];
+
+	connection.getConnection(function (err, con){
+		con.query(mysql.format(sql, inserts), function(err, results){
+			if(err){
+				res.send(401);
+				return err;
+			}
+
+			else{
+				console.log(results);
+				res.send(results);
+			}
+		});
+	});
+});
+
+//Check Available email
+router.post('/signup/email', function(req, res, next){
+	var sql = "SELECT COUNT(*) FROM gibson.user WHERE email = ?";
+	var inserts = [req.body.email];
+
+	connection.getConnection(function (err, con){
+		con.query(mysql.format(sql, inserts), function(err, results){
+			if(err){
+				res.send(401);
+				return err;
+			}
+
+			else{
+				console.log(results);
+				res.send(results);
+			}
+		});
+	});
+});
+
+
+
 	return router;
 };
+
