@@ -737,45 +737,19 @@ function listcourses(){
 			courses += '                		<p id="description' + i + '">Description: ' + data[i].course_description + '</p>';
 			courses += '        			</div>';
 			courses += '        		</div>';
-			courses += '        		<div class="row">';
+			courses += '        		<div class="row largemargin">';
 			courses += '            		<div class="col-sm-6">';
-			courses += '               		 	 <p id="coursestartdate' + i + '">Dates: ' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+			courses += '               		 	 <p id="coursestartdate' + i + '">Start Date: ' + String(data[i].start_date).substring(0, 10) + '</p>';
 			courses += '            		</div>';
 			courses += '            		<div class="col-sm-6">';
-			courses += '                		  <p id="courseenddate' + i + '">Time: ' + data[i].course_time + '</p>';
+			courses += '                		  <p id="courseenddate' + i + '">End Date: ' + String(data[i].end_date).substring(0, 10) + '</p>';
 			courses += '            		</div>';
 			courses += '        		</div>';
-            
-            
-            if(data[i].course_days != null){
-            	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
-                	var day_time =JSON.parse(data[i].course_days)[j].day;
-                	courses += '        		<div class="row">';
-					courses += '            		<div class="col-sm-6">';
-					courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s) : ' + day_time + '</p>';
-					courses += '            		</div>';
-					
-					courses += '            		<div class="col-sm-6">';
-					courses += '                  		<p id="courseinterval' + i + '">Interval: ' + data[i].course_interval + '</p>';
-					courses += '           			</div>';
-					courses += '        		</div>';
-                
-                	console.log(day_time);
-
-            	}
-            }
-
-
-            
-           
-			courses += '        		<div class="row">';
-			courses += '            		<div class="col-sm-6">';
-			courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s) : ' + day_time + '</p>';
-			courses += '            		</div>';
-			courses += '            		<div class="col-sm-6">';
-			courses += '                  		<p id="courseinterval' + i + '">Interval: ' + data[i].course_interval + '</p>';
-			courses += '           			</div>';
-			courses += '        		</div>';
+            courses += '        		<div class="row small margin">';
+            courses += '            		<div class="col-sm-12">';
+            courses += '                		<p id="courseinterval' + i + '">Interval: ' + data[i].course_interval+ '</p>';
+            courses += '            		</div>';
+            courses += '        		</div>';
 
 
 			courses += '        		<div class="row">';
@@ -791,7 +765,33 @@ function listcourses(){
 			courses += '        	        	 <p id="courselanguage' + i + '">Language: ' + data[i].course_language + '</p>';
 			courses += '         	   		</div>';
 			courses += '        		</div>';
-			courses += '        		<div class="row">';
+            
+            
+            /** Generates Date and Time for a Course **/
+            courses += '        		<div class="row smallmargin">';
+            courses += '            		<div class="col-sm-12">';
+            courses += '                		<p class="coursetimetitle' + i + '"><b>Date and Time: </b></p>';
+            courses += '            		</div>';
+            courses += '        		</div>';
+
+            if(data[i].course_days != null){
+            	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+                	var days = JSON.parse(data[i].course_days)[j].day;
+                    var times = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
+                    
+                	courses += '        		<div class="row">';
+					courses += '            		<div class="col-sm-2">';
+					courses += '                		<p id="coursetime' + i + '">' + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + days + '</p>';
+					courses += '            		</div>';
+					
+					courses += '            		<div class="col-sm-10">';
+					courses += '                  		<p id="courseint' + i + '">' + times + '</p>';
+					courses += '           			</div>';
+					courses += '        		</div>';
+
+            	}
+            }
+            courses += '        		<div class="row largemargin">';
 			courses += '            		<div class="col-sm-6">';
 			courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' +data[i].course_id +'">Add to Cart</button>';
 			courses += '            		</div>';
