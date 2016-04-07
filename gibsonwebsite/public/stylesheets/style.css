@@ -360,7 +360,7 @@ hr {
 }
 
 /** Shopping Cart - Header **/
-#cart-header{
+.cart-header{
     background-color: #d9d9d9;
     color: #000000;
 }
@@ -407,11 +407,11 @@ hr {
     width: 150px;
 }
 
-tr:nth-child(odd){
+tr:nth-child(odd)[class*="cart"]{
     background-color:#d9d9d9; 
 }
 
-tr:nth-child(even){
+tr:nth-child(even)[class*="cart"]{
     background-color:#ffffff; 
 }
 
