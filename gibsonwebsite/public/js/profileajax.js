@@ -747,24 +747,37 @@ function listcourses(){
 			courses += '        		</div>';
             
             
-            
-            for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+            if(data[i].course_days != null){
+            	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+                	var day_time =JSON.parse(data[i].course_days)[j].day;
+                	courses += '        		<div class="row">';
+					courses += '            		<div class="col-sm-6">';
+					courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s) : ' + day_time + '</p>';
+					courses += '            		</div>';
+					
+					courses += '            		<div class="col-sm-6">';
+					courses += '                  		<p id="courseinterval' + i + '">Interval: ' + data[i].course_interval + '</p>';
+					courses += '           			</div>';
+					courses += '        		</div>';
                 
-                var day_time = '';
-                
-                day_time = '' + JSON.parse(data[i].course_days)[j].day + ', ';
-                
-                console.log(day_time);
+                	console.log(day_time);
+
+            	}
             }
+
+
             
+           
 			courses += '        		<div class="row">';
 			courses += '            		<div class="col-sm-6">';
-			courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s) : ' + '</p>';
+			courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s) : ' + day_time + '</p>';
 			courses += '            		</div>';
 			courses += '            		<div class="col-sm-6">';
 			courses += '                  		<p id="courseinterval' + i + '">Interval: ' + data[i].course_interval + '</p>';
 			courses += '           			</div>';
 			courses += '        		</div>';
+
+
 			courses += '        		<div class="row">';
 			courses += '        	    	<div class="col-sm-6">';
 			courses += '        	        	 <p id="coursetarget' + i + '">Target: ' + data[i].course_target + '</p>';
