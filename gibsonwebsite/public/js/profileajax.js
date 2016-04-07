@@ -715,7 +715,9 @@ function listcourses(){
 
 		var courses = '';
 		courses += '<div id="scheduleaccordion" class="panel-group">';
-		for(i = 0; i < data.length; i++) {
+		for(var i = 0; i < data.length; i++) {    
+            
+            
 			courses += '    <div class="panel panel-primary">';
 			courses += '        <div class="panel-heading">';
 			courses += '            <h4 class="panel-title">';
@@ -743,9 +745,21 @@ function listcourses(){
 			courses += '                		  <p id="courseenddate' + i + '">Time: ' + data[i].course_time + '</p>';
 			courses += '            		</div>';
 			courses += '        		</div>';
+            
+            
+            
+            for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+                
+                var day_time = '';
+                
+                day_time = '' + JSON.parse(data[i].course_days)[j].day + ', ';
+                
+                console.log(day_time);
+            }
+            
 			courses += '        		<div class="row">';
 			courses += '            		<div class="col-sm-6">';
-			courses += '                		<p id="coursetime' + i + '">Day(s) of Week : ' + data[i].course_days + '</p>';
+			courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s) : ' + '</p>';
 			courses += '            		</div>';
 			courses += '            		<div class="col-sm-6">';
 			courses += '                  		<p id="courseinterval' + i + '">Interval: ' + data[i].course_interval + '</p>';
@@ -773,6 +787,8 @@ function listcourses(){
 			courses += '        	</div>';
 			courses += '        </div>';
 			courses += '    </div>';
+        
+        
 		}
 		schedule += '</div>';
 		$('#courses').append(courses);
