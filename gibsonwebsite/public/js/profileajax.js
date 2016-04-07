@@ -731,6 +731,7 @@ function filterCourses(searchText){
 	var searchTerms = $.grep(searchText.replace(/\W*\b\w{1,2}\b/g, "").toLowerCase().split(' '), function(x) {return $.inArray(x, stopWords) < 0;});
 	//var searchTerms = searchText.toLowerCase().split(' ');
 	var filteredCourses = [];
+	var match = false;
 
 	// Very crude word match search
 	if (searchTerms.length === 0){
@@ -739,22 +740,21 @@ function filterCourses(searchText){
 	else{
 		for (var i = 0; i < allAvailableCourses.length; i++){
 			for (var j = 0; j < searchTerms.length; j++){
-				if(allAvailableCourses[i].course_name.toLowerCase().indexOf(searchTerms[j]) > -1){
-					filteredCourses.push(allAvailableCourses[i]);
+				if(allAvailableCourses[i].course_name.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+					 allAvailableCourses[i].course_description.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+				 	 allAvailableCourses[i].course_code.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+				 	 allAvailableCourses[i].course_target.toLowerCase().indexOf(searchTerms[j]) > -1){
+
+					match = true;
+				}
+				else{
+					match = false;
 					break;
 				}
-				else if(allAvailableCourses[i].course_description.toLowerCase().indexOf(searchTerms[j]) > -1){
-					filteredCourses.push(allAvailableCourses[i]);
-					break;
-				}
-				else if(allAvailableCourses[i].course_code.toLowerCase().indexOf(searchTerms[j]) > -1){
-					filteredCourses.push(allAvailableCourses[i]);
-					break;
-				}
-				else if(allAvailableCourses[i].course_target.toLowerCase().indexOf(searchTerms[j]) > -1){
-					filteredCourses.push(allAvailableCourses[i]);
-					break;
-				}
+			}
+
+			if (match){
+				filteredCourses.push(allAvailableCourses[i]);
 			}
 		}
 	}
