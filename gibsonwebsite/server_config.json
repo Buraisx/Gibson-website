@@ -4,7 +4,7 @@
     "connectionLimit": 10,
     "host": "localhost",
     "user": "root",
-    "password": "Sabad@th!s1234567",
+    "password": "local123",
     "database": "gibson",
     "multipleStatements": true,
     "port": 3306
