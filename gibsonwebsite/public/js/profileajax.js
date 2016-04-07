@@ -120,7 +120,7 @@ function load_profile(){
 			profileinfo+='    </div>';
 			}
 		}
-        
+
         + ", " + user_info.user.province_name + ", " + user_info.user.postal_code
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
@@ -741,16 +741,21 @@ function filterCourses(searchText){
 }
 
 //Display list of registerable courses
-function listcourses(){
-	jQuery.getJSON("/user/profile/courses", function(data){
+// Actually displaying courses.
+function showFilteredCourses(data, searchText){
 
-		$('#courses').contents().remove();
+	$('#courses').contents().remove();
+	var courses = '';
+	courses += '<div id="scheduleaccordion" class="panel-group">';
 
-		var courses = '';
-		courses += '<div id="scheduleaccordion" class="panel-group">';
-		for(var i = 0; i < data.length; i++) {    
-            
-            
+	courses += '	<div class="search-box">';
+	courses += '		<p>Filter Courses</p>';
+	courses += '		<input onfocus="this.value = this.value;" class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
+	courses += '	</div>';
+
+	for(var i = 0; i < data.length; i++) {
+
+
 			courses += '    <div class="panel panel-primary">';
 			courses += '        <div class="panel-heading">';
 			courses += '            <h4 class="panel-title">';
@@ -765,14 +770,14 @@ function listcourses(){
 			courses += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="collapse' + i + '">';
 			courses += '          	<div class="panel-body">';
 			courses += '        	<div class="col-sm-offset-1">';
-            
+
             //*** AJAX for Generating Description ***//
 			courses += '        		<div class="row">';
 			courses += '            		<div class="form-group col-sm-12">';
 			courses += '                		<p id="description' + i + '">Description: ' + data[i].course_description + '</p>';
 			courses += '        			</div>';
 			courses += '        		</div>';
-            
+
             //*** AJAX for Generating Period ***//
 			courses += '        		<div class="row">';
 			courses += '            		<div class="col-sm-12">';
@@ -786,24 +791,24 @@ function listcourses(){
 			courses += '        	        	 <p id="coursetarget' + i + '">Target: ' + data[i].course_target + '</p>';
 			courses += '         	   		</div>';
 			courses += '        		</div>';
-            
-            
+
+
             //*** AJAX for Generating Language ***//
             courses += '        		<div class="row">';
 			courses += '        	    	<div class="col-sm-12">';
 			courses += '        	        	 <p id="courselanguage' + i + '">Language: ' + data[i].course_language + '</p>';
 			courses += '         	   		</div>';
 			courses += '        		</div>';
-            
-            
-            
+
+
+
             //*** AJAX for Header of Date(s) and Time(s) ***//
             courses += '        		<div class="row">';
             courses += '            		<div class="col-sm-12">';
             courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s): </p>';
             courses += '            		</div>';
             courses += '        		</div>';
-            
+
             //*** AJAX Loop for Generating Day-Time ***//
             if(data[i].course_days != null){
             	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
@@ -817,7 +822,7 @@ function listcourses(){
 
             	}
             }
-            
+
             //*** Cost and Button for Adding the Course to the Cart ***//
 			courses += '        		<div class="row largemargin">';
             courses += '          	  		<div class="col-sm-6">';
@@ -827,21 +832,21 @@ function listcourses(){
 			courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' +data[i].course_id +'">Add to Cart</button>';
 			courses += '            		</div>';
 			courses += '       			</div>';
-            
-            
-            
-            
+
+
+
+
             //*** Closes all divs ***//
 			courses += '        	</div>';
 			courses += '        	</div>';
 			courses += '        </div>';
 			courses += '    </div>';
-        
-        
+
+
 		}
-		schedule += '</div>';
-		$('#courses').append(courses);
-	});
+	courses += '</div>';
+	$('#courses').append(courses);
+	$("#searchText").focus(); //focuses on the search bar
 }
 
 
