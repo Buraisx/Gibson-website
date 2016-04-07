@@ -765,9 +765,6 @@ function listcourses(){
             	}
             }
 
-
-            
-           
 			courses += '        		<div class="row">';
 			courses += '            		<div class="col-sm-6">';
 			courses += '                		<p id="coursetime' + i + '">Date(s) and Time(s) : ' + day_time + '</p>';

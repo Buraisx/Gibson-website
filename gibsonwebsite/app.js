@@ -18,7 +18,7 @@ var connection = require('./mysqlpool');
 
 //CSRF Protection
 var csrf = require('csurf');
-var csrfProtection = csrf({cookie: true});
+var csrfProtection = csrf({Secure:true, cookie: true});
 
 //HTTPS AND READ FILE SYNC
 var https = require('https');
@@ -57,6 +57,8 @@ app.use(function (req, res, next)
   res.locals.csrfToken = req.csrfToken();
   next();
 });
+
+
 app.use(function (err, req, res, next){
   if(err.code !== 'EBADCSRFTOKEN')
     return next(err);
@@ -100,6 +102,32 @@ var resetpassword = require('./routes/resetpassword');
 var cart = require('./routes/cart');
 var payment = require('./routes/payment');
 var invoice = require('./routes/invoice');
+
+// ================================================
+// ===ALWAYS LOOK FOR ALERTS ======================
+// ================================================
+app.use(function (req, res, next){
+   connection.getConnection(function(err, con){
+      if(err){
+        console.log('app.js: Cannot get alerts');
+        next();
+      }
+      else{
+        con.query('SELECT alert_msg, alert_type FROM gibson.website_alert WHERE start_alert=1', function(err, results){
+          if(!results.length){
+            res.clearCookie('gibson_alert');
+            next();
+          }
+          else{
+            res.cookie('gibson_alert', results, {secure:true});
+            next();
+          }
+        });  
+      }
+      
+   });
+}); 
+
 
 app.use('/', routes);
 app.use('/', signup);
@@ -166,9 +194,9 @@ app.use(function (req, res, next){
               con.release();
               console.log('app.js: Error verifying token.');
               //res.end();
-			  res.clearCookie('access_token');
-			  res.clearCookie('privilege');
-			  res.clearCookie('user_info');
+			        res.clearCookie('access_token');
+			        res.clearCookie('privilege');
+			        res.clearCookie('user_info');
               res.status(401).send("BAD TOKEN");
             }
             else{
