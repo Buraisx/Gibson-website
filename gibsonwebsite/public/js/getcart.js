@@ -25,8 +25,6 @@ function delete_course(cart_course){
 function load_cart(){
 	jQuery.getJSON("/cart/view", function(course_info){
 		console.log(course_info);
-		//remove empty cart text
-		$('#empty-cart').contents().remove();
 		
 		var cart_table = $('#cart-table');
 
@@ -49,6 +47,10 @@ function load_cart(){
 			cart_table.append(item);
 		}
         if (!cart_empty){ 
+            
+            //remove empty cart text
+            $('#empty-cart').contents().remove();
+            
         	//add total
             var cart_total_html = '';
                 cart_total_html+= '<tr class="cart-total">';
