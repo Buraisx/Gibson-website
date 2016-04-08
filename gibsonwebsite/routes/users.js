@@ -110,7 +110,7 @@ router.get('/user/profile/info', function(req, res, next) {
 		else{
 			async.waterfall([
 				function(next){
-					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, province_name, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
+					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
@@ -174,7 +174,7 @@ router.get('/user/profile/info', function(req, res, next) {
 				function(next){
 
 					// QUERYING FOR A LIST OF PROVINCES
-					con.query('SELECT province_id, province_name FROM gibson.province;', function(err, results){
+					con.query('SELECT province_id, prov_abb FROM gibson.province;', function(err, results){
 						if(err){
 							console.log('user.js: Unable to query for provinces; /user/profile/info');
 							return next(err);

@@ -121,7 +121,7 @@ function load_profile(){
 			}
 		}
 
-        + ", " + user_info.user.province_name + ", " + user_info.user.postal_code
+        + ", " + user_info.user.prov_abb + ", " + user_info.user.postal_code
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
 		profileinfo+='            <p><span class="col-sm-2 fieldname">Gender</span><span class="col-sm-9 fieldval">' + user_info.user.gender + '</span></p>';
@@ -134,8 +134,8 @@ function load_profile(){
 		profileinfo+='    </div>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
-		profileinfo+='            <p><span class="col-sm-2 fieldname">Address</span><span class="col-sm-9 fieldval">' + user_info.user.address + ", " + user_info.user.city + '</span></p>';
-        profileinfo+='            <p><span class="col-sm-2 fieldname"></span><span class="col-sm-9 fieldval">' + user_info.user.province_name + ", " + user_info.user.postal_code+ '</span></p>';
+		profileinfo+='            <p><span class="col-sm-2 fieldname">Address</span><span class="col-sm-9 fieldval">' + user_info.user.address + '</span></p>';
+        profileinfo+='            <p><span class="col-sm-2 fieldname"></span><span class="col-sm-9 fieldval">' + user_info.user.city + ", " + user_info.user.prov_abb + ", " + user_info.user.postal_code+ '</span></p>';
 		profileinfo+='        </div>';
 		profileinfo+='    </div>';
 		if (user_info.user.unit_no != "") {
@@ -383,14 +383,14 @@ function editinfo () {
 		editinfo+='            <label class="editfieldname col-sm-5">';
 		editinfo+='                <p>Province: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <select class = "form-control col-sm-4" name = "editprovince" id = "editprovince">';
+		editinfo+='            <select class = "form-control col-sm-4 editselect" name = "editprovince" id = "editprovince">';
 		for (var i = 0; i < user_info.provinces_list.length; i++) {
 			//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
 			editinfo+='                <option';
-			if (user_info.user.province_name == user_info.provinces_list[i].province_name) {
+			if (user_info.user.prov_abb == user_info.provinces_list[i].prov_abb) {
 				editinfo+=' selected';
 			}
-			editinfo+='>' + user_info.provinces_list[i].province_name + '</option>';
+			editinfo+='>' + user_info.provinces_list[i].prov_abb + '</option>';
 		}
 		editinfo+='            </select>';
 		editinfo+='        </div>';
@@ -779,7 +779,7 @@ function showFilteredCourses(data, searchText){
 			courses += '        		</div>';
             courses += '        		<div class="row">';
 			courses += '            		<div class="col-sm-12 courseindent">';
-            courses += '                		<p>' + data[i].course_description + '</p>';
+            courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 			courses += '        			</div>';
 			courses += '        		</div>';
 
@@ -821,7 +821,7 @@ function showFilteredCourses(data, searchText){
             //*** AJAX for Header of Date(s) and Time(s) ***//
             courses += '        		<div class="row">';
             courses += '            		<div class="col-sm-12">';
-            courses += '                		<p id="coursetime' + i + '"><b>Date(s) and Time(s): </b></p>';
+            courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s): </b></p>';
             courses += '            		</div>';
             courses += '        		</div>';
 
@@ -832,7 +832,7 @@ function showFilteredCourses(data, searchText){
                     var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
                 	courses += '        		<div class="row">';
 					courses += '            		<div class="col-sm-12">';
-                    courses += '                        <p><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
+                    courses += '                        <p id="coursedaytime"><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
 					courses += '            		</div>';
 					courses += '        		</div>';
 
@@ -862,10 +862,20 @@ function showFilteredCourses(data, searchText){
 		}
 	courses += '</div>';
 	$('#courses').append(courses);
+
+	//If there are no courses in search
+	if(data.length < 1)
+	{
+		var empty_courses_html = '';
+			empty_courses_html+= '<div> Oops! There are no courses available. </div>';
+
+		$('#scheduleaccordion').append(empty_courses_html);
+	}
+	
 	$("#searchText").focus();
-    var tmpStr = $("#searchText").val();
-    $("#searchText").val('');
-    $("#searchText").val(tmpStr);
+	var tmpStr = $("#searchText").val();
+	$("#searchText").val('');
+	$("#searchText").val(tmpStr);
 }
 
 
@@ -909,6 +919,15 @@ function listschedule(){
 		}
 		schedule += '</div>';
 		$('#schedule').append(schedule);
+
+		//If there are no courses in search
+		if(data.length < 1)
+		{
+			var empty_schedule_html = '';
+				empty_schedule_html+= '<div> Oops! You have no upcoming courses. </div>';
+
+			$('#scheduleaccordion').append(empty_schedule_html);
+		}
 	});
 }
 
