@@ -743,14 +743,14 @@ function filterCourses(searchText){
 //Display list of registerable courses
 // Actually displaying courses.
 function showFilteredCourses(data, searchText){
-
 	$('#courses').contents().remove();
+
 	var courses = '';
 	courses += '<div id="scheduleaccordion" class="panel-group">';
 
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
-	courses += '		<input onfocus="this.value = this.value;" class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
+	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
 	courses += '	</div>';
 
 	for(var i = 0; i < data.length; i++) {
@@ -849,7 +849,10 @@ function showFilteredCourses(data, searchText){
 		}
 	courses += '</div>';
 	$('#courses').append(courses);
-	$("#searchText").focus(); //focuses on the search bar
+	$("#searchText").focus();
+    var tmpStr = $("#searchText").val();
+    $("#searchText").val('');
+    $("#searchText").val(tmpStr);
 }
 
 
