@@ -40,15 +40,16 @@ function updateOrCreate (user, cb){
 */ // DISABLED FOR NOW
 
 //login
-router.post('/login', passport.authenticate('local-login', {
+router.post('/login', passport.authenticate('local-login',{
 	session: false,
+	//successRedirect: '/user/profile'
 	//failureRedirect: '/login'	// Return to login when fail, and flash error
 
 }), token.generateToken, token.respond, token.adminRespond, token.sendInfo, redirect);
 
 // REDIRECT FOR LOGIN
 function redirect(req, res){
-	res.status(200).send('User logged in.');
+	res.status(200).send("User logged in.");
 }
 
 	return router;

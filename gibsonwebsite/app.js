@@ -106,27 +106,27 @@ var invoice = require('./routes/invoice');
 // ================================================
 // ===ALWAYS LOOK FOR ALERTS ======================
 // ================================================
-// app.use(function (req, res, next){
-//    connection.getConnection(function(err, con){
-//       if(err){
-//         console.log('app.js: Cannot get alerts');
-//         next();
-//       }
-//       else{
-//         con.query('SELECT alert_msg, alert_type FROM gibson.website_alert WHERE start_alert=1', function(err, results){
-//           if(!results.length){
-//             res.clearCookie('gibson_alert');
-//             next();
-//           }
-//           else{
-//             res.cookie('gibson_alert', results, {secure:true});
-//             next();
-//           }
-//         });
-//       }
-//
-//    });
-// });
+ app.use(function (req, res, next){
+    connection.getConnection(function(err, con){
+       if(err){
+         console.log('app.js: Cannot get alerts');
+         next();
+       }
+       else{
+         con.query('SELECT alert_msg, alert_type FROM gibson.website_alert WHERE start_alert=1', function(err, results){
+           if(!results.length){
+             res.clearCookie('gibson_alert');
+             next();
+           }
+           else{
+             res.cookie('gibson_alert', results, {secure:true});
+             next();
+           }
+         });
+       }
+
+    });
+});
 
 
 app.use('/', routes);

@@ -295,17 +295,20 @@ module.exports = function(passport){
                         return next (err, null);
                     }
 
-                    if(!results.length){
+                    else if(!results.length){
                         console.log (req.body.username +' not found in user table.');
                         return next('No user found', null);
                     }
 
                     // USER EXISTS, BUT INVALID PASSWORD ENTERED
-                    if (!bcrypt.compareSync(password, results[0].password)){
+                    else if (!bcrypt.compareSync(password, results[0].password)){
                         console.log ('Wrong password for ' +req.body.username);
                         return next ('bad password', null); //, req.flash('loginMessage', 'Incorrect Password.')
                     }
-                    next(null, results);
+
+                    else{
+                      next(null, results);
+                    }
                 });
             },
 
@@ -322,8 +325,11 @@ module.exports = function(passport){
                         console.log ('passport.js: Error updating last_login_time.');
                         return next('Error updating last login time', null);
                     }
-                    user[0].last_login_time = lastLogIn;
-                    return next (null, user[0]);
+
+                    else{
+                      user[0].last_login_time = lastLogIn;
+                      return next (null, user[0]);
+                    }            
                 });
             }
         ],
@@ -338,7 +344,7 @@ module.exports = function(passport){
                             return done(null, err, {message: 'passport.js: Error while querying database for username; local-login'});
                         }
 
-                        if (!results.length){
+                        else if (!results.length){
                             console.log (req.body.username +' not found in the temp database.');
                             return done(null, false, {message:'not found in temp database'}); //, req.flash('loginMessage', 'Invalid Username.')
                         }
@@ -352,6 +358,7 @@ module.exports = function(passport){
 
                 else{
                     con.release();
+                    console.log(results);
                     return done(null, results);
                 }
             });
