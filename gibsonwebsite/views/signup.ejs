@@ -39,7 +39,7 @@
                             <div class="form-group col-sm-offset-1 col-sm-10">
                                 <label class="control-label"><span class="required">*</span>Username:</label>
                                 <span id = "confirmuser"></span>
-                                <input class = "form-control reqIn" type="text" name ="username" id="username" placeholder = "Enter Username"onkeyup="checkSpecialChars(); return false;" required pattern="\w+">
+                                <input class = "form-control reqIn" type="text" name ="username" id="username" placeholder = "Enter Username"onkeyup="checkSpecialChars(); return false;" required pattern="\w{3,16}">
                                 <!--Character restrictions-->
                             </div>
                         </div>
