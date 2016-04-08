@@ -801,10 +801,23 @@ function showFilteredCourses(data, searchText){
             //*** AJAX for Generating Language ***//
             courses += '        		<div class="row">';
 			courses += '        	    	<div class="col-sm-12">';
-			courses += '        	        	 <p id="courselanguage' + i + '">Language: ' + data[i].course_language + '</p>';
+			courses += '        	        	 <p id="courselanguage' + i + '">Language:</p>';
 			courses += '         	   		</div>';
 			courses += '        		</div>';
-        
+        	
+
+        	//*** JQuery Loop for Generating Languages ***//
+			if(data[i].course_language != null){
+				for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
+					var lang = JSON.parse(data[i].course_language)[j];
+					courses += '        		<div class="row">';
+					courses += '            		<div class="col-sm-12">';
+                    courses += '                        <p><span class="col-sm-2"><b>' + "&nbsp;" + lang + '</b></span></p>';
+					courses += '            		</div>';
+					courses += '        		</div>';
+				}
+			}
+
             //*** AJAX for Header of Date(s) and Time(s) ***//
             courses += '        		<div class="row">';
             courses += '            		<div class="col-sm-12">';

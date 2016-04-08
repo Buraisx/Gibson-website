@@ -210,12 +210,12 @@ router.get('/user/profile/courses', function(req, res, callback) {
 	//alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
 	//console.log(alreadyRegCourses);
 
-	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_days, a.default_fee FROM (SELECT * FROM gibson.course WHERE start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY course_id DESC) AS A LEFT JOIN (SELECT gibson.course.course_id, course_code, course_name, default_fee, gibson.course.start_date, gibson.course.end_date, course_time, course_interval, course_target, course_description, course_days FROM gibson.course, gibson.user_course WHERE gibson.user_course.user_id = ? AND gibson.course.course_id = gibson.user_course.course_id AND gibson.course.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY gibson.course.course_id DESC) AS B ON A.course_id = B.course_id WHERE B.course_id is NULL;";
+	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_language, a.course_days, a.default_fee FROM gibson.course a WHERE NOT EXISTS (SELECT course_id FROM gibson.user_course uc WHERE a.course_id = uc.course_id AND uc.user_id = '1') AND a.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY a.course_id DESC;";
 	nonRegCourses = mysql.format(nonRegCourses, inserts);
 	//console.log(nonRegCourses);
 
 	connection.getConnection(function(err, con){
-		if(err){
+		if(err){		
 			con.release();
 			console.log("cannot get connection");
 			return err;
