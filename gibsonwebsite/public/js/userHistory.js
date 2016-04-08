@@ -41,6 +41,15 @@ function load_history(){
 			history+='    </tbody>';
 			history+='</table>';
 		}
+		//if there is no history
+		if(res.length < 1)
+		{
+			var empty_history_html = '';			
+				empty_history_html+= '<div id="empty-courses"><p>Oops! You have never signed up for a course! </p></div>';
+
+				$('#account-history').append(empty_history_html);
+
+		}
 		$('#account-history').append(history);
 	});
 }

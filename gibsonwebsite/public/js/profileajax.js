@@ -849,10 +849,20 @@ function showFilteredCourses(data, searchText){
 		}
 	courses += '</div>';
 	$('#courses').append(courses);
+
+	//If there are no courses in search
+	if(data.length < 1)
+	{
+		var empty_courses_html = '';
+			empty_courses_html+= '<div> Oops! There are no courses available. </div>';
+
+		$('#scheduleaccordion').append(empty_courses_html);
+	}
+	
 	$("#searchText").focus();
-    var tmpStr = $("#searchText").val();
-    $("#searchText").val('');
-    $("#searchText").val(tmpStr);
+	var tmpStr = $("#searchText").val();
+	$("#searchText").val('');
+	$("#searchText").val(tmpStr);
 }
 
 
@@ -896,6 +906,15 @@ function listschedule(){
 		}
 		schedule += '</div>';
 		$('#schedule').append(schedule);
+
+		//If there are no courses in search
+		if(data.length < 1)
+		{
+			var empty_schedule_html = '';
+				empty_schedule_html+= '<div> Oops! You have no upcoming courses. </div>';
+
+			$('#scheduleaccordion').append(empty_schedule_html);
+		}
 	});
 }
 
