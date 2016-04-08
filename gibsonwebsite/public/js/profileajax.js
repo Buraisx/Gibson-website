@@ -747,6 +747,8 @@ function showFilteredCourses(data, searchText){
 
 	var courses = '';
 	courses += '<div id="scheduleaccordion" class="panel-group">';
+    courses += '<hr>';
+    courses += '<h3>List of Available Courses</h3>'; 
 
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
@@ -887,6 +889,8 @@ function listschedule(){
 		$('#schedule').contents().remove();
 		var schedule = '';
 		schedule += '<div id="scheduleaccordion" class="panel-group">';
+        schedule += '<hr>';
+        schedule += '<h3>My Scheduled Courses</h3>';
 		for(i = 0; i < data.length; i++) {
 			schedule += '    <div class="panel panel-primary">';
 			schedule += '        <div class="panel-heading">';

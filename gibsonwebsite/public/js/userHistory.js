@@ -12,6 +12,8 @@ function load_history(){
 		$('#account-history').contents().remove();
 		var history = '';
 		var i;
+        history+='<hr>';
+        history+='<h3>Your Past Account Transactions</h3>';
 		for(i = 0; i < res.length; i++) {
 			var date = String(res[i].create_time).substring(0, 10); // Substring of valuable part
 			var state = res[i].state.charAt(0).toUpperCase() + res[i].state.slice(1); // Capitalizes first letter
