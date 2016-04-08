@@ -921,17 +921,14 @@ function listschedule(){
 			schedule += '        </div>';
 			schedule += '    </div>';
 		}
-		schedule += '</div>';
-		$('#schedule').append(schedule);
-
 		//If there are no courses in search
 		if(data.length < 1)
 		{
-			var empty_schedule_html = '';
-				empty_schedule_html+= '<div> Oops! You have no upcoming courses. </div>';
-
-			$('#scheduleaccordion').append(empty_schedule_html);
+			schedule+= '<div> Oops! You have no upcoming courses. </div>';
 		}
+		schedule += '</div>';
+		$('#schedule').append(schedule);
+
 	});
 }
 
