@@ -184,6 +184,11 @@ a {
     width: 500px;
  }
 
+
+.courseindent{
+    margin-left: 20px;
+
+}
 /*round corners*/
 .rcorners {
 	border: 2px solid rgba(0,0,0,0.5);
