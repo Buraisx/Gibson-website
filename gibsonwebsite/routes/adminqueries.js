@@ -188,8 +188,8 @@ router.post('/admin/profile/v2', function(req, res){
 // ROUTE TO ADD NEW EVENT
 router.post('/admin/addEvent', function(req, res){
 
-  var query = 'INSERT INTO gibson.website_alert (init_date, end_date, alert_msg, alert_type) ';
-      query +='VALUES(?, ?, ?, ?)';
+  var query = 'INSERT INTO gibson.website_alert (init_date, end_date, alert_msg, alert_type, start_alert) ';
+      query +='VALUES(?, ?, ?, ?, 0)';
 
   query = mysql.format(query, [req.body.startdate, req.body.enddate, req.body.eventmessage, req.body.eventtype]);
 
