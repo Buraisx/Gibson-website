@@ -362,6 +362,10 @@ hr {
     color: #3aaada;
 }
 
+/** user profile styles **/
+.coursetime {
+    margin-left: 30px;
+}
 
 /** admin profile styles **/
 .courseid {

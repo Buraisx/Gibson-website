@@ -817,7 +817,12 @@ function showFilteredCourses(data, searchText){
 		if(data[i].course_language != null){
 			for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
 				var lang = JSON.parse(data[i].course_language)[j];
-				courses += '            <div class="col-sm-8">';
+                if (j != 0) {
+					courses += '            <div class="col-sm-8 col-sm-offset-4">';
+                }
+                else {
+					courses += '            <div class="col-sm-8">';
+                }
                 courses += '                 <p id="courselanguage' + i + '">' + lang + '</p>';
 				courses += '            </div>';
 			}
@@ -835,14 +840,14 @@ function showFilteredCourses(data, searchText){
         	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
             	var days = JSON.parse(data[i].course_days)[j].day;
                 var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
-                if (j != 0){
-                    courses += '            		<div class="col-sm-4">';
-                    courses += '            		</div>';           
+                if (j != 0) {
+					courses += '            <div class="col-sm-8 col-sm-offset-4 timedatefix">';
                 }
-                
-				courses += '            <div class="col-sm-8 timedatefix">';
-                courses += '                 <p id="coursetime" class="col-xs-2">' + days + '</p>';
-                courses += '                 <p id="coursetime" class="col-xs-10">' + time + '</p>';
+                else {
+                	courses += '            <div class="col-sm-8 timedatefix">';
+                }
+                courses += '                 <span class="courseday">' + days + '</span>';
+                courses += '                 <span class="coursetime">' + time + '</span>';
 				courses += '            </div>';
 
         	}
