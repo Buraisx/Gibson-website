@@ -17,9 +17,13 @@
 </head>
 
 <body class="index" >
-<form name="frm" action = "/signup" method = "post" role = "form">
+<form name="frm" action = "/signup" method = "post" role = "form" id= "frm">
 <!--sending csrf token-->
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                 <div id="dimmer">
+                </div>
+                <div  class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0" data-callback="recaptchacallback">
+                </div> 
     <div id="myCarousel" class="carousel slide" style="height:700px;" data-interval="false">
 
         <!-- Wrapper for Slides -->
@@ -154,8 +158,12 @@
                         </div>
 
                             <div class = "row">
-                                <div class = "col-sm-offset-1  col-sm-5">
+                                <div class = "col-sm-offset-1  col-sm-4">
                                     <label for='student'><input type="checkbox" id="student" name = "student"> I am a student</label>
+                                </div>
+                                <div class="marginleft21 col-sm-4">
+                                    <label><input type="checkbox" id="send_notifications" name = "send_notifications" value="1"> Receive notifications
+                                    </label>
                                 </div>
                             </div>
                             <div id='student_info' class='hidden'>
@@ -197,9 +205,9 @@
                 </div>
                 
             </div>
-            <div class="item">
+            <div class="item captchadiv">
                 <!-- Set the third background image using inline CSS below. -->
-                <div class = "fill"style="background-image:url(/img/classroom.jpg);">
+                <div class = "fill" style="background-image:url(/img/classroom.jpg);">
                     <div class = "col-sm-offset-3 col-sm-6"><!--panel div-->
                         <div class = "panel panel-default shadowy  signuppanel"><!-- panel start-->
                            <div class = "panel-heading">
@@ -235,21 +243,21 @@
                                         <div class="row">
                                             <div class = "form-group col-sm-offset-1 col-sm-5">
                                                 <label><span class="required">*</span>First Name:</label>
-                                                <input type = "text" class = "form-control" name = <%= "emergencyfname" + i %> id = <%= "emergencyfname" + i %> placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %> ><!--Character restrictions-->
+                                                <input type = "text" class = "form-control reqIn" name = <%= "emergencyfname" + i %> id = <%= "emergencyfname" + i %> placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %> ><!--Character restrictions-->
                                             </div>
                                             <div class = "form-group col-sm-5">
                                                 <label><span class="required">*</span>Last Name:</label>
-                                                <input type = "text" class = "form-control" name = <%= "emergencylname" + i %> id = <%= "emergencylname" + i %> placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
+                                                <input type = "text" class = "form-control reqIn" name = <%= "emergencylname" + i %> id = <%= "emergencylname" + i %> placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity('Invalid name.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class = "form-group col-sm-offset-1 col-sm-5">
                                                 <label><span class="required">*</span>Relationship:</label>
-                                                <input type = "text" class = "form-control" name = <%= "relationship" + i %> id = <%= "relationship" + i %> pattern="[a-zA-Z0-9. ]+" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
+                                                <input type = "text" class = "form-control reqIn" name = <%= "relationship" + i %> id = <%= "relationship" + i %> pattern="[a-zA-Z0-9. ]+" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
                                             </div>
                                             <div class = "form-group col-sm-5">
                                                 <label><span class="required">*</span>Phone:</label>
-                                                <input type = "text" class = "form-control" name = <%= "ephone" + i %> id = <%= "ephone" + i %> maxlength="16" pattern="\w+" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
+                                                <input type = "text" class = "form-control reqIn" name = <%= "ephone" + i %> id = <%= "ephone" + i %> maxlength="16" pattern="\w+" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}" <% if (i == 1) { %> required <% } %>><!--Character restrictions-->
                                             </div>
                                         </div>
                                     </div>
@@ -269,7 +277,7 @@
                                         </div>
 
                                         <div class = "col-sm-offset-1 col-sm-5 stoppaddingright">
-                                            <button type = "submit" class = "btn btn-success btn-block" name="submit" onclick="return submitbutton()" id="submit">Success!</button>
+                                            <button type = "submit" class = "btn btn-success btn-block" name="btnsubmit" onclick="return submitbutton()" id="btnsubmit">Success!</button>
                                         </div>
                                     </div>
 
