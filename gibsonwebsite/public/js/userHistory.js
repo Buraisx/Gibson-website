@@ -14,10 +14,8 @@ function load_history(){
 		var i;
         history+='<hr>';
         history+='<h3>Your Past Account Transactions</h3>';
-		for(i = 0; i < res.length; i++) {
-			var date = String(res[i].create_time).substring(0, 10); // Substring of valuable part
-			var state = res[i].state.charAt(0).toUpperCase() + res[i].state.slice(1); // Capitalizes first letter
-
+        if(res.length > 0)
+        {
 			history+='<table class = "table table-bordered">';
 			history+='    <thead>';
 			history+='        <tr class = "tableheader">';
@@ -31,21 +29,25 @@ function load_history(){
 			history+='        </tr>';
 			history+='    </thead>';
 			history+='    <tbody>';
-			history+='        <tr>';
-			history+='            <td>' + res[i].description + '</td>';
-			history+='            <td>' + date + '</td>';
-			//history+='            <td>' + res[i].transaction_id + '</td>';
-			 history+='            <td>' + res[i].paypal_id + '</td>';
-			history+='            <td>' + state + '</td>';
-			history+='            <td>' + res[i].payer_first_name + ' ' + res[i].payer_last_name + '</td>';
-			history+='            <td>' + res[i].total + '</td>';
-			history+='        </tr>';
+        	for(i = 0; i < res.length; i++) {
+				var date = String(res[i].create_time).substring(0, 10); // Substring of valuable part
+				var state = res[i].state.charAt(0).toUpperCase() + res[i].state.slice(1); // Capitalizes first letter
+				history+='        <tr>';
+				history+='            <td>' + res[i].description + '</td>';
+				history+='            <td>' + date + '</td>';
+				//history+='            <td>' + res[i].transaction_id + '</td>';
+				 history+='            <td>' + res[i].paypal_id + '</td>';
+				history+='            <td>' + state + '</td>';
+				history+='            <td>' + res[i].payer_first_name + ' ' + res[i].payer_last_name + '</td>';
+				history+='            <td>' + res[i].total + '</td>';
+				history+='        </tr>';
+			}
 			history+='    </tbody>';
 			history+='</table>';
-		}
-		//if there is no history
-		if(res.length < 1)
-		{	
+        }
+        //if there is no history
+        else
+        {
 				history+= '<div id="empty-courses"><p>Oops! You have never signed up for a course! </p></div>';
 		}
 		$('#account-history').append(history);
