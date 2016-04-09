@@ -25,6 +25,7 @@ $(document).ready(function(){
 		userdisplay += '<a href="/login">Login</a>';
 	}
 	$('#userdisplay').append(userdisplay);
+	getAlert();
 });
 
 $('#cart').ready(function(){
@@ -39,6 +40,43 @@ $('#cart').on('cookieUpdate', function(){
     var num_courses = getNumCourses();
 	$('a[href$="/cart"]').text(" (" + num_courses + ")");
 });
+
+function getAlert(){
+	var alert = getCookie('gibson_alert'); 
+	var alert_type;
+	var banner='';
+
+	$('.banner-maintenance').remove();
+	$('.banner-event').remove();
+
+	if(alert != null){
+		alert = unescape(alert).substring(2);	
+		alert = JSON.parse(alert);
+
+		for(var i = 0; i < alert.length; i++){
+			console.log('HI'+i);
+			switch(alert[i].alert_type){
+				case 'MAINTENANCE':
+					alert_type = 'banner-maintenance';
+					break;
+				case  'SLOW':
+					alert_type = 'banner-maintenance';
+					break;
+				case 'EVENT':
+					alert_type = 'banner-event';
+					break;
+				default:
+					alert_type = 'banner-event';
+			}
+
+			banner+='<div class="' + alert_type + '">';
+			banner+='        <p>' + alert[i].alert_msg + '</p>';
+			banner+='</div> ';
+		}
+		$('#navbar-standard').after(banner);
+	}
+	
+}
 
 // Get number of courses
 function getNumCourses(){

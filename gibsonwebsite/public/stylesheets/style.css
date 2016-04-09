@@ -519,18 +519,24 @@ td{
 
 /** Banner Alerts **/
 
-div[id*="banner"]{
-    margin-top: -21px;
+div[class*="banner"]{
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     text-align:center;
     color: #ffffff;
     height: 50px;
     line-height: 50px;
+
 }
 
-#banner-maintenance{
+.banner-maintenance{
     background-color: #F39C37;
 }
 
-#banner-event{
+.banner-event{
     background-color: #97CD51;
+}
+
+
+.navbar {
+    margin-bottom: 0px;
 }

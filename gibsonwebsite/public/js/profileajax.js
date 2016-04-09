@@ -754,6 +754,8 @@ function showFilteredCourses(data, searchText){
 	courses += '		<p><b>Filter Courses</b></p>';
 	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
 	courses += '	</div>';
+	courses += '    <div class="panel-group" id="profileaccordion">';
+
 
 	for(var i = 0; i < data.length; i++) {
 
@@ -877,6 +879,8 @@ function showFilteredCourses(data, searchText){
 
 	}
 	courses += '</div>';
+	courses += '</div>';
+
 	$('#courses').append(courses);
 
 	//If there are no courses in search
