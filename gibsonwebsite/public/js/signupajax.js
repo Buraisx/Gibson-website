@@ -10,7 +10,7 @@ function checkusername(){
       })
       .done(function (res){
             console.log("LOLS:  " +res);
-      
+
             if(!res){
                 swal({
                   title: "Username already taken.",
@@ -60,7 +60,7 @@ function delayEmail(){
       if($('#email').val()){
             typingTimer = setTimeout(checkemail, delay);
       }
-     
+
 }
 
 //AJAX Signup Post
@@ -100,7 +100,7 @@ function signup() {
       ephone3: $('#ephone3').val()
 	})
 	.done(function(res){
-		$.get("signup/success");
+    window.location.href = 'signup/success';
 	})
 	.fail(function (err){
 		alert('Registration failed.');
