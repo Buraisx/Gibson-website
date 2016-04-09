@@ -511,9 +511,9 @@ function courseform(){
 	nav += '<h1>Add A Course</h1>'
 	nav += '</br>'
 	nav += '<ul class="nav nav-tabs">';
-	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">1. Course Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#instructor-tab" data-toggle="tab">2. Instructor Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#time-tab" data-toggle="tab">3. Set Course Schedule <i class="fa"></i></a></li>';
+	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">Step 1 - Course Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#instructor-tab" data-toggle="tab">Step 2 - Instructor Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#time-tab" data-toggle="tab">Step 3 - Set Course Schedule <i class="fa"></i></a></li>';
 	nav += '</ul>';
 
 	var csrfmeta = $("meta[name=_csrf]");
@@ -526,7 +526,8 @@ function courseform(){
 	//Course Info Tab
 	var course_info='';
 	course_info+='					<div class="tab-pane active" id="info-tab">';
-	course_info+='                    <div class = "row">';
+    course_info+='                  <h3>Step 1 - Course Information</h3>';
+	course_info+='                    <div class = "row largemargin">';
 	course_info+='                        <div class = "form-group col-sm-4">';
 	course_info+='                            <label><span class="required">*</span>Course Name:</label>';
 	course_info+='                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>';
@@ -556,7 +557,7 @@ function courseform(){
 	course_info+='                    </div>';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="addLanguages()">Add Another Language</button>';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
-	course_info+='                    <div class = "row">';
+	course_info+='                    <div class = "row smallmargin">';
 	course_info+='                        <div class = "form-group col-sm-8">';
 	course_info+='                            <label class = "targetmargin"><span class="required">*</span>Target Audience:</label>';
 	course_info+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
@@ -573,7 +574,8 @@ function courseform(){
 	//Instructor Info Tab
 	var instructor_info = '';
 	instructor_info+='				<div class="tab-pane" id="instructor-tab">';
-	instructor_info+='					 <div class = "row">';
+    instructor_info+='              <h3>Step 2 - Instructor Information</h3>';
+    instructor_info+='					 <div class = "row largemargin">';
 	instructor_info+='					 	 <div class = "form-group col-sm-4">';
 	instructor_info+='					 		 <label><span class="required">*</span>Instructor\'s Name:</label>';
 	instructor_info+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name" required>';
@@ -594,7 +596,8 @@ function courseform(){
 	//Set Course Days Tab
 	var set_date = '';
 	set_date+='               <div class="tab-pane" id="time-tab">';
-	set_date+='                   <div class = "row">';
+    set_date+='               <h3>Step 3 - Set Course Schedule</h3>';
+	set_date+='                   <div class = "row largemargin">';
 	set_date+='                    <div class = "form-group col-sm-8">';
 	set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><br>';
 	//set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><label id="addstartdate-error" id="addenddate-error" class="error" for="addstartdate addenddate"></label><br>';
@@ -657,7 +660,7 @@ function courseform(){
 	set_date+='                    </div>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "removeschedule" onClick="removeTime()">Remove schedule</button>';
-	set_date+='                    <div class = "row" name="adhoc0" id="adhoc0">';
+	set_date+='                    <div class = "row largemargin" name="adhoc0" id="adhoc0">';
 	set_date+='                    	<div>';
 	set_date+='							<label class = "form-group col-sm-4">Ad-Hoc Days:</label>';
 	set_date+='							<label class = "form-group col-sm-2">Start Time:</label>';
