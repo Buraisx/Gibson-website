@@ -435,12 +435,12 @@ function showFilteredCourses(data, searchText){
         }
         courses += '        </div>';
 
-        //*** Cost and Button for Adding the Course to the Cart ***//
+		//*** Cost and Button for Adding the Course to the Cart ***//
 		courses += '        		<div class="row largemargin">';
-        courses += '          	  		<div class="col-sm-4">';
+		courses += '          	  		<div class="col-sm-4">';
 		courses += '         	         	<p id="cost' + i + '"><b>Cost:</b></p>';
 		courses += '        	    	</div>';
-        courses += '          	  		<div class="col-sm-1">';
+		courses += '          	  		<div class="col-sm-1">';
 		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee + '</p>';
 		courses += '        	    	</div>';
 		courses += '       			</div>';
@@ -493,7 +493,7 @@ function listEnrolled(course_id, index){
 			studentslist+='        </tr>';
 			studentslist+='    </thead>';
 			studentslist+='    <tbody>';
-	       	for(var k = 0; k < students.length; k++) {
+			for(var k = 0; k < students.length; k++) {
 				studentslist+='        <tr>';
 				studentslist+='            <td>' + students[k].fname + ' ' + students[k].lname + '</td>';
 				studentslist+='            <td>' + students[k].username + '</td>';
@@ -505,15 +505,15 @@ function listEnrolled(course_id, index){
 			
 			//Apply to HTML
 			$( "#course_table" ).show("slow", function() {
-    			// Animation complete.
-  			});
-        	$("#course_table"+index).contents().remove();
-        	$("#course_table"+index).append(studentslist);
-        }
+				// Animation complete.
+			});
+			$("#course_table"+index).contents().remove();
+			$("#course_table"+index).append(studentslist);
+		}
 
-        else{
-        	$( "#course_table" ).hide();
-        }      
+		else{
+			$( "#course_table" ).hide();
+		}
 	});
 }
 

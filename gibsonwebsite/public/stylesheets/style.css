@@ -391,6 +391,11 @@ hr {
     text-align: right;
 }
 
+/** admin panel **/
+.eventsubmit {
+    margin-bottom: 30px;
+}
+
 /** Shopping Cart Styles **/
 
 #shoppingcart{
