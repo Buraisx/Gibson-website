@@ -18,9 +18,9 @@ function controlpanel () {
     controlpanel+='                    <input type="text" class="input form-control" name="enddate" id="enddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
     controlpanel+='                </div>';
     controlpanel+='            </div>';
-    controlpanel+='            <div class = "form-group col-sm-3" required>';
+    controlpanel+='            <div class = "form-group col-sm-3">';
     controlpanel+='                <label><span class="required">*</span>Type:</label>';
-    controlpanel+='                 <select class="form-control" name="eventtype" id="eventtype">';
+    controlpanel+='                 <select class="form-control" name="eventtype" id="eventtype" required>';
     controlpanel+='                     <option value="">Select a type</option>';
     controlpanel+='                     <option value="MAINTENANCE">MAINTENANCE</option>';
     controlpanel+='                     <option value="SLOW">SLOW</option>';
@@ -41,7 +41,7 @@ function controlpanel () {
     controlpanel+='        <div class = "row">';
     controlpanel+='            <div class = "form-group col-sm-9">';
     controlpanel+='                <label><span class="required">*</span>Description:</label>';
-    controlpanel+='                <textarea class = "form-control" rows = "3" name = "message" id = "message"></textarea>';
+    controlpanel+='                <textarea class = "form-control" rows = "3" name = "message" id = "message" required></textarea>';
     controlpanel+='            </div>';
     controlpanel+='        </div>';
     controlpanel+='        <div class = "row">';
