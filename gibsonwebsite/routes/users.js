@@ -210,7 +210,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 	//alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
 	//console.log(alreadyRegCourses);
 
-	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_language, a.course_days, a.default_fee FROM gibson.course a WHERE NOT EXISTS (SELECT course_id FROM gibson.user_course uc WHERE a.course_id = uc.course_id AND uc.user_id = '1') AND a.start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY ORDER BY a.course_id DESC;";
+	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_language, a.course_days, a.default_fee FROM gibson.course a WHERE NOT EXISTS (SELECT course_id FROM gibson.user_course uc WHERE a.course_id = uc.course_id AND uc.user_id = '1') AND a.end_date >= NOW() ORDER BY a.course_id DESC;";
 	nonRegCourses = mysql.format(nonRegCourses, inserts);
 	//console.log(nonRegCourses);
 
