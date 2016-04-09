@@ -354,6 +354,8 @@ function filterCourses(searchText){
 	showFilteredCourses(filteredCourses, searchText);
 }
 
+
+
 //Display list of registerable courses
 // Actually displaying courses.
 function showFilteredCourses(data, searchText){
@@ -386,82 +388,96 @@ function showFilteredCourses(data, searchText){
 		courses += '          	<div class="panel-body">';
 		courses += '        	<div class="col-sm-offset-1">';
 
-				//*** AJAX for Generating Description ***//
+        //*** AJAX for Generating Description ***//
 		courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-12">';
-		courses += '                		<p id="descriptiontitle' + i + '"><b>Description: </b></p>';
+		courses += '            		<div class="col-sm-4">';
+		courses += '                		<p id="descriptiontitle' + i + '"><b>Description:</b></p>';
 		courses += '        			</div>';
-		courses += '        		</div>';
-				courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-12 courseindent">';
-				courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
+		courses += '            		<div class="col-sm-8 courseindent">';
+        courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
 
-				//*** AJAX for Generating Period ***//
-		courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-12">';
-		courses += '               		 	 <p id="courseperiod' + i + '">Period: ' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+        //*** AJAX for Generating Period ***//
+		courses += '        		<div class="row largemargin">';
+		courses += '            		<div class="col-sm-4">';
+		courses += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
+		courses += '            		</div>';
+        courses += '            		<div class="col-sm-8">';
+		courses += '               		 	 <p id="courseperiod' + i + '">' +String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
 		courses += '            		</div>';
 		courses += '        		</div>';
 
-				//*** AJAX for Generating Target ***//
+        //*** AJAX for Generating Target ***//
 		courses += '        		<div class="row">';
-		courses += '        	    	<div class="col-sm-12">';
-		courses += '        	        	 <p id="coursetarget' + i + '">Target: ' + data[i].course_target + '</p>';
+		courses += '        	    	<div class="col-sm-4">';
+		courses += '        	        	 <p id="coursetarget' + i + '"><b>Target:</b></p>';
+		courses += '         	   		</div>';
+        courses += '        	    	<div class="col-sm-8">';
+		courses += '        	        	 <p id="coursetarget' + i + '">' + data[i].course_target + '</p>';
 		courses += '         	   		</div>';
 		courses += '        		</div>';
 
 
-				//*** AJAX for Generating Language ***//
-				courses += '        		<div class="row">';
-		courses += '        	    	<div class="col-sm-12">';
-		courses += '        	        	 <p id="courselanguage' + i + '">Language:</p>';
+        //*** AJAX for Generating Language ***//
+        courses += '        		<div class="row">';
+		courses += '        	    	<div class="col-sm-4">';
+		courses += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
 		courses += '         	   		</div>';
-		courses += '        		</div>';
+    	
 
-
-			//*** JQuery Loop for Generating Languages ***//
+    	//*** JQuery Loop for Generating Languages ***//
 		if(data[i].course_language != null){
 			for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
 				var lang = JSON.parse(data[i].course_language)[j];
-				courses += '        		<div class="row">';
-				courses += '            		<div class="col-sm-12">';
-								courses += '                        <p><span class="col-sm-2"><b>' + "&nbsp;" + lang + '</b></span></p>';
-				courses += '            		</div>';
-				courses += '        		</div>';
+                if (j != 0) {
+					courses += '            <div class="col-sm-8 col-sm-offset-4">';
+                }
+                else {
+					courses += '            <div class="col-sm-8">';
+                }
+                courses += '                 <p id="courselanguage' + i + '">' + lang + '</p>';
+				courses += '            </div>';
 			}
 		}
+        courses += '                </div>';
 
-				//*** AJAX for Header of Date(s) and Time(s) ***//
-				courses += '        		<div class="row">';
-				courses += '            		<div class="col-sm-12">';
-				courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s): </b></p>';
-				courses += '            		</div>';
-				courses += '        		</div>';
+        //*** AJAX for Header of Date(s) and Time(s) ***//
+        courses += '        		<div class="row largemargin">';
+        courses += '            		<div class="col-sm-4">';
+        courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s):</b></p>';
+        courses += '            		</div>';
 
-				//*** AJAX Loop for Generating Day-Time ***//
-				if(data[i].course_days != null){
-					for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
-							var days = JSON.parse(data[i].course_days)[j].day;
-								var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
-							courses += '        		<div class="row">';
-				courses += '            		<div class="col-sm-12">';
-								courses += '                        <p id="coursedaytime"><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
-				courses += '            		</div>';
-				courses += '        		</div>';
+        //*** AJAX Loop for Generating Day-Time ***//
+        if(data[i].course_days != null){
+        	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+            	var days = JSON.parse(data[i].course_days)[j].day;
+                var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
+                if (j != 0) {
+				courses += '            <div class="col-sm-8">';
+                }
+                else {
+                courses += '            <div class="col-sm-8">';
+                }
+                courses += '                 <span class="courseday">' + days + '</span>';
+                courses += '                 <span class="coursetime">' + time + '</span>';
+				courses += '            </div>';
 
-					}
-				}
-
-				//*** Cost ***//
+        	}
+        }
+        courses += '        </div>';
+        
+        //*** Cost for Adding the Course to the Cart ***//
 		courses += '        		<div class="row largemargin">';
-				courses += '          	  		<div class="col-sm-3">';
-		courses += '         	         	<p id="cost' + i + '"><b>Cost: $' + data[i].default_fee + '</b></p>';
+        courses += '          	  		<div class="col-sm-4">';
+		courses += '         	         	<p id="cost' + i + '"><b>Cost:</b></p>';
+		courses += '        	    	</div>';
+        courses += '          	  		<div class="col-sm-1">';
+		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee + '</p>';
 		courses += '        	    	</div>';
 		courses += '       			</div>';
 
-				//*** Closes all divs ***//
+        //*** Closes all divs ***//
 		courses += '        	</div>';
 		courses += '        	</div>';
 		courses += '        </div>';

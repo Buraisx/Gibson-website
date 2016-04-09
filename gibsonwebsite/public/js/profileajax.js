@@ -841,7 +841,7 @@ function showFilteredCourses(data, searchText){
             	var days = JSON.parse(data[i].course_days)[j].day;
                 var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
                 if (j != 0) {
-					courses += '            <div class="col-sm-8">';
+				courses += '            <div class="col-sm-8">';
                 }
                 else {
                 courses += '            <div class="col-sm-8">';
