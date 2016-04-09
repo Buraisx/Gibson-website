@@ -185,6 +185,32 @@ router.post('/admin/profile/v2', function(req, res){
     res.send("DONE");
 });
 
+// ROUTE TO ADD NEW EVENT
+router.post('/admin/addEvent', function(req, res){
+
+  var query = 'INSERT INTO gibson.website_alert (init_date, end_date, alert_msg, alert_type) ';
+      query +='VALUES(?, ?, ?, ?)';
+
+  query = mysql.format(query, [req.body.startdate, req.body.enddate, req.body.eventmessage, req.body.eventtype]);
+
+  connection.getConnection(function(err, con){
+    if(err){
+      res.status(500).send('Internal Server Error');
+    }
+    else{
+      con.query(query, function(err, result){
+        if(err){
+          console.log('adminqueries.js: Unable to add new event.');
+          res.status(500).send('Unable to add new event.');
+        }
+        else{
+          res.status(200).send('Event added');
+        }
+      });
+    }
+  });
+});
+
 router.post('/admin/profile/addCourse', function(req, res){
     var sql = readSQL.getSQL('dml_addcourse.txt');
 	//Note: *create DML closures apply .shift() on to req.body*
