@@ -15,6 +15,62 @@ $("a[href$='#courses']").click(function() {
 
 $("a[href$='#addcourses']").ready(function(){
 	courseform();
+		var count = 0;
+	var count2=0;
+	$('#addcourses').find('input[required]').each(function(){
+		if ($.trim($(this).val()).length == 0)
+        { 
+			count++;
+			console.log(this.id)
+		}
+	});
+	if (count > 0)
+	{		
+		$("#addcourses").find('#validate').removeAttr('onClick');	
+	}
+	$('#validate').click(function(){
+		count = 0;
+		count2=0;
+		$('#addcourses').find('input[required]').each(function(){
+			if ($.trim($(this).val()).length == 0)
+        	{ 
+				count++;
+				count2++;
+				$(this).addClass('enabler');
+			}
+			if(count>4)
+			{
+				$("#addcourses").find('#validate').addClass('disabled');	
+			}
+		});
+		if (count>4)
+		{
+			swal("Please fill in all required fields.")
+		}
+		console.log(count2)
+	});
+	//$('#addcourses').find('.enabler').on("change",function(){
+	$(document).on("change","input.enabler",function(){
+		if ($.trim($(this).val()).length > 0)
+        { 
+			count2--;
+			$(this).removeClass('enabler');
+		}
+		console.log(count2)
+		if (count2<=4)
+		{
+			swal("Course can now be submitted.") 
+			$('#validate').removeClass('disabled');
+			$('#validate').attr('onClick', 'validateCourse()');	
+		}
+	});
+/*	$('input[required]').focus(function(){
+	}).blur(function(){
+		if($.trim($(this).val()).length ==0)
+		{
+			console.log("please fill")
+		}
+	});*/
 });
 
 
@@ -437,9 +493,9 @@ function courseform(){
 	nav += '<h1>Add A Course</h1>'
 	nav += '</br>'
 	nav += '<ul class="nav nav-tabs">';
-	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">Course Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#instructor-tab" data-toggle="tab">Instructor Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#time-tab" data-toggle="tab">Set Course Schedule <i class="fa"></i></a></li>';
+	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">1. Course Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#instructor-tab" data-toggle="tab">2. Instructor Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#time-tab" data-toggle="tab">3. Set Course Schedule <i class="fa"></i></a></li>';
 	nav += '</ul>';
 
 	var csrfmeta = $("meta[name=_csrf]");
@@ -470,7 +526,7 @@ function courseform(){
 	course_info+='                    </div>';
 	course_info+='                    <div class = "row">';
 	course_info+='                        <div class = "form-group col-sm-4">';
-	course_info+='                            <label>Maxmimum Capacity:</label>';
+	course_info+='                            <label><span class="required">*</span>Maximum Capacity:</label>';
 	course_info+='                            <input type = "number" class = "form-control" name = "course_limit" id = "course_limit" required>';
 	course_info+='                        </div>';
 	course_info+='                    </div>';
@@ -505,7 +561,7 @@ function courseform(){
 	instructor_info+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name" required>';
 	instructor_info+='					 	 </div>';
 	instructor_info+='					 	 <div class = "form-group col-sm-4">';
-	instructor_info+='					 		 <label>Instructor\'s Username:</label>';
+	instructor_info+='					 		 <label><span class="required">*</span>Instructor\'s Username:</label>';
 	instructor_info+='                            <input type = "text" class = "form-control" name = "instructor_username" id = "instructor_username" required>';
 	instructor_info+='					 	 </div>';
 	instructor_info+='					 </div>';
@@ -607,7 +663,14 @@ function courseform(){
 	set_date+='                    </div>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="addAdhocTime()">Add a custom schedule</button>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "removeadhoc" onClick="removeAdhocTime()">Remove schedule</button>';
+	set_date+='                    <div class="row form-group">';
+	//addcourses+='                    <br>';
+	set_date+='                        <div class = "col-sm-8 reducepadding">';
+	set_date+='                            <button type = "button" class= "btn btn-success" id = "validate" onClick="validateCourse()">Submit</button>';
+	set_date+='                        </div>';
+	set_date+='                    </div>';
 	set_date+='                </div>';
+	set_date+='                </form>';
 
 	//Insert all tabs
 	addcourses+=course_info;
@@ -616,13 +679,6 @@ function courseform(){
 
 	//Submit Tab
 	addcourses+='				  	 </div>';	//closing tab div
-	addcourses+='                    <div class="row form-group">';
-	//addcourses+='                    <br>';
-	addcourses+='                        <div class = "col-sm-8 reducepadding">';
-	addcourses+='                            <button type = "button" class= "btn btn-default" id = "validate" onClick="validateCourse()">Validate!</button>';
-	addcourses+='                        </div>';
-	addcourses+='                    </div>';
-	addcourses+='                </form>';
 
 	$('#addcourses').append(nav);
 	$('#addcourses').append(addcourses);
