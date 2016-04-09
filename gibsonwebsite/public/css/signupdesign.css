@@ -69,6 +69,15 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
     display:none;
     z-index: 999;
 }
+.g-recaptcha
+{
+	position:fixed;
+    top:40%;
+    left:40%;
+	display: none;
+	opacity:1;
+	z-index: 9999;
+}
 .marginleft73
 {
 	margin-top:3%;
@@ -78,6 +87,10 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 .marginleft30
 {
 	margin-left:30%;
+}
+.marginleft21
+{
+	margin-left:21%;
 }
 .extend
 {
@@ -103,9 +116,4 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 {
 	padding-right:0px;
 	margin-left: 20px;
-}
-.g-recaptcha
-{
-	width:50%;
-	height:50%;
 }
