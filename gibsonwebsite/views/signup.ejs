@@ -10,7 +10,7 @@
     <script src = "/js/serializecontacts.js"></script>
     <script src = "/js/passwordvalidation.js"></script>
     <script src = "/js/studentinputboxes.js"></script>
-    
+    <script src ="/js/signupajax.js"></script>
     <script src = "/js/submitbutton.js"></script>
     <script src = 'https://www.google.com/recaptcha/api.js'></script>
     <!--script src = "/js/captcha.js"></script-->
@@ -19,7 +19,7 @@
 <body class="index" >
 <form name="frm" action = "/signup" method = "post" role = "form">
 <!--sending csrf token-->
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" id= "_csrf" name="_csrf" value="<%= csrfToken %>">
     <div id="myCarousel" class="carousel slide" style="height:700px;" data-interval="false">
 
         <!-- Wrapper for Slides -->
@@ -39,7 +39,7 @@
                             <div class="form-group col-sm-offset-1 col-sm-10">
                                 <label class="control-label"><span class="required">*</span>Username:</label>
                                 <span id = "confirmuser"></span>
-                                <input class = "form-control reqIn" type="text" name ="username" id="username" placeholder = "Enter Username"onkeyup="checkSpecialChars(); return false;" required pattern="\w{3,16}">
+                                <input class = "form-control reqIn" type="text" name ="username" id="username" placeholder = "Enter Username"onkeyup="delayUsername();" required pattern="\w{3,16}">
                                 <!--Character restrictions-->
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                         <div class = "row">
                             <div class="form-group col-sm-offset-1 col-sm-10">
                                 <label class="control-label"><span class="required">*</span>Email:</label>
-                                <input class = "form-control reqIn" type="email" name = "email" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
+                                <input class = "form-control reqIn" type="email" name = "email" id="email" onkeyup =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
                             </div>
                         </div>
                         <div class = "row">
