@@ -363,7 +363,8 @@ function showFilteredCourses(data, searchText){
 
 	var courses = '';
 	courses += '<div id="coursesaccordion" class="panel-group">';
-
+    courses += '<hr>';
+    courses += '<h1>All Courses and Enrollment</h1>';
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
 	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
@@ -431,7 +432,7 @@ function showFilteredCourses(data, searchText){
 			for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
 				var lang = JSON.parse(data[i].course_language)[j];
                 if (j != 0) {
-					courses += '            <div class="col-sm-8 col-sm-offset-4">';
+					courses += '            <div class="col-sm-8">';
                 }
                 else {
 					courses += '            <div class="col-sm-8">';
@@ -506,6 +507,7 @@ function showFilteredCourses(data, searchText){
 
 function courseform(){
 	var nav = '';
+    nav += '<hr>';
 	nav += '<h1>Add A Course</h1>'
 	nav += '</br>'
 	nav += '<ul class="nav nav-tabs">';
