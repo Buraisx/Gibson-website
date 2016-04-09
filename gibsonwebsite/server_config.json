@@ -2,7 +2,7 @@
 
   "db_config": {
     "connectionLimit": 10,
-    "host": "localhost",
+    "host": "127.0.0.1",
     "user": "root",
     "password": "gibson",
     "database": "gibson",
