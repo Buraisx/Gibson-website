@@ -355,8 +355,6 @@ function filterCourses(searchText){
 	showFilteredCourses(filteredCourses, searchText);
 }
 
-
-
 //Display list of registerable courses
 // Actually displaying courses.
 function showFilteredCourses(data, searchText){
@@ -364,8 +362,7 @@ function showFilteredCourses(data, searchText){
 
 	var courses = '';
 	courses += '<div id="coursesaccordion" class="panel-group">';
-    courses += '<hr>';
-    courses += '<h1>All Courses and Enrollment</h1>';
+
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
 	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
@@ -390,73 +387,52 @@ function showFilteredCourses(data, searchText){
 		courses += '          	<div class="panel-body">';
 		courses += '        	<div class="col-sm-offset-1">';
 
-        //*** AJAX for Generating Description ***//
+				//*** AJAX for Generating Description ***//
 		courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-4">';
-		courses += '                		<p id="descriptiontitle' + i + '"><b>Description:</b></p>';
+		courses += '            		<div class="col-sm-12">';
+		courses += '                		<p id="descriptiontitle' + i + '"><b>Description: </b></p>';
 		courses += '        			</div>';
-<<<<<<< HEAD
 		courses += '        		</div>';
 		courses += '        		<div class="row">';
 		courses += '            		<div class="col-sm-12 courseindent">';
 		courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
-=======
-		courses += '            		<div class="col-sm-8 courseindent">';
-        courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
->>>>>>> master
 		courses += '        			</div>';
 		courses += '        		</div>';
 
-        //*** AJAX for Generating Period ***//
-		courses += '        		<div class="row largemargin">';
-		courses += '            		<div class="col-sm-4">';
-		courses += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
-		courses += '            		</div>';
-        courses += '            		<div class="col-sm-8">';
-		courses += '               		 	 <p id="courseperiod' + i + '">' +String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
-		courses += '            		</div>';
-		courses += '        		</div>';
-
-        //*** AJAX for Generating Target ***//
+				//*** AJAX for Generating Period ***//
 		courses += '        		<div class="row">';
-		courses += '        	    	<div class="col-sm-4">';
-		courses += '        	        	 <p id="coursetarget' + i + '"><b>Target:</b></p>';
-		courses += '         	   		</div>';
-        courses += '        	    	<div class="col-sm-8">';
-		courses += '        	        	 <p id="coursetarget' + i + '">' + data[i].course_target + '</p>';
+		courses += '            		<div class="col-sm-12">';
+		courses += '               		 	 <p id="courseperiod' + i + '">Period: ' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+		courses += '            		</div>';
+		courses += '        		</div>';
+
+				//*** AJAX for Generating Target ***//
+		courses += '        		<div class="row">';
+		courses += '        	    	<div class="col-sm-12">';
+		courses += '        	        	 <p id="coursetarget' + i + '">Target: ' + data[i].course_target + '</p>';
 		courses += '         	   		</div>';
 		courses += '        		</div>';
 
 
-<<<<<<< HEAD
 				//*** AJAX for Generating Language ***//
 		courses += '        		<div class="row">';
 		courses += '        	    	<div class="col-sm-12">';
 		courses += '        	        	 <p id="courselanguage' + i + '">Language:</p>';
-=======
-        //*** AJAX for Generating Language ***//
-        courses += '        		<div class="row">';
-		courses += '        	    	<div class="col-sm-4">';
-		courses += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
->>>>>>> master
 		courses += '         	   		</div>';
-    	
+		courses += '        		</div>';
 
-    	//*** JQuery Loop for Generating Languages ***//
+
+			//*** JQuery Loop for Generating Languages ***//
 		if(data[i].course_language != null){
 			for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
 				var lang = JSON.parse(data[i].course_language)[j];
-                if (j != 0) {
-					courses += '            <div class="col-sm-8">';
-                }
-                else {
-					courses += '            <div class="col-sm-8">';
-                }
-                courses += '                 <p id="courselanguage' + i + '">' + lang + '</p>';
-				courses += '            </div>';
+				courses += '        		<div class="row">';
+				courses += '            		<div class="col-sm-12">';
+								courses += '                        <p><span class="col-sm-2"><b>' + "&nbsp;" + lang + '</b></span></p>';
+				courses += '            		</div>';
+				courses += '        		</div>';
 			}
 		}
-<<<<<<< HEAD
 
 			//*** AJAX for Header of Date(s) and Time(s) ***//
 		courses += '        		<div class="row">';
@@ -491,46 +467,6 @@ function showFilteredCourses(data, searchText){
 
 
 				//*** Closes all divs ***//
-=======
-        courses += '                </div>';
-
-        //*** AJAX for Header of Date(s) and Time(s) ***//
-        courses += '        		<div class="row largemargin">';
-        courses += '            		<div class="col-sm-4">';
-        courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s):</b></p>';
-        courses += '            		</div>';
-
-        //*** AJAX Loop for Generating Day-Time ***//
-        if(data[i].course_days != null){
-        	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
-            	var days = JSON.parse(data[i].course_days)[j].day;
-                var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
-                if (j != 0) {
-				courses += '            <div class="col-sm-8">';
-                }
-                else {
-                courses += '            <div class="col-sm-8">';
-                }
-                courses += '                 <span class="courseday">' + days + '</span>';
-                courses += '                 <span class="coursetime">' + time + '</span>';
-				courses += '            </div>';
-
-        	}
-        }
-        courses += '        </div>';
-        
-        //*** Cost for Adding the Course to the Cart ***//
-		courses += '        		<div class="row largemargin">';
-        courses += '          	  		<div class="col-sm-4">';
-		courses += '         	         	<p id="cost' + i + '"><b>Cost:</b></p>';
-		courses += '        	    	</div>';
-        courses += '          	  		<div class="col-sm-1">';
-		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee + '</p>';
-		courses += '        	    	</div>';
-		courses += '       			</div>';
-
-        //*** Closes all divs ***//
->>>>>>> master
 		courses += '        	</div>';
 		courses += '        	</div>';
 		courses += '        </div>';
@@ -597,13 +533,12 @@ function listEnrolled(course_id, index){
 
 function courseform(){
 	var nav = '';
-    nav += '<hr>';
 	nav += '<h1>Add A Course</h1>'
 	nav += '</br>'
 	nav += '<ul class="nav nav-tabs">';
-	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">Step 1 - Course Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#instructor-tab" data-toggle="tab">Step 2 - Instructor Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#time-tab" data-toggle="tab">Step 3 - Set Course Schedule <i class="fa"></i></a></li>';
+	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">1. Course Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#instructor-tab" data-toggle="tab">2. Instructor Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#time-tab" data-toggle="tab">3. Set Course Schedule <i class="fa"></i></a></li>';
 	nav += '</ul>';
 
 	var csrfmeta = $("meta[name=_csrf]");
@@ -616,8 +551,7 @@ function courseform(){
 	//Course Info Tab
 	var course_info='';
 	course_info+='					<div class="tab-pane active" id="info-tab">';
-    course_info+='                  <h3>Step 1 - Course Information</h3>';
-	course_info+='                    <div class = "row largemargin">';
+	course_info+='                    <div class = "row">';
 	course_info+='                        <div class = "form-group col-sm-4">';
 	course_info+='                            <label><span class="required">*</span>Course Name:</label>';
 	course_info+='                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>';
@@ -647,7 +581,7 @@ function courseform(){
 	course_info+='                    </div>';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="addLanguages()">Add Another Language</button>';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
-	course_info+='                    <div class = "row smallmargin">';
+	course_info+='                    <div class = "row">';
 	course_info+='                        <div class = "form-group col-sm-8">';
 	course_info+='                            <label class = "targetmargin"><span class="required">*</span>Target Audience:</label>';
 	course_info+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
@@ -664,8 +598,7 @@ function courseform(){
 	//Instructor Info Tab
 	var instructor_info = '';
 	instructor_info+='				<div class="tab-pane" id="instructor-tab">';
-    instructor_info+='              <h3>Step 2 - Instructor Information</h3>';
-    instructor_info+='					 <div class = "row largemargin">';
+	instructor_info+='					 <div class = "row">';
 	instructor_info+='					 	 <div class = "form-group col-sm-4">';
 	instructor_info+='					 		 <label><span class="required">*</span>Instructor\'s Name:</label>';
 	instructor_info+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name" required>';
@@ -686,8 +619,7 @@ function courseform(){
 	//Set Course Days Tab
 	var set_date = '';
 	set_date+='               <div class="tab-pane" id="time-tab">';
-    set_date+='               <h3>Step 3 - Set Course Schedule</h3>';
-	set_date+='                   <div class = "row largemargin">';
+	set_date+='                   <div class = "row">';
 	set_date+='                    <div class = "form-group col-sm-8">';
 	set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><br>';
 	//set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><label id="addstartdate-error" id="addenddate-error" class="error" for="addstartdate addenddate"></label><br>';
@@ -750,7 +682,7 @@ function courseform(){
 	set_date+='                    </div>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "removeschedule" onClick="removeTime()">Remove schedule</button>';
-	set_date+='                    <div class = "row largemargin" name="adhoc0" id="adhoc0">';
+	set_date+='                    <div class = "row" name="adhoc0" id="adhoc0">';
 	set_date+='                    	<div>';
 	set_date+='							<label class = "form-group col-sm-4">Ad-Hoc Days:</label>';
 	set_date+='							<label class = "form-group col-sm-2">Start Time:</label>';
