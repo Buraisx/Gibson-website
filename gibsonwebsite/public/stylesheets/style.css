@@ -184,9 +184,17 @@ a {
     width: 100%;
  }
 
+.courseday{
+    float: left;
+}
 
-.timedatefix{
-    padding-left: -10px;
+.coursetime{
+    float: right;
+    padding-right: 300px;
+}
+
+.addbutton{
+    padding-right:50px;
 
 }
 /*round corners*/
@@ -346,6 +354,10 @@ hr {
 
 .targetmargin, .submitbutton, .smallmargin {
 	margin-top: 10px;
+}
+
+.course-submit{
+    float:right;
 }
 
 .largemargin {

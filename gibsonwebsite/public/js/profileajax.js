@@ -841,10 +841,10 @@ function showFilteredCourses(data, searchText){
             	var days = JSON.parse(data[i].course_days)[j].day;
                 var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
                 if (j != 0) {
-					courses += '            <div class="col-sm-8 col-sm-offset-4 timedatefix">';
+					courses += '            <div class="col-sm-8">';
                 }
                 else {
-                	courses += '            <div class="col-sm-8 timedatefix">';
+                courses += '            <div class="col-sm-8">';
                 }
                 courses += '                 <span class="courseday">' + days + '</span>';
                 courses += '                 <span class="coursetime">' + time + '</span>';
@@ -862,7 +862,7 @@ function showFilteredCourses(data, searchText){
         courses += '          	  		<div class="col-sm-1">';
 		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee + '</p>';
 		courses += '        	    	</div>';
-		courses += '            		<div class="col-sm-4">';
+		courses += '            		<div class="col-sm-7 addbutton">';
 		courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
 		courses += '            		</div>';
 		courses += '       			</div>';
