@@ -31,6 +31,18 @@ $(document).ready(function(){
         $('#myCarousel').animate({height: '-=' + ECONTACTHEIGHTSTR});
     });
 
+    //checks for captcha
+    $('#btnsubmit').click(function(){
+        $('#frm').submit(function(){
+            $(document).find('#dimmer').css("display","block");
+            $(document).find('.g-recaptcha').css("display","block");
+            return false;
+        });
+    });
+   /* $('#frm').submit(function(e){
+    return false;
+    });*/
+
     //CHECK EVERY TEXTBOX FILLED IN
     $('.btn-success').click(function (){ 
         var count = 0;
@@ -51,7 +63,6 @@ $(document).ready(function(){
         {
             butparents.find('.btn-success').attr('data-slide', 'next');
         }
-        console.log(count);
     });
 
 });//END
@@ -107,4 +118,8 @@ function progress(percent, $element)
 {
     var progressBarWidth = percent * $element.width() / 100;
     $element.find('div').animate({ width: progressBarWidth }, 500);
+}
+function recaptchacallback()
+{
+   document.getElementById('frm').submit();
 }

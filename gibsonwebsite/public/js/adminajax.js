@@ -15,7 +15,8 @@ $("a[href$='#courses']").click(function() {
 
 $("a[href$='#addcourses']").ready(function(){
 	courseform();
-		var count = 0;
+
+	/*var count = 0;
 	var count2=0;
 	$('#addcourses').find('input[required]').each(function(){
 		if ($.trim($(this).val()).length == 0)
@@ -112,66 +113,68 @@ function listusers(){
 	jQuery.getJSON("/admin/profile/info", function(user_info){
 		$('#profile').contents().remove();
 
-		var users = $("<div></div>", {class: "panel-group", id: "profileaccordion"});
+		var users = '';
+		users = '<hr>';
+
+		users += '    <div class="panel-group" id="profileaccordion">';
+		users += '	<div class="search-box">';
+		users += '		<p><b> Admin Control Panel</b></p>';
+		users += ' 		<label> User Emails:  </label>';
+		users += '  	<input id="emails" value="">';
+		users += '			<button id="getemailbutton" type="button" data-clipboard-target="#emails"> <img src="/img/clippy.svg.png" alt="Copy to clipboard" height="20" width= "20"></button>';
+		users += '	</div>';
+
 
 		for(var i = 0; i < user_info.length; i++) {
-			//A user Accordion Panel
-			var panel_default = $("<div></div>", {class: "panel panel-primary"});
 
-			var panel_heading = $("<div></div>", {class: "panel-heading"});
-			var panel_title = $("<h4></h4>", {class: "panel-title"});
-			var collapse = $("<a></a>", {href: "#usercollapse"+i});
-			collapse.attr("data-toggle", "collapse");
-			var fullname = $("<p></p>", {id: "fullname" + i}).append(user_info[i].fname, " ", user_info[i].lname);
-			var collapse2 = $("<div></div>", {id: "usercollapse" + i, class: "panel-collapse collapse"});
-			var panelbody = $("<div></div>", {class: "panel-body"});
-
-
-			//==================================
-			//==================================
-			//WRITE ALL BASIC TAGS
-			//==================================
-			//==================================
-			///Header in Profile
-			var basicInfo = $("<h3></h3>").append("Basic Information");
-
-			var row = $("<div></div>", {class: "row"});
-			var colsm6 = $("<div></div>", {class:"col-sm-6"});
-
-			//Name
-			var fname = $("<p></p>", {id: "fname" + i}).append($("<strong></strong>").append("First Name: "), (user_info[i].fname));
-			var lname = $("<p></p>", {id: "lname" + i}).append($("<strong></strong>").append("Last Name: "), (user_info[i].lname));
-
-			//Identifiers
-			var username = $("<p></p>", {id: "username" + i}).append($("<strong></strong>").append("Username: "), (user_info[i].username));
-			var email = $("<p></p>", {id: "email" + i}).append($("<strong></strong>").append("Email: "), (user_info[i].email));
-
-			//Phone
-			var primaryPhone = $("<p></p>", {id: "primaryphone" + i}).append($("<strong></strong>").append("Phone (Home): "), (user_info[i].primary_phone));
-			var secondaryPhone = $("<p></p>", {id: "secondaryphone" + i}).append($("<strong></strong>").append("Phone (Cell): "), (user_info[i].secondary_phone));
-
-			//Birth Info
-			var gender = $("<p></p>", {id: "gender" + i}).append($("<strong></strong>").append("Gender: "), (user_info[i].gender));
-			var dob = $("<p></p>", {id: "dob" + i}).append($("<strong></strong>").append("Date of Birth: "), String(user_info[i].birth_date).substring(0, 10));
-
-			//Address
-			var address = $("<p></p>", {id: "address" + i}).append($("<strong></strong>").append("Address: "), (user_info[i].address));
-
-			if (user_info[i].student == 1) {
-				// Do student stuff
-			}
-
-			/*
-				//Student Info
-				var student = $("<h3></h3>").append("Student Information");
-				//School Name and Grade
-				var schoolname = $("<div></div>", {class: "col-sm-6"}).append("<p>School Name: " + user_info.user.address + " </p>");
-				var grade = $("<div></div>", {class: "col-sm-6"}).append("<p>Grade: " + user_info.user.address + " </p>");
-				//Major and ESL
-				var major = $("<div></div>", {class: "col-sm-6"}).append("<p>Major: " + user_info.user.address + " </p>");
-				var esl = $("<div></div>", {class: "col-sm-6"}).append("<p>ESL Level: " + user_info.user.address + " </p>");
-			*/
-
+			users += '         <div class="panel panel-primary">';
+			users += '            <div class="panel-heading">';
+			users += '                <h4 class="panel-title">';
+			users += '                    <a data-toggle="collapse" href="#usercollapse' + i + '">';
+			users += '                        <p>' + user_info[i].fname + ' ' + user_info[i].lname +'</p>';
+			users += '                    </a>';
+			users += '                </h4>';
+			users += '            </div>';
+			users += '            <div class="panel-collapse collapse" id="usercollapse' + i + '">';
+			users += '               <div class="panel-body">';
+			users += '                        <h3>Personal Information</h3>';
+			users += '                        <div class = "row">';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>First Name: </strong>' + user_info[i].fname + '</p>';
+			users += '                            </div>';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Last Name: </strong>' + user_info[i].lname + '</p>';
+			users += '                            </div>';
+			users += '                        </div>';
+			users += '                        <div class = "row">';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Username: </strong>' + user_info[i].username + '</p>';
+			users += '                            </div>';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Email: </strong>' + user_info[i].email + '</p>';
+			users += '                            </div>';
+			users += '                        </div>';
+			users += '                        <div class = "row">';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Phone (Home): </strong>' + user_info[i].primary_phone + '</p>';
+			users += '                            </div>';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Phone (Cell): </strong>' + user_info[i].secondary_phone + '</p>';
+			users += '                            </div>';
+			users += '                        </div>';
+			users += '                        <div class = "row">';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Gender: </strong>' + user_info[i].gender + '</p>';
+			users += '                            </div>';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Date of Birth: </strong>' + String(user_info[i].birth_date).substring(0, 10) + '</p>';
+			users += '                            </div>';
+			users += '                        </div>';
+			users += '                        <div class = "row">';
+			users += '                            <div class = "col-sm-6">';
+			users += '                                <p><strong>Address: </strong>' + user_info[i].address + '</p>';
+			users += '                            </div>';
+			users += '                        </div>';
 
 			//Emergency Contacts Header
 			//var emInfo = $("<h3></h3>").append("Emergency Contacts");
@@ -200,105 +203,70 @@ function listusers(){
 			//==================================
 
 
-			//=============================
-			//Top Down compilation hierarchy
-			//=============================
-			panel_default = panel_default.append(panel_heading, collapse2);
+			/*
+			//==================
+			//TOP DOWN HIERARCHY
+			//==================
+			$('#profile').append(basicInfo);
+			//fname lname
+			$('#profile').append($("<div></div>", {class:"row"}).append(
+				fname, lname));
+			//username email
+			$('#profile').append($("<div></div>", {class:"row"}).append(
+				username, email));
+			//Phone (Home, Cell)
+			$('#profile').append($("<div></div>", {class:"row"}).append(
+				primaryPhone, secondaryPhone));
+			//Gender and Date of Birth
+			$('#profile').append($("<div></div>", {class:"row"}).append(
+				gender, dob));
+			//Address
+			$('#profile').append($("<div></div>", {class:"row"}).append(
+				address));
+			/*
+			//check if user is a student
+			if(user_info.user.student==1)
+			{
 
-			//--------------------------
-			//First div of panel-default
-			panel_heading = panel_heading.append(panel_title);
-			panel_title = panel_title.append(collapse);
-			collapse = collapse.append(fullname);
+			}[*]/
+			//Emergency Contact
+			$('#profile').append(emInfo);
+			$('#profile').append(eContacts);
+			*/
 
-			//--------------------------
-			//Second div of panel-default
-			collapse2 = collapse2.append(panelbody);
-
-			// Header
-			panelbody = panelbody.append(basicInfo);
-
-			// First & last name
-			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		fname),			//escaping closures
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		lname)));			//escaping closures
-
-			// Username & email
-			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		username),			//escaping closures
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		email)));			//escaping closures
-
-			// Phone numbers
-			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		primaryPhone),			//escaping closures
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		secondaryPhone)));			//escaping closures
-
-			// Birth info
-			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		gender),			//escaping closures
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		dob)));			//escaping closures
-
-			// Address
-			panelbody = panelbody.append($("<div></div>", {class: "row"}).append(
-										 	$("<div></div>", {class:"col-sm-6"}).append(
-										 		address)));			//escaping closures
-
-			// Emergency contacts header
-			//panelbody = panelbody.append(emInfo);
-
-
-			users.append(panel_default);
-
-
-		/*
-				//==================
-				//TOP DOWN HIERARCHY
-				//==================
-				$('#profile').append(basicInfo);
-				//fname lname
-				$('#profile').append($("<div></div>", {class:"row"}).append(
-					fname, lname));
-				//username email
-				$('#profile').append($("<div></div>", {class:"row"}).append(
-					username, email));
-				//Phone (Home, Cell)
-				$('#profile').append($("<div></div>", {class:"row"}).append(
-					primaryPhone, secondaryPhone));
-				//Gender and Date of Birth
-				$('#profile').append($("<div></div>", {class:"row"}).append(
-					gender, dob));
-				//Address
-				$('#profile').append($("<div></div>", {class:"row"}).append(
-					address));
-				/*
-				//check if user is a student
-				if(user_info.user.student==1)
-				{
-					//Student Info
-					$('#profile').append(student);
-					//School Name and grade
-					$('#profile').append($("<div></div>", {class:"row"}).append(
-						schoolname, grade));
-					//major and esl level
-					$('#profile').append($("<div></div>", {class:"row"}).append(
-						major, esl));
-				}[*]/
-				//Emergency Contact
-				$('#profile').append(emInfo);
-				$('#profile').append(eContacts);
-
-				*/
+			users += '        	</div>';
+			users += '        </div>';
+			users += '    </div>';
 		}
+		users += '    </div>';
+
+		// If there are no users
+		if(user_info.length < 1)
+		{
+			var empty_courses_html = '';
+				empty_courses_html+= '<div> Oops! There are no users signed up. </div>';
+
+			users = empty_courses_html;
+		}
+
 		$('#profile').append(users);
+		var btn = document.getElementById('getemailbutton');
+		new Clipboard(btn);
+		copyEmails(user_info);
 	});
+}
+
+function copyEmails(user_info){
+
+	var emailsString = "";
+
+	for(var i = 0; i < user_info.length; i++){
+		if(user_info[i].send_notification == 1){
+			emailsString += user_info[i].email + ', ';
+		}
+	}
+	emailsString = emailsString.substring(0, emailsString.length - 2);
+	document.getElementById("emails").value = emailsString;
 }
 
 
@@ -354,8 +322,6 @@ function filterCourses(searchText){
 	showFilteredCourses(filteredCourses, searchText);
 }
 
-
-
 //Display list of registerable courses
 // Actually displaying courses.
 function showFilteredCourses(data, searchText){
@@ -363,8 +329,7 @@ function showFilteredCourses(data, searchText){
 
 	var courses = '';
 	courses += '<div id="coursesaccordion" class="panel-group">';
-    courses += '<hr>';
-    courses += '<h1>All Courses and Enrollment</h1>';
+
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
 	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
@@ -389,33 +354,29 @@ function showFilteredCourses(data, searchText){
 		courses += '          	<div class="panel-body">';
 		courses += '        	<div class="col-sm-offset-1">';
 
-        //*** AJAX for Generating Description ***//
+				//*** AJAX for Generating Description ***//
 		courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-4">';
-		courses += '                		<p id="descriptiontitle' + i + '"><b>Description:</b></p>';
+		courses += '            		<div class="col-sm-12">';
+		courses += '                		<p id="descriptiontitle' + i + '"><b>Description: </b></p>';
 		courses += '        			</div>';
-		courses += '            		<div class="col-sm-8 courseindent">';
-        courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
+		courses += '        		</div>';
+		courses += '        		<div class="row">';
+		courses += '            		<div class="col-sm-12 courseindent">';
+		courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
 
-        //*** AJAX for Generating Period ***//
-		courses += '        		<div class="row largemargin">';
-		courses += '            		<div class="col-sm-4">';
-		courses += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
-		courses += '            		</div>';
-        courses += '            		<div class="col-sm-8">';
-		courses += '               		 	 <p id="courseperiod' + i + '">' +String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+				//*** AJAX for Generating Period ***//
+		courses += '        		<div class="row">';
+		courses += '            		<div class="col-sm-12">';
+		courses += '               		 	 <p id="courseperiod' + i + '">Period: ' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
 		courses += '            		</div>';
 		courses += '        		</div>';
 
-        //*** AJAX for Generating Target ***//
+				//*** AJAX for Generating Target ***//
 		courses += '        		<div class="row">';
-		courses += '        	    	<div class="col-sm-4">';
-		courses += '        	        	 <p id="coursetarget' + i + '"><b>Target:</b></p>';
-		courses += '         	   		</div>';
-        courses += '        	    	<div class="col-sm-8">';
-		courses += '        	        	 <p id="coursetarget' + i + '">' + data[i].course_target + '</p>';
+		courses += '        	    	<div class="col-sm-12">';
+		courses += '        	        	 <p id="coursetarget' + i + '">Target: ' + data[i].course_target + '</p>';
 		courses += '         	   		</div>';
 		courses += '        		</div>';
 
@@ -425,22 +386,21 @@ function showFilteredCourses(data, searchText){
 		courses += '        	    	<div class="col-sm-4">';
 		courses += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
 		courses += '         	   		</div>';
-    	
+		courses += '        		</div>';
 
-    	//*** JQuery Loop for Generating Languages ***//
+
+			//*** JQuery Loop for Generating Languages ***//
 		if(data[i].course_language != null){
 			for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
 				var lang = JSON.parse(data[i].course_language)[j];
-                if (j != 0) {
-					courses += '            <div class="col-sm-8">';
-                }
-                else {
-					courses += '            <div class="col-sm-8">';
-                }
-                courses += '                 <p id="courselanguage' + i + '">' + lang + '</p>';
-				courses += '            </div>';
+				courses += '        		<div class="row">';
+				courses += '            		<div class="col-sm-12">';
+								courses += '                        <p><span class="col-sm-2"><b>' + "&nbsp;" + lang + '</b></span></p>';
+				courses += '            		</div>';
+				courses += '        		</div>';
 			}
 		}
+
         courses += '                </div>';
 
         //*** AJAX for Header of Date(s) and Time(s) ***//
@@ -508,12 +468,11 @@ function showFilteredCourses(data, searchText){
 function courseform(){
 	var nav = '';
     nav += '<hr>';
-	nav += '<h1>Add A Course</h1>'
-	nav += '</br>'
+	nav += '<h1>Add A Course</h1>';
 	nav += '<ul class="nav nav-tabs">';
-	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">Step 1 - Course Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#instructor-tab" data-toggle="tab">Step 2 - Instructor Information <i class="fa"></i></a></li>';
-	nav += '	<li><a href="#time-tab" data-toggle="tab">Step 3 - Set Course Schedule <i class="fa"></i></a></li>';
+	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">1. Course Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#instructor-tab" data-toggle="tab">2. Instructor Information <i class="fa"></i></a></li>';
+	nav += '	<li><a href="#time-tab" data-toggle="tab">3. Set Course Schedule <i class="fa"></i></a></li>';
 	nav += '</ul>';
 
 	var csrfmeta = $("meta[name=_csrf]");
@@ -526,8 +485,7 @@ function courseform(){
 	//Course Info Tab
 	var course_info='';
 	course_info+='					<div class="tab-pane active" id="info-tab">';
-    course_info+='                  <h3>Step 1 - Course Information</h3>';
-	course_info+='                    <div class = "row largemargin">';
+	course_info+='                    <div class = "row">';
 	course_info+='                        <div class = "form-group col-sm-4">';
 	course_info+='                            <label><span class="required">*</span>Course Name:</label>';
 	course_info+='                            <input type = "text" class = "form-control" name = "addcoursename" id = "addcoursename" required>';
@@ -557,7 +515,7 @@ function courseform(){
 	course_info+='                    </div>';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="addLanguages()">Add Another Language</button>';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
-	course_info+='                    <div class = "row smallmargin">';
+	course_info+='                    <div class = "row">';
 	course_info+='                        <div class = "form-group col-sm-8">';
 	course_info+='                            <label class = "targetmargin"><span class="required">*</span>Target Audience:</label>';
 	course_info+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
@@ -574,8 +532,7 @@ function courseform(){
 	//Instructor Info Tab
 	var instructor_info = '';
 	instructor_info+='				<div class="tab-pane" id="instructor-tab">';
-    instructor_info+='              <h3>Step 2 - Instructor Information</h3>';
-    instructor_info+='					 <div class = "row largemargin">';
+	instructor_info+='					 <div class = "row">';
 	instructor_info+='					 	 <div class = "form-group col-sm-4">';
 	instructor_info+='					 		 <label><span class="required">*</span>Instructor\'s Name:</label>';
 	instructor_info+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name" required>';
@@ -596,8 +553,7 @@ function courseform(){
 	//Set Course Days Tab
 	var set_date = '';
 	set_date+='               <div class="tab-pane" id="time-tab">';
-    set_date+='               <h3>Step 3 - Set Course Schedule</h3>';
-	set_date+='                   <div class = "row largemargin">';
+	set_date+='                   <div class = "row">';
 	set_date+='                    <div class = "form-group col-sm-8">';
 	set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><br>';
 	//set_date+='                        <label class = "addcoursepadding"><span class="required">*</span>Date:</label><label id="addstartdate-error" id="addenddate-error" class="error" for="addstartdate addenddate"></label><br>';
@@ -660,7 +616,7 @@ function courseform(){
 	set_date+='                    </div>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
 	set_date+='                    <button type = "button" class= "btn btn-default" id = "removeschedule" onClick="removeTime()">Remove schedule</button>';
-	set_date+='                    <div class = "row largemargin" name="adhoc0" id="adhoc0">';
+	set_date+='                    <div class = "row" name="adhoc0" id="adhoc0">';
 	set_date+='                    	<div>';
 	set_date+='							<label class = "form-group col-sm-4">Ad-Hoc Days:</label>';
 	set_date+='							<label class = "form-group col-sm-2">Start Time:</label>';
@@ -1000,7 +956,7 @@ function submitCourse(){
 		"instructor_bio":$('#instructor_bio').val(),
 		"addstartdate":$('#addstartdate').val(),
 		"addenddate":$('#addenddate').val(),
-		"addinterval":$('#addinterval').val(),
+		"addinterval":$('#addinterval:checked').val(),
 		"notes":"Placeholder note",
 		"course_days": scheduled_days,
 		"adhoc_days": adhoc_days,

@@ -19,7 +19,7 @@ router.get('/admin/profile/info', function(req, res) {
 
     var decode = jwt.decode(req.cookies.access_token);
 
-    var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user";
+    var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, send_notification, student FROM gibson.user";
     var inserts = decode.id;
     sql = mysql.format(sql, inserts);
 

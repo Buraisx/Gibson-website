@@ -5,7 +5,7 @@ function loginajax(){
     	password: $('#password').val()
 	})
 	.done(function (res){
-    	//window.location.href = '/user/profile';
+    	window.location.href = '/user/profile';
 	})
 	.fail(function (err){
 		swal({

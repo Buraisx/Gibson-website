@@ -152,7 +152,7 @@ header .intro-text .skills {
 /* this is to replace the bootstrap default. */
  .nav > li > a:hover,
  .nav > li > a:focus{
-	background-color: #3AAADA;
+	background-color: #FFFFFF;
 }
 
 .navbar {
@@ -178,13 +178,13 @@ header .intro-text .skills {
     border: 0;
 }
 
-.navbar-custum{
-    background-color: #3AAADA;
+.navbar-custom{
+    background-color: #FFFFFF;
     opacity:0.9;
 }
 
-.nav.navbar-nav.navbar-right li a{
-    color: white;
+.nav.navbar-nav.navbar-right li a p{
+    color: black;
 }
 
 

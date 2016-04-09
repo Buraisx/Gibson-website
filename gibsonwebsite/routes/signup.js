@@ -69,7 +69,7 @@ router.get('/signup/success', function(req,res){
 // ==============================================================
 //Check Available Username
 router.post('/signup/username', function(req, res, next){
-	var sql = "SELECT COUNT(*) FROM gibson.user WHERE username = ?";
+	var sql = "SELECT COUNT(*) AS count FROM gibson.user WHERE username = ?";
 	var inserts = [req.body.username];
 
 	connection.getConnection(function (err, con){
@@ -80,8 +80,14 @@ router.post('/signup/username', function(req, res, next){
 			}
 
 			else{
-				console.log(results);
-				res.send(results);
+
+				if(results[0].count == 0){
+					res.status(200).send(true);
+				}
+				else{
+					res.status(200).send(false);
+				}
+				
 			}
 		});
 	});
@@ -89,7 +95,7 @@ router.post('/signup/username', function(req, res, next){
 
 //Check Available email
 router.post('/signup/email', function(req, res, next){
-	var sql = "SELECT COUNT(*) FROM gibson.user WHERE email = ?";
+	var sql = "SELECT COUNT(*) as count FROM gibson.user WHERE email = ?";
 	var inserts = [req.body.email];
 
 	connection.getConnection(function (err, con){
@@ -100,8 +106,14 @@ router.post('/signup/email', function(req, res, next){
 			}
 
 			else{
-				console.log(results);
-				res.send(results);
+				
+				if(results[0].count == 0){
+					res.status(200).send(true);
+				}
+				else{
+					res.status(200).send(false);
+				}
+				
 			}
 		});
 	});

@@ -1,3 +1,7 @@
+//GLOBAL TIMER
+var typingTimer;
+var delay = 1000;
+//
 //Check username availability
 function checkusername(){
       $.post("/signup/username", {
@@ -5,12 +9,13 @@ function checkusername(){
             username: $('#username').val()
       })
       .done(function (res){
-            if(res === 0){
-                 console.log('USERNAME ' + $('#username').val() + ' OK!'); 
-            }
+            console.log("LOLS:  " +res);
 
-            else{
-                console.log('Username already taken.'); 
+            if(!res){
+                swal({
+                  title: "Username already taken.",
+                  type: "error"
+                });
             }
       })
       .fail(function (err){
@@ -25,17 +30,37 @@ function checkemail(){
             email: $('#email').val()
       })
       .done(function (res){
-            if(res === 0){
-                 console.log('EMAIL ' + $('#email').val() + ' OK!');
-            }
-
-            else{
-                console.log('Email already taken.'); 
+            if(!res){
+                swal({
+                  title: "Email already taken.",
+                  type: "error"
+                });
             }
       })
       .fail(function (err){
             console.log('Bad email');
       });
+}
+
+function delayUsername(){
+
+      clearTimeout(typingTimer);
+
+      if($('#username').val()){
+            typingTimer = setTimeout(checkusername, delay);
+      }
+
+
+}
+
+function delayEmail(){
+
+      clearTimeout(typingTimer);
+
+      if($('#email').val()){
+            typingTimer = setTimeout(checkemail, delay);
+      }
+
 }
 
 //AJAX Signup Post
@@ -75,7 +100,7 @@ function signup() {
       ephone3: $('#ephone3').val()
 	})
 	.done(function(res){
-		$.get("signup/success");
+    window.location.href = 'signup/success';
 	})
 	.fail(function (err){
 		alert('Registration failed.');

@@ -69,43 +69,58 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
     display:none;
     z-index: 999;
 }
-.marginleft73
+.g-recaptcha
 {
-	margin-top:3%;
-	margin-left:73%;
-	margin-bottom:2%;
+	position:fixed;
+    top:40%;
+    left:40%;
+	display: none;
+	opacity:1;
+	z-index: 9999;
 }
-.marginleft30
-{
-	margin-left:30%;
+
+
+.next-button{
+    margin-right: 4.8%;
+    float: right;
 }
-.extend
-{
+
+.register-button{
+    margin-right: 10%;
+    float: right;
+}
+
+#signup-notifications{
+	margin-left:21%;
+}
+
+.extend{
 	margin-bottom: 2%;
 }
-.centerbutton1
-{
-	margin-left:14%;
-}
-.centerbutton2
-{
-	margin-left:34%;
-}
-.btnedit
-{
+
+.btnedit{
 	padding: 10px 24px;
 }
-.stoppaddingleft
-{
+
+.stoppaddingleft{
 	padding-left:0px;
 }
+
 .stoppaddingright
 {
 	padding-right:0px;
 	margin-left: 20px;
 }
-.g-recaptcha
-{
-	width:50%;
-	height:50%;
+
+/* Panel Colour */
+#signup1{
+    background-color: #F39C37;
+}
+
+#signup2{
+    background-color: #3AAADA;
+}
+
+#signup3{
+    background-color: #97CD51;
 }
