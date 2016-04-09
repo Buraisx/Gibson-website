@@ -8,7 +8,7 @@ function controlpanel () {
     var controlpanel = '';
     controlpanel+='<div class="search-box">';
     controlpanel+='    <h3>Schedule Event</h3>';
-    controlpanel+='    <form action="/admin/addEvent" method="post">';
+    controlpanel+='    <form action="/admin/addEvent" method="post" class="centeredtool">';
     controlpanel+='        <div class = "row">';
     controlpanel+='            <div class = "form-group col-sm-6" required>';
     controlpanel+='                <label><span class="required">*</span>Date:</label>';
@@ -18,7 +18,7 @@ function controlpanel () {
     controlpanel+='                    <input type="text" class="input form-control" name="enddate" id="enddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
     controlpanel+='                </div>';
     controlpanel+='            </div>';
-    controlpanel+='            <div class = "form-group col-sm-4" required>';
+    controlpanel+='            <div class = "form-group col-sm-3" required>';
     controlpanel+='                <label><span class="required">*</span>Type:</label>';
     controlpanel+='                 <select class="form-control" name="eventtype" id="eventtype">';
     controlpanel+='                     <option value="">Select a type</option>';
@@ -30,20 +30,22 @@ function controlpanel () {
     controlpanel+='        </div>';
     controlpanel+='        <div class = "row">';
     controlpanel+='            <div class = "form-group col-sm-3">';
+    controlpanel+='                <label><span class="required">*</span>Start Time:</label>';
     controlpanel+='                <input type = "text" class = "form-control timepicki" name = "starttime" id = "starttime" required>';
     controlpanel+='            </div>';
     controlpanel+='            <div class = "form-group col-sm-3">';
+    controlpanel+='                <label><span class="required">*</span>End Time:</label>';
     controlpanel+='                <input type = "text" class = "form-control timepicki" name = "endtime" id = "endtime" required>';
     controlpanel+='            </div>';
     controlpanel+='        </div>';
     controlpanel+='        <div class = "row">';
-    controlpanel+='            <div class = "form-group col-sm-10">';
+    controlpanel+='            <div class = "form-group col-sm-9">';
     controlpanel+='                <label><span class="required">*</span>Description:</label>';
     controlpanel+='                <textarea class = "form-control" rows = "3" name = "message" id = "message"></textarea>';
     controlpanel+='            </div>';
     controlpanel+='        </div>';
     controlpanel+='        <div class = "row">';
-    controlpanel+='            <div class = "col-sm-8 ">';
+    controlpanel+='            <div class = "col-sm-8">';
     controlpanel+='                <button type = "submit" class= "btn eventsubmit" id = "validate">Submit</button>';
     controlpanel+='            </div>';
     controlpanel+='        </div>';
@@ -52,6 +54,7 @@ function controlpanel () {
 
     $('#controlPanel').append(controlpanel);;
 
+    $('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
     $('.timepicki').timepicki({start_time: ["12", "00", "PM"]});
 }
 
