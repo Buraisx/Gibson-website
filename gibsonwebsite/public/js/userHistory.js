@@ -36,7 +36,7 @@ function load_history(){
 				history+='            <td>' + res[i].description + '</td>';
 				history+='            <td>' + date + '</td>';
 				//history+='            <td>' + res[i].transaction_id + '</td>';
-				 history+='            <td>' + res[i].paypal_id + '</td>';
+				history+='            <td>' + res[i].paypal_id + '</td>';
 				history+='            <td>' + state + '</td>';
 				history+='            <td>' + res[i].payer_first_name + ' ' + res[i].payer_last_name + '</td>';
 				history+='            <td>' + res[i].total + '</td>';
