@@ -121,54 +121,55 @@ function listusers(){
 
 		for(var i = 0; i < user_info.length; i++) {
 
-			users += '    <div class="panel panel-primary">';
-			users += '        <div class="panel-heading">';
-			users += '            <h4 class="panel-title">';
-			users += '                <a data-toggle="collapse" href="#usercollapse' + i + '">';
-			users += '                    <p>' + user_info[i].fname + ' ' + user_info[i].lname +'</p>';
-			users += '                </a>';
-			users += '            </h4>';
-			users += '        </div>';
-			users += '        <div class="panel-collapse collapse" id="usercollapse' + i + '">';
-			users += '          	<div class="panel-body">';
-			users += '                    <h3>Personal Information</h3>';
-			users += '                    <div class = "row">';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>First Name: </strong>' + user_info[i].fname + '</p>';
-			users += '                        </div>';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Last Name: </strong>' + user_info[i].lname + '</p>';
-			users += '                        </div>';
-			users += '                    </div>';
-			users += '                    <div class = "row">';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Username: </strong>' + user_info[i].username + '</p>';
-			users += '                        </div>';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Email: </strong>' + user_info[i].email + '</p>';
-			users += '                        </div>';
-			users += '                    </div>';
-			users += '                    <div class = "row">';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Phone (Home): </strong>' + user_info[i].primary_phone + '</p>';
-			users += '                        </div>';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Phone (Cell): </strong>' + user_info[i].secondary_phone + '</p>';
-			users += '                        </div>';
-			users += '                    </div>';
-			users += '                    <div class = "row">';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Gender: </strong>' + user_info[i].gender + '</p>';
-			users += '                        </div>';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Date of Birth: </strong>' + String(user_info[i].birth_date).substring(0, 10) + '</p>';
-			users += '                        </div>';
-			users += '                    </div>';
-			users += '                    <div class = "row">';
-			users += '                        <div class = "col-sm-6">';
-			users += '                            <p><strong>Address: </strong>' + user_info[i].address + '</p>';
-			users += '                        </div>';
-			users += '                    </div>';
+			users += '
+			        <div class="panel panel-primary">
+			            <div class="panel-heading">
+			                <h4 class="panel-title">
+			                    <a data-toggle="collapse" href="#usercollapse' + i + '">
+			                        <p>' + user_info[i].fname + ' ' + user_info[i].lname +'</p>
+			                    </a>
+			                </h4>
+			            </div>
+			            <div class="panel-collapse collapse" id="usercollapse' + i + '">
+			               <div class="panel-body">
+			                        <h3>Personal Information</h3>
+			                        <div class = "row">
+			                            <div class = "col-sm-6">
+			                                <p><strong>First Name: </strong>' + user_info[i].fname + '</p>
+			                            </div>
+			                            <div class = "col-sm-6">
+			                                <p><strong>Last Name: </strong>' + user_info[i].lname + '</p>
+			                            </div>
+			                        </div>
+			                        <div class = "row">
+			                            <div class = "col-sm-6">
+			                                <p><strong>Username: </strong>' + user_info[i].username + '</p>
+			                            </div>
+			                            <div class = "col-sm-6">
+			                                <p><strong>Email: </strong>' + user_info[i].email + '</p>
+			                            </div>
+			                        </div>
+			                        <div class = "row">
+			                            <div class = "col-sm-6">
+			                                <p><strong>Phone (Home): </strong>' + user_info[i].primary_phone + '</p>
+			                            </div>
+			                            <div class = "col-sm-6">
+			                                <p><strong>Phone (Cell): </strong>' + user_info[i].secondary_phone + '</p>
+			                            </div>
+			                        </div>
+			                        <div class = "row">
+			                            <div class = "col-sm-6">
+			                                <p><strong>Gender: </strong>' + user_info[i].gender + '</p>
+			                            </div>
+			                            <div class = "col-sm-6">
+			                                <p><strong>Date of Birth: </strong>' + String(user_info[i].birth_date).substring(0, 10) + '</p>
+			                            </div>
+			                        </div>
+			                        <div class = "row">
+			                            <div class = "col-sm-6">
+			                                <p><strong>Address: </strong>' + user_info[i].address + '</p>
+			                            </div>
+			                        </div>';
 
 
 			if (user_info[i].student == 1) {
