@@ -16,7 +16,7 @@ $("a[href$='#courses']").click(function() {
 
 $("a[href$='#addcourses']").ready(function(){
 	courseform();
-	var count = 0;
+	/*var count = 0;
 	var count2=0;
 	$('#addcourses').find('input[required]').each(function(){
 		if ($.trim($(this).val()).length == 0)
@@ -987,7 +987,7 @@ function submitCourse(){
 		"instructor_bio":$('#instructor_bio').val(),
 		"addstartdate":$('#addstartdate').val(),
 		"addenddate":$('#addenddate').val(),
-		"addinterval":$('#addinterval').val(),
+		"addinterval":$('#addinterval:checked').val(),
 		"notes":"Placeholder note",
 		"course_days": scheduled_days,
 		"adhoc_days": adhoc_days,
