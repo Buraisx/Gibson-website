@@ -9,6 +9,7 @@ function controlpanel () {
     controlpanel+='<div class="search-box">';
     controlpanel+='    <h3>Schedule Event</h3>';
     controlpanel+='    <form action="/admin/addEvent" method="post" class="centeredtool">';
+    controlpanel+='        <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
     controlpanel+='        <div class = "row">';
     controlpanel+='            <div class = "form-group col-sm-6" required>';
     controlpanel+='                <label><span class="required">*</span>Date:</label>';
