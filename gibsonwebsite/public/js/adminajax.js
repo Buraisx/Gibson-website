@@ -108,16 +108,22 @@ function addCourse(course_add){
 }
 */
 
-
 // Generate List of users HTML
 function listusers(){
 	jQuery.getJSON("/admin/profile/info", function(user_info){
 		$('#profile').contents().remove();
-
+		new Clipboard('button');
+		
 		var users = '';
 		users = '<hr>';
 
 		users += '    <div class="panel-group" id="profileaccordion">';
+		users += '	<div class="search-box">';
+		users += '		<p><b> Admin Control Panel</b></p>';
+		users += '  	<input id="emails" value="">';
+		users += '		<button class="button" data-clipboard-target="#emails">Copy Emails to Clipboard </button>';
+		users += '	</div>';
+
 
 		for(var i = 0; i < user_info.length; i++) {
 
@@ -244,9 +250,22 @@ function listusers(){
 		}
 
 		$('#profile').append(users);
+		copyEmails(user_info);
 	});
 }
 
+function copyEmails(user_info){
+
+	var emailsString = "";
+
+	for(var i = 0; i < user_info.length; i++){
+		if(user_info[i].send_notification == 1){
+			emailsString += user_info[i].email + ', ';
+		}
+	}
+	emailsString = emailsString.substring(0, emailsString.length - 2);
+	document.getElementById("emails").value = emailsString;
+}
 
 
 //Global variable allAvailableCourses
