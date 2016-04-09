@@ -13,9 +13,10 @@ $("a[href$='#courses']").click(function() {
 	listcourses();
 });
 
+
 $("a[href$='#addcourses']").ready(function(){
 	courseform();
-		var count = 0;
+	var count = 0;
 	var count2=0;
 	$('#addcourses').find('input[required]').each(function(){
 		if ($.trim($(this).val()).length == 0)
@@ -376,7 +377,7 @@ function showFilteredCourses(data, searchText){
 		courses += '    <div class="panel panel-primary">';
 		courses += '        <div class="panel-heading">';
 		courses += '            <h4 class="panel-title">';
-		courses += '                <a  data-toggle="collapse" href="#collapse' + i + '">';
+		courses += '                <a  data-toggle="collapse" href="#collapse' + i + '" onClick="listEnrolled('+ data[i].course_id +', '+ i +')">';
 		courses += '                    <p id = "course_name_id' + i + '">';
 		courses += '                        <span class = "coursename">' + data[i].course_name +'</span>';
 		courses += '                        <span class = "courseid">Course Code: ' + data[i].course_code + '</span>';
@@ -394,8 +395,15 @@ function showFilteredCourses(data, searchText){
 		courses += '            		<div class="col-sm-4">';
 		courses += '                		<p id="descriptiontitle' + i + '"><b>Description:</b></p>';
 		courses += '        			</div>';
+<<<<<<< HEAD
+		courses += '        		</div>';
+		courses += '        		<div class="row">';
+		courses += '            		<div class="col-sm-12 courseindent">';
+		courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
+=======
 		courses += '            		<div class="col-sm-8 courseindent">';
         courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
+>>>>>>> master
 		courses += '        			</div>';
 		courses += '        		</div>';
 
@@ -420,10 +428,17 @@ function showFilteredCourses(data, searchText){
 		courses += '        		</div>';
 
 
+<<<<<<< HEAD
+				//*** AJAX for Generating Language ***//
+		courses += '        		<div class="row">';
+		courses += '        	    	<div class="col-sm-12">';
+		courses += '        	        	 <p id="courselanguage' + i + '">Language:</p>';
+=======
         //*** AJAX for Generating Language ***//
         courses += '        		<div class="row">';
 		courses += '        	    	<div class="col-sm-4">';
 		courses += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
+>>>>>>> master
 		courses += '         	   		</div>';
     	
 
@@ -441,6 +456,42 @@ function showFilteredCourses(data, searchText){
 				courses += '            </div>';
 			}
 		}
+<<<<<<< HEAD
+
+			//*** AJAX for Header of Date(s) and Time(s) ***//
+		courses += '        		<div class="row">';
+		courses += '            		<div class="col-sm-12">';
+		courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s): </b></p>';
+		courses += '            		</div>';
+		courses += '        		</div>';
+
+		//*** AJAX Loop for Generating Day-Time ***//
+		if(data[i].course_days != null){
+			for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+				var days = JSON.parse(data[i].course_days)[j].day;
+				var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
+				courses += '        		<div class="row">';
+				courses += '            		<div class="col-sm-12">';
+				courses += '                        <p id="coursedaytime"><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
+				courses += '            		</div>';
+				courses += '        		</div>';
+			}
+		}
+
+				//*** Cost ***//
+		courses += '        		<div class="row largemargin">';
+		courses += '          	  		<div class="col-sm-3">';
+		courses += '         	         	<p id="cost' + i + '"><b>Cost: $' + data[i].default_fee + '</b></p>';
+		courses += '        	    	</div>';
+		courses += '       			</div>';
+
+				//*** List of Users ***//
+		courses += '<table class="table table-bordered" id ="course_table'+ i +'" value='+ data[i].course_id +'>';
+		courses += '</table>';
+
+
+				//*** Closes all divs ***//
+=======
         courses += '                </div>';
 
         //*** AJAX for Header of Date(s) and Time(s) ***//
@@ -479,6 +530,7 @@ function showFilteredCourses(data, searchText){
 		courses += '       			</div>';
 
         //*** Closes all divs ***//
+>>>>>>> master
 		courses += '        	</div>';
 		courses += '        	</div>';
 		courses += '        </div>';
@@ -503,7 +555,45 @@ function showFilteredCourses(data, searchText){
 	$("#searchText").val(tmpStr);
 }
 
+function listEnrolled(course_id, index){
+	// List of registered students
+	jQuery.getJSON("/admin/profile/courses/students?course_id="+course_id, function(students){
+		var studentslist = '';
+					        					//coursesnsole.log(students);
+	    if(students.length > 0){
+			studentslist+='    <thead>';
+			studentslist+='        <tr class = "tableheader">';
+			studentslist+='            <th class = "col-sm-4">Description</th>';
+			studentslist+='            <th>Name</th>';
+			studentslist+='            <th>Username</th>';
+			studentslist+='            <th>User ID</th>';
+			studentslist+='            <th>Email</th>';
+			studentslist+='        </tr>';
+			studentslist+='    </thead>';
+			studentslist+='    <tbody>';
+	       	for(var k = 0; k < students.length; k++) {
+				studentslist+='        <tr>';
+				studentslist+='            <td>' + students[k].fname + ' ' + students[k].lname + '</td>';
+				studentslist+='            <td>' + students[k].username + '</td>';
+				studentslist+='            <td>' + students[k].user_id + '</td>';
+				studentslist+='            <td>' + students[k].email + '</td>';
+				studentslist+='        </tr>';
+			}
+			studentslist+='    </tbody>';
+			
+			//Apply to HTML
+			$( "#course_table" ).show("slow", function() {
+    			// Animation complete.
+  			});
+        	$("#course_table"+index).contents().remove();
+        	$("#course_table"+index).append(studentslist);
+        }
 
+        else{
+        	$( "#course_table" ).hide();
+        }      
+	});
+}
 
 function courseform(){
 	var nav = '';
