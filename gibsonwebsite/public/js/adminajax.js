@@ -13,9 +13,10 @@ $("a[href$='#courses']").click(function() {
 	listcourses();
 });
 
+
 $("a[href$='#addcourses']").ready(function(){
 	courseform();
-		var count = 0;
+	var count = 0;
 	var count2=0;
 	$('#addcourses').find('input[required]').each(function(){
 		if ($.trim($(this).val()).length == 0)
@@ -373,7 +374,7 @@ function showFilteredCourses(data, searchText){
 		courses += '    <div class="panel panel-primary">';
 		courses += '        <div class="panel-heading">';
 		courses += '            <h4 class="panel-title">';
-		courses += '                <a  data-toggle="collapse" href="#collapse' + i + '">';
+		courses += '                <a  data-toggle="collapse" href="#collapse' + i + '" onClick="listEnrolled('+ data[i].course_id +', '+ i +')">';
 		courses += '                    <p id = "course_name_id' + i + '">';
 		courses += '                        <span class = "coursename">' + data[i].course_name +'</span>';
 		courses += '                        <span class = "courseid">Course Code: ' + data[i].course_code + '</span>';
@@ -460,52 +461,9 @@ function showFilteredCourses(data, searchText){
 		courses += '        	    	</div>';
 		courses += '       			</div>';
 
-
-
-
-
-
-			// List of registered students
-			jQuery.getJSON("/admin/profile/courses/students?course_id="+data[i].course_id, function(students){
-				var studentslist = '';
-						        					//console.log(students);
-
-		        if(students.length > 0)
-		        {
-					console.log(students[0]);
-
-					studentslist+='<table class = "table table-bordered">';
-					studentslist+='    <thead>';
-					studentslist+='        <tr class = "tableheader">';
-					studentslist+='            <th class = "col-sm-4">Description</th>';
-					studentslist+='            <th>Name</th>';
-					studentslist+='            <th>Username</th>';
-					studentslist+='            <th>User ID</th>';
-					studentslist+='            <th>Email</th>';
-					studentslist+='        </tr>';
-					studentslist+='    </thead>';
-					studentslist+='    <tbody>';
-		        	for(var k = 0; k < students.length; k++) {
-						studentslist+='        <tr>';
-						studentslist+='            <td>' + students[k].fname + ' ' + students[k].lname + '</td>';
-						studentslist+='            <td>' + students[k].username + '</td>';
-						studentslist+='            <td>' + students[k].user_id + '</td>';
-						studentslist+='            <td>' + students[k].email + '</td>';
-						studentslist+='        </tr>';
-					}
-					studentslist+='    </tbody>';
-					studentslist+='</table>';
-		        }
-
-
-				courses += studentslist;
-
-			});
-
-			console.log(studentslist);
-
-
-
+				//*** List of Users ***//
+		courses += '<table class="table table-bordered" id ="course_table'+ i +'" value='+ data[i].course_id +'>';
+		courses += '</table>';
 
 
 				//*** Closes all divs ***//
@@ -533,7 +491,45 @@ function showFilteredCourses(data, searchText){
 	$("#searchText").val(tmpStr);
 }
 
+function listEnrolled(course_id, index){
+	// List of registered students
+	jQuery.getJSON("/admin/profile/courses/students?course_id="+course_id, function(students){
+		var studentslist = '';
+					        					//coursesnsole.log(students);
+	    if(students.length > 0){
+			studentslist+='    <thead>';
+			studentslist+='        <tr class = "tableheader">';
+			studentslist+='            <th class = "col-sm-4">Description</th>';
+			studentslist+='            <th>Name</th>';
+			studentslist+='            <th>Username</th>';
+			studentslist+='            <th>User ID</th>';
+			studentslist+='            <th>Email</th>';
+			studentslist+='        </tr>';
+			studentslist+='    </thead>';
+			studentslist+='    <tbody>';
+	       	for(var k = 0; k < students.length; k++) {
+				studentslist+='        <tr>';
+				studentslist+='            <td>' + students[k].fname + ' ' + students[k].lname + '</td>';
+				studentslist+='            <td>' + students[k].username + '</td>';
+				studentslist+='            <td>' + students[k].user_id + '</td>';
+				studentslist+='            <td>' + students[k].email + '</td>';
+				studentslist+='        </tr>';
+			}
+			studentslist+='    </tbody>';
+			
+			//Apply to HTML
+			$( "#course_table" ).show("slow", function() {
+    			// Animation complete.
+  			});
+        	$("#course_table"+index).contents().remove();
+        	$("#course_table"+index).append(studentslist);
+        }
 
+        else{
+        	$( "#course_table" ).hide();
+        }      
+	});
+}
 
 function courseform(){
 	var nav = '';
