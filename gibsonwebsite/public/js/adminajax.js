@@ -499,8 +499,8 @@ function listEnrolled(course_id, index){
 
 function courseform(){
 	var nav = '';
-	nav += '<h1>Add A Course</h1>'
-	nav += '</br>'
+    nav += '<hr>';
+	nav += '<h1>Add A Course</h1>';
 	nav += '<ul class="nav nav-tabs">';
 	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">1. Course Information <i class="fa"></i></a></li>';
 	nav += '	<li><a href="#instructor-tab" data-toggle="tab">2. Instructor Information <i class="fa"></i></a></li>';
