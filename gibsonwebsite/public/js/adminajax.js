@@ -253,7 +253,6 @@ var allAvailableCourses;
 function listcourses(){
 	jQuery.getJSON("/admin/profile/courses", function(data_unfiltered){
 
-		console.log(data_unfiltered);
 		allAvailableCourses = data_unfiltered;
 		showFilteredCourses(allAvailableCourses, '');
 	});
