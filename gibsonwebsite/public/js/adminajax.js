@@ -392,9 +392,9 @@ function showFilteredCourses(data, searchText){
 		courses += '                		<p id="descriptiontitle' + i + '"><b>Description: </b></p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
-				courses += '        		<div class="row">';
+		courses += '        		<div class="row">';
 		courses += '            		<div class="col-sm-12 courseindent">';
-				courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
+		courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
 
@@ -414,7 +414,7 @@ function showFilteredCourses(data, searchText){
 
 
 				//*** AJAX for Generating Language ***//
-				courses += '        		<div class="row">';
+		courses += '        		<div class="row">';
 		courses += '        	    	<div class="col-sm-12">';
 		courses += '        	        	 <p id="courselanguage' + i + '">Language:</p>';
 		courses += '         	   		</div>';
@@ -433,33 +433,80 @@ function showFilteredCourses(data, searchText){
 			}
 		}
 
-				//*** AJAX for Header of Date(s) and Time(s) ***//
+			//*** AJAX for Header of Date(s) and Time(s) ***//
+		courses += '        		<div class="row">';
+		courses += '            		<div class="col-sm-12">';
+		courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s): </b></p>';
+		courses += '            		</div>';
+		courses += '        		</div>';
+
+		//*** AJAX Loop for Generating Day-Time ***//
+		if(data[i].course_days != null){
+			for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+				var days = JSON.parse(data[i].course_days)[j].day;
+				var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
 				courses += '        		<div class="row">';
 				courses += '            		<div class="col-sm-12">';
-				courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s): </b></p>';
+				courses += '                        <p id="coursedaytime"><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
 				courses += '            		</div>';
 				courses += '        		</div>';
-
-				//*** AJAX Loop for Generating Day-Time ***//
-				if(data[i].course_days != null){
-					for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
-							var days = JSON.parse(data[i].course_days)[j].day;
-								var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
-							courses += '        		<div class="row">';
-				courses += '            		<div class="col-sm-12">';
-								courses += '                        <p id="coursedaytime"><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
-				courses += '            		</div>';
-				courses += '        		</div>';
-
-					}
-				}
+			}
+		}
 
 				//*** Cost ***//
 		courses += '        		<div class="row largemargin">';
-				courses += '          	  		<div class="col-sm-3">';
+		courses += '          	  		<div class="col-sm-3">';
 		courses += '         	         	<p id="cost' + i + '"><b>Cost: $' + data[i].default_fee + '</b></p>';
 		courses += '        	    	</div>';
 		courses += '       			</div>';
+
+
+
+
+
+
+			// List of registered students
+			jQuery.getJSON("/admin/profile/courses/students?course_id="+data[i].course_id, function(students){
+				var studentslist = '';
+						        					//console.log(students);
+
+		        if(students.length > 0)
+		        {
+					console.log(students[0]);
+
+					studentslist+='<table class = "table table-bordered">';
+					studentslist+='    <thead>';
+					studentslist+='        <tr class = "tableheader">';
+					studentslist+='            <th class = "col-sm-4">Description</th>';
+					studentslist+='            <th>Name</th>';
+					studentslist+='            <th>Username</th>';
+					studentslist+='            <th>User ID</th>';
+					studentslist+='            <th>Email</th>';
+					studentslist+='        </tr>';
+					studentslist+='    </thead>';
+					studentslist+='    <tbody>';
+		        	for(var k = 0; k < students.length; k++) {
+						studentslist+='        <tr>';
+						studentslist+='            <td>' + students[k].fname + ' ' + students[k].lname + '</td>';
+						studentslist+='            <td>' + students[k].username + '</td>';
+						studentslist+='            <td>' + students[k].user_id + '</td>';
+						studentslist+='            <td>' + students[k].email + '</td>';
+						studentslist+='        </tr>';
+					}
+					studentslist+='    </tbody>';
+					studentslist+='</table>';
+		        }
+
+
+				courses += studentslist;
+
+			});
+
+			console.log(studentslist);
+
+
+
+
 
 				//*** Closes all divs ***//
 		courses += '        	</div>';
