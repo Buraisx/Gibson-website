@@ -550,3 +550,7 @@ div[class*="banner"]{
     max-width: 300px;
     margin-bottom: 15px;
 }
+
+.tablecaption {
+    color: #2C3E50;
+}
