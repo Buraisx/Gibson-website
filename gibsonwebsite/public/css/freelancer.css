@@ -168,7 +168,7 @@ header .intro-text .skills {
 }
 
 .nav.navbar-nav.navbar-right > li > a {
-    color: black;
+    color: #888888;
 }
 
 /* specified this way to overwrite bootstrap */
