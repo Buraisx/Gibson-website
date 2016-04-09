@@ -112,16 +112,16 @@ function addCourse(course_add){
 function listusers(){
 	jQuery.getJSON("/admin/profile/info", function(user_info){
 		$('#profile').contents().remove();
-		new Clipboard('button');
-		
+
 		var users = '';
 		users = '<hr>';
 
 		users += '    <div class="panel-group" id="profileaccordion">';
 		users += '	<div class="search-box">';
 		users += '		<p><b> Admin Control Panel</b></p>';
+		users += ' 		<label> User Emails:  </label>';
 		users += '  	<input id="emails" value="">';
-		users += '		<button class="button" data-clipboard-target="#emails">Copy Emails to Clipboard </button>';
+		users += '			<button id="getemailbutton" type="button" data-clipboard-target="#emails"> <img src="/img/clippy.svg.png" alt="Copy to clipboard" height="20" width= "20"></button>';
 		users += '	</div>';
 
 
@@ -250,6 +250,8 @@ function listusers(){
 		}
 
 		$('#profile').append(users);
+		var btn = document.getElementById('getemailbutton');
+		new Clipboard(btn);
 		copyEmails(user_info);
 	});
 }
@@ -498,8 +500,8 @@ function listEnrolled(course_id, index){
 
 function courseform(){
 	var nav = '';
-	nav += '<h1>Add A Course</h1>'
-	nav += '</br>'
+    nav += '<hr>';
+	nav += '<h1>Add A Course</h1>';
 	nav += '<ul class="nav nav-tabs">';
 	nav += '	<li class="active"><a href="#info-tab" data-toggle="tab">1. Course Information <i class="fa"></i></a></li>';
 	nav += '	<li><a href="#instructor-tab" data-toggle="tab">2. Instructor Information <i class="fa"></i></a></li>';
