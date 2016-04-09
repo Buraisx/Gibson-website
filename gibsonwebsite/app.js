@@ -114,6 +114,7 @@ var invoice = require('./routes/invoice');
        }
        else{
          con.query('SELECT alert_msg, alert_type FROM gibson.website_alert WHERE start_alert=1', function(err, results){
+           con.release();
            if(!results.length){
              res.clearCookie('gibson_alert');
              next();
