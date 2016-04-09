@@ -16,15 +16,12 @@ router.get('/admin/profile', function(req, res, next) {
 
 /* Get all users */
 router.get('/admin/profile/info', function(req, res) {
-    console.log("Getting all user info");
 
     var decode = jwt.decode(req.cookies.access_token);
-    console.log(decode);
 
     var sql = "SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, student FROM gibson.user";
     var inserts = decode.id;
     sql = mysql.format(sql, inserts);
-    console.log(sql);
 
     connection.getConnection(function(err, con) {
         if(err) {
@@ -54,16 +51,13 @@ router.get('/admin/profile/info', function(req, res) {
 });
 
 router.get('/admin/profile/courses', function(req, res){
-    console.log("adminqueries.js: Getting registered courses");
 
     //in query, counts the number of users who take each course from user_course table.
     //for a more efficient, less readable count query, look at http://stackoverflow.com/questions/944099/mysql-count-on-multiple-tables
     var sql = "SELECT course_id, course_name, default_fee, start_date, end_date, course_time, course_interval, course_target, course_description, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC";
-    console.log(sql);
 
     connection.getConnection(function(err, con){
         if(err){
-            con.release();
             console.log("adminqueries.js: Cannot get connection");
             return err;
         }
@@ -88,6 +82,37 @@ router.get('/admin/profile/courses', function(req, res){
     });
 });
 
+// SENDS A LIST OF STUDENTS
+router.get('/admin/profile/courses/students', function(req, res){
+
+  var query =  'SELECT user.user_id, user.username, user.fname, user.lname, user.email ';
+      query += 'FROM gibson.user INNER JOIN gibson.user_course ';
+      query += 'ON user_course.user_id = user.user_id ';
+      query += 'WHERE user_course.course_id = ?;';
+
+  query = mysql.format(query, [req.query.course_id]);
+
+  connection.getConnection(function(err, con){
+    if (err){
+      console.log("adminqueries.js: Error getting connection to database.");
+      return err;
+    }
+    else{
+      con.query(query, function(err, results){
+        con.release();
+
+        if (err){
+          console.log("adminqueries.js: Error querying for list of students.");
+          res.status(500).send("Internal Server Error.");
+        }
+        else{
+          res.status(200).send(results);
+        }
+      });
+    }
+  });
+});
+
 /*
 router.get('/admin/profile/addCourse', function(req, res){
     res.sendStatus(200);
@@ -110,7 +135,7 @@ router.post('/validateCourse', function(req, res){
 
             if(!results.length){
                 res.send("adminqueries.js: Validated!");
-            }   
+            }
 
             else{
                 res.send(new Error("adminqueries.js: Course name or course code already exists!"));
@@ -128,21 +153,21 @@ router.post('/admin/profile/v2', function(req, res){
     var adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
 
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
-                   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription, 
+                   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription,
                    req.body.instructor_bio, ''];
 
     sql = mysql.format(sql, inserts);
     sql = sql.replace('language_dml', language_dml);
     sql = sql.replace('course_days_dml', course_days_dml);
     console.log(sql);
-    
+
     connection.getConnection(function(err,con){
         if(err){
             con.release();
             console.log("adminqueries.js: cannot get connection");
             return err;
         }
-        
+
         //execute add course DML
         console.log("DML statement addcourse");
         con.query(sql, function(err, results){
@@ -152,7 +177,7 @@ router.post('/admin/profile/v2', function(req, res){
                 return next(err);
             }
             adminFunctions.getScheduledDays(results.insertId, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);
-			
+
         });
     });
 
@@ -163,18 +188,18 @@ router.post('/admin/profile/v2', function(req, res){
 router.post('/admin/profile/addCourse', function(req, res){
     var sql = readSQL.getSQL('dml_addcourse.txt');
 	//Note: *create DML closures apply .shift() on to req.body*
-	
+
 	// HAVE TO SANITIZE days here since used in helper function AND bulk queries
 	var languages, course_days, adhoc_days;
-	
+
 	languages = sanitizeJSONArray(req.body["languages[]"]);
 	course_days = sanitizeJSONArray(req.body["course_days[]"]);
 	adhoc_days = sanitizeJSONArray(req.body["adhoc_days[]"]);
-	
+
 	console.log(languages);
 	console.log(course_days);
 	console.log(adhoc_days);
-	
+
     language_dml = createLanguageDML(languages);
 	course_days_dml = createCourseDaysDML(course_days);
     adhoc_days_dml = createAdhocDaysDML(adhoc_days);
@@ -184,21 +209,21 @@ router.post('/admin/profile/addCourse', function(req, res){
     console.log(adhoc_days_dml);
 
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
-                   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription, 
+                   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription,
                    req.body.instructor_bio, ''];
 
     sql = mysql.format(sql, inserts);
     sql = sql.replace('language_dml', language_dml);
     sql = sql.replace('course_days_dml', course_days_dml);
     console.log(sql);
-    
+
     connection.getConnection(function(err,con){
         if(err){
             con.release();
             console.log("adminqueries.js: cannot get connection");
             return err;
         }
-        
+
         async.waterfall([
             function (next){
                 con.query("START TRANSACTION;", function(err, results){
@@ -219,7 +244,7 @@ router.post('/admin/profile/addCourse', function(req, res){
                         return next(err);
                     }
                     console.log(results.insertId);
-                    next(null, results.insertId);        
+                    next(null, results.insertId);
                 });
             },
 
@@ -228,7 +253,7 @@ router.post('/admin/profile/addCourse', function(req, res){
                 if(adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, course_days)){
                     return new Error('Error adding course schedule');
                 }
-                
+
                 next(null, course_id);
             },
 			function (course_id, next) {
@@ -290,12 +315,12 @@ function createLanguageDML(languages){
     //remove last , for languages array
     language_dml=language_dml.slice(0, -1);
     language_dml+=')';
-    
+
     return language_dml;
 }
 
 function createCourseDaysDML(course_days){
-	
+
 	/* if (course_days == null) {
 		return 'JSON_ARRAY()';
 	}
@@ -317,10 +342,10 @@ function createCourseDaysDML(course_days){
         var end_time = json.end_time;
 
         schedule+= '\'day\',' +  mysql.escape(day) + ',';
-        schedule+= '\'start_time\',' + mysql.escape(start_time) + ',';  
+        schedule+= '\'start_time\',' + mysql.escape(start_time) + ',';
         schedule+= '\'end_time\',' + mysql.escape(end_time);
         schedule+= '),';
-        
+
         course_days_dml+=schedule;
     }
     //remove last , for course days array
@@ -352,10 +377,10 @@ function createAdhocDaysDML(adhoc_days){
         var end_time = json.end_time;
 
         schedule+= '\'day\',' + mysql.escape(day) + ',';
-        schedule+= '\'start_time\',' + mysql.escape(start_time) + ',';  
+        schedule+= '\'start_time\',' + mysql.escape(start_time) + ',';
         schedule+= '\'end_time\',' + mysql.escape(end_time);
         schedule+= '),';
-        
+
         adhoc_days_dml+=schedule;
     }
     //remove last , for adhoc days array
