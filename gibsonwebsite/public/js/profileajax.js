@@ -71,7 +71,7 @@ function load_profile(){
 		$('#profile').contents().remove();
 		var profileinfo='';
 		profileinfo+='    <hr>';
-		profileinfo+='    <h3>Personal Information</h3>';
+		profileinfo+='    <h1>Personal Information</h1>';
 		profileinfo+='    <div class="row">';
 		profileinfo+='        <div class="form-group col-sm-12">';
 		profileinfo+='            <p><span class="col-sm-2 fieldname">Username</span><span class="col-sm-9 fieldval">' + user_info.user.username + '</span></p>';
@@ -150,7 +150,7 @@ function load_profile(){
 		if(user_info.user.student==1)
 		{
 			profileinfo+='    <hr>';
-			profileinfo+='    <h3>Student Information</h3>';
+			profileinfo+='    <h1>Student Information</h1>';
 			profileinfo+='    <div class="row">';
 			profileinfo+='        <div class="form-group col-sm-12">';
 			profileinfo+='            <p><span class="col-sm-2 fieldname">School Name</span><span class="col-sm-9 fieldval">' + user_info.student_info.school_name + '</span></p>';
@@ -195,7 +195,7 @@ function load_profile(){
 			}
 		}
 		profileinfo+='    <hr>';
-		profileinfo+='    <h3>Emergency Contacts</h3>';
+		profileinfo+='    <h1>Emergency Contacts</h1>';
 		for(var i=0; i<user_info.emergency_contacts.length; i++)
 		{
 			profileinfo+='    <h4>Contact #'+(i+1)+'</h4>';
@@ -280,7 +280,7 @@ function editinfo () {
 		$('#profile').contents().remove();
 		var editinfo='';
 		editinfo+='    <hr>';
-		editinfo+='    <h3>Basic Information</h3>';
+		editinfo+='    <h1>Basic Information</h1>';
 		editinfo+='    <form class="form-inline" name="editinformation" id="editinformation" action="/user/profile/edit" method="POST" role="form">';
 		editinfo+='    <input type="hidden" name="username" id="username" value="' + user_info.user.username + '">';
 		editinfo+='    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">';
@@ -399,7 +399,7 @@ function editinfo () {
 		if(user_info.user.student==1)
 		{
 			editinfo+='    <hr>';
-			editinfo+='    <h3>Student Information</h3>';
+			editinfo+='    <h1>Student Information</h1>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="editfieldname col-sm-5">';
@@ -431,7 +431,7 @@ function editinfo () {
 		}
 		else {
 			editinfo+='    <hr>';
-			editinfo+='    <h3>Student Information</h3>';
+			editinfo+='    <h1>Student Information</h1>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="editfieldname col-sm-5">';
@@ -462,7 +462,7 @@ function editinfo () {
 			editinfo+='    </div>';
 		}
 		editinfo+='    <hr>';
-		editinfo+='    <h3>Emergency Contacts</h3>';
+		editinfo+='    <h1>Emergency Contacts</h1>';
 		// The user's existing emergency contacts
 		for(var i=0; i<user_info.emergency_contacts.length; i++)
 		{
@@ -748,7 +748,7 @@ function showFilteredCourses(data, searchText){
 	var courses = '';
 	courses += '<div id="coursesaccordion" class="panel-group">';
     courses += '<hr>';
-    courses += '<h3>List of Available Courses</h3>'; 
+    courses += '<h1>List of Available Courses</h1>'; 
 
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
@@ -841,10 +841,10 @@ function showFilteredCourses(data, searchText){
             	var days = JSON.parse(data[i].course_days)[j].day;
                 var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
                 if (j != 0) {
-					courses += '            <div class="col-sm-8 col-sm-offset-4 timedatefix">';
+				courses += '            <div class="col-sm-8">';
                 }
                 else {
-                	courses += '            <div class="col-sm-8 timedatefix">';
+                courses += '            <div class="col-sm-8">';
                 }
                 courses += '                 <span class="courseday">' + days + '</span>';
                 courses += '                 <span class="coursetime">' + time + '</span>';
@@ -862,7 +862,7 @@ function showFilteredCourses(data, searchText){
         courses += '          	  		<div class="col-sm-1">';
 		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee + '</p>';
 		courses += '        	    	</div>';
-		courses += '            		<div class="col-sm-4">';
+		courses += '            		<div class="col-sm-7 addbutton">';
 		courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
 		courses += '            		</div>';
 		courses += '       			</div>';
@@ -904,7 +904,7 @@ function listschedule(){
 		var schedule = '';
 		schedule += '<div id="scheduleaccordion" class="panel-group">';
         schedule += '<hr>';
-        schedule += '<h3>My Scheduled Courses</h3>';
+        schedule += '<h1>My Scheduled Courses</h1>';
 		for(i = 0; i < data.length; i++) {
 			schedule += '    <div class="panel panel-primary">';
 			schedule += '        <div class="panel-heading">';

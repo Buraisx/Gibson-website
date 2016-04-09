@@ -13,7 +13,7 @@ function load_history(){
 		var history = '';
 		var i;
         history+='<hr>';
-        history+='<h3>Your Past Account Transactions</h3>';
+        history+='<h1>Your Past Account Transactions</h1>';
         if(res.length > 0)
         {
 			history+='<table class = "table table-bordered">';
