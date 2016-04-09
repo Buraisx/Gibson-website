@@ -746,7 +746,7 @@ function showFilteredCourses(data, searchText){
 	$('#courses').contents().remove();
 
 	var courses = '';
-	courses += '<div id="coursesaccordion" class="panel-group">';
+	courses += '<div id="scheduleaccordion" class="panel-group">';
     courses += '<hr>';
     courses += '<h3>List of Available Courses</h3>'; 
 
@@ -758,110 +758,110 @@ function showFilteredCourses(data, searchText){
 	for(var i = 0; i < data.length; i++) {
 
 
-		courses += '    <div class="panel panel-primary">';
-		courses += '        <div class="panel-heading">';
-		courses += '            <h4 class="panel-title">';
-		courses += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#collapse' + i + '">';
-		courses += '                    <div class="row">';
-		courses += '                        <div class="col-sm-9">' + data[i].course_name +'</div>';
-		courses += '                        <div class="col-sm-3">Course Code: ' + data[i].course_code + '</div>';
-		courses += '                    </div>';
-		courses += '                </a>';
-		courses += '            </h4>';
-		courses += '        </div>';
-		courses += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="collapse' + i + '">';
-		courses += '          	<div class="panel-body">';
-		courses += '        	<div class="col-sm-offset-1">';
+			courses += '    <div class="panel panel-primary">';
+			courses += '        <div class="panel-heading">';
+			courses += '            <h4 class="panel-title">';
+			courses += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#collapse' + i + '">';
+			courses += '                    <div class="row">';
+			courses += '                        <div class="col-sm-9">' + data[i].course_name +'</div>';
+			courses += '                        <div class="col-sm-3">Course Code: ' + data[i].course_code + '</div>';
+			courses += '                    </div>';
+			courses += '                </a>';
+			courses += '            </h4>';
+			courses += '        </div>';
+			courses += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="collapse' + i + '">';
+			courses += '          	<div class="panel-body">';
+			courses += '        	<div class="col-sm-offset-1">';
 
-        //*** AJAX for Generating Description ***//
-		courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-12">';
-		courses += '                		<p id="descriptiontitle' + i + '"><b>Description: </b></p>';
-		courses += '        			</div>';
-		courses += '        		</div>';
-        courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-12 courseindent">';
-        courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
-		courses += '        			</div>';
-		courses += '        		</div>';
+            //*** AJAX for Generating Description ***//
+			courses += '        		<div class="row">';
+			courses += '            		<div class="col-sm-12">';
+			courses += '                		<p id="descriptiontitle' + i + '"><b>Description: </b></p>';
+			courses += '        			</div>';
+			courses += '        		</div>';
+            courses += '        		<div class="row">';
+			courses += '            		<div class="col-sm-12 courseindent">';
+            courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
+			courses += '        			</div>';
+			courses += '        		</div>';
 
-        //*** AJAX for Generating Period ***//
-		courses += '        		<div class="row">';
-		courses += '            		<div class="col-sm-12">';
-		courses += '               		 	 <p id="courseperiod' + i + '">Period: ' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
-		courses += '            		</div>';
-		courses += '        		</div>';
+            //*** AJAX for Generating Period ***//
+			courses += '        		<div class="row">';
+			courses += '            		<div class="col-sm-12">';
+			courses += '               		 	 <p id="courseperiod' + i + '">Period: ' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+			courses += '            		</div>';
+			courses += '        		</div>';
 
-        //*** AJAX for Generating Target ***//
-		courses += '        		<div class="row">';
-		courses += '        	    	<div class="col-sm-12">';
-		courses += '        	        	 <p id="coursetarget' + i + '">Target: ' + data[i].course_target + '</p>';
-		courses += '         	   		</div>';
-		courses += '        		</div>';
+            //*** AJAX for Generating Target ***//
+			courses += '        		<div class="row">';
+			courses += '        	    	<div class="col-sm-12">';
+			courses += '        	        	 <p id="coursetarget' + i + '">Target: ' + data[i].course_target + '</p>';
+			courses += '         	   		</div>';
+			courses += '        		</div>';
 
 
-        //*** AJAX for Generating Language ***//
-        courses += '        		<div class="row">';
-		courses += '        	    	<div class="col-sm-12">';
-		courses += '        	        	 <p id="courselanguage' + i + '">Language:</p>';
-		courses += '         	   		</div>';
-		courses += '        		</div>';
-    	
+            //*** AJAX for Generating Language ***//
+            courses += '        		<div class="row">';
+			courses += '        	    	<div class="col-sm-12">';
+			courses += '        	        	 <p id="courselanguage' + i + '">Language:</p>';
+			courses += '         	   		</div>';
+			courses += '        		</div>';
+        	
 
-    	//*** JQuery Loop for Generating Languages ***//
-		if(data[i].course_language != null){
-			for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
-				var lang = JSON.parse(data[i].course_language)[j];
-				courses += '        		<div class="row">';
-				courses += '            		<div class="col-sm-12">';
-                courses += '                        <p><span class="col-sm-2"><b>' + "&nbsp;" + lang + '</b></span></p>';
-				courses += '            		</div>';
-				courses += '        		</div>';
+        	//*** JQuery Loop for Generating Languages ***//
+			if(data[i].course_language != null){
+				for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
+					var lang = JSON.parse(data[i].course_language)[j];
+					courses += '        		<div class="row">';
+					courses += '            		<div class="col-sm-12">';
+                    courses += '                        <p><span class="col-sm-2"><b>' + "&nbsp;" + lang + '</b></span></p>';
+					courses += '            		</div>';
+					courses += '        		</div>';
+				}
 			}
+
+            //*** AJAX for Header of Date(s) and Time(s) ***//
+            courses += '        		<div class="row">';
+            courses += '            		<div class="col-sm-12">';
+            courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s): </b></p>';
+            courses += '            		</div>';
+            courses += '        		</div>';
+
+            //*** AJAX Loop for Generating Day-Time ***//
+            if(data[i].course_days != null){
+            	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+                	var days = JSON.parse(data[i].course_days)[j].day;
+                    var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
+                	courses += '        		<div class="row">';
+					courses += '            		<div class="col-sm-12">';
+                    courses += '                        <p id="coursedaytime"><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
+					courses += '            		</div>';
+					courses += '        		</div>';
+
+            	}
+            }
+
+            //*** Cost and Button for Adding the Course to the Cart ***//
+			courses += '        		<div class="row largemargin">';
+            courses += '          	  		<div class="col-sm-3">';
+			courses += '         	         	<p id="cost' + i + '"><b>Cost: $' + data[i].default_fee + '</b></p>';
+			courses += '        	    	</div>';
+			courses += '            		<div class="col-sm-2 righttext">';
+			courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
+			courses += '            		</div>';
+			courses += '       			</div>';
+
+
+
+
+            //*** Closes all divs ***//
+			courses += '        	</div>';
+			courses += '        	</div>';
+			courses += '        </div>';
+			courses += '    </div>';
+
+
 		}
-
-        //*** AJAX for Header of Date(s) and Time(s) ***//
-        courses += '        		<div class="row">';
-        courses += '            		<div class="col-sm-12">';
-        courses += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s): </b></p>';
-        courses += '            		</div>';
-        courses += '        		</div>';
-
-        //*** AJAX Loop for Generating Day-Time ***//
-        if(data[i].course_days != null){
-        	for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
-            	var days = JSON.parse(data[i].course_days)[j].day;
-                var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp;&nbsp;" + " - " + "&nbsp;&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
-            	courses += '        		<div class="row">';
-				courses += '            		<div class="col-sm-12">';
-                courses += '                        <p id="coursedaytime"><span class="col-sm-2">' + "&nbsp;" + days + '</span><span class="col-sm-9">' + time + '</span></p>';
-				courses += '            		</div>';
-				courses += '        		</div>';
-
-        	}
-        }
-
-        //*** Cost and Button for Adding the Course to the Cart ***//
-		courses += '        		<div class="row largemargin">';
-        courses += '          	  		<div class="col-sm-3">';
-		courses += '         	         	<p id="cost' + i + '"><b>Cost: $' + data[i].default_fee + '</b></p>';
-		courses += '        	    	</div>';
-		courses += '            		<div class="col-sm-2 righttext">';
-		courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
-		courses += '            		</div>';
-		courses += '       			</div>';
-
-
-
-
-        //*** Closes all divs ***//
-		courses += '        	</div>';
-		courses += '        	</div>';
-		courses += '        </div>';
-		courses += '    </div>';
-
-
-	}
 	courses += '</div>';
 	$('#courses').append(courses);
 
@@ -871,7 +871,7 @@ function showFilteredCourses(data, searchText){
 		var empty_courses_html = '';
 			empty_courses_html+= '<div> Oops! There are no courses available. </div>';
 
-		$('#coursesaccordion').append(empty_courses_html);
+		$('#scheduleaccordion').append(empty_courses_html);
 	}
 	
 	$("#searchText").focus();
