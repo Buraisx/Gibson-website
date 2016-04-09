@@ -542,5 +542,7 @@ div[class*="banner"]{
 }
 
 #emails{
-    display:none;
+    width: 50%;
+    max-width: 300px;
+    margin-bottom: 15px;
 }

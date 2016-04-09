@@ -120,8 +120,9 @@ function listusers(){
 		users += '    <div class="panel-group" id="profileaccordion">';
 		users += '	<div class="search-box">';
 		users += '		<p><b> Admin Control Panel</b></p>';
+		users += ' 		<label> User Emails:  </label>';
 		users += '  	<input id="emails" value="">';
-		users += '		<button class="button" data-clipboard-target="#emails">Copy Emails to Clipboard </button>';
+		users += '			<button type="button" data-clipboard-target="#emails"> <img src="/img/clippy.svg.png" alt="Copy to clipboard" height="20" width= "20"></button>';
 		users += '	</div>';
 
 
