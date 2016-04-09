@@ -577,7 +577,7 @@ function courseform(){
 	set_date+='                        <div class = "form-group col-sm-4" required>';
 	set_date+='                            <label class="addcoursepadding"><span class="required">*</span>Class Interval:</label><label id="addinterval-error" class="error" for="addinterval"></label><br>';
 	set_date+='                            <label class="radio-inline">';
-	set_date+='                              <input type="radio" name="addinterval" id="addinterval" value="weekly">Weekly';
+	set_date+='                              <input type="radio" name="addinterval" id="addinterval" value="weekly" checked="checked">Weekly';
 	set_date+='                            </label>';
 	set_date+='                            <label class="radio-inline">';
 	set_date+='                              <input type="radio" name="addinterval" id="addinterval" value="bi-weekly">Bi-Weekly';
