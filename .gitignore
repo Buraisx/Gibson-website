@@ -39,3 +39,6 @@ Don'tBankOnIt
 
 #Super safe
 notsecret.txt
+
+#Server config for this system
+gibsonwebsite/server_config.json
