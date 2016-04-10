@@ -67,7 +67,6 @@ router.get('/admin/profile/info', function(req, res) {
         // });
 
 router.get('/profile/:username', function(req, res, next){
-    console.log(req.params.username);
 
     // HUGE OBJECT
     var response = {};
@@ -79,12 +78,11 @@ router.get('/profile/:username', function(req, res, next){
         }
         else{
 
-            var userId;
             async.waterfall([
 
                 function(next){
-                    var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, province_name, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE username = ? AND user.province_id = province.province_id;";
-                    
+                    var sql = "SELECT user_id, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, province_name, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE username = ? AND user.province_id = province.province_id;";
+
                     con.query(sql, [req.params.username], function(err, results){
                         if(err){
                             console.log('adminqueries.js: Unable to query for user information; /profile/:username');
@@ -96,13 +94,12 @@ router.get('/profile/:username', function(req, res, next){
                         }
                         else{
                             response.user_info = results[0];
-                            userId = results[0].user_id;
-                            next(null);
+                            next(null, results[0].user_id);
                         }
                     });
                 },
 
-                function(next){
+                function(userId, next){
                     var sql = "SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;";
 
                     con.query(sql, [userId], function(err, results){
@@ -112,13 +109,12 @@ router.get('/profile/:username', function(req, res, next){
                         }
                         else{
                             response.student_info = results[0];
-                            next(null);
+                            next(null, userId);
                         }
                     });
                 },
 
-                function(next){
-                    console.log(userId);
+                function(userId, next){
                     var sql = "SELECT contact_id, lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;";
 
                     con.query(sql, [userId], function(err, results){
@@ -136,7 +132,7 @@ router.get('/profile/:username', function(req, res, next){
 
                 function(next){
 
-                    con.query("SELECT province_id, prov_abb FROM gibson.province;", function(err, results){
+                    con.query("SELECT province_id, province_name, prov_abb FROM gibson.province;", function(err, results){
                         if(err){
                             console.log('adminqueries.js: Unable to query for province information; /profile/:username');
                             return next ({no: 500, msg: "Unable to query for province information"}, null);
@@ -148,7 +144,7 @@ router.get('/profile/:username', function(req, res, next){
                     });
                 }
 
-            ], 
+            ],
             function(err){
                 con.release();
 
@@ -174,7 +170,7 @@ router.post('/profile/:username/edit/personalinfo', function(req, res){
             console.log("adminqueries.js: Cannot get connection.");
         }
         con.query(sql, function(err, results){
-            
+
             if(err){
                 con.release();
                 console.log("adminqueries.js: Cannot get the user profile.");
@@ -217,7 +213,7 @@ router.post('/profile/:username/edit/studentinfo', function(req, res){
             console.log("adminqueries.js: Cannot get connection.");
         }
         con.query(sql, function(err, results){
-            
+
             if(err){
                 con.release();
                 console.log("adminqueries.js: Cannot do the edit the user profile.");
@@ -234,7 +230,7 @@ router.post('/profile/:username/edit/studentinfo', function(req, res){
                 if(results[0].student == 0){
 
                     var insertquery = "INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level) VALUES (?,?,?,?,?);";
-                    var inserts = [userid, req.body.schoolname, req.body.grade, req.body.major, req.body.esl]; 
+                    var inserts = [userid, req.body.schoolname, req.body.grade, req.body.major, req.body.esl];
                     insertquery = mysql.format(insertquery, inserts);
 
                     con.query('START TRANSACTION', function(err, results){
