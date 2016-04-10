@@ -226,7 +226,7 @@ router.post('/profile/:username/edit/studentinfo', function(req, res){
                 res.status(404).send("User profile does not exist.");
             }
             else{
-                 var userid = results[0].user_id;
+                var userid = results[0].user_id;
                 if(results[0].student == 0){
 
                     var insertquery = "INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level) VALUES (?,?,?,?,?);";
@@ -271,7 +271,7 @@ router.post('/profile/:username/edit/studentinfo', function(req, res){
                 else{
                     var query = 'UPDATE gibson.student SET school_name = ?, grade = ?, major = ?, esl_level = ? WHERE user_id = ?;';
                     var insert = [req.body.schoolname, req.body.grade, req.body.major, req.body.esl, userid];
-                    query = mysql.format(query, inserts);
+                    query = mysql.format(query, insert);
 
                     con.query(query, function(err, results){
                         con.release();
