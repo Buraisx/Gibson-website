@@ -325,7 +325,7 @@ function load_profile(){
 	editinfo+='    <h1>Personal Information</h1>';
 	editinfo+='    <form class="form-inline" name="editinformation" id="editinformation" action="/user/profile/edit" method="POST" role="form">';
 	editinfo+='    <input type="hidden" name="username" id="username" value="' + user_info.user.username + '">';
-	editinfo+='    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">';
+	editinfo+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
 	editinfo+='    <div class="row">';
 	editinfo+='        <div class="form-group col-sm-5">';
 	editinfo+='            <label class="editfieldname col-sm-12">';

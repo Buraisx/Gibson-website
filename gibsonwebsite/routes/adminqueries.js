@@ -79,6 +79,7 @@ router.get('/profile/:username', function(req, res, next){
         }
         else{
 
+            var userId;
             async.waterfall([
 
                 function(next){
@@ -95,12 +96,13 @@ router.get('/profile/:username', function(req, res, next){
                         }
                         else{
                             response.user_info = results[0];
-                            next(null, results[0].user_id);
+                            userId = results[0].user_id;
+                            next(null);
                         }
                     });
                 },
 
-                function(userId, next){
+                function(next){
                     var sql = "SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;";
 
                     con.query(sql, [userId], function(err, results){
@@ -110,12 +112,13 @@ router.get('/profile/:username', function(req, res, next){
                         }
                         else{
                             response.student_info = results[0];
-                            next(null, userId);
+                            next(null);
                         }
                     });
                 },
 
-                function(userId, next){
+                function(next){
+                    console.log(userId);
                     var sql = "SELECT contact_id, lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;";
 
                     con.query(sql, [userId], function(err, results){
