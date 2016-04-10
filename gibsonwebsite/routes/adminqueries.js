@@ -95,30 +95,30 @@ router.get('/profile/:username', function(req, res, next){
                         }
                         else{
                             response.user_info = results[0];
-                            next(null);
+                            next(null, results[0].user_id);
                         }
                     });
                 },
 
-                function(next){
-                    var sql = "SELECT school_name, grade, major, esl_level FROM gibson.student WHERE username = ?;";
+                function(userId, next){
+                    var sql = "SELECT school_name, grade, major, esl_level FROM gibson.student WHERE user_id = ?;";
 
-                    con.query(sql, [req.params.username], function(err, results){
+                    con.query(sql, [userId], function(err, results){
                         if(err){
                             console.log('adminqueries.js: Unable to query for student information; /profile/:username');
                             return next ({no: 500, msg: "Unable to query for student information"}, null);
                         }
                         else{
                             response.student_info = results[0];
-                            next(null);
+                            next(null, userId);
                         }
                     });
                 },
 
-                function(next){
+                function(userId, next){
                     var sql = "SELECT contact_id, lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;";
 
-                    con.query(sql, [req.params.username], function(err, results){
+                    con.query(sql, [userId], function(err, results){
                         if(err){
                             console.log('adminqueries.js: Unable to query for contact information; /profile/:username');
                             return next ({no: 500, msg: "Unable to query for contact information"}, null);
