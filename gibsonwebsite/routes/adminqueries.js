@@ -188,10 +188,13 @@ router.post('/admin/profile/v2', function(req, res){
 // ROUTE TO ADD NEW EVENT
 router.post('/admin/addEvent', function(req, res){
 
+  var startDate = req.body.startdate +' 00:00:00';
+  var endDate = req.body.enddate +' 00:00:00';
+
   var query = 'INSERT INTO gibson.website_alert (init_date, end_date, alert_msg, alert_type, start_alert) ';
       query +='VALUES(?, ?, ?, ?, 0)';
 
-  query = mysql.format(query, [req.body.startdate, req.body.enddate, req.body.eventmessage, req.body.eventtype]);
+  query = mysql.format(query, [startDate, endDate, req.body.message, req.body.eventtype]);
 
   connection.getConnection(function(err, con){
     if(err){
@@ -199,6 +202,8 @@ router.post('/admin/addEvent', function(req, res){
     }
     else{
       con.query(query, function(err, result){
+        con.release();
+
         if(err){
           console.log('adminqueries.js: Unable to add new event.');
           res.status(500).send('Unable to add new event.');

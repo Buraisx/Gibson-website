@@ -38,16 +38,14 @@ function controlpanel () {
     controlpanel+='        </div>';
     controlpanel+='        <div class = "row">';
     controlpanel+='            <div class = "col-sm-8">';
-    controlpanel+='                <button type = "submit" class= "btn eventsubmit" id = "validate">Submit</button>';
+    controlpanel+='                <button type = "button" onclick="makeEvent()" class= "btn eventsubmit" id = "validate">Submit</button>';
     controlpanel+='            </div>';
     controlpanel+='        </div>';
     controlpanel+='    </form>';
     controlpanel+='</div>';
 
-    $('#controlPanel').append(controlpanel);;
+    $('#controlPanel').append(controlpanel);
 
     $('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
     $('.timepicki').timepicki({start_time: ["12", "00", "PM"]});
 }
-
-
