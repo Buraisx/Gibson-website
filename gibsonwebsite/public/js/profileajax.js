@@ -265,7 +265,7 @@ function load_profile(){
 	changePassword+='<div class="changepassdesign form-group form-group-sm row col-sm-12" id="change_password">';
 	changePassword+='    <div>';
 	changePassword+='        <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>';
-	changePassword+='        <form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id = "change_password_form">';
+	changePassword+='        <form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id = "change_password_form" onsubmit="changepassword();return false">';
 	changePassword+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
 	changePassword+='    		 <div class="row">';
 	changePassword+='            	<label>Current Password:</label>';
@@ -280,7 +280,7 @@ function load_profile(){
 	changePassword+='            	<input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">';
 	changePassword+='    		 </div>';
 	changePassword+='    		 <div class="row">';
-	changePassword+='            	<button id="changepassbutton" class="btn btn-default submitbutton" type="button" onClick="changepassword()">Change</button>';
+	changePassword+='            	<button id="changepassbutton" class="btn btn-default submitbutton" type="submit">Change</button>';
 	changePassword+='    		 </div>';
 	changePassword+='        </form>';
 	changePassword+='    </div>';
@@ -853,7 +853,7 @@ function showFilteredCourses(data, searchText){
 		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee + '</p>';
 		courses += '        	    	</div>';
 		courses += '            		<div class="col-sm-7 addbutton">';
-		courses += '            			<button type="submit" action="/register" class="btn btn-default course-submit" onclick="register(this)" method="POST" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
+		courses += '            			<button type="button" class="btn btn-default course-submit" onclick="register(this)" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
 		courses += '            		</div>';
 		courses += '       			</div>';
 

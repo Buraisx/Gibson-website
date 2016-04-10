@@ -284,7 +284,7 @@ router.post('/register', function(req, res, next){
 	var course_id = Number(req.body.course_id);
 
 	// how to compare dates?
-	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND start_date BETWEEN DATE_ADD(NOW(), INTERVAL 1 DAY) AND DATE_ADD(NOW(), INTERVAL 6 MONTH) - INTERVAL 1 DAY';
+	var query_course_exists = 'SELECT * FROM gibson.course WHERE course_id = ? AND end_date >= NOW()';
 	var inserts = [course_id];
 	var course = {};
 

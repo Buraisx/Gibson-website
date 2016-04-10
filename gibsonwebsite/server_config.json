@@ -2,9 +2,9 @@
 
   "db_config": {
     "connectionLimit": 10,
-    "host": "prod-gibson-instance.cdvppcqaisw3.us-west-2.rds.amazonaws.com",
+    "host": "localhost",
     "user": "root",
-    "password": "Gibson!05",
+    "password": "Sabad@th!s1234567",
     "database": "gibson",
     "multipleStatements": true,
     "port": 3306
