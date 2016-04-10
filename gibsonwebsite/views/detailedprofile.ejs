@@ -11,13 +11,13 @@
 </head>
 
 	<body>
-	<section class="container rcorners">
+	<section id = "profile" class="container rcorners">
 		<h1>Personal Information</h1>
 		<div class="row">
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Username</span>
-					<span class="col-sm-9 fieldval"><%=info.username%></span>
+					<span id = "username" class="col-sm-9 fieldval"><%=info.username%></span>
 				</p>
 			</div>
 		</div>
@@ -25,7 +25,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Name</span>
-					<span class="col-sm-9 fieldval"><%= info.fname%> <%=info.lname%></span>
+					<span class ="col-sm-9 fieldval"><span id = "fname"><%= info.fname%></span> <span id="lname"><%=info.lname%></span></span>
 				</p>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Email</span>
-					<span class="col-sm-9 fieldval"><%=info.email%></span>
+					<span id = "email" class="col-sm-9 fieldval"><%=info.email%></span>
 				</p>
 			</div>
 		</div>
@@ -41,7 +41,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Phone (Home)</span>
-					<span class="col-sm-9 fieldval"><%=info.primary_phone%></span>
+					<span id = "primary_phone" class="col-sm-9 fieldval"><%=info.primary_phone%></span>
 				</p>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Phone (Cell)</span>
-					<span class="col-sm-9 fieldval"><%=info.secondary_phone%></span>
+					<span id = "secondary_phone" class="col-sm-9 fieldval"><%=info.secondary_phone%></span>
 				</p>
 			</div>
 		</div>
@@ -57,7 +57,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Gender</span>
-					<span class="col-sm-9 fieldval"><%=info.gender%></span>
+					<span id = "gender" class="col-sm-9 fieldval"><%=info.gender%></span>
 				</p>
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Date of Birth</span>
-					<span class="col-sm-9 fieldval"><%=String(info.birth_date).substring(3, 15)%></span>
+					<span id = "birth_date" class="col-sm-9 fieldval"><%=String(info.birth_date).substring(3, 15)%></span>
 				</p>
 			</div>
 		</div>
@@ -73,10 +73,10 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Address</span>
-					<span class="col-sm-9 fieldval"><%=info.address%></span>
+					<span id = "address" class="col-sm-9 fieldval"><%=info.address%></span>
 				</p>
 				<p>
-					<span class="col-sm-9 col-sm-offset-2 fieldval"><%=info.city%>, <%=info.province_name%>, <%=info.postal_code%></span>
+					<span class="col-sm-9 col-sm-offset-2 fieldval"><span id = "city"><%=info.city%></span>, <span id = "province_name"><%=info.province_name%></span>, <span id = "postal_code"><%=info.postal_code%></span></span>
 				</p>
 			</div>
 		</div>
@@ -91,7 +91,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">School Name</span>
-					<span class="col-sm-9 fieldval"><%=info.school_name%></span>
+					<span id = "school_name" class="col-sm-9 fieldval"><%=info.school_name%></span>
 				</p>
 			</div>
 		</div>
@@ -99,7 +99,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Grade/Year</span>
-					<span class="col-sm-9 fieldval"><%=info.grade%></span>
+					<span id = "grade" class="col-sm-9 fieldval"><%=info.grade%></span>
 				</p>
 			</div>
 		</div>
@@ -107,7 +107,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Major</span>
-					<span class="col-sm-9 fieldval"><%=info.major%></span>
+					<span id = "major" class="col-sm-9 fieldval"><%=info.major%></span>
 				</p>
 			</div>
 		</div>
@@ -115,7 +115,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">ESL Level</span>
-					<span class="col-sm-9 fieldval"><%=info.esl_level%></span>
+					<span id = "esl_level" class="col-sm-9 fieldval"><%=info.esl_level%></span>
 				</p>
 			</div>
 		</div>
@@ -135,7 +135,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Name</span>
-					<span class="col-sm-9 fieldval">Hard Coded</span>
+					<span class="col-sm-9 fieldval"><span id = "contactfname">Hard</span><span id = "contactlname">Coded</span></span>
 				</p>
 			</div>
 		</div>
@@ -143,7 +143,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Relationship</span>
-					<span class="col-sm-9 fieldval">Hardcoding Mentor</span>
+					<span id = "relationship" class="col-sm-9 fieldval">Hardcoding Mentor</span>
 				</p>
 			</div>
 		</div>
@@ -151,7 +151,7 @@
 			<div class="form-group col-sm-12">
 				<p>
 					<span class="col-sm-2 fieldname">Phone</span>
-					<span class="col-sm-9 fieldval">123</span>
+					<span id = "contactphone" class="col-sm-9 fieldval">123</span>
 				</p>
 			</div>
 		</div>
@@ -183,28 +183,14 @@
 		<div class="row form-group col-sm-12">
 			<button type="button" class="btn btn-default col-sm-offset-5" onclick="editcontacts()" id="editcontacts">Edit</button>
 		</div>
-		<hr>
-
-
-
-		<div class="row form-group form-group-sm col-sm-12">	<button id="changepassbutton" onclick="togglepassworddropdown()" class="btn btn-default" type="button">Change Password</button></div>
-		<div style="display: block;" class="changepassdesign hidden form-group form-group-sm row col-sm-12" id="change_password">
-			<div>
-				<p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>
-				<form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id="change_password_form" novalidate="novalidate">
-					<input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
-					<label>New Password:</label>
-					<input onkeyup="checkPass(); return false;" minlength="6" placeholder="Enter New Password" id="password" name="newpass" class="form-control" type="password">
-					<label>Confirm New Password:</label>
-					<input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">
-					<button id="changepassbutton" class="btn btn-default submitbutton" type="button" onclick="changepassword()">Change</button>
-				</form>
-			</div>
-		</div>
 	</section>
-</body>
 
-<script src="/js/profileajax.js"></script>
-<script src="/js/convertdate.js"></script>
+	<!-- jQuery -->
+	<script src="/js/jquery.js"></script>
+
+	<script src="/js/detailedprofileajax.js"></script>
+	<script src="/js/convertdate.js"></script>
+
+</body>
 
 </html>
