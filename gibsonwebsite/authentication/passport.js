@@ -120,9 +120,9 @@ module.exports = function(passport){
                 newUser.unit_no = req.body.apt;
                 newUser.city = req.body.city;
                 newUser.province_id = req.body.province;
-                newUser.postal_code = req.body.postal_code.replace(/ /g,''); //Deletes the white space in postal code.
-                newUser.primary_phone = req.body.primary_phone;
-                newUser.secondary_phone = req.body.secondary_phone;
+                newUser.postal_code = req.body.postal_code.toUpperCase().replace(/ /g,''); //Deletes the white space in postal code.
+                newUser.primary_phone = req.body.primary_phone.replace(/\D+/g, ''); //Removes everything, but digits [0-9]
+                newUser.secondary_phone = req.body.secondary_phone.replace(/\D+/g, '');
                 newUser.email = req.body.email;
                 newUser.send_notification = (!req.body.send_notifications)? 0:req.body.send_notifications;
                 newUser.student = (!req.body.student)? 0:req.body.student;
@@ -140,7 +140,6 @@ module.exports = function(passport){
 
                 createUser = mysql.format(createUser, values);
 
-                console.log(createUser);
                 // INSERTING NEW USER INTO DATABASE
                 con.query(createUser, function(err, results){
                   if(err){
@@ -153,6 +152,7 @@ module.exports = function(passport){
                   }
                   else{
                     // user_id OF THE INSERTED USER
+                    newUser.user_id = results.insertId;
                     var userId = results.insertId;
 
                     //==========================================================================

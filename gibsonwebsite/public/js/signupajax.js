@@ -9,7 +9,6 @@ function checkusername(){
             username: $('#username').val()
       })
       .done(function (res){
-            console.log("LOLS:  " +res);
 
             if(!res){
                 swal({
@@ -100,7 +99,7 @@ function signup() {
       ephone3: $('#ephone3').val()
 	})
 	.done(function(res){
-    window.location.href = 'signup/success';
+    window.location.href = res.redirect_url;
 	})
 	.fail(function (err){
 		swal({

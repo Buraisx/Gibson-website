@@ -11,7 +11,7 @@ function generateOneUse(req, res, next){
   connection.getConnection(function(err, con){
     if (err){
       console.log('token.js: Error connecting to the database.');
-      return;
+      return err;
     }
 
     var tomorrow = new Date();
@@ -49,6 +49,64 @@ function generateOneUse(req, res, next){
   });
 }
 
+
+// FUNCTION FOR CREATING NEW TOKEN FOR RESENDING CONFIRMATION EMAIL
+function resendToken(username, callback){
+
+  connection.getConnection(function(err, con){
+    if(err){
+      console.log('token.js: Error connecting to the database.');
+      callback({no:500, msg:'Connection to database failed.'}, null);
+    }
+    else{
+      // CHECKING IF USER IS IN TEMPORARY TABLE
+      con.query('SELECT email FROM gibson.temp_user WHERE username = ?;', [username], function(err, results){
+        if(err){
+          console.log('token.js: Unable to query for email; resendToken');
+          callback({no:500, msg:'Unable to find email address.'}, null);
+        }
+        else if(results.length === 0){
+          console.log('token.js: No user found in temp table.');
+          callback({no:500, msg:'Unable to find email address.'}, null);
+        }
+        // USER IS IN TEMP TABLE:
+        else{
+
+          var email = results[0].email;
+          var tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+
+          var query =  'INSERT INTO gibson.active_tokens (username, expiry_date, \`desc\`)';
+              query += 'VALUES (?, ?, ?);';
+          var inserts = [username, tomorrow.toISOString().slice(0, 19).replace('T', ' '), config.jwt.type.signup];
+          query = mysql.format(query, inserts);
+
+          con.query(query, function(err, results){
+            con.release();
+
+            if(err){
+              console.log('token.js: Error while inserting into active_tokens table.');
+              callback({no:500, msg:'Error generating token.'}, null);
+            }
+            else{
+              var token = jwt.sign({
+                token_id: results.insertId,
+                iss: config.jwt.issuer,
+                user: username,
+                type: config.jwt.type.signup
+              },
+              config.jwt.oneUseSecret, {
+                expiresIn: 24*60*60
+              });
+
+              callback(null, {username: username, email: email, token: token});
+            }
+          });
+        }
+      });
+    }
+  });
+}
 
 // FORGOT PASSWORD JWT
 function forgotPasswordToken (email, username){
@@ -204,3 +262,4 @@ module.exports.generateToken = generateToken;
 module.exports.respond = respond;
 module.exports.adminRespond = adminRespond;
 module.exports.sendInfo = sendInfo;
+module.exports.resendToken = resendToken;

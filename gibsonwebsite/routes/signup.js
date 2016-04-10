@@ -5,6 +5,7 @@ var config = require('../server_config');
 var token = require('../authentication/token');
 var email = require('../authentication/auto_email');
 var recaptcha = require('express-recaptcha');
+var sanitizer = require('sanitizer');
 // CREATING CONNECTION
 var connection = require('../mysqlpool');
 
@@ -38,6 +39,50 @@ router.get('/signup', function(req,res,next){
 	}
 });
 
+// ROUTE FOR RESENDING CONFIRMATION EMAIL
+router.get('/signup/resend', function(req, res){
+
+	var username = sanitizer.sanitize(req.query.username);
+
+	token.resendToken(username, function(err, userInfo){
+		if(err){
+			res.status(err.no).send(err.msg);
+		}
+		else{
+			email.resendSignupEmail(userInfo, function(err){
+				if(err){
+					res.status(err.no).send(err.msg);
+				}
+				else{
+					res.redirect('/signup/success?username='+username);
+				}
+			});
+		}
+	});
+});
+
+// ROUTE FOR RESENDING CONFIRMATION EMAIL
+router.post('/signup/resendConfirmation', function(req, res){
+
+	var username = sanitizer.sanitize(req.body.username);
+
+	token.resendToken(username, function(err, userInfo){
+		if(err){
+			res.status(err.no).send(err.msg);
+		}
+		else{
+			email.resendSignupEmail(userInfo, function(err){
+				if(err){
+					res.status(err.no).send(err.msg);
+				}
+				else{
+					res.status(200).send('Signup confirmation email sent.');
+				}
+			});
+		}
+	});
+});
+
 //create new user
 router.post('/signup', function(req, res, next) {
 	recaptcha.verify(req, function(err){
@@ -56,12 +101,12 @@ router.post('/signup', function(req, res, next) {
 
 // REDIRECT FOR SIGNUP PAGE
 function redirect(req, res){
-	res.redirect('/signup/success');
+	res.status(200).send({redirect_url: 'signup/success?username='+req.user.username});
 }
 
 //show signup success page
-router.get('/signup/success', function(req,res){
-	res.render('SuccessSignup', {title: 'Success Sign Up!'});
+router.get('/signup/success', function(req, res){
+	res.render('SuccessSignup', {title: 'Success Sign Up!', username: req.query.username});
 });
 
 // ==============================================================
@@ -87,7 +132,7 @@ router.post('/signup/username', function(req, res, next){
 				else{
 					res.status(200).send(false);
 				}
-				
+
 			}
 		});
 	});
@@ -106,14 +151,14 @@ router.post('/signup/email', function(req, res, next){
 			}
 
 			else{
-				
+
 				if(results[0].count == 0){
 					res.status(200).send(true);
 				}
 				else{
 					res.status(200).send(false);
 				}
-				
+
 			}
 		});
 	});
@@ -123,4 +168,3 @@ router.post('/signup/email', function(req, res, next){
 
 	return router;
 };
-
