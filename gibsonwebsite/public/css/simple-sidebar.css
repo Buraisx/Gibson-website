@@ -76,10 +76,10 @@
     transform: translate3d(8px,0,0);
 }
 
-.sidebar-nav nav li.tab-current a {
+.sidebar-nav li.active a {
     color: #2CC185;
-    -webkit-transform: translate3d(0,8px,0);
-    transform: translate3d(0,8px,0);
+    -webkit-transform: translate3d(8px,0,0);
+    transform: translate3d(8px,0,0);
 }
  
 .sidebar-nav li a:active,
