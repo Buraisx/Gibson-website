@@ -50,34 +50,246 @@ router.get('/admin/profile/info', function(req, res) {
     });
 });
 
+// con.query(sql, function(err, results){
+        //     con.release();
+        //     if(err){
+        //         console.log("adminqueries.js: Cannot get the user profile.");
+        //         return err;
+        //     }
+
+        //     if(!results.length){
+        //         console.log("adminqueries.js: User profile does not exist");
+        //         res.status(404).send("User profile does not exist.");
+        //     }
+        //     else{
+        //         res.render('detailedprofile', {title: req.params.username + "'s Profile", info: results[0] });
+        //     }
+        // });
+
 router.get('/profile/:username', function(req, res, next){
     console.log(req.params.username);
-    var sql = "SELECT username, lname, fname, birth_date, gender, address, unit_no, city, province_name, postal_code, primary_phone, secondary_phone, email, send_notification, student FROM gibson.user,gibson.province WHERE gibson.user.province_id = gibson.province.province_id AND username = ? AND rank_id < 4;";
-    var inserts = [req.params.username];
 
-    sql = mysql.format(sql, inserts);
+    // HUGE OBJECT
+    var response = {};
+
+    connection.getConnection(function(err,con){
+        if(err){
+            console.log("adminqueries.js: Cannot get connection.");
+            res.status(500).send('Internal Server Error');
+        }
+        else{
+
+            async.waterfall([
+
+                function(next){
+                    var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, province_name, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE username = ? AND user.province_id = province.province_id;";
+                    
+                    con.query(sql, [req.params.username], function(err, results){
+                        if(err){
+                            console.log('adminqueries.js: Unable to query for user information; /profile/:username');
+                            return next ({no: 500, msg: "Unable to query for user information"}, null);
+                        }
+                        else if(results.length === 0){
+                            console.log('adminqueries.js: User does not exist; /profile/:username');
+                            return next ({no: 500, msg: "No user with that username."}, null);
+                        }
+                        else{
+                            response.user_info = results[0];
+                            next(null);
+                        }
+                    });
+                },
+
+                function(next){
+                    var sql = "SELECT school_name, grade, major, esl_level FROM gibson.student WHERE username = ?;";
+
+                    con.query(sql, [req.params.username], function(err, results){
+                        if(err){
+                            console.log('adminqueries.js: Unable to query for student information; /profile/:username');
+                            return next ({no: 500, msg: "Unable to query for student information"}, null);
+                        }
+                        else{
+                            response.student_info = results[0];
+                            next(null);
+                        }
+                    });
+                },
+
+                function(next){
+                    var sql = "SELECT contact_id, lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;";
+
+                    con.query(sql, [req.params.username], function(err, results){
+                        if(err){
+                            console.log('adminqueries.js: Unable to query for contact information; /profile/:username');
+                            return next ({no: 500, msg: "Unable to query for contact information"}, null);
+                        }
+                        else{
+                            response.emergency_contacts = results;
+                            next(null);
+                        }
+
+                    });
+                },
+
+                function(next){
+
+                    con.query("SELECT province_id, prov_abb FROM gibson.province;", function(err, results){
+                        if(err){
+                            console.log('adminqueries.js: Unable to query for province information; /profile/:username');
+                            return next ({no: 500, msg: "Unable to query for province information"}, null);
+                        }
+                        else{
+                            response.province = results;
+                            next(null);
+                        }
+                    });
+                }
+
+            ], 
+            function(err){
+                con.release();
+
+                if(err){
+                    res.status(err.no).send(err.msg);
+                }
+                else{
+                    res.status(200).send(response);
+                }
+            });
+        }
+
+    });
+});
+
+router.post('/profile/:username/edit/personalinfo', function(req, res){
+
+    var sql = "SELECT user_id FROM gibson.user WHERE username = ? AND rank_id < 4;";
+    var inserts = [req.params.username];
 
     connection.getConnection(function(err,con){
         if(err){
             console.log("adminqueries.js: Cannot get connection.");
         }
         con.query(sql, function(err, results){
-            con.release();
+            
             if(err){
+                con.release();
                 console.log("adminqueries.js: Cannot get the user profile.");
                 return err;
             }
 
             if(!results.length){
+                con.release();
                 console.log("adminqueries.js: User profile does not exist");
                 res.status(404).send("User profile does not exist.");
             }
             else{
-                res.render('detailedprofile', {title: req.params.username + "'s Profile", info: results[0] });
+                //can edit
+                var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, secondary_phone = ?, gender = ?, birth_date = ?, address = ?, city = ?, unit_no = ?, province_id = (select province_id from gibson.province where province_name = ?), postal_code = ? WHERE user_id = ?;';
+                var inserts = [req.body.fname, req.body.lname, req.body.primary_phone, req.body.secondary_phone, req.body.gender, req.body.birth_date, req.body.address, req.body.city, req.body.unit_no, req.body.province, req.body.postal_code, results[0].user_id];
+                query = mysql.format(query, inserts);
+
+                con.query(query, function(err, results){
+                    con.release();
+                    if(err){
+                        console.log('adminqueries.js: Unable to edit personal info.');
+                        res.status(500).send('Internal Server Error');
+                    }
+                    else{
+                        res.status(200).send('User personal info changed.');
+                    }
+                });
             }
         });
     });
 });
+
+router.post('/profile/:username/edit/studentinfo', function(req, res){
+
+    var sql = "SELECT user_id, student FROM gibson.user WHERE username = ? AND rank_id < 4;";
+    var inserts = [req.params.username];
+
+    connection.getConnection(function(err,con){
+        if(err){
+            console.log("adminqueries.js: Cannot get connection.");
+        }
+        con.query(sql, function(err, results){
+            
+            if(err){
+                con.release();
+                console.log("adminqueries.js: Cannot do the edit the user profile.");
+                return err;
+            }
+
+            if(!results.length){
+                con.release();
+                console.log("adminqueries.js: User profile does not exist");
+                res.status(404).send("User profile does not exist.");
+            }
+            else{
+                 var userid = results[0].user_id;
+                if(results[0].student == 0){
+
+                    var insertquery = "INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level) VALUES (?,?,?,?,?);";
+                    var inserts = [userid, req.body.schoolname, req.body.grade, req.body.major, req.body.esl]; 
+                    insertquery = mysql.format(insertquery, inserts);
+
+                    con.query('START TRANSACTION', function(err, results){
+                        if(err){
+                            con.release();
+                            res.status(500);
+                        }
+                        else{
+
+                            con.query(insertquery, function(err, results){
+                                if(err){
+                                    con.release();
+                                    res.send(500);
+                                }
+                                else{
+
+                                    con.query('UPDATE gibson.user SET student = 1 WHERE user_id =?;', [userid], function(err, results){
+                                        if(err){
+                                            con.query('ROLLBACK', function(err, results){
+                                                con.release();
+                                                res.send(500);
+                                            });
+                                        }
+                                        else{
+                                            con.query('COMMIT', function(err, results){
+                                                con.release();
+                                                res.status(200).send("Edited Student information");
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+
+
+                }
+                else{
+                    var query = 'UPDATE gibson.student SET school_name = ?, grade = ?, major = ?, esl_level = ? WHERE user_id = ?;';
+                    var insert = [req.body.schoolname, req.body.grade, req.body.major, req.body.esl, userid];
+                    query = mysql.format(query, inserts);
+
+                    con.query(query, function(err, results){
+                        con.release();
+                        if(err){
+                            console.log('adminqueries.js: Unable to edit student info.');
+                            res.status(500).send('Internal Server Error');
+                        }
+                        else{
+                            res.status(200).send('User student info changed.');
+                        }
+                    });
+                }
+            }
+        });
+    });
+});
+
 
 router.get('/admin/profile/courses', function(req, res){
 
