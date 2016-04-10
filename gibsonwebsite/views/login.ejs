@@ -18,7 +18,7 @@
 				<h1><span class = "fa fa-lock"></span> Login</h1>
 			</div>
 			<div class = "panel-body">
-				<form action="/login" method="POST" class="form-horizontal" role="form">
+				<form action="/login" method="POST" class="form-horizontal" role="form" onsubmit="loginajax();return false">
 
 				<!--sending csrf token-->
         <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
@@ -62,7 +62,7 @@
 				<!--Submit Button-->
 				<div class="form-group">
 					<div class="col-sm-7 col-sm-offset-3">
-						<button type="button" name="login" onClick="loginajax()" class="btn  btn-block btn-primary">Login</button>
+						<button type="submit" name="login" class="btn  btn-block btn-primary">Login</button>
 					</div>
 				</div>
 
