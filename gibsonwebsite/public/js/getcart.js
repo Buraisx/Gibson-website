@@ -38,8 +38,8 @@ function load_cart(){
             
 			var item='';
 			item+='<tr class="cart-item">';
+            item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
 			item+='    <td class="cart-item-name">'+ course_info[i].course_name +'</td>';
-			item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
 			item+='    <td class="cart-item-cost"><span class="dollar">$</span>'+ course_info[i].default_fee +'.00</td>';
 			item+='    <td class="cart-item-delete"> <button type="button" class = "btn-xsm btn-danger btn delete-button" action="/cart/course/delete" onclick="delete_course(this)" method="POST" value="' + course_info[i].course_id +'">X</button> </td>';
 			item+='</tr>';

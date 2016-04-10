@@ -31,16 +31,6 @@ function controlpanel () {
     controlpanel+='            </div>';
     controlpanel+='        </div>';
     controlpanel+='        <div class = "row">';
-    controlpanel+='            <div class = "form-group col-sm-3">';
-    controlpanel+='                <label><span class="required">*</span>Start Time:</label>';
-    controlpanel+='                <input type = "text" class = "form-control timepicki" name = "starttime" id = "starttime" required>';
-    controlpanel+='            </div>';
-    controlpanel+='            <div class = "form-group col-sm-3">';
-    controlpanel+='                <label><span class="required">*</span>End Time:</label>';
-    controlpanel+='                <input type = "text" class = "form-control timepicki" name = "endtime" id = "endtime" required>';
-    controlpanel+='            </div>';
-    controlpanel+='        </div>';
-    controlpanel+='        <div class = "row">';
     controlpanel+='            <div class = "form-group col-sm-9">';
     controlpanel+='                <label><span class="required">*</span>Description:</label>';
     controlpanel+='                <textarea class = "form-control" rows = "3" name = "message" id = "message" required></textarea>';
@@ -48,16 +38,14 @@ function controlpanel () {
     controlpanel+='        </div>';
     controlpanel+='        <div class = "row">';
     controlpanel+='            <div class = "col-sm-8">';
-    controlpanel+='                <button type = "submit" class= "btn eventsubmit" id = "validate">Submit</button>';
+    controlpanel+='                <button type = "button" onclick="makeEvent()" class= "btn eventsubmit" id = "validate">Submit</button>';
     controlpanel+='            </div>';
     controlpanel+='        </div>';
     controlpanel+='    </form>';
     controlpanel+='</div>';
 
-    $('#controlPanel').append(controlpanel);;
+    $('#controlPanel').append(controlpanel);
 
     $('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
     $('.timepicki').timepicki({start_time: ["12", "00", "PM"]});
 }
-
-

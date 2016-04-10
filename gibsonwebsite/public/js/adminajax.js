@@ -531,7 +531,7 @@ function courseform(){
 
 	var csrfmeta = $("meta[name=_csrf]");
 	var addcourses='';
-	addcourses+='                <form name="frm" role = "form" id="courseform">';
+	addcourses+='                <form name="frm" role = "form" id="courseform" onsubmit="validateCourse();return false">';
 	addcourses+='                     <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
 	addcourses+='						<div class="tab-content">';
 	addcourses+='						<br>';
@@ -697,7 +697,7 @@ function courseform(){
 	set_date+='                    <div class="row form-group">';
 	//addcourses+='                    <br>';
 	set_date+='                        <div class = "col-sm-8 reducepadding">';
-	set_date+='                            <button type = "button" class= "btn btn-success" id = "validate" onClick="validateCourse()">Submit</button>';
+	set_date+='                            <button type = "submit" class= "btn btn-success" id = "validate">Submit</button>';
 	set_date+='                        </div>';
 	set_date+='                    </div>';
 	set_date+='                </div>';
