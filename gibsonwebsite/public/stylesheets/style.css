@@ -280,8 +280,8 @@ hr {
 	width: 100%;
     border: none;
     height: 1px;
-    color: #000;
-    background-color: #000;
+    background-color: #888;
+    opacity: 0.5;
 }
 
 .fieldname {
@@ -423,9 +423,9 @@ hr {
 }
 
 /** Shopping Cart - Header **/
-.cart-header{
-    background-color: #d9d9d9;
-    color: #000000;
+.shoppingheader{
+    background-color: #3AAADA;
+    color: #FFFFFF;
 }
 
 #empty-cart {
@@ -497,13 +497,13 @@ tr:nth-child(even)[class*="cart"]{
     text-align: right;
     padding-left: 10px;
     font-weight: bold;
-    color: #b12704;
+    color: #e74c3c;
 }
 
 .cart-total-cost{
     text-align: right;
     font-weight: bold;
-    color: #b12704;
+    color: #e74c3c;
 }
 
 .cart-total-delete{
@@ -558,7 +558,7 @@ div[class*="banner"]{
 }
 
 .banner-maintenance{
-    background-color: #F39C37;
+    background-color: #e74c3c;
 }
 
 .banner-event{
