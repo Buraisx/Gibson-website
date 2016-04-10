@@ -41,7 +41,7 @@ function load_cart(){
 			item+='    <td class="cart-item-name">'+ course_info[i].course_name +'</td>';
 			item+='    <td class="cart-item-code">'+ course_info[i].course_code +'</td>';
 			item+='    <td class="cart-item-cost"><span class="dollar">$</span>'+ course_info[i].default_fee +'.00</td>';
-			item+='    <td class="cart-item-delete"> <button type="button" class = "btn-xsm btn-danger" action="/cart/course/delete" onclick="delete_course(this)" method="POST" id="submit" value="' + course_info[i].course_id +'">X</button> </td>';
+			item+='    <td class="cart-item-delete"> <button type="button" class = "btn-xsm btn-danger btn delete-button" action="/cart/course/delete" onclick="delete_course(this)" method="POST" value="' + course_info[i].course_id +'">X</button> </td>';
 			item+='</tr>';
 
 			cart_table.append(item);
@@ -66,10 +66,10 @@ function load_cart(){
         	var button_div = $('#shoppingcart-buttons');
         	var button_content = '';
         		button_content+= '<div>';
-                button_content+=	'<a href="/user/profile#courses"><button type="button" class="btn-primary smallmargin" id="backtoprofile">Back to Profile</button></a>';
+                button_content+=	'<a href="/user/profile#courses"><button type="button" class="btn btn-primary smallmargin" id="backtoprofile">Back to Profile</button></a>';
                 button_content+= '</div>';
                 button_content+= '<div>';
-                button_content+=    '<a href="/payment/paypal"><button type="button" class="btn-primary smallmargin" id="paypal-button">Checkout</button></a>';
+                button_content+=    '<a href="/payment/paypal"><button type="button" class="btn btn-primary smallmargin" id="paypal-button">Checkout</button></a>';
                 button_content+= '</div>';
 
         	    button_div.append(button_content);

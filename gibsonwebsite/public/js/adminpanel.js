@@ -5,6 +5,7 @@ $("a[href$='#controlPanel']").ready(function(){
 
 function controlpanel () {
 
+    var csrfmeta = $("meta[name=_csrf]");
     var controlpanel = '';
     controlpanel+='<div class="search-box">';
     controlpanel+='    <h3>Schedule Event</h3>';
