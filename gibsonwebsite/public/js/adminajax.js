@@ -173,8 +173,10 @@ function listusers(){
 			users += '                        <div class = "row">';
 			users += '                            <div class = "col-sm-6">';
 			users += '                                <p><strong>Address: </strong>' + user_info[i].address + '</p>';
+			users += '								  <a href="/profile/'+ user_info[i].username +'" <button type="button" class="btn btn-success"> Detailed User Page</button></a>';
 			users += '                            </div>';
 			users += '                        </div>';
+
 
 			//Emergency Contacts Header
 			//var emInfo = $("<h3></h3>").append("Emergency Contacts");

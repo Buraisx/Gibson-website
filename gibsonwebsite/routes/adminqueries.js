@@ -50,6 +50,35 @@ router.get('/admin/profile/info', function(req, res) {
     });
 });
 
+router.get('/profile/:username', function(req, res, next){
+    console.log(req.params.username);
+    var sql = "SELECT username, lname, fname, birth_date, gender, address, unit_no, city, province_name, postal_code, primary_phone, secondary_phone, email, send_notification, student FROM gibson.user,gibson.province WHERE gibson.user.province_id = gibson.province.province_id AND username = ? AND rank_id < 4;";
+    var inserts = [req.params.username];
+
+    sql = mysql.format(sql, inserts);
+
+    connection.getConnection(function(err,con){
+        if(err){
+            console.log("adminqueries.js: Cannot get connection.");
+        }
+        con.query(sql, function(err, results){
+            con.release();
+            if(err){
+                console.log("adminqueries.js: Cannot get the user profile.");
+                return err;
+            }
+
+            if(!results.length){
+                console.log("adminqueries.js: User profile does not exist");
+                res.status(404).send("User profile does not exist.");
+            }
+            else{
+                res.render('detailedprofile', {title: req.params.username + "'s Profile", info: results[0] });
+            }
+        });
+    });
+});
+
 router.get('/admin/profile/courses', function(req, res){
 
     //in query, counts the number of users who take each course from user_course table.
