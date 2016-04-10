@@ -160,7 +160,7 @@ function load_profile(){
 	personalinfo+='    </div>';
 	personalinfo+='    <div class="row">';
 	personalinfo+='        <div class="form-group col-sm-12">';
-	personalinfo+='            <p><span class="col-sm-3 fieldname">Date of Birth</span><span class="col-sm-9 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
+	personalinfo+='            <p><span class="col-sm-3 fieldname">Date of Birth</span><span class="col-sm-9 fieldval">' + convertdate(String(user_info.user.birth_date).substring(0, 10)) + '</span></p>';
 	personalinfo+='        </div>';
 	personalinfo+='    </div>';
 	personalinfo+='    <div class="row">';
@@ -798,7 +798,7 @@ function showFilteredCourses(data, searchText){
 		courses += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
 		courses += '            		</div>';
         courses += '            	   <div class="col-sm-8">';
-		courses += '               		 	 <p id="courseperiod' + i + '">' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+		courses += '               		 	 <p id="courseperiod' + i + '">' + convertdate(String(data[i].start_date).substring(0, 10)) + ' to ' + convertdate(String(data[i].end_date).substring(0, 10)) + '</p>';
 		courses += '            		</div>'
 		courses += '        		</div>';
 
