@@ -413,6 +413,7 @@ hr {
     margin-left: auto;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     border: 1px solid black;
+    overflow: auto;
 
 }
 
@@ -516,10 +517,19 @@ td{
     padding: 5px;
 }
 
+#refundpolicy{
+    width: 80%;
+    float: left;
+}
+
+.refund{
+    font-size: 8pt;
+}
 /** Shopping Cart - Buttons **/
 
-#shoppingcart-buttons div{
-    width: 150px;
+#shoppingcart-buttons{
+    width: auto;
+    float: right;
     margin-left:auto;
     margin-right:0;
 }
@@ -531,6 +541,9 @@ td{
 .fa-shopping-cart{
     font-size: 1.3em;
     margin: 0 0.4em 0 0;
+}
+
+.delete-button{
 }
 
 /** Banner Alerts **/
