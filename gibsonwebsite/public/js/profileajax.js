@@ -160,7 +160,7 @@ function load_profile(){
 	personalinfo+='    </div>';
 	personalinfo+='    <div class="row">';
 	personalinfo+='        <div class="form-group col-sm-12">';
-	personalinfo+='            <p><span class="col-sm-3 fieldname">Date of Birth</span><span class="col-sm-9 fieldval">' + String(user_info.user.birth_date).substring(0, 10) + '</span></p>';
+	personalinfo+='            <p><span class="col-sm-3 fieldname">Date of Birth</span><span class="col-sm-9 fieldval">' + convertdate(String(user_info.user.birth_date).substring(0, 10)) + '</span></p>';
 	personalinfo+='        </div>';
 	personalinfo+='    </div>';
 	personalinfo+='    <div class="row">';
@@ -798,7 +798,7 @@ function showFilteredCourses(data, searchText){
 		courses += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
 		courses += '            		</div>';
         courses += '            	   <div class="col-sm-8">';
-		courses += '               		 	 <p id="courseperiod' + i + '">' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+		courses += '               		 	 <p id="courseperiod' + i + '">' + convertdate(String(data[i].start_date).substring(0, 10)) + ' to ' + convertdate(String(data[i].end_date).substring(0, 10)) + '</p>';
 		courses += '            		</div>'
 		courses += '        		</div>';
 
@@ -920,26 +920,98 @@ function listschedule(){
 			schedule += '            <h4 class="panel-title">';
 			schedule += '                <a aria-expanded="false" class="collapsed" data-toggle="collapse" href="#scollapse' + i + '">';
 			schedule += '                    <div class="row">';
-			schedule += '                        <div class="col-sm-5">' + data[i].course_name +'</div>';
-			schedule += '                        <div class="col-sm-7 righttext">Course Code: ' + data[i].course_code + '</div>';
+			schedule += '                        <div class="col-sm-9">' + data[i].course_name +'</div>';
+			schedule += '                        <div class="col-sm-3">Course Code: ' + data[i].course_code + '</div>';
 			schedule += '                    </div>';
 			schedule += '                </a>';
 			schedule += '            </h4>';
 			schedule += '        </div>';
 			schedule += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="scollapse' + i + '">';
 			schedule += '            <div class="panel-body">';
-			schedule += '                <div class="col-sm-offset-1">';
-			schedule += '                    <p id="description' + i + '">' + data[i].course_description + '</p>';
-			schedule += '                    <div class="row">';
-			schedule += '                        <div class="col-sm-6">';
-			schedule += '                            <p id="coursestartdate' + i + '">Start Date: ' + String(data[i].start_date).substring(0, 10) + '</p>';
-			schedule += '                    	 </div>';
-			schedule += '                        <div class="col-sm-6">';
-			schedule += '                            <p id="courseenddate' + i + '">End Date: ' + String(data[i].end_date).substring(0, 10) + '</p>';
-			schedule += '                        </div>';
-			schedule += '                        <div class="col-sm-3">Days of Week: ' + data[i].course_days + '</div>';
-			schedule += '                    </div>';
-			schedule += '                </div>';
+			schedule += '               <div class="col-sm-offset-1">';
+            
+            //*** AJAX for Generating Description ***//
+            schedule += '        		<div class="row">';
+            schedule += '            		<div class="col-sm-4">';
+            schedule += '                		<p id="descriptiontitle' + i + '"><b>Description:</b></p>';
+            schedule += '        			</div>';
+            schedule += '            		<div class="col-sm-8">';
+            schedule += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
+            schedule += '        			</div>';
+            schedule += '        		</div>';
+            
+            //*** ATTENTION!! NEED TO ASK YYYY-MM-DD to Jun 11, 2016 style ***//
+            //*** AJAX for Generating Period ***//
+            schedule += '        		<div class="row largemargin">';
+            schedule += '            		<div class="col-sm-4">';
+            schedule += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
+            schedule += '            		</div>';
+            schedule += '            	   <div class="col-sm-8">';
+            schedule += '               		 	 <p id="courseperiod' + i + '">' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+            schedule += '            		</div>'
+            schedule += '        		</div>';
+            
+            //*** AJAX for Generating Target ***//
+            schedule += '        		<div class="row">';
+            schedule += '        	    	<div class="col-sm-4">';
+            schedule += '        	        	 <p id="coursetargettitle' + i + '"><b>Target:</b></p>';
+            schedule += '         	   		</div>';
+            schedule += '        	    	<div class="col-sm-8">';
+            schedule += '        	        	 <p id="coursetarget' + i + '">' + data[i].course_target + '</p>';
+            schedule += '         	   		</div>';
+            schedule += '        		</div>';
+            
+            //*** AJAX for Generating Language ***//
+            schedule += '        		<div class="row">';
+            schedule += '        	    	<div class="col-sm-4">';
+            schedule += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
+            schedule += '         	   		</div>';
+    	
+
+            //*** JQuery Loop for Generating Languages ***//
+            if(data[i].course_language != null){
+                for(var j = 0; j < JSON.parse(data[i].course_language).length; j++){
+                    var lang = JSON.parse(data[i].course_language)[j];
+                    if (j != 0) {
+                        schedule += '            <div class="col-sm-8 col-sm-offset-4">';
+                    }
+                    else {
+                        schedule += '            <div class="col-sm-8">';
+                    }
+                    schedule += '                 <p id="courselanguage' + i + '">' + lang + '</p>';
+                    schedule += '            </div>';
+                }
+            }
+            schedule += '                </div>';
+
+            //*** AJAX for Header of Date(s) and Time(s) ***//
+            schedule += '        		<div class="row largemargin">';
+            schedule += '            		<div class="col-sm-4">';
+            schedule += '                		<p id="coursetimetitle' + i + '"><b>Date(s) and Time(s):</b></p>';
+            schedule += '            		</div>';
+
+            //*** AJAX Loop for Generating Day-Time ***//
+            if(data[i].course_days != null){
+                for (var j = 0; j < JSON.parse(data[i].course_days).length; j++ ){
+                    var days = JSON.parse(data[i].course_days)[j].day;
+                    var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
+                    if (j != 0) {
+                    schedule += '            <div class="col-sm-8">';
+                    }
+                    else {
+                    schedule += '            <div class="col-sm-8">';
+                    }
+                    schedule += '                 <span class="courseday">' + days + '</span>';
+                    schedule += '                 <span class="coursetime">' + time + '</span>';
+                    schedule += '            </div>';
+
+                }
+            }
+            schedule += '        </div>';
+            
+            
+			schedule += '               </div>';
+            schedule += '               </div>';
 			schedule += '            </div>';
 			schedule += '        </div>';
 			schedule += '    </div>';

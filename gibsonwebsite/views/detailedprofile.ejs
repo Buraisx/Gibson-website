@@ -1,3 +1,210 @@
-<html>
-<p> <%=info.username %> </p>
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include standardnavbar.ejs %>
+
+<head>
+	<script src = "/js/passwordvalidation.js"></script>
+	<script src = "/js/changepassword.js"></script>
+	<script src = "/js/emergencycontacts.js"></script>
+	<link href="/css/datepicker.css" rel="stylesheet">
+</head>
+
+	<body>
+	<section class="container rcorners">
+		<h1>Personal Information</h1>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Username</span>
+					<span class="col-sm-9 fieldval"><%=info.username%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Name</span>
+					<span class="col-sm-9 fieldval"><%= info.fname%> <%=info.lname%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Email</span>
+					<span class="col-sm-9 fieldval"><%=info.email%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Phone (Home)</span>
+					<span class="col-sm-9 fieldval"><%=info.primary_phone%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Phone (Cell)</span>
+					<span class="col-sm-9 fieldval"><%=info.secondary_phone%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Gender</span>
+					<span class="col-sm-9 fieldval"><%=info.gender%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Date of Birth</span>
+					<span class="col-sm-9 fieldval"><%=String(info.birth_date).substring(3, 15)%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Address</span>
+					<span class="col-sm-9 fieldval"><%=info.address%></span>
+				</p>
+				<p>
+					<span class="col-sm-9 col-sm-offset-2 fieldval"><%=info.city%>, <%=info.province_name%>, <%=info.postal_code%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row form-group col-sm-12">
+			<button type="button" class="btn btn-default col-sm-offset-5" onclick="editpersonal()" id="editpersonal">Edit</button>
+		</div>
+		<hr>
+
+		<h1>Student Information</h1>
+		<% if ( info.student == 1) { %>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">School Name</span>
+					<span class="col-sm-9 fieldval"><%=info.school_name%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Grade/Year</span>
+					<span class="col-sm-9 fieldval"><%=info.grade%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Major</span>
+					<span class="col-sm-9 fieldval"><%=info.major%></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">ESL Level</span>
+					<span class="col-sm-9 fieldval"><%=info.esl_level%></span>
+				</p>
+			</div>
+		</div>
+		<% } %>
+		<div class="row form-group col-sm-12">
+			<button type="button" class="btn btn-default col-sm-offset-5" onclick="editstudent()" id="editstudent">Edit</button>
+		</div>
+		<hr>
+
+		<h1>Emergency Contacts</h1>
+
+
+                                
+
+		<h4>Contact #1</h4>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Name</span>
+					<span class="col-sm-9 fieldval">Hard Coded</span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Relationship</span>
+					<span class="col-sm-9 fieldval">Hardcoding Mentor</span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Phone</span>
+					<span class="col-sm-9 fieldval">123</span>
+				</p>
+			</div>
+		</div>
+		<h4>Contact #2</h4>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Name</span>
+					<span class="col-sm-9 fieldval">Hard Coded</span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Relationship</span>
+					<span class="col-sm-9 fieldval">Hardcoder Mentor</span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<p>
+					<span class="col-sm-2 fieldname">Phone</span>
+					<span class="col-sm-9 fieldval">123</span>
+				</p>
+			</div>
+		</div>
+		<div class="row form-group col-sm-12">
+			<button type="button" class="btn btn-default col-sm-offset-5" onclick="editcontacts()" id="editcontacts">Edit</button>
+		</div>
+		<hr>
+
+
+
+		<div class="row form-group form-group-sm col-sm-12">	<button id="changepassbutton" onclick="togglepassworddropdown()" class="btn btn-default" type="button">Change Password</button></div>
+		<div style="display: block;" class="changepassdesign hidden form-group form-group-sm row col-sm-12" id="change_password">
+			<div>
+				<p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>
+				<form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id="change_password_form" novalidate="novalidate">
+					<input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+					<label>New Password:</label>
+					<input onkeyup="checkPass(); return false;" minlength="6" placeholder="Enter New Password" id="password" name="newpass" class="form-control" type="password">
+					<label>Confirm New Password:</label>
+					<input minlength="6" onkeyup="checkPass(); return false;" placeholder="Confirm New Password" id="passwordhashed" name="confirmnewpass" class="form-control" type="password">
+					<button id="changepassbutton" class="btn btn-default submitbutton" type="button" onclick="changepassword()">Change</button>
+				</form>
+			</div>
+		</div>
+	</section>
+</body>
+
+<script src="/js/profileajax.js"></script>
+<script src="/js/convertdate.js"></script>
+
 </html>

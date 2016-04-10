@@ -167,7 +167,7 @@ function listusers(){
 			users += '                                <p><strong>Gender: </strong>' + user_info[i].gender + '</p>';
 			users += '                            </div>';
 			users += '                            <div class = "col-sm-6">';
-			users += '                                <p><strong>Date of Birth: </strong>' + String(user_info[i].birth_date).substring(0, 10) + '</p>';
+			users += '                                <p><strong>Date of Birth: </strong>' + convertdate(String(user_info[i].birth_date).substring(0, 10)) + '</p>';
 			users += '                            </div>';
 			users += '                        </div>';
 			users += '                        <div class = "row">';
@@ -373,7 +373,7 @@ function showFilteredCourses(data, searchText){
 		courses += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
 		courses += '            		</div>';
         courses += '            	   <div class="col-sm-8">';
-		courses += '               		 	 <p id="courseperiod' + i + '">' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+		courses += '               		 	 <p id="courseperiod' + i + '">' + convertdate(String(data[i].start_date).substring(0, 10)) + ' to ' + convertdate(String(data[i].end_date).substring(0, 10)) + '</p>';
 		courses += '            		</div>'
 		courses += '        		</div>';
 

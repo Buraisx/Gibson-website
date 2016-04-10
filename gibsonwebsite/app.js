@@ -115,7 +115,7 @@ var invoice = require('./routes/invoice');
        else{
          con.query('SELECT alert_msg, alert_type FROM gibson.website_alert WHERE start_alert=1', function(err, results){
            con.release();
-           if(!results.length){
+           if(results == null || !results.length){
              res.clearCookie('gibson_alert');
              next();
            }
@@ -185,7 +185,9 @@ app.use(function (req, res, next){
             //res.end();
             return err;
           }
-
+		  if (!password.length) {
+			  return err;
+		  }
           // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
           secretKey += password[0].password;
 

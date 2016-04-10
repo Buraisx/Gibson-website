@@ -4,6 +4,7 @@ var ECONTACTHEIGHT = 250; // Height added when a single econtact is added
 var ECONTACTHEIGHTSTR = ECONTACTHEIGHT.toString();
 
 $(document).ready(function(){
+    $('#addbutton').prop('disabled', false);
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })

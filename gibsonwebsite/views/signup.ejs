@@ -26,10 +26,10 @@
                 <div  class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0" data-callback="recaptchacallback">
                 </div> 
 
-    <div id="myCarousel" class="carousel slide" style="height:700px;" data-interval="false">
+    <div id="myCarousel" class="carousel-overflow carousel slide" style="height:700px;" data-interval="false">
 
         <!-- Wrapper for Slides -->
-        <div class="carousel-inner">
+        <div class="carousel-inner carousel-overflow">
             <div class="item active">
                 <!-- Set the first background image using inline CSS below. -->
                 <div class="fill" style="background-image:url(/img/cat-1044750_960_720.jpg);">
@@ -76,8 +76,8 @@
                             </div>
                         </div>
                         <div class = "row">
-                            <div class = "next-button col-sm-2">
-                                <button type = "button" class = "btn btn-success toppage2" href="#myCarousel" data-slide="next">Next&nbsp;&nbsp;&nbsp;&rarr;</button>
+                            <div class = "col-sm-offset-6 col-sm-5">
+                                <button type = "button" class = "btn btn-success toppage2 next-button" href="#myCarousel" data-slide="next">Next&nbsp;&nbsp;&nbsp;&rarr;</button>
                             </div>
                         </div>
 
@@ -163,8 +163,8 @@
                                 <div class = "col-sm-offset-1  col-sm-4">
                                     <label for='student'><input type="checkbox" id="student" name = "student"> I am a student</label>
                                 </div>
-                                <div class="col-sm-4" id="signup-notifications">
-                                    <label><input type="checkbox" id="send_notifications" name = "send_notifications" value="1"> Receive notifications
+                                <div class="col-sm-6" id="signup-notifications">
+                                    <label><input type="checkbox" id="send_notifications" name = "send_notifications" value="1"> Receive email notifications
                                     </label>
                                 </div>
                             </div>
@@ -192,12 +192,12 @@
                             </div>
 
                         <div class = "row">
-                            <div class = "col-sm-offset-1 col-sm-4">
+                            <div class = "col-sm-offset-1 col-sm-5">
                                 <button type = "button" class = "btn btn-warning " href="#myCarousel" id="back2" data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>
                             </div>
 
-                            <div class = "next-button col-sm-2">
-                                <button type = "button" class = "btn btn-success " href="#myCarousel" id ="next2"data-slide="next">Next&nbsp;&nbsp; &nbsp; &rarr;</button>
+                            <div class = "col-sm-5">
+                                <button type = "button" class = "btn btn-success next-button" href="#myCarousel" id ="next2"data-slide="next">Next&nbsp;&nbsp; &nbsp; &rarr;</button>
                             </div>
                         </div>
 
@@ -265,21 +265,21 @@
                                     </div>
                                     <% } %>
                                     <div class="row">
-                                        <div class = "centerbutton1 col-sm-1">
+                                        <div class = " col-sm-offset-1 col-sm-5">
                                             <button type = "button" class= "btn btn-info" onclick="addcontact()" id = "addbutton">Add another contact</button>
                                         </div>
-                                        <div class = "centerbutton2 col-sm-1">
+                                        <div class = "col-sm-5">
                                             <button type = "button" class= "btn btn-info hidden btnedit" onclick="removecontact()" id = "removebutton">Remove a contact</button>
                                         </div>
                                     </div>
                                     
                                     <div class = "row signupbuttons">
-                                        <div class = "col-sm-offset-1 col-sm-2 stoppaddingleft">
+                                        <div class = "col-sm-offset-1 col-sm-5">
                                             <button type = "button" class = "btn btn-warning topage2" id="back" href="#myCarousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>
                                         </div>
 
-                                        <div class = "register-button col-sm-offset-1 col-sm-2">
-                                            <button type = "submit" class = "btn btn-success btn-block" name="btnsubmit" onclick="return submitbutton()" id="btnsubmit">Complete Signup</button>
+                                        <div class = "register-button col-sm-5">
+                                            <button type = "submit" class = "btn btn-success" name="btnsubmit" onclick="return submitbutton()" id="btnsubmit">Complete Signup</button>
                                         </div>
                                     </div>
 
