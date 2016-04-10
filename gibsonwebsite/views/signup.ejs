@@ -10,7 +10,7 @@
     <script src = "/js/serializecontacts.js"></script>
     <script src = "/js/passwordvalidation.js"></script>
     <script src = "/js/studentinputboxes.js"></script>
-    <script src ="/js/signupajax.js"></script>
+    <script src = "/js/signupajax.js"></script>
     <script src = "/js/submitbutton.js"></script>
     <script src = 'https://www.google.com/recaptcha/api.js'></script>
     <!--script src = "/js/captcha.js"></script-->
@@ -24,7 +24,7 @@
                  <div id="dimmer">
                 </div>
                 <div  class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0" data-callback="recaptchacallback">
-                </div> 
+                </div>
 
     <div id="myCarousel" class="carousel-overflow carousel slide" style="height:700px;" data-interval="false">
 
@@ -59,7 +59,7 @@
                             </div>
                             <div class="form-group col-sm-5">
                                 <label class="control-label"><span class="required">*</span>Confirm Password:</label>
-                                
+
                                 <input type="password" class = "form-control reqIn" name = "passwordhashed" id="passwordhashed" placeholder="Re-enter Password" onkeyup="checkPass(); return false;" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
                                 <!--Character restrictions-->
                             </div>
@@ -161,10 +161,10 @@
 
                             <div class = "row">
                                 <div class = "col-sm-offset-1  col-sm-4">
-                                    <label for='student'><input type="checkbox" id="student" name = "student"> I am a student</label>
+                                    <label for='student'><input type="checkbox" id="student" name = "student" value = "1"> I am a student.</label>
                                 </div>
                                 <div class="col-sm-6" id="signup-notifications">
-                                    <label><input type="checkbox" id="send_notifications" name = "send_notifications" value="1"> Receive email notifications
+                                    <label><input type="checkbox" id="send_notifications" name = "send_notifications" value="1"> Signup for email newsletters.
                                     </label>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                 </div><!--panel-default-->
             </div><!--panel div-->
                 </div>
-                
+
             </div>
             <div class="item captchadiv">
                 <!-- Set the third background image using inline CSS below. -->
@@ -272,14 +272,14 @@
                                             <button type = "button" class= "btn btn-info hidden btnedit" onclick="removecontact()" id = "removebutton">Remove a contact</button>
                                         </div>
                                     </div>
-                                    
+
                                     <div class = "row signupbuttons">
                                         <div class = "col-sm-offset-1 col-sm-5">
                                             <button type = "button" class = "btn btn-warning topage2" id="back" href="#myCarousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>
                                         </div>
 
                                         <div class = "register-button col-sm-5">
-                                            <button type = "submit" class = "btn btn-success" name="btnsubmit" onclick="return submitbutton()" id="btnsubmit">Complete Signup</button>
+                                            <button type = "button" class = "btn btn-success" name="btnsubmit" onclick="signup()" id="btnsubmit">Complete Signup</button>
                                         </div>
                                     </div>
 
@@ -293,7 +293,7 @@
 
 
 <!--<div class="g-recaptcha" data-sitekey="6LeqAhkTAAAAAB9OOXvWMNbFrUTNc2sTTX2rivF0"></div>-->
-              
+
 </form>
 
 
@@ -327,7 +327,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/js/freelancer.js"></script>
-    
+
     <!-- Hide Navbar Items -->
     <script src="/js/navbarhide.js"></script>
 

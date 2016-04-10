@@ -103,6 +103,9 @@ function signup() {
     window.location.href = 'signup/success';
 	})
 	.fail(function (err){
-		alert('Registration failed.');
+		swal({
+      title: 'Signup Failed',
+      type: 'error'
+    });
 	});
 }

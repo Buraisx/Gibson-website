@@ -140,6 +140,7 @@ module.exports = function(passport){
 
                 createUser = mysql.format(createUser, values);
 
+                console.log(createUser);
                 // INSERTING NEW USER INTO DATABASE
                 con.query(createUser, function(err, results){
                   if(err){
@@ -329,7 +330,7 @@ module.exports = function(passport){
                     else{
                       user[0].last_login_time = lastLogIn;
                       return next (null, user[0]);
-                    }            
+                    }
                 });
             }
         ],
