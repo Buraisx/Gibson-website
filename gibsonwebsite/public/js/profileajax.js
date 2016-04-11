@@ -911,9 +911,10 @@ function listschedule(){
 	jQuery.getJSON("/user/profile/schedule", function(data){
 		$('#schedule').contents().remove();
 		var schedule = '';
-		schedule += '<div id="scheduleaccordion" class="panel-group">';
         schedule += '<hr>';
         schedule += '<h1>My Scheduled Courses</h1>';
+		schedule += '<div id="scheduleaccordion" class="panel-group">';
+        schedule += '<div class="panel-group" id="scheduleaccordion">';
 		for(i = 0; i < data.length; i++) {
 			schedule += '    <div class="panel panel-primary">';
 			schedule += '        <div class="panel-heading">';
@@ -1014,13 +1015,13 @@ function listschedule(){
             schedule += '               </div>';
 			schedule += '            </div>';
 			schedule += '        </div>';
-			schedule += '    </div>';
 		}
 		//If there are no courses in search
 		if(data.length < 1)
 		{
 			schedule+= '<div> Oops! You have no upcoming courses. </div>';
 		}
+		schedule += '</div>';
 		schedule += '</div>';
 		$('#schedule').append(schedule);
 
