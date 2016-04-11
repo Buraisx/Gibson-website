@@ -4,7 +4,7 @@
     "connectionLimit": 10,
     "host": "localhost",
     "user": "root",
-    "password": "local123",
+    "password": "Sabad@th!s1234567",
     "database": "gibson",
     "multipleStatements": true,
     "port": 3306
@@ -25,7 +25,7 @@
     "https://www.105gibson.ca"
   ],
 
-  "sendEmail": false,
+  "sendEmail": true,
 
   "transport": {
     "host": "smtp.gmail.com",
