@@ -8,11 +8,10 @@ var transport = nodemailer.createTransport(smtpTransport(config.transport));
 
 // SIGNUP CONFIRMATION EMAIL
 function signupConfEmail (req, res, next){
-
+  console.log('\n' +req.user.username +'\'s E-MAIL CONFIRMATION URL:');
+  console.log(config.domains[0] +'/confirm?token=' +req.oneUseToken +'\n');
   // IF config.sendEmail = false, DISABLE OUTGOING EMAIL
   if (!config.sendEmail){
-    console.log('\n' +req.user.username +'\'s E-MAIL CONFIRMATION URL:');
-    console.log(config.domains[0] +'/confirm?token=' +req.oneUseToken +'\n');
     next();
   }
   // config.sendEmail = true, DO SEND EMAIL
