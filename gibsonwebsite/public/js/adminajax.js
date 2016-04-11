@@ -331,6 +331,7 @@ function showFilteredCourses(data, searchText){
 
 	var courses = '';
 	courses += '<div id="coursesaccordion" class="panel-group">';
+	courses += '	<hr>';
 
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
