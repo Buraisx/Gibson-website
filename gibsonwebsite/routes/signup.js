@@ -95,8 +95,7 @@ router.post('/signup', function(req, res, next) {
 		}
 	});
 } ,passport.authenticate('local-signup', {
-	session: false,
-	failureFlash: true
+	session: false
 }),token.generateOneUse, email.signupConfEmail , redirect);
 
 // REDIRECT FOR SIGNUP PAGE
