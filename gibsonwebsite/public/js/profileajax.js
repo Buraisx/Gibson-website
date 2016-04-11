@@ -997,10 +997,10 @@ function listschedule(){
                     var days = JSON.parse(data[i].course_days)[j].day;
                     var time = JSON.parse(data[i].course_days)[j].start_time + "&nbsp" + " - " + "&nbsp;" + JSON.parse(data[i].course_days)[j].end_time;
                     if (j != 0) {
-                    schedule += '            <div class="col-sm-8">';
+                    	schedule += '            <div class="col-sm-8">';
                     }
                     else {
-                    schedule += '            <div class="col-sm-8">';
+                    	schedule += '            <div class="col-sm-8">';
                     }
                     schedule += '                 <span class="courseday">' + days + '</span>';
                     schedule += '                 <span class="coursetime">' + time + '</span>';

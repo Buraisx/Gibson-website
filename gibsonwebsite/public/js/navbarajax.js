@@ -10,7 +10,7 @@ $(document).ready(function(){
 		// Gets data from the JSON
 		var user = json.username;
 		var rank = json.rank;
-		userdisplay = '<a class = "dropdown-toggle" data-toggle="dropdown" href="/user/profile">' + user + '</a>';
+		userdisplay = '<a class = "dropdown-toggle" href="/user/profile">' + user + '</a>';
 		userdisplay += '<ul class = "dropdown-menu">';
 		// Adds link to profile views
 		userdisplay += '	<li><a href="/user/profile">Profile</a></li>';
