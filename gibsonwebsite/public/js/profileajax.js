@@ -888,7 +888,7 @@ function showFilteredCourses(data, searchText){
 	if(data.length < 1)
 	{
 		var empty_courses_html = '';
-			empty_courses_html+= '<div> Oops! There are no courses available. </div>';
+			empty_courses_html+= '<div>There are currently no courses available.</div>';
 
 		$('#coursesaccordion').append(empty_courses_html);
 	}
@@ -1015,7 +1015,7 @@ function listschedule(){
 		//If there are no courses in search
 		if(data.length < 1)
 		{
-			schedule+= '<div> Oops! You have no upcoming courses. </div>';
+			schedule+= '<div>You no courses in your schedule. Sign up today using the Courses tab!</div>';
 		}
 		schedule += '</div>';
 		schedule += '</div>';
