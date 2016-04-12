@@ -1,7 +1,3 @@
-.signup-carousel{
-	overflow: auto;
-}
-
 #progressBar {
 	margin-left: 25%;
 	width: 50%;
@@ -39,9 +35,17 @@
 -moz-box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 }
+
+.signup-container {
+	width: 90%;
+	max-width: 800px;
+	margin: 0 auto;
+	padding-top: 80px;
+}
+
 .signuppanel
 {
-	margin-top: 80px;
+	/*margin-top: 80px;*/
 	margin-bottom: 100px;
 }
 .fill {
@@ -134,4 +138,18 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 
 #signup3{
     background-color: #97CD51;
+}
+
+
+/* mobile */
+@media (max-width: 767px)
+{
+	#frm {
+		height: auto;
+	}
+
+	.carousel-overflow{
+		display: table;
+		width: 100%;
+	}
 }
