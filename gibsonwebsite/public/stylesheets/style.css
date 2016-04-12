@@ -108,6 +108,7 @@ a {
 .footer-above
 {
 	max-width: 100%;
+    border-top: solid 2px grey;
 }
 #student_info {
   display:none;
@@ -579,6 +580,7 @@ div[class*="banner"]{
 
 .navbar {
     margin-bottom: 0px;
+    border-bottom: solid 2px grey;
 }
 
 #emails{
