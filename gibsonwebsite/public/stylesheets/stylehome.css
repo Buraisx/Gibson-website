@@ -160,6 +160,7 @@ hr.star-orange:after {
 .piccaption{
     text-align:center;
     margin-top: 30px;
+    color: #fff;
 }
 
 
@@ -351,4 +352,9 @@ hr.star-orange:after {
     .collapse.in{
   		display:block !important;
 	}
+}
+
+.eventpic{
+    width: 380px;
+    height: 265px;
 }
