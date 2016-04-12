@@ -17,13 +17,13 @@ $(document).ready(function(){
     $('#student').click(function(){
         if(document.getElementById('student').checked)
         {
+            console.log('student true')
             //set heightt 1000.log
-            console.log('student false')
             $('#myCarousel').animate({height: 1000});
         }
         else
         {
-            console.log('student true')
+            console.log('student false')
             $('#myCarousel').animate({height: 700});
         }
     });
