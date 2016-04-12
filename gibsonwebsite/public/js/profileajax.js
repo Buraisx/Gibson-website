@@ -84,10 +84,6 @@ function load_profile(){
     nav += '        <li><a class="menucolour" href="#emergencyinfo" data-toggle="tab"><i class="fa fa-users"></i> Emergency Contacts</a></li>';
     nav += '        <li><a class="menucolour" href="#changepass" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a></li>';
     nav += '        <li><a class="menucolour" href="#editinfo" data-toggle="tab"><i class="fa fa-pencil"></i> Edit Information</a>';
-    nav += '            <ul class="nav-pills nav-stacked" style="list-style-type:none;">';
-    nav += '                <li><a class="menucolour" href="#">link1</a></li>';
-    nav += '                <li><a class="menucolour" href="#">link2</a></li>';
-    nav += '            </ul>';
     nav += '        </li>';
     nav += '    </ul>';
     nav += '	</div>';
@@ -269,7 +265,7 @@ function load_profile(){
 	changePassword+='<div id="page-content-wrapper" class="container-fluid xyz">';
 	changePassword+='<div class="changepassdesign form-group form-group-sm row col-sm-12" id="change_password">';
 	changePassword+='    <div>';
-	changePassword+='        <p class="small">Passwords must contain at least one letter and one number and must have a minimum 6 characters. No special characters.</p>';
+	changePassword+='        <p class="small">Passwords must contain at least one letter, one number and must have a minimum of 6 characters. No special characters.</p>';
 	changePassword+='        <form role="form" method="post" action="/user/profile/changepassword" class="form-inline" id = "change_password_form" onsubmit="changepassword();return false">';
 	changePassword+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
 	changePassword+='       <div class="row">';
@@ -948,7 +944,7 @@ function listschedule(){
             schedule += '               		 	 <p id="courseperiodtitle' + i + '"><b>Period:</b></p>';
             schedule += '            		</div>';
             schedule += '            	   <div class="col-sm-8">';
-            schedule += '               		 	 <p id="courseperiod' + i + '">' + String(data[i].start_date).substring(0, 10) + ' to ' + String(data[i].end_date).substring(0, 10) + '</p>';
+            schedule += '               		 	 <p id="courseperiod' + i + '">' + convertdate(String(data[i].start_date).substring(0, 10)) + ' to ' + convertdate(String(data[i].end_date).substring(0, 10)) + '</p>';
             schedule += '            		</div>'
             schedule += '        		</div>';
             

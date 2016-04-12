@@ -118,7 +118,8 @@ function listusers(){
 
 		users += '    <div class="panel-group" id="profileaccordion">';
 		users += '	<div class="search-box">';
-		users += '		<p><b> Admin Control Panel</b></p>';
+		users += '		<h3>Newsletter Email Shortcut</h3>';
+        users += '      <p>Click the clipboard icon to copy all users who have signed up for newsletters</p>';
 		users += ' 		<label> User Emails:  </label>';
 		users += '  	<input id="emails" value="">';
 		users += '			<button id="getemailbutton" type="button" data-clipboard-target="#emails"> <img src="/img/clippy.svg.png" alt="Copy to clipboard" height="20" width= "20"></button>';
@@ -334,7 +335,7 @@ function showFilteredCourses(data, searchText){
 	courses += '	<hr>';
 
 	courses += '	<div class="search-box">';
-	courses += '		<p><b>Filter Courses</b></p>';
+	courses += '		<h3>Filter Courses</h3>';
 	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
 	courses += '	</div>';
 

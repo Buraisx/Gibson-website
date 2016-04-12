@@ -374,9 +374,20 @@ hr {
 
 /** LOGIN BUTTONS **/
 
-#forgotuser, #forgotpw, #registerhere{
+#forgotuser, #forgotpw{
     color: #3aaada;
 }
+
+#registerhere{
+    color: #FFFFFF;
+}
+
+
+#login-header, #login-footer{
+    background-color: #3aaada;
+    opacity: 0.8;
+}
+
 
 /** user profile styles **/
 .coursetime {

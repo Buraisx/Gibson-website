@@ -104,7 +104,8 @@ a {
 
 /*star design*/
 hr.star-blue,
-hr.star-green {
+hr.star-green,
+hr.star-orange{
     margin: 25px auto 30px;
     padding: 0;
     max-width: 250px;
@@ -114,7 +115,8 @@ hr.star-green {
 }
 
 hr.star-blue:after,
-hr.star-green:after {
+hr.star-green:after,
+hr.star-orange:after{
     content: "\f005";
     display: inline-block;
     position: relative;
@@ -140,6 +142,15 @@ hr.star-green {
 hr.star-green:after {
     color: #fff;
     background-color: #F39C37;
+}
+
+hr.star-orange {
+    border-color: #fff;
+}
+
+hr.star-orange:after {
+    color: #fff;
+    background-color: #3AAADA;
 }
 
 .bluecolour{
