@@ -146,10 +146,11 @@ hr.star-green:after {
 	color: #3AAADA;
 }
 
-/*p text colour*/
-p {
-	color: #fff;
+.piccaption{
+    text-align:center;
+    margin-top: 30px;
 }
+
 
 /* keyframes are user-defined animations used for 
  * webkit-animation, -moz-animation, etc
