@@ -108,6 +108,7 @@ a {
 .footer-above
 {
 	max-width: 100%;
+    border-top: solid 2px grey;
 }
 #student_info {
   display:none;
@@ -374,9 +375,20 @@ hr {
 
 /** LOGIN BUTTONS **/
 
-#forgotuser, #forgotpw, #registerhere{
+#forgotuser, #forgotpw{
     color: #3aaada;
 }
+
+#registerhere{
+    color: #FFFFFF;
+}
+
+
+#login-header, #login-footer{
+    background-color: #3aaada;
+    opacity: 0.8;
+}
+
 
 /** user profile styles **/
 .coursetime {
@@ -568,6 +580,7 @@ div[class*="banner"]{
 
 .navbar {
     margin-bottom: 0px;
+    border-bottom: solid 2px grey;
 }
 
 #emails{

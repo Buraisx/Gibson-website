@@ -25,7 +25,7 @@ function load_history(){
 			// history+='            <th>Paypal ID</th>';
 			history+='            <th>State</th>';
 			history+='            <th>Payer</th>';
-			history+='            <th>Total</th>';
+			history+='            <th>Total ($)</th>';
 			history+='        </tr>';
 			history+='    </thead>';
 			history+='    <tbody>';
@@ -39,7 +39,7 @@ function load_history(){
 				history+='            <td>' + res[i].paypal_id + '</td>';
 				history+='            <td>' + state + '</td>';
 				history+='            <td>' + res[i].payer_first_name + ' ' + res[i].payer_last_name + '</td>';
-				history+='            <td>' + res[i].total + '</td>';
+				history+='            <td>' + "$ " + res[i].total + '</td>';
 				history+='        </tr>';
 			}
 			history+='    </tbody>';
