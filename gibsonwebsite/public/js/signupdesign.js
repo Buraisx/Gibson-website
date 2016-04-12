@@ -1,4 +1,4 @@
-var page = 1;
+var destinationstep = 1;
 var WAITTIME = 150; // Wait time before page shrinks
 var ECONTACTHEIGHT = 250; // Height added when a single econtact is added
 var ECONTACTHEIGHTSTR = ECONTACTHEIGHT.toString();
@@ -68,39 +68,53 @@ $(document).ready(function(){
 
 });//END
 
+
+
+$('#myCarousel').bind('slide.bs.carousel', function (e) {
+    if (destinationstep == 1){
+        if (document.getElementById('student').checked) {
+            setTimeout(function(){
+                $('#myCarousel').animate({height: 700});
+            }, WAITTIME);
+        }
+    }
+    else if (destinationstep == 2){
+        if (document.getElementById('student').checked) {
+            $("#student_info").removeClass("hidden").hide().slideDown();
+            document.getElementById("schoolname").required = true;
+            document.getElementById("grade").required = true;
+            setTimeout(function() {
+                $('#myCarousel').animate({height: 1000});
+            }, WAITTIME);
+
+        }
+        else {
+            setTimeout(function() {
+                $('#myCarousel').animate({height: 700});
+            }, WAITTIME);
+        }
+    }
+    else if (destinationstep == 3){
+        var contactheight = getContactInfoHeight();
+        setTimeout(function(){
+            $('#myCarousel').animate({height: contactheight});
+        }, WAITTIME);
+    }
+});
+
 // Next Step button of Step 1 and Back button of Step 3
 $('.topage2').click(function() {
-    if (document.getElementById('student').checked) {
-        $("#student_info").removeClass("hidden").hide().slideDown();
-        document.getElementById("schoolname").required = true;
-        document.getElementById("grade").required = true;
-        setTimeout(function() {
-            $('#myCarousel').animate({height: 1000});
-        }, WAITTIME);
-
-    }
-    else {
-        setTimeout(function() {
-            $('#myCarousel').animate({height: 700});
-        }, WAITTIME);
-    }
+    destinationstep = 2;
 });
 
 // Back button of Step 2
-$('#back2').click(function() {
-    if (document.getElementById('student').checked) {
-        setTimeout(function(){
-            $('#myCarousel').animate({height: 700});
-        }, WAITTIME);
-    }
+$('#topage1').click(function() {
+    destinationstep = 1;
 });
 
 // Next Step button of Step 2
-$('#next2').click(function() {
-    var contactheight = getContactInfoHeight();
-    setTimeout(function(){
-        $('#myCarousel').animate({height: contactheight});
-    }, WAITTIME);
+$('#topage3').click(function() {
+    destinationstep = 3;
 });
 
 // Finds the appropriate height for Step 3
