@@ -592,3 +592,9 @@ div[class*="banner"]{
 .tablecaption {
     color: #2C3E50;
 }
+
+/** ERROR PAGE **/
+#error-header{
+    background-color: #F39C37;
+
+}
