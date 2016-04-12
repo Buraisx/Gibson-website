@@ -57,20 +57,28 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <div class="page-wrap">
-        <div class = "container centered">
-            <div class = "container-fluid">
-            <h2>Error 404 </h2><br>
-                <div class="col-sm-4 portfolio-item">
-                    <!-- <img src="/img/error.png" class="error-pic"> -->
-                        <div class="caption">
-                            <h3>Oops! We could not find the page you are looking for.</h3>
-                        </div>
-                    </a>
+<div class="container page-wrap absolute-background" data-background="/img/gibsonpic.jpg">
+	<div class="row text-center centermid logindesign">
+        <div class = "col-sm-offset-3 col-sm-6">
+            <div class = "panel panel-default fadedIn"><!--PanelStart-->
+                <div class = "panel-heading" id="login-header">
+                    <h1><span class = "fa fa-exclamation"></span> ERROR 404</h1>
                 </div>
+                <div class = "panel-body">
+                    <div class="col-sm-12 ">
+                        <!-- <img src="/img/error.png" class="error-pic"> -->
+                        <h3>We could not find the page you are looking for. Try one of these links instead:</h3>
+                        <div class="col-sm-12 largemargin">
+                                <p class="largemargin"><a href="index.ejs">Home Page</a></p>
+                                <p class="largemargin"><a href="/signup">Sign Up</a></p>
+                                <p class="largemargin"><a href="/login">Login</a></p>
+                        </div>
+                    </div>	
+                </div> <!--Panel body end-->
             </div>
-        </div>
-    </div>
+		</div>
+	</div>
+</div>
     <script src="/js/jquery.js"></script>
     <script src="/js/navbarajax.js"></script>
     <%- include standardfooter %>
