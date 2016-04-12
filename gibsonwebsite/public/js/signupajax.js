@@ -65,12 +65,12 @@ function delayEmail(){
 //AJAX Signup Post
 function signup() {
 	$.post("/signup", {
-			_csrf: $('#_csrf').val(),
-			username: $('#username').val(),
+	_csrf: $('#_csrf').val(),
+	username: $('#username').val(),
       password: $('#password').val(),
       email: $('#email').val(),
-			fname: $('#fname').val(),
-			lname: $('#lname').val(),
+	fname: $('#fname').val(),
+	lname: $('#lname').val(),
       birth_date: $('#datepicker').val(),
       gender: $('#gender').val(),
       address: $('#address').val(),
@@ -78,13 +78,14 @@ function signup() {
       apt: $('#apt').val(),
       city: $('#city').val(),
       province: $('#province').val(),
+      send_notifications: $('#send_notifications').val(),   
       student: $('#student').val(),
       schoolname: $('#schoolname').val(),
       grade: $('#grade').val(),
-			major: $('#major').val(),
-			esl: $('#esl').val(),
-			primary_phone: $('#primary_phone').val(),
-			secondary_phone: $('#secondary_phone').val(),
+	major: $('#major').val(),
+	esl: $('#esl').val(),
+	primary_phone: $('#primary_phone').val(),
+	secondary_phone: $('#secondary_phone').val(),
       emergencyfname1: $('#emergencyfname1').val(),
       emergencyfname2: $('#emergencyfname2').val(),
       emergencyfname3: $('#emergencyfname3').val(),
@@ -100,11 +101,14 @@ function signup() {
 	})
 	.done(function(res){
             //window.location.href = res.redirect_url;
+            $.get('/login', function(){
+                  console.log('Signup Success!');      
+            });
 	})
 	.fail(function (err){
 		swal({
-      title: 'Signup Failed',
-      type: 'error'
-    });
+                  title: 'Signup Failed',
+                  type: 'error'
+            });
 	});
 }

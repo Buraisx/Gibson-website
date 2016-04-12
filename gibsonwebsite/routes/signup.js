@@ -100,7 +100,7 @@ router.post('/signup', function(req, res, next) {
 
 // REDIRECT FOR SIGNUP PAGE
 function redirect(req, res){
-	res.status(200).send({redirect_url: 'signup/success?username='+req.user.username});
+	res.status(200).send('Signup Complete!');
 }
 
 //show signup success page
