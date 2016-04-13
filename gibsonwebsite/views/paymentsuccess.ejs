@@ -18,14 +18,26 @@
 <%- include standardnavbar.ejs %>
 
 <body>
-<div class="container">
-	<div style = "margin-top:100px; margin-bottom: 100px;" class="row text-center centermid">
-		<h1 class="jumbotron">You Have Successfully Registered for your courses!</h1>
-		<div id="result">
-</div>
-		<p><a href="/">Click Here</a> to redirect to the home page.</p>
+<div class="container page-wrap absolute-background" data-background="/img/gibsonpic.jpg">
+	<div class="row text-center centermid logindesign">
+        <div class = "col-sm-offset-2 col-sm-8">
+            <div class = "panel panel-default fadedIn"><!--PanelStart-->
+                <div class = "panel-heading" id="success-header">
+                    <h1>Course Payment Success <span><i class="fa fa-check-circle-o" aria-hidden="true"></i></span></h1>
+                </div>
+                <div class = "panel-body">
+                    <div class="col-sm-12 ">
+                        <!-- <img src="/img/error.png" class="error-pic"> -->
+                        <p>You have been sent an email with your confirmation link.</p> 
+                        <p class="largemargin">Please confirm your email address within 24 hours.</p>
+                        <p class="largemargin">If you did not receive your confirmation email, <a href = "/signup/resend?username=<%= username %>">click here</a> to resend.</p>
+                        <p class="largemargin"></p>
+                        <p>Click <a href="/user/profile">here </a>to return to your profile.</p>
+                    </div>	
+                </div> <!--Panel body end-->
+            </div>
+		</div>
 	</div>
-
 </div>
  <%- include standardfooter %>
 

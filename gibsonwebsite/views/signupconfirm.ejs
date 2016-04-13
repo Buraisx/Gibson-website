@@ -17,14 +17,22 @@
 <%- include standardnavbar.ejs %>
 
 <body>
-<div class="container">
-	<div style = "margin-top:100px; margin-bottom: 100px;" class="row text-center centermid">
-		<h1 class="jumbotron">Thank you for Verifying your e-mail.</h1>
-		<div id="result">
-</div>
-		<p><a href="/">Click Here</a> to redirect to the home page.</p>
+<div class="container page-wrap absolute-background" data-background="/img/gibsonpic.jpg">
+	<div class="row text-center centermid logindesign">
+        <div class = "col-sm-offset-2 col-sm-8">
+            <div class = "panel panel-default fadedIn"><!--PanelStart-->
+                <div class = "panel-heading" id="success-header">
+                    <h1>Confirmation Success <span><i class="fa fa-check-circle-o" aria-hidden="true"></i></span></h1>
+                </div>
+                <div class = "panel-body">
+                    <div class="col-sm-12 ">
+                        <!-- <img src="/img/error.png" class="error-pic"> -->
+                        <p>Click <a href="/login">here </a>to return to the login page.</p>
+                    </div>	
+                </div> <!--Panel body end-->
+            </div>
+		</div>
 	</div>
-
 </div>
  <%- include standardfooter %>
 

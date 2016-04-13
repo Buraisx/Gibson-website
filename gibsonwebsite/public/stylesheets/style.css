@@ -389,6 +389,11 @@ hr {
     opacity: 0.8;
 }
 
+#success-header{
+    background-color: #97CD51;
+    opacity: 0.8;
+}
+
 
 /** user profile styles **/
 .coursetime {
@@ -595,6 +600,6 @@ div[class*="banner"]{
 
 /** ERROR PAGE **/
 #error-header{
-    background-color: #F39C37;
+    background-color: #e74c3c;
 
 }
