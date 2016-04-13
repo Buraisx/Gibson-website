@@ -621,8 +621,14 @@ function load_profile(){
 
     $('#profile').append(nav);
     $('#profile').append(profileinfo);
+    //ON JSON APPEND COMPLETE ATTACH FADE IN ANIMATION
+	}).done(function(){
+    	$( "#sidebar-wrapper" ).tabs({
+        	activate: function( event, ui ) {
+            	ui.newPanel.hide().fadeIn(500);
+        	}
+    	});
 	});
-	
 }
 
 function savechanges() {
