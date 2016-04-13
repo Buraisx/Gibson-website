@@ -5,9 +5,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var flash    = require('connect-flash');
+var flash = require('connect-flash');
 var expressSession = require('express-session');
 var mysql = require ('mysql');
+var async = require('async');
 var routes = require('./routes/index');
 var helmet = require('helmet');
 var dnsPrefetchControl = require('dns-prefetch-control');
@@ -15,6 +16,7 @@ var jwt = require('jsonwebtoken');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
 var connection = require('./mysqlpool');
+
 
 //CSRF Protection
 var csrf = require('csurf');
@@ -142,6 +144,106 @@ app.use('/', resetpassword);
 // ===↑↑↑↑↑ NO AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
 // ================================================
 
+app.use(function (req, res, next){
+  // LOOKING FOR TOKEN IN COOKIES
+  var token = req.cookies.access_token;
+  var decoded = jwt.decode(token);
+
+  async.waterfall([
+
+    //CHECK IF TOKEN EXISTS
+    function (next){
+      if(token){
+        next(null);
+      }
+      else{
+        return next(new Error ('No Authenticated Token'), null);
+      }
+    },
+
+    //GET CONNECTION
+    function (next){
+      connection.getConnection(function (err, con){
+        if(err){
+          return next(new Error ('app.js: Error connecting to DB'), con);
+        }
+        else{
+          next(null, con);
+        }
+      });
+    },
+
+    //QUERY FOR SECRET KEY
+    function (con, next){
+      // SETTING UP QUERIES NEEDED
+      var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = 1;';
+      //secretQuery = mysql.format(secretQuery, decoded.rank);
+      
+      // QUERYING THE DATABASE FOR SECRET KEY
+      con.query(secretQuery, function(err, results){
+        if(err){
+          return next(new Error ('app.js: Error querying the Database for secret_key'), con);
+        }
+        else if(!results.length){
+          return next(new Error ('app.js: Error No Secret Key Found.'), con);
+        }
+        else{
+          next(null, con, results[0].secret_key); 
+        }
+      });
+    },
+
+    // QUERYING THE DATABASE FOR USER'S PASSWORD
+    function (con, secret_key, next){
+      var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
+      passwordQuery = mysql.format(passwordQuery, decoded.id);
+      
+      con.query(passwordQuery, function(err, results){
+        if(err){
+          return next(new Error('app.js:Error querying database for password'), con);
+        }
+        else if(!results.length){
+          return next(new Error('app.js:Error no password for user found'), con); 
+        }
+        else{
+          next(null, con, secret_key+results[0].password);
+        }
+      });
+    },
+
+    //VERIFY TOKEN
+    function (con, full_key, next){
+      jwt.verify(token, full_key, function(err, userInfo){
+        if(err){
+          return next(new Error('app.js:Could not verify user token'), con);
+        }
+        else{
+          req.decoded = userInfo;
+          next(null, con);
+        }
+      });
+    }
+    ],function (err, con){
+        if(con!=null){
+          con.release();
+        }
+        if(err){
+          res.clearCookie('access_token');
+          res.clearCookie('privilege');
+          res.clearCookie('user_info');
+          console.log(err);
+          //res.status(401).json({redirect_url: 'login'});
+          res.redirect('/login');
+          //res.end();
+        }
+        else{
+          console.log('app.js:User logged in!');
+          next();
+        }
+  });
+});
+/*
+
 // AUTHENTICATION FUNCTION - CHECKS THE TOKEN IN COOKIE
 app.use(function (req, res, next){
 
@@ -185,9 +287,9 @@ app.use(function (req, res, next){
             //res.end();
             return err;
           }
-		  if (!password.length) {
-			  return err;
-		  }
+		      if (!password.length) {
+			       return err;
+		      }
           // CONCATENATE THE PASSWORD TO THE END OF THE RANK'S SECRET KEY
           secretKey += password[0].password;
 
@@ -225,6 +327,7 @@ app.use(function (req, res, next){
   }
 
 });
+*/
 // =============================================
 // ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // =============================================

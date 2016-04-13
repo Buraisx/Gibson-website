@@ -3,7 +3,7 @@ function convertdate(date) {
 	var split = date.split('-');
 	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	var ret = '';
-	ret += months[Number(split[1])];
+	ret += months[Number(split[1])-1];
 	ret += ' ';
 	ret += split[2];
 	ret += ', ';

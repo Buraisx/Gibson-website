@@ -100,10 +100,7 @@ function signup() {
       ephone3: $('#ephone3').val()
 	})
 	.done(function(res){
-            //window.location.href = res.redirect_url;
-            $.get('/login', function(){
-                  console.log('Signup Success!');      
-            });
+            window.location.href = res.redirect_url;
 	})
 	.fail(function (err){
 		swal({
