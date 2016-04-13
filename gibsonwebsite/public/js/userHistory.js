@@ -48,7 +48,7 @@ function load_history(){
         //if there is no history
         else
         {
-				history+= '<div id="empty-courses"><p>Oops! You have never signed up for a course! </p></div>';
+				history+= '<div id="empty-courses"><p>You have no previous transactions.</p></div>';
 		}
 		$('#account-history').append(history);
 	});

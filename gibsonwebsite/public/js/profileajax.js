@@ -206,8 +206,6 @@ function load_profile(){
 				studentinfo+='            <p><span class="col-sm-3 fieldname">ESL Level</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 				studentinfo+='        </div>';
 				studentinfo+='    </div>';
-				studentinfo+='    </div>';
-				studentinfo+='  </div>';
 			}
 			else if(user_info.student_info.major)
 			{
@@ -215,8 +213,6 @@ function load_profile(){
 				studentinfo+='      <div class="form-group col-sm-12">';
 				studentinfo+='           <p><span class="col-sm-3 fieldname">Major</span><span class="col-sm-9 fieldval">' + user_info.student_info.major + '</span></p>';
 				studentinfo+='      </div>';
-				studentinfo+='  </div>';
-				studentinfo+='  </div>';
 				studentinfo+='  </div>';
 			}
 			else
@@ -226,10 +222,10 @@ function load_profile(){
 				studentinfo+='           <p><span class="col-sm-3 fieldname">ESL Level</span><span class="col-sm-9 fieldval">' + user_info.student_info.esl_level + '</span></p>';
 				studentinfo+='      </div>';
 				studentinfo+='  </div>';
-				studentinfo+='  </div>';
-				studentinfo+='  </div>';
 			}
 		}
+		studentinfo+='    </div> <!-- tab-pane -->';
+		studentinfo+='  </div> <!-- container-fluid -->';
 	}
 
 	//emergency Info Tab
@@ -888,7 +884,7 @@ function showFilteredCourses(data, searchText){
 	if(data.length < 1)
 	{
 		var empty_courses_html = '';
-			empty_courses_html+= '<div> Oops! There are no courses available. </div>';
+			empty_courses_html+= '<div>There are currently no courses available.</div>';
 
 		$('#coursesaccordion').append(empty_courses_html);
 	}
@@ -1015,7 +1011,7 @@ function listschedule(){
 		//If there are no courses in search
 		if(data.length < 1)
 		{
-			schedule+= '<div> Oops! You have no upcoming courses. </div>';
+			schedule+= '<div>You no courses in your schedule. Sign up today using the Courses tab!</div>';
 		}
 		schedule += '</div>';
 		schedule += '</div>';
