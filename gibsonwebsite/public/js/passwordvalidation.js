@@ -57,7 +57,7 @@ function checkPass()
                 }
                 else {
                     if(message != null) {
-                        message.innerHTML = "<strong>Password has invalid symbols!</strong>";
+                        message.innerHTML = "<strong>Password is invalid!</strong>";
                     }
                 }
             }
@@ -80,6 +80,6 @@ function passValid(pass) {
         // -1 return means the password is too short
         return (-1);
     }
-    // Otherwise password has invalid symbols
+    // Otherwise password is invalid (invalid symbols or doesn't follow the format)
     return (-2);
 }
