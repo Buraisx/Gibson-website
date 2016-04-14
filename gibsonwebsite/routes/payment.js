@@ -240,7 +240,7 @@ router.get('/payment/execute', function(req,res,next){
               con.release();
               res.clearCookie('cart');
               //res.status(200).send("User signed up successfully.");
-              res.redirect('/registersuccess');
+              res.redirect('/paymentsuccess');
             });
           }
         }
@@ -249,5 +249,8 @@ router.get('/payment/execute', function(req,res,next){
   });
 });
 
+router.get('/paymentsuccess', function (req, res, next){
+  res.render('paymentsuccess', {title: "Payment Success!"});
+});
 
 module.exports = router;

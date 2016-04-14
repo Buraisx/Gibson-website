@@ -559,10 +559,6 @@ router.post('/user/profile/history', function(req, res, next){
 	});
 });
 
-router.get('/registersuccess', function (req, res, next){
-	res.render('paymentsuccess', {title: "Register Success!"});
-});
-
 //logout of account
 router.get('/logout', function(req,res,next){
 	//clears cookie of account from browser
