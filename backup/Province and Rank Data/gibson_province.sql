@@ -21,7 +21,7 @@
 
 LOCK TABLES `province` WRITE;
 /*!40000 ALTER TABLE `province` DISABLE KEYS */;
-INSERT INTO `province` VALUES (1,'Ontario','ON'),(2,'Quebec','QC'),(3,'Newfoundland and Labrador','NL'),(4,'New Brunswick','NB'),(5,'Northwest Territories','NT'),(6,'Nova Scotia','NS'),(7,'Manitoba','MB'),(8,'British Columbia','BC'),(9,'Prince Edward Island','PE'),(10,'Saskatchewan','SK'),(11,'Alberta','AB'),(12,'Yukon','YT'),(13,'Nunavut','NU'),(14,'North Pole','XD');
+INSERT INTO `province` VALUES (1,'Ontario','ON'),(2,'Quebec','QC'),(3,'Newfoundland and Labrador','NL'),(4,'New Brunswick','NB'),(5,'Northwest Territories','NT'),(6,'Nova Scotia','NS'),(7,'Manitoba','MB'),(8,'British Columbia','BC'),(9,'Prince Edward Island','PE'),(10,'Saskatchewan','SK'),(11,'Alberta','AB'),(12,'Yukon','YT'),(13,'Nunavut','NU');
 /*!40000 ALTER TABLE `province` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
