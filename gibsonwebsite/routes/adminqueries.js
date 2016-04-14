@@ -360,28 +360,88 @@ router.get('/admin/profile/addCourse', function(req, res){
 */
 
 router.post('/validateCourse', function(req, res){
-    //validate the course name and course code
-    var sql = "SELECT course_id FROM gibson.course WHERE course_name = ? OR course_code = ?;";
-    var inserts = [req.body.course_name, req.body.course_code];
+    async.waterfall([
+        //Check Database for duplicate course codes and course names
+        function (next){
+            var sql = "SELECT course_id FROM gibson.course WHERE course_name = ? OR course_code = ?;";
+            var inserts = [req.body.course_name, req.body.course_code];
 
-    sql = mysql.format(sql, inserts);
+            sql = mysql.format(sql, inserts);
+            connection.getConnection(function(err, con){
+                con.query(sql, function(err, results){
+                    con.release();
+                    if(err){
+                        return next(new Error("Error querying add course validation!"), null);
+                    }
 
-    connection.getConnection(function(err, con){
-        con.query(sql, function(err, results){
-            con.release();
-            if(err){
-                res.send(new Error("err querying"));
+                    else if(results.length){
+                        return next(new Error("Course name or course code already exists!"), null);
+                        
+                    }
+
+                    else{
+                        next();
+                    }
+                });
+            });
+        },
+
+        //Validate fields for Course Information
+        function (next){
+            languages = sanitizeJSONArray(req.body["languages[]"]);
+
+            if(req.body.addcost==null || req.body.addcost=='')
+                return next(new Error("Cost field is missing!"), null);
+            else if(req.body.addtarget==null || req.body.addtarget=='')
+                return next(new Error("Target field is missing!"), null);
+            else if(req.body.adddescription==null || req.body.adddescription=='')
+                return next(new Error("Description field is missing!"), null);
+            else {
+                for(var i = 0; i < languages.length; i++){
+                    if(languages[i]==null || languages[i]==''){
+                        return next(new Error ("Language field " + (i+1) + " is missing!"), null);
+                    }
+                    else if(i == languages.length - 1){
+                        next();
+                    }
+                }
             }
+        },
 
-            else if(!results.length){
-                res.send("adminqueries.js: Validated!");
+        //Validate fields for Instructor Information
+        function (next){
+        //    if(req.body.instructor_name==null || req.body.instructor_name=='')
+        //        return next(new Error("Instructor Name field is missing!"), null);
+        //    else
+            next();
+        },
+
+        //Validate Schedule field
+        function (next){
+            if(req.body.addstartdate==null || req.body.addstartdate=='')
+                return next(new Error("Starting Date field is missing!"), null);
+            else if(req.body.addenddate==null || req.body.addenddate=='')
+                return next(new Error("Ending Date field is missing!"), null);
+            else if(req.body.interval==null || req.body.interval=='')
+                return next(new Error("No Interval field selected!"), null);
+            else if(!checkSchedule(req.body.course_days)){
+                return next(new Error("Bad schedule field found!"), null);
             }
-
             else{
-                res.send(new Error("adminqueries.js: Course name or course code already exists!"));
+                next();
+            }
+        }
+
+        ],function(err, results){
+            if(err){
+                console.log("adminqueries.js:"+err.message);
+                res.status(400).send(err.message);
+            }
+            else{
+                console.log("adminqueries.js: Validated " + req.body.course_name + "!");
+                res.status(200).send("Validated!"));
             }
         });
-    });
 });
 
 
@@ -618,6 +678,14 @@ function createAdhocDaysDML(adhoc_days){
     adhoc_days_dml+=')';
 	console.log(adhoc_days_dml);
     return adhoc_days_dml;
+}
+
+function checkSchedule(course_days){
+    if(!course_days==null){
+        return true;
+    }
+
+    else if(course_days)
 }
 
 module.exports = router;

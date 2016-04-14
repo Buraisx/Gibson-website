@@ -940,6 +940,10 @@ function removeAdhocTime(){
 }
 
 function validateCourse(){
+	var languages = addLanguages();
+	var scheduled_days = addSchedule();
+	var adhoc_days = addAdhoc();
+
 	//$("#courseform").slideToggle();
 	$.post("/validateCourse",{
 		"course_name": $('#addcoursename').val(),
@@ -958,42 +962,9 @@ function validateCourse(){
 }
 
 function submitCourse(){
-	var languages = [];
-	var scheduled_days = [];
-	var adhoc_days = [];
-
-	for(var i=1; i<=COUNTLANGUAGE; i++){
-		languages.push($("#course_language"+i).val());
-	}
-
-	for(var i=1; i<=COUNTCOURSEDAYS; i++){
-		var day_of_week = $('#day-of-week'+i).val();
-		var start_time = $('#starttime'+i).val();
-		var end_time = $('#endtime'+i).val();
-
-		var day = {
-			"day":day_of_week,
-			"start_time":start_time,
-			"end_time":end_time
-		}
-
-		scheduled_days.push(JSON.stringify(day));
-	}
-
-
-	for(var i=1; i<=COUNTADHOCDAYS; i++){
-		var date = $('#adhocstartdate'+i).val();
-		var start_time = $('#startadhoc'+i).val();
-		var end_time = $('#endadhoc'+i).val();
-
-		var day = {
-			"day":date,
-			"start_time":start_time,
-			"end_time":end_time
-		}
-
-		adhoc_days.push(JSON.stringify(day));
-	}
+	var languages = addLanguages();
+	var scheduled_days = addSchedule();
+	var adhoc_days = addAdhoc();
 
 	console.log(languages);
 	console.log(scheduled_days);
@@ -1021,4 +992,58 @@ function submitCourse(){
 	.done(function (res){
 		alert(res);
 	});
+}
+
+//-----------------------------------------------
+//-------Intermediate JSON Creator Functions-----
+//-------/AddCourses-----------------------------
+//-----------------------------------------------
+
+function addLanguages(){
+	var languages = [];
+	for(var i=1; i<=COUNTLANGUAGE; i++){
+		languages.push($("#course_language"+i).val());
+	}
+
+	return languages;
+}
+
+function addSchedule(){
+	var scheduled_days = [];
+
+	for(var i=1; i<=COUNTCOURSEDAYS; i++){
+		var day_of_week = $('#day-of-week'+i).val();
+		var start_time = $('#starttime'+i).val();
+		var end_time = $('#endtime'+i).val();
+
+		var day = {
+			"day":day_of_week,
+			"start_time":start_time,
+			"end_time":end_time
+		}
+
+		scheduled_days.push(JSON.stringify(day));
+	}
+
+	return scheduled_days;
+}
+
+function addAdhoc(){
+	var adhoc_days = [];
+
+	for(var i=1; i<=COUNTADHOCDAYS; i++){
+		var date = $('#adhocstartdate'+i).val();
+		var start_time = $('#startadhoc'+i).val();
+		var end_time = $('#endadhoc'+i).val();
+
+		var day = {
+			"day":date,
+			"start_time":start_time,
+			"end_time":end_time
+		}
+
+		adhoc_days.push(JSON.stringify(day));
+	} 
+
+	return adhoc_days;
 }
