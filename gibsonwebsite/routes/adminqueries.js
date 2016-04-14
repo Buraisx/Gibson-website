@@ -373,7 +373,7 @@ router.post('/validateCourse', function(req, res){
                 res.send(new Error("err querying"));
             }
 
-            if(!results.length){
+            else if(!results.length){
                 res.send("adminqueries.js: Validated!");
             }
 
@@ -384,46 +384,6 @@ router.post('/validateCourse', function(req, res){
     });
 });
 
-router.post('/admin/profile/v2', function(req, res){
-	console.log("HELLO WORLD");
-   var sql = readSQL.getSQL('dml_addcourse.txt');
-
-    var language_dml = createLanguageDML(req.body["languages[]"]);
-    var course_days_dml = createCourseDaysDML(req.body["course_days[]"]);
-    var adhoc_days_dml = createAdhocDaysDML(req.body["adhoc_days[]"]);
-
-    var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
-                   req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription,
-                   req.body.instructor_bio, ''];
-
-    sql = mysql.format(sql, inserts);
-    sql = sql.replace('language_dml', language_dml);
-    sql = sql.replace('course_days_dml', course_days_dml);
-    console.log(sql);
-
-    connection.getConnection(function(err,con){
-        if(err){
-            con.release();
-            console.log("adminqueries.js: cannot get connection");
-            return err;
-        }
-
-        //execute add course DML
-        console.log("DML statement addcourse");
-        con.query(sql, function(err, results){
-            con.release();
-            if(err){
-                console.log("adminqueries.js: Query error for inserting course to database");
-                return next(err);
-            }
-            adminFunctions.getScheduledDays(results.insertId, req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body["course_days[]"]);
-
-        });
-    });
-
-
-    res.send("DONE");
-});
 
 // ROUTE TO ADD NEW EVENT
 router.post('/admin/addEvent', function(req, res){
@@ -508,7 +468,7 @@ router.post('/admin/profile/addCourse', function(req, res){
             },
 
             function (next){
-                console.log("DML statement addcourse");
+                console.log("adminqueries.js:DML statement addcourse");
                 con.query(sql, function(err, results){
                     if(err){
                         console.log("adminqueries.js: Query error for inserting course to database");
@@ -520,7 +480,7 @@ router.post('/admin/profile/addCourse', function(req, res){
             },
 
             function (course_id, next){
-                console.log("DML statement add course days");
+                console.log("adminqueries.js:DML statement add course days");
                 if(adminFunctions.getScheduledDays(course_id, req.body.addstartdate, req.body.addenddate, req.body.addinterval, course_days)){
                     return new Error('Error adding course schedule');
                 }
@@ -528,7 +488,7 @@ router.post('/admin/profile/addCourse', function(req, res){
                 next(null, course_id);
             },
 			function (course_id, next) {
-				console.log("DML statement add adhoc days");
+				console.log("adminqueries.js:DML statement add adhoc days");
 				if (adminFunctions.getAdhocDays(course_id, adhoc_days)){
 					return new Error('Error adding individual days');
 				}
@@ -536,7 +496,6 @@ router.post('/admin/profile/addCourse', function(req, res){
 			}
         ],
         function (err, results){
-            console.log("END");
             if(err){
                 con.query("ROLLBACK;", function(err, results){
                     con.release();
