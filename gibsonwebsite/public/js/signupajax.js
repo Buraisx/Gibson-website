@@ -62,6 +62,11 @@ function delayEmail(){
 
 }
 
+function trueOrFalse(arg){
+	if (arg) return 1;
+	return 0;
+}
+
 //AJAX Signup Post
 function signup() {
 	$.post("/signup", {
@@ -78,8 +83,8 @@ function signup() {
       apt: $('#apt').val(),
       city: $('#city').val(),
       province: $('#province').val(),
-      send_notifications: $('#send_notifications').is(':checked'),   
-      student: $('#student').is(':checked'),
+      send_notifications: trueOrFalse($('#send_notifications').is(':checked')),   
+      student: trueOrFalse($('#student').is(':checked')),
       schoolname: $('#schoolname').val(),
       grade: $('#grade').val(),
 	major: $('#major').val(),
