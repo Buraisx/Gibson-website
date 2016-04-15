@@ -213,18 +213,22 @@ section h2 {
 }
 
 section.gibsonorange {
-    color: #fff;
-    background: #F39C37;
+    color: #F39C37;
+    background: #FFF;
 }
 
 section.gibsongreen {
-    color: #fff;
-    background: #97CD51;
+    color: #97CD51;
+    background: #FFF;
 }
 
 section.gibsonblue {
-    color: #fff;
-    background: #3AAADA;
+    color: #3AAADA;
+    background: #FFF;
+}
+
+p{
+    color: #000;
 }
 
 section.success a,

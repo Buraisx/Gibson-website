@@ -108,7 +108,7 @@ hr.star-green,
 hr.star-orange{
     margin: 25px auto 30px;
     padding: 0;
-    max-width: 250px;
+    max-width: 650px;
     border: 0;
     border-top: solid 5px;
     text-align: center;
@@ -126,41 +126,28 @@ hr.star-orange:after{
     font-size: 2em;
 }
 
-hr.star-blue {
-    border-color: #fff;
-}
-
 hr.star-blue:after {
     color: #fff;
-    background-color: #97CD51;
-}
-
-hr.star-green {
-    border-color: #fff;
+    background-color: #3AAADA;
+    border-color: #3AAADA;
 }
 
 hr.star-green:after {
     color: #fff;
-    background-color: #F39C37;
-}
-
-hr.star-orange {
-    border-color: #fff;
+    background-color: #97CD51;
+    border-color: #97CD51;
 }
 
 hr.star-orange:after {
     color: #fff;
-    background-color: #3AAADA;
-}
-
-.bluecolour{
-	color: #3AAADA;
+    background-color: #F39C37;
+    border-color: #F39C37;
 }
 
 .piccaption{
     text-align:center;
     margin-top: 30px;
-    color: #fff;
+    color: #97CD51;
 }
 
 
