@@ -430,7 +430,7 @@ router.post('/user/profile/edit', function(req, res, next){
 						else{
 
 							// QUERYING TO UPDATE USER PROFILE
-							var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, secondary_phone = ?, gender = ?, birth_date = ?, address = ?, city = ?, unit_no = ?, province_id = (select province_id from gibson.province where province_name = ?), postal_code = ? WHERE user_id = ?;';
+							var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, secondary_phone = ?, gender = ?, birth_date = ?, address = ?, city = ?, unit_no = ?, province_id = (select province_id from gibson.province where prov_abb = ?), postal_code = ? WHERE user_id = ?;';
 							var inserts = [req.body.fname, req.body.lname, req.body.primary_phone, req.body.secondary_phone, req.body.gender, req.body.birth_date, req.body.address, req.body.city, req.body.unit_no, req.body.province, req.body.postal_code, userId];
 							query = mysql.format(query, inserts);
 
