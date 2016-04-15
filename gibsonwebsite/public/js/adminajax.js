@@ -374,7 +374,7 @@ function showFilteredCourses(data, searchText){
 		courses += '                		<p id="descriptiontitle' + i + '"><b>NOTE: </b></p>';
 		courses += '        			</div>';
 		courses += '            		<div class="col-sm-8">';
-        courses += '                		<p id="description' + i + '">' + data[i].course_notes + '</p>';
+        courses += '                		<p id="description' + i + '">' + data[i].notes + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
 
@@ -974,7 +974,7 @@ function validateCourse(){
 		"addstartdate":$('#addstartdate').val(),
 		"addenddate":$('#addenddate').val(),
 		"addinterval":$('#addinterval:checked').val(),
-		"notes":"Placeholder note",
+		"notes":$('#course_notes').val(),
 		"course_days": scheduled_days,
 		"adhoc_days": adhoc_days,
 		"_csrf": $('#_csrf').val()

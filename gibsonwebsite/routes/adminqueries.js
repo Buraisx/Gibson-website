@@ -294,7 +294,7 @@ router.get('/admin/profile/courses', function(req, res){
 
     //in query, counts the number of users who take each course from user_course table.
     //for a more efficient, less readable count query, look at http://stackoverflow.com/questions/944099/mysql-count-on-multiple-tables
-    var sql = "SELECT course_id, course_name, course_code, default_fee, start_date, end_date, course_time, course_interval, course_language, course_target, course_description, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC";
+    var sql = "SELECT course_id, course_name, course_code, default_fee, start_date, end_date, course_time, course_interval, course_language, course_target, course_description, notes, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC";
 
     connection.getConnection(function(err, con){
         if(err){
@@ -514,7 +514,7 @@ router.post('/admin/profile/addCourse', function(req, res){
 
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
                    req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription,
-                   req.body.instructor_bio, ''];
+                   req.body.instructor_bio, req.body.notes];
 
     sql = mysql.format(sql, inserts);
     sql = sql.replace('language_dml', language_dml);

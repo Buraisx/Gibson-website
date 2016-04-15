@@ -793,7 +793,7 @@ function showFilteredCourses(data, searchText){
 		courses += '                		<p id="descriptiontitle' + i + '"><b>NOTE: </b></p>';
 		courses += '        			</div>';
 		courses += '            		<div class="col-sm-8">';
-        courses += '                		<p id="description' + i + '">' + data[i].course_notes + '</p>';
+        courses += '                		<p id="description' + i + '">' + data[i].notes + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
 
