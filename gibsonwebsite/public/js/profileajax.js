@@ -786,10 +786,17 @@ function showFilteredCourses(data, searchText){
         courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
-
-    
         
-        //*** ATTENTION!! NEED TO ASK YYYY-MM-DD to Jun 11, 2016 style ***//
+        //*** AJAX for Generating Notes ***//
+		courses += '        		<div class="row">';
+		courses += '            		<div class="col-sm-4">';
+		courses += '                		<p id="descriptiontitle' + i + '"><b>NOTE: </b></p>';
+		courses += '        			</div>';
+		courses += '            		<div class="col-sm-8">';
+        courses += '                		<p id="description' + i + '">' + data[i].course_notes + '</p>';
+		courses += '        			</div>';
+		courses += '        		</div>';
+
         //*** AJAX for Generating Period ***//
 		courses += '        		<div class="row largemargin">';
 		courses += '            		<div class="col-sm-4">';
@@ -939,7 +946,16 @@ function listschedule(){
             schedule += '        			</div>';
             schedule += '        		</div>';
             
-            //*** ATTENTION!! NEED TO ASK YYYY-MM-DD to Jun 11, 2016 style ***//
+            //*** AJAX for Generating Notes ***//
+            schedule += '        		<div class="row">';
+            schedule += '            		<div class="col-sm-4">';
+            schedule += '                		<p id="descriptiontitle' + i + '"><b>NOTE: </b></p>';
+            schedule += '        			</div>';
+            schedule += '            		<div class="col-sm-8">';
+            schedule += '                		<p id="description' + i + '">' + data[i].course_notes + '</p>';
+            schedule += '        			</div>';
+            schedule += '        		</div>';
+            
             //*** AJAX for Generating Period ***//
             schedule += '        		<div class="row largemargin">';
             schedule += '            		<div class="col-sm-4">';
