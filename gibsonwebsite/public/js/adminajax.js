@@ -1014,7 +1014,7 @@ function submitCourse(){
 		"addstartdate":$('#addstartdate').val(),
 		"addenddate":$('#addenddate').val(),
 		"addinterval":$('#addinterval:checked').val(),
-		"notes":"Placeholder note",
+		"notes":$( '#course_notes' ).val(),
 		"course_days": scheduled_days,
 		"adhoc_days": adhoc_days,
 		"_csrf": $('#_csrf').val()
