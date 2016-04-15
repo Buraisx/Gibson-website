@@ -387,7 +387,7 @@ router.post('/validateCourse', function(req, res){
                     }
 
                     else{
-						console.log("Checked Course name/code is unique");
+						console.log("adminqueries.js:Checked Course name/code is unique");
                         next();
                     }
                 });
@@ -410,7 +410,7 @@ router.post('/validateCourse', function(req, res){
                         return next(new Error ("Language field " + (i+1) + " is missing!"), null);
                     }
                     else if(i == languages.length - 1){
-						console.log("Checked cost, target, description, Languages");
+						console.log("adminqueries.js:Checked cost, target, description, Languages");
                         next();
                     }
                 }
@@ -439,11 +439,11 @@ router.post('/validateCourse', function(req, res){
                 return next(new Error("No Interval field selected!"), null);
 			}
             else if(!checkSchedule(course_days)){
-				console.log("Checking scheduled days");
+				console.log("adminqueries.js:Checking scheduled days");
                 return next(new Error("Bad schedule field found!"), null);
             }
 			else if (!checkSchedule(adhoc_days)) {
-				console.log("Checking ad-hoc days");
+				console.log("adminqueries.js:Checking ad-hoc days");
 				return next(new Error("Bad ad-hoc day field found!"), null);
 			}
             else{

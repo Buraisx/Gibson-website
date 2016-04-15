@@ -569,7 +569,7 @@ function courseform(){
 	course_info+='                            <input type = "text" class = "form-control" name = "course_language1" id = "course_language1" required>';
 	course_info+='                        </div>';
 	course_info+='                    </div>';
-	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="addLanguages()">Add Another Language</button>';
+	course_info+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="nextLanguages()">Add Another Language</button>';
 	course_info+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
 	course_info+='                    <div class = "row">';
 	course_info+='                        <div class = "form-group col-sm-8">';
@@ -581,6 +581,12 @@ function courseform(){
 	course_info+='                        <div class = "form-group col-sm-8">';
 	course_info+='                            <label><span class="required">*</span>Description:</label>';
 	course_info+='                            <textarea class = "form-control" rows = "6" name = "adddescription" id = "adddescription"></textarea>';
+	course_info+='                        </div>';
+	course_info+='                  	</div>';
+	course_info+='                    <div class = "row">';
+	course_info+='                        <div class = "form-group col-sm-8">';
+	course_info+='                            <label><span class="required">*</span>Notes:</label>';
+	course_info+='                            <textarea class = "form-control" rows = "4" name = "course_notes" id = "course_notes"></textarea>';
 	course_info+='                        </div>';
 	course_info+='                  	</div>';
 	course_info+='					</div>';
@@ -797,7 +803,7 @@ function courseform(){
 //reset onpage refresh
 var COUNTLANGUAGE=1;
 
-function addLanguages(){
+function nextLanguages(){
 	console.log("Adding " + COUNTLANGUAGE + " languages.");
 
 	var newLanguage=COUNTLANGUAGE+1;
