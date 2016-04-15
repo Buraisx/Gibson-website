@@ -360,9 +360,16 @@ router.get('/admin/profile/addCourse', function(req, res){
 */
 
 router.post('/validateCourse', function(req, res){
+	console.log("Validating course name " + req.body.course_name);
     async.waterfall([
         //Check Database for duplicate course codes and course names
         function (next){
+			if (req.body.course_name==null || req.body.course_name=='') {
+				return next (new Error("Course name is not filled in!"), null);
+			}
+			if (req.body.course_code==null || req.body.course_code=='') {
+				return next (new Error("Course code is not filled in!"), null);
+			}
             var sql = "SELECT course_id FROM gibson.course WHERE course_name = ? OR course_code = ?;";
             var inserts = [req.body.course_name, req.body.course_code];
 
@@ -380,6 +387,7 @@ router.post('/validateCourse', function(req, res){
                     }
 
                     else{
+						console.log("Checked Course name/code is unique");
                         next();
                     }
                 });
@@ -390,8 +398,8 @@ router.post('/validateCourse', function(req, res){
         function (next){
             languages = sanitizeJSONArray(req.body["languages[]"]);
 
-            if(req.body.addcost==null || req.body.addcost=='')
-                return next(new Error("Cost field is missing!"), null);
+            if(req.body.addcost==null || req.body.addcost=='') {
+                return next(new Error("Cost field is missing!"), null);}
             else if(req.body.addtarget==null || req.body.addtarget=='')
                 return next(new Error("Target field is missing!"), null);
             else if(req.body.adddescription==null || req.body.adddescription=='')
@@ -402,6 +410,7 @@ router.post('/validateCourse', function(req, res){
                         return next(new Error ("Language field " + (i+1) + " is missing!"), null);
                     }
                     else if(i == languages.length - 1){
+						console.log("Checked cost, target, description, Languages");
                         next();
                     }
                 }
@@ -413,21 +422,32 @@ router.post('/validateCourse', function(req, res){
         //    if(req.body.instructor_name==null || req.body.instructor_name=='')
         //        return next(new Error("Instructor Name field is missing!"), null);
         //    else
+			console.log("Checked Instructor info (?)");
             next();
         },
 
         //Validate Schedule field
         function (next){
+			var course_days = makeJSONArray(sanitizeJSONArray(req.body['course_days[]']));
+			var adhoc_days = makeJSONArray(sanitizeJSONArray(req.body['adhoc_days[]']));
             if(req.body.addstartdate==null || req.body.addstartdate=='')
                 return next(new Error("Starting Date field is missing!"), null);
             else if(req.body.addenddate==null || req.body.addenddate=='')
                 return next(new Error("Ending Date field is missing!"), null);
-            else if(req.body.interval==null || req.body.interval=='')
+            else if(req.body.addinterval==null || req.body.addinterval==''){
+				console.log(req.body.addinterval);
                 return next(new Error("No Interval field selected!"), null);
-            else if(!checkSchedule(req.body.course_days)){
+			}
+            else if(!checkSchedule(course_days)){
+				console.log("Checking scheduled days");
                 return next(new Error("Bad schedule field found!"), null);
             }
+			else if (!checkSchedule(adhoc_days)) {
+				console.log("Checking ad-hoc days");
+				return next(new Error("Bad ad-hoc day field found!"), null);
+			}
             else{
+				console.log("Checked start & end date, interval, scheduled days");
                 next();
             }
         }
@@ -439,7 +459,7 @@ router.post('/validateCourse', function(req, res){
             }
             else{
                 console.log("adminqueries.js: Validated " + req.body.course_name + "!");
-                res.status(200).send("Validated!"));
+                res.status(200).send("Validated!");
             }
         });
 });
@@ -487,17 +507,10 @@ router.post('/admin/profile/addCourse', function(req, res){
 	course_days = sanitizeJSONArray(req.body["course_days[]"]);
 	adhoc_days = sanitizeJSONArray(req.body["adhoc_days[]"]);
 
-	console.log(languages);
-	console.log(course_days);
-	console.log(adhoc_days);
 
     language_dml = createLanguageDML(languages);
 	course_days_dml = createCourseDaysDML(course_days);
     adhoc_days_dml = createAdhocDaysDML(adhoc_days);
-
-    console.log(language_dml);
-    console.log(course_days_dml);
-    console.log(adhoc_days_dml);
 
     var inserts = [req.body.addcoursecode, req.body.addcoursename, req.body.instructor_username, req.body.instructor_name, req.body.addcost, req.body.course_limit,
                    req.body.addstartdate, req.body.addenddate, req.body.addinterval, req.body.addtarget, req.body.adddescription,
@@ -583,6 +596,14 @@ function sanitizeJSONArray (a) {
 	else if (a.constructor === Array)
 		return a;
 	else return [a];
+}
+
+function makeJSONArray (a) {
+	var res = [];
+	for (var i = 0; i < a.length; i++){
+		res.push(JSON.parse(a[i]));
+	}
+	return res;
 }
 
 function createLanguageDML(languages){
@@ -680,12 +701,25 @@ function createAdhocDaysDML(adhoc_days){
     return adhoc_days_dml;
 }
 
+//TODO: REDO
 function checkSchedule(course_days){
-    if(!course_days==null){
-        return true;
-    }
-
-    else if(course_days)
+	var faulty = false;
+	for (var i = course_days.length - 1; i >= 0; i--){
+		if (course_days[i].day == '' || course_days[i].day == null) {
+			faulty = true;
+			console.log("adminqueries.js: schedule " + i + "'s day is not filled in!");
+		}
+		if (course_days[i].start_time == '' || course_days[i].start_time == null) {
+			faulty = true;
+			console.log("adminqueries.js: schedule " + i + "'s start_time is not filled in!");
+		}
+		if (course_days[i].end_time == '' || course_days[i].end_time == null) {
+			faulty = true;
+			console.log("adminqueries.js: schedule " + i + "'s end time is not filled in!");
+		}
+		if (faulty) return false;
+	}
+	return true;
 }
 
 module.exports = router;

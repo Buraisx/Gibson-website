@@ -948,6 +948,20 @@ function validateCourse(){
 	$.post("/validateCourse",{
 		"course_name": $('#addcoursename').val(),
 		"course_code": $('#addcoursecode').val(),
+		"addcost":$('#addcost').val(),
+		"course_limit":$('#course_limit').val(),
+		"languages": languages,
+		"addtarget": $('#addtarget').val(),
+		"adddescription":$('#adddescription').val(),
+		"instructor_name":$('#instructor_name').val(),
+		"instructor_username":$('#instructor_username').val(),
+		"instructor_bio":$('#instructor_bio').val(),
+		"addstartdate":$('#addstartdate').val(),
+		"addenddate":$('#addenddate').val(),
+		"addinterval":$('#addinterval:checked').val(),
+		"notes":"Placeholder note",
+		"course_days": scheduled_days,
+		"adhoc_days": adhoc_days,
 		"_csrf": $('#_csrf').val()
 	})
 	.done(function (res){
@@ -955,8 +969,9 @@ function validateCourse(){
 		submitCourse();
 	})
 	.fail(function (err){
-		$("#courseform").slideToggle();
-		alert(err);
+		//$("#courseform").slideToggle();
+		console.log(err.responseText);
+		alert(err.responseText);
 	});
 	//$("#courseform").submit();
 }
@@ -966,9 +981,9 @@ function submitCourse(){
 	var scheduled_days = addSchedule();
 	var adhoc_days = addAdhoc();
 
-	console.log(languages);
-	console.log(scheduled_days);
-	console.log(adhoc_days);
+	//console.log(languages);
+	//console.log(scheduled_days);
+	//console.log(adhoc_days);
 
 	$.post("/admin/profile/addCourse",{
 		"addcoursecode":$('#addcoursecode').val(),
