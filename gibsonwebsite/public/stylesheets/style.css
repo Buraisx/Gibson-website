@@ -576,6 +576,11 @@ td{
     width: 150px;
 }
 
+#paypal-button{
+    background-color: #2CC185;
+    border-color: #2CC185;
+}
+
 .fa-shopping-cart{
     font-size: 1.3em;
     margin: 0 0.4em 0 0;

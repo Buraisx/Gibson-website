@@ -61,8 +61,13 @@ a {
     color: #3AAADA;
 }
 
+#AboutUs{
+    padding-top: 120px;
+}
+
+
 #GetInvolved{
-    padding-top: 130px;
+    padding-top: 140px;
 }
 
 #getinvolved:hover,
