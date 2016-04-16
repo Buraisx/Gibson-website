@@ -1,5 +1,4 @@
  $(document).ready(function(){
-
             $('.scroll').click(function() {
         event.preventDefault();
             $('html,body').animate({ 

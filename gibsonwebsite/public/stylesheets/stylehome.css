@@ -36,7 +36,8 @@ body {
 }
 
 #map{
-padding-bottom: 0px;
+    padding-top: 130px;
+    padding-bottom: 0px;
 }
 
 a {
@@ -58,6 +59,10 @@ a {
 #events:hover,
 #signup:hover{
     color: #3AAADA;
+}
+
+#GetInvolved{
+    padding-top: 130px;
 }
 
 #getinvolved:hover,
