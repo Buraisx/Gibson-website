@@ -83,7 +83,8 @@ function load_profile(){
     }
     nav += '        <li><a class="menucolour" href="#emergencyinfo" data-toggle="tab"><i class="fa fa-users"></i> Emergency Contacts</a></li>';
     nav += '        <li><a class="menucolour" href="#changepass" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a></li>';
-    nav += '        <li><a class="menucolour" href="#editinfo" data-toggle="tab"><i class="fa fa-pencil"></i> Edit Information</a>';
+    // Edit Info temporarily disabled
+    // nav += '        <li><a class="menucolour" href="#editinfo" data-toggle="tab"><i class="fa fa-pencil"></i> Edit Information</a>';
     nav += '        </li>';
     nav += '    </ul>';
     nav += '	</div>';
