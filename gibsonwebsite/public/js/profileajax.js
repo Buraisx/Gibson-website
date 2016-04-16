@@ -699,7 +699,7 @@ function listcourses(){
 	jQuery.getJSON("/user/profile/courses", function(data_unfiltered){
 
 		allAvailableCourses = data_unfiltered;
-		showFilteredCourses(allAvailableCourses, '');
+		showFilteredCourses(allAvailableCourses, '', []);
 	});
 }
 
@@ -745,17 +745,65 @@ function filterCourses(searchText){
 
 //Display list of registerable courses
 // Actually displaying courses.
-function showFilteredCourses(data, searchText){
+function showFilteredCourses(data, searchText, searchTags){
+
+	// Checkbox HTML for unselected
+	var tagCheckboxes = {
+		all_ages: '<div><label><input type="checkbox" id="all_ages" name = "all_ages"> All Ages</label></div>',
+		adults_over_16: '<div><label><input type="checkbox" id="adults_over_16" name = "adults_over_16"> Adults 16+</label></div>',
+		children: '<div><label><input type="checkbox" id="children" name = "children"> Children</label></div>',
+		youth: '<div><label><input type="checkbox" id="youth" name = "youth"> Youth</label></div>',
+		senior: '<div><label><input type="checkbox" id="senior" name = "senior"> Senior</label></div>',
+		sports_drop_in: '<div><label><input type="checkbox" id="sports_drop_in" name = "sports_drop_in"> Sports Drop In</label></div>',
+		information_session: '<div><label><input type="checkbox" id="information_session" name = "information_session"> Information Session</label></div>',
+		tccc: '<div><label><input type="checkbox" id="tccc" name = "tccc"> TCCC</label></div>'
+	}
+
+	// If searchTags contain tag make checkbox to selected
+	for (var i in searchTags){
+		if (searchTags[i] == 'all_ages')
+			tagCheckboxes.all_ages = '<div><label><input type="checkbox" id="all_ages" name = "all_ages" checked=""> All Ages</label></div>';
+		else if (searchTags[i] == 'adult')
+			tagCheckboxes.adults_over_16 = '<div><label><input type="checkbox" id="adults_over_16" name = "adults_over_16" checked=""> Adults 16+</label></div>';
+		else if (searchTags[i] == 'children')
+			tagCheckboxes.children = '<div><label><input type="checkbox" id="children" name = "children" checked=""> Children</label></div>';
+		else if (searchTags[i] == 'youth')
+			tagCheckboxes.youth = '<div><label><input type="checkbox" id="youth" name = "youth" checked=""> Youth</label></div>';
+		else if (searchTags[i] == 'senior')
+			tagCheckboxes.senior = '<div><label><input type="checkbox" id="senior" name = "senior" checked=""> Senior</label></div>';
+		else if (searchTags[i] == 'sports_drop_in')
+			tagCheckboxes.sports_drop_in = '<div><label><input type="checkbox" id="sports_drop_in" name = "sports_drop_in" checked=""> Sports Drop In</label></div>';
+		else if (searchTags[i] == 'information_session')
+			tagCheckboxes.information_session = '<div><label><input type="checkbox" id="information_session" name = "information_session" checked=""> Information Session</label></div>';
+		else if (searchTags[i] == 'tccc')
+			tagCheckboxes.tccc = '<div><label><input type="checkbox" id="tccc" name = "tccc" checked=""> TCCC</label></div>';
+	}
+
 	$('#courses').contents().remove();
 
 	var courses = '';
 	courses += '<div id="coursesaccordion" class="panel-group">';
     courses += '<hr>';
-    courses += '<h1>List of Available Courses</h1>'; 
+    courses += '<h1>List of Available Courses</h1>';
 
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
 	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
+	courses += '		<div class="tag-box">';
+	courses += '			<p><b>Filter by Tags</b></p>';
+	courses += '			<div class="checkboxes-col-1">';
+	courses += 					tagCheckboxes.children;
+	courses += 					tagCheckboxes.youth;
+	courses += 					tagCheckboxes.senior;
+	courses += 					tagCheckboxes.tccc;
+	courses += '			</div>';
+	courses += '			<div class="checkboxes-col-2">';
+	courses += 					tagCheckboxes.all_ages;
+	courses += 					tagCheckboxes.adults_over_16;
+	courses += 					tagCheckboxes.sports_drop_in;
+	courses += 					tagCheckboxes.information_session;
+	courses += '			</div>';
+	courses += '		</div>'
 	courses += '	</div>';
 	courses += '    <div class="panel-group" id="profileaccordion">';
 
@@ -786,7 +834,7 @@ function showFilteredCourses(data, searchText){
         courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
-        
+
         //*** AJAX for Generating Notes ***//
 		courses += '        		<div class="row">';
 		courses += '            		<div class="col-sm-4">';
@@ -823,7 +871,7 @@ function showFilteredCourses(data, searchText){
 		courses += '        	    	<div class="col-sm-4">';
 		courses += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
 		courses += '         	   		</div>';
-    	
+
 
     	//*** JQuery Loop for Generating Languages ***//
 		if(data[i].course_language != null){
@@ -901,7 +949,7 @@ function showFilteredCourses(data, searchText){
 
 		$('#coursesaccordion').append(empty_courses_html);
 	}
-	
+
 	$("#searchText").focus();
 	var tmpStr = $("#searchText").val();
 	$("#searchText").val('');
@@ -935,7 +983,7 @@ function listschedule(){
 			schedule += '        <div style="height: 0px;" aria-expanded="false" class="panel-collapse collapse" id="scollapse' + i + '">';
 			schedule += '            <div class="panel-body">';
 			schedule += '               <div class="col-sm-offset-1">';
-            
+
             //*** AJAX for Generating Description ***//
             schedule += '        		<div class="row">';
             schedule += '            		<div class="col-sm-4">';
@@ -945,7 +993,7 @@ function listschedule(){
             schedule += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
             schedule += '        			</div>';
             schedule += '        		</div>';
-            
+
             //*** AJAX for Generating Notes ***//
             schedule += '        		<div class="row">';
             schedule += '            		<div class="col-sm-4">';
@@ -955,7 +1003,7 @@ function listschedule(){
             schedule += '                		<p id="description' + i + '">' + data[i].course_notes + '</p>';
             schedule += '        			</div>';
             schedule += '        		</div>';
-            
+
             //*** AJAX for Generating Period ***//
             schedule += '        		<div class="row largemargin">';
             schedule += '            		<div class="col-sm-4">';
@@ -965,7 +1013,7 @@ function listschedule(){
             schedule += '               		 	 <p id="courseperiod' + i + '">' + convertdate(String(data[i].start_date).substring(0, 10)) + ' to ' + convertdate(String(data[i].end_date).substring(0, 10)) + '</p>';
             schedule += '            		</div>'
             schedule += '        		</div>';
-            
+
             //*** AJAX for Generating Target ***//
             schedule += '        		<div class="row">';
             schedule += '        	    	<div class="col-sm-4">';
@@ -975,13 +1023,13 @@ function listschedule(){
             schedule += '        	        	 <p id="coursetarget' + i + '">' + data[i].course_target + '</p>';
             schedule += '         	   		</div>';
             schedule += '        		</div>';
-            
+
             //*** AJAX for Generating Language ***//
             schedule += '        		<div class="row">';
             schedule += '        	    	<div class="col-sm-4">';
             schedule += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
             schedule += '         	   		</div>';
-    	
+
 
             //*** JQuery Loop for Generating Languages ***//
             if(data[i].course_language != null){
@@ -1023,8 +1071,8 @@ function listschedule(){
                 }
             }
             schedule += '        </div>';
-            
-            
+
+
 			schedule += '               </div>';
             schedule += '               </div>';
 			schedule += '            </div>';
