@@ -20,28 +20,28 @@ $("a[href$='#addcourses']").ready(function(){
 	var count2=0;
 	$('#addcourses').find('input[required]').each(function(){
 		if ($.trim($(this).val()).length == 0)
-        { 
+        {
 			count++;
 			console.log(this.id)
 		}
 	});
 	if (count > 0)
-	{		
-		$("#addcourses").find('#validate').removeAttr('onClick');	
+	{
+		$("#addcourses").find('#validate').removeAttr('onClick');
 	}
 	$('#validate').click(function(){
 		count = 0;
 		count2=0;
 		$('#addcourses').find('input[required]').each(function(){
 			if ($.trim($(this).val()).length == 0)
-        	{ 
+        	{
 				count++;
 				count2++;
 				$(this).addClass('enabler');
 			}
 			if(count>4)
 			{
-				$("#addcourses").find('#validate').addClass('disabled');	
+				$("#addcourses").find('#validate').addClass('disabled');
 			}
 		});
 		if (count>4)
@@ -53,16 +53,16 @@ $("a[href$='#addcourses']").ready(function(){
 	//$('#addcourses').find('.enabler').on("change",function(){
 	$(document).on("change","input.enabler",function(){
 		if ($.trim($(this).val()).length > 0)
-        { 
+        {
 			count2--;
 			$(this).removeClass('enabler');
 		}
 		console.log(count2)
 		if (count2<=4)
 		{
-			swal("Course can now be submitted.") 
+			swal("Course can now be submitted.")
 			$('#validate').removeClass('disabled');
-			$('#validate').attr('onClick', 'validateCourse()');	
+			$('#validate').attr('onClick', 'validateCourse()');
 		}
 	});
 /*	$('input[required]').focus(function(){
@@ -273,15 +273,22 @@ function copyEmails(user_info){
 }
 
 
-//Global variable allAvailableCourses
+//Global variables
 var allAvailableCourses;
+var allTags;
+var checkedBoxes = [];
 
 //Generates List of Courses HTML
 function listcourses(){
 	jQuery.getJSON("/admin/profile/courses", function(data_unfiltered){
 
 		allAvailableCourses = data_unfiltered;
-		showFilteredCourses(allAvailableCourses, '');
+	})
+	.done(function(res){
+		jQuery.getJSON("/admin/tags", function(tags){
+			allTags = tags;
+			showFilteredCourses(allAvailableCourses, '', []);
+		});
 	});
 }
 
@@ -294,19 +301,38 @@ function filterCourses(searchText){
 	var searchTerms = $.grep(searchText.replace(/\W*\b\w{1,2}\b/g, "").toLowerCase().split(' '), function(x) {return $.inArray(x, stopWords) < 0;});
 	//var searchTerms = searchText.toLowerCase().split(' ');
 	var filteredCourses = [];
+	var coursesFilteredByTags = [];
 	var match = false;
+
+	// FILTERTING COURSES BY TAGS
+	if(checkedBoxes.length === 0){
+		coursesFilteredByTags = allAvailableCourses;
+	}
+	else{
+		for(var i = 0; i < allAvailableCourses.length; i++){
+			for (var j = 0; j < checkedBoxes.length; j++){
+				if(allAvailableCourses[i].categories.indexOf(checkedBoxes[j]) != -1){
+					coursesFilteredByTags.push(allAvailableCourses[i]);
+					break;
+				}
+			}
+		}
+	}
+
 
 	// Very crude word match search
 	if (searchTerms.length === 0){
-		filteredCourses = allAvailableCourses;
+		filteredCourses = coursesFilteredByTags;
 	}
 	else{
-		for (var i = 0; i < allAvailableCourses.length; i++){
+		for (var i = 0; i < coursesFilteredByTags.length; i++){
 			for (var j = 0; j < searchTerms.length; j++){
-				if(allAvailableCourses[i].course_name.toLowerCase().indexOf(searchTerms[j]) > -1 ||
-					 allAvailableCourses[i].course_description.toLowerCase().indexOf(searchTerms[j]) > -1 ||
-				 	 allAvailableCourses[i].course_code.toLowerCase().indexOf(searchTerms[j]) > -1 ||
-				 	 allAvailableCourses[i].course_target.toLowerCase().indexOf(searchTerms[j]) > -1){
+				if(coursesFilteredByTags[i].course_name.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+					 coursesFilteredByTags[i].course_description.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+					 coursesFilteredByTags[i].notes.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+					 coursesFilteredByTags[i].course_language.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+				 	 coursesFilteredByTags[i].course_code.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+				 	 coursesFilteredByTags[i].course_target.toLowerCase().indexOf(searchTerms[j]) > -1){
 
 					match = true;
 				}
@@ -317,17 +343,55 @@ function filterCourses(searchText){
 			}
 
 			if (match){
-				filteredCourses.push(allAvailableCourses[i]);
+				filteredCourses.push(coursesFilteredByTags[i]);
 			}
 		}
 	}
 
-	showFilteredCourses(filteredCourses, searchText);
+	showFilteredCourses(filteredCourses, searchText, checkedBoxes);
 }
+
+
+function updateCheckboxArray(searchText, categoryId){
+	var index = checkedBoxes.indexOf(categoryId);
+
+	if(index === -1){ //NOT FOUND -> ADD
+		checkedBoxes.push(categoryId);
+	}
+	else{ //FOUND -> DELETE
+		checkedBoxes.splice(index, 1);
+	}
+
+	filterCourses(searchText);
+}
+
 
 //Display list of registerable courses
 // Actually displaying courses.
-function showFilteredCourses(data, searchText){
+function showFilteredCourses(data, searchText, searchTags){
+
+	var checkBoxesHTML = [];
+	var isChecked = false;
+
+	// GENERATING HTML FOR CHECKBOXES
+	for (var i in allTags){
+		isChecked = false;
+
+		for (var j in checkedBoxes){
+			if (allTags[i].category_id == checkedBoxes[j]){
+				isChecked = true;
+				break;
+			}
+		}
+
+		if (isChecked){
+			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')" checked=""> ' +allTags[i].category_string +'</label></div>');
+		}
+		else{
+			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')"> ' +allTags[i].category_string +'</label></div>');
+		}
+	}
+
 	$('#courses').contents().remove();
 
 	var courses = '';
@@ -335,8 +399,29 @@ function showFilteredCourses(data, searchText){
 	courses += '	<hr>';
 
 	courses += '	<div class="search-box">';
-	courses += '		<h3>Filter Courses</h3>';
+	courses += '		<p><b>Filter Courses</b></p>';
 	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
+	courses += '		<div class="tag-box">';
+	courses += '			<p><b>Filter by Tags</b></p>';
+	courses += '			<div class="checkboxes-col-1">';
+	for(var i = 0; i < Math.ceil(checkBoxesHTML.length/2); i++){
+		courses += checkBoxesHTML[i];
+	}
+	courses += '			</div>';
+
+	// ALIGN THE CHECKBOXES
+	if(checkBoxesHTML.length%2 === 0){ //EVEN
+		courses += '			<div style="padding-left: 15px; padding-top: 5px; background-color: #ffffff; margin-left: 240px; margin-top: -' +(129 + 31*Math.ceil((checkBoxesHTML.length-8)/2)) +'px; margin-bottom: 0px;">';
+	}
+	else{ //ODD
+		courses += '			<div style="padding-left: 15px; padding-top: 5px; background-color: #ffffff; margin-left: 240px; margin-top: -' +(129 + 31*Math.ceil((checkBoxesHTML.length-8)/2)) +'px; margin-bottom: 31px;">';
+	}
+
+	for(var i = Math.ceil(checkBoxesHTML.length/2); i < checkBoxesHTML.length; i++){
+		courses += checkBoxesHTML[i];
+	}
+	courses += '			</div>';
+	courses += '		</div>';
 	courses += '	</div>';
 
 	for(var i = 0; i < data.length; i++) {
@@ -367,7 +452,7 @@ function showFilteredCourses(data, searchText){
         courses += '                		<p id="description' + i + '">' + data[i].course_description + '</p>';
 		courses += '        			</div>';
 		courses += '        		</div>';
-        
+
         //*** AJAX for Generating Notes ***//
 		courses += '        		<div class="row">';
 		courses += '            		<div class="col-sm-4">';
@@ -405,7 +490,7 @@ function showFilteredCourses(data, searchText){
 		courses += '        	    	<div class="col-sm-4">';
 		courses += '        	        	 <p id="courselanguagetitle' + i + '"><b>Language:</b></p>';
 		courses += '         	   		</div>';
-    	
+
 
     	//*** JQuery Loop for Generating Languages ***//
 		if(data[i].course_language != null){
@@ -515,7 +600,7 @@ function listEnrolled(course_id, index){
 				studentslist+='        </tr>';
 			}
 			studentslist+='    </tbody>';
-			
+
 			//Apply to HTML
 			$( "#course_table" ).show("slow", function() {
 				// Animation complete.
@@ -1073,7 +1158,7 @@ function addAdhoc(){
 		}
 
 		adhoc_days.push(JSON.stringify(day));
-	} 
+	}
 
 	return adhoc_days;
 }

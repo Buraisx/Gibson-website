@@ -293,7 +293,7 @@ router.get('/admin/profile/courses', function(req, res){
 
     //in query, counts the number of users who take each course from user_course table.
     //for a more efficient, less readable count query, look at http://stackoverflow.com/questions/944099/mysql-count-on-multiple-tables
-    var sql = "SELECT course_id, course_name, course_code, default_fee, start_date, end_date, course_time, course_interval, course_language, course_target, course_description, notes, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC";
+    var sql = "SELECT course_id, course_name, course_code, default_fee, start_date, end_date, course_time, categories, course_interval, course_language, course_target, course_description, notes, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC";
 
     connection.getConnection(function(err, con){
         if(err){
@@ -325,7 +325,9 @@ router.get('/admin/tags', function(req, res){
     var sql = "SELECT category_id, category_string, category_type FROM category_matrix;";
 
     connection.getConnection(function(err, con){
-        con.query(sql, function(err, con){
+        con.query(sql, function(err, results){
+            con.release();
+
             if(err){
                 console.log("adminqueries.js: Cannot get a list of tags");
                 return err;
@@ -336,8 +338,8 @@ router.get('/admin/tags', function(req, res){
             }
 
             res.send(results);
-        });        
-    })    
+        });
+    })
 });
 
 
@@ -402,7 +404,7 @@ router.post('/validateCourse', function(req, res){
 
                     else if(results.length){
                         return next(new Error("Course name or course code already exists!"), null);
-                        
+
                     }
 
                     else{
