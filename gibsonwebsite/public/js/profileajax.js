@@ -83,7 +83,8 @@ function load_profile(){
     }
     nav += '        <li><a class="menucolour" href="#emergencyinfo" data-toggle="tab"><i class="fa fa-users"></i> Emergency Contacts</a></li>';
     nav += '        <li><a class="menucolour" href="#changepass" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a></li>';
-    nav += '        <li><a class="menucolour" href="#editinfo" data-toggle="tab"><i class="fa fa-pencil"></i> Edit Information</a>';
+	// Edit Info temporarily disabled
+	// nav += '        <li><a class="menucolour" href="#editinfo" data-toggle="tab"><i class="fa fa-pencil"></i> Edit Information</a>';
     nav += '        </li>';
     nav += '    </ul>';
     nav += '	</div>';
@@ -691,15 +692,22 @@ var preventUser = function() {
 };
 
 
-//Global variable allAvailableCourses
+//Global variables
 var allAvailableCourses;
+var allTags;
+var checkedBoxes = [];
 
 //Display list of registerable courses
 function listcourses(){
 	jQuery.getJSON("/user/profile/courses", function(data_unfiltered){
 
 		allAvailableCourses = data_unfiltered;
-		showFilteredCourses(allAvailableCourses, '', []);
+	})
+	.done(function(res){
+		jQuery.getJSON("/user/tags", function(tags){
+			allTags = tags;
+			showFilteredCourses(allAvailableCourses, '', []);
+		});
 	});
 }
 
@@ -712,19 +720,38 @@ function filterCourses(searchText){
 	var searchTerms = $.grep(searchText.replace(/\W*\b\w{1,2}\b/g, "").toLowerCase().split(' '), function(x) {return $.inArray(x, stopWords) < 0;});
 	//var searchTerms = searchText.toLowerCase().split(' ');
 	var filteredCourses = [];
+	var coursesFilteredByTags = [];
 	var match = false;
+
+	// FILTERTING COURSES BY TAGS
+	if(checkedBoxes.length === 0){
+		coursesFilteredByTags = allAvailableCourses;
+	}
+	else{
+		for(var i = 0; i < allAvailableCourses.length; i++){
+			for (var j = 0; j < checkedBoxes.length; j++){
+				if(allAvailableCourses[i].categories.indexOf(checkedBoxes[j]) != -1){
+					coursesFilteredByTags.push(allAvailableCourses[i]);
+					break;
+				}
+			}
+		}
+	}
+
 
 	// Very crude word match search
 	if (searchTerms.length === 0){
-		filteredCourses = allAvailableCourses;
+		filteredCourses = coursesFilteredByTags;
 	}
 	else{
-		for (var i = 0; i < allAvailableCourses.length; i++){
+		for (var i = 0; i < coursesFilteredByTags.length; i++){
 			for (var j = 0; j < searchTerms.length; j++){
-				if(allAvailableCourses[i].course_name.toLowerCase().indexOf(searchTerms[j]) > -1 ||
-					 allAvailableCourses[i].course_description.toLowerCase().indexOf(searchTerms[j]) > -1 ||
-				 	 allAvailableCourses[i].course_code.toLowerCase().indexOf(searchTerms[j]) > -1 ||
-				 	 allAvailableCourses[i].course_target.toLowerCase().indexOf(searchTerms[j]) > -1){
+				if(coursesFilteredByTags[i].course_name.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+					 coursesFilteredByTags[i].course_description.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+					 coursesFilteredByTags[i].notes.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+					 coursesFilteredByTags[i].course_language.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+				 	 coursesFilteredByTags[i].course_code.toLowerCase().indexOf(searchTerms[j]) > -1 ||
+				 	 coursesFilteredByTags[i].course_target.toLowerCase().indexOf(searchTerms[j]) > -1){
 
 					match = true;
 				}
@@ -735,48 +762,51 @@ function filterCourses(searchText){
 			}
 
 			if (match){
-				filteredCourses.push(allAvailableCourses[i]);
+				filteredCourses.push(coursesFilteredByTags[i]);
 			}
 		}
 	}
 
-	showFilteredCourses(filteredCourses, searchText);
+	showFilteredCourses(filteredCourses, searchText, checkedBoxes);
+}
+
+function updateCheckboxArray(searchText, categoryId){
+	var index = checkedBoxes.indexOf(categoryId);
+
+	if(index === -1){ //NOT FOUND -> ADD
+		checkedBoxes.push(categoryId);
+	}
+	else{ //FOUND -> DELETE
+		checkedBoxes.splice(index, 1);
+	}
+
+	filterCourses(searchText);
 }
 
 //Display list of registerable courses
 // Actually displaying courses.
 function showFilteredCourses(data, searchText, searchTags){
 
-	// Checkbox HTML for unselected
-	var tagCheckboxes = {
-		all_ages: '<div><label><input type="checkbox" id="all_ages" name = "all_ages"> All Ages</label></div>',
-		adults_over_16: '<div><label><input type="checkbox" id="adults_over_16" name = "adults_over_16"> Adults 16+</label></div>',
-		children: '<div><label><input type="checkbox" id="children" name = "children"> Children</label></div>',
-		youth: '<div><label><input type="checkbox" id="youth" name = "youth"> Youth</label></div>',
-		senior: '<div><label><input type="checkbox" id="senior" name = "senior"> Senior</label></div>',
-		sports_drop_in: '<div><label><input type="checkbox" id="sports_drop_in" name = "sports_drop_in"> Sports Drop In</label></div>',
-		information_session: '<div><label><input type="checkbox" id="information_session" name = "information_session"> Information Session</label></div>',
-		tccc: '<div><label><input type="checkbox" id="tccc" name = "tccc"> TCCC</label></div>'
-	}
+	var checkBoxesHTML = [];
+	var isChecked = false;
 
-	// If searchTags contain tag make checkbox to selected
-	for (var i in searchTags){
-		if (searchTags[i] == 'all_ages')
-			tagCheckboxes.all_ages = '<div><label><input type="checkbox" id="all_ages" name = "all_ages" checked=""> All Ages</label></div>';
-		else if (searchTags[i] == 'adult')
-			tagCheckboxes.adults_over_16 = '<div><label><input type="checkbox" id="adults_over_16" name = "adults_over_16" checked=""> Adults 16+</label></div>';
-		else if (searchTags[i] == 'children')
-			tagCheckboxes.children = '<div><label><input type="checkbox" id="children" name = "children" checked=""> Children</label></div>';
-		else if (searchTags[i] == 'youth')
-			tagCheckboxes.youth = '<div><label><input type="checkbox" id="youth" name = "youth" checked=""> Youth</label></div>';
-		else if (searchTags[i] == 'senior')
-			tagCheckboxes.senior = '<div><label><input type="checkbox" id="senior" name = "senior" checked=""> Senior</label></div>';
-		else if (searchTags[i] == 'sports_drop_in')
-			tagCheckboxes.sports_drop_in = '<div><label><input type="checkbox" id="sports_drop_in" name = "sports_drop_in" checked=""> Sports Drop In</label></div>';
-		else if (searchTags[i] == 'information_session')
-			tagCheckboxes.information_session = '<div><label><input type="checkbox" id="information_session" name = "information_session" checked=""> Information Session</label></div>';
-		else if (searchTags[i] == 'tccc')
-			tagCheckboxes.tccc = '<div><label><input type="checkbox" id="tccc" name = "tccc" checked=""> TCCC</label></div>';
+	// GENERATING HTML FOR CHECKBOXES
+	for (var i in allTags){
+		isChecked = false;
+
+		for (var j in checkedBoxes){
+			if (allTags[i].category_id == checkedBoxes[j]){
+				isChecked = true;
+				break;
+			}
+		}
+
+		if (isChecked){
+			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')" checked=""> ' +allTags[i].category_string +'</label></div>');
+		}
+		else{
+			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')"> ' +allTags[i].category_string +'</label></div>');
+		}
 	}
 
 	$('#courses').contents().remove();
@@ -788,23 +818,31 @@ function showFilteredCourses(data, searchText, searchTags){
 
 	courses += '	<div class="search-box">';
 	courses += '		<p><b>Filter Courses</b></p>';
-	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" value="' +searchText +'" placeholder="Search..."/>';
+	courses += '		<input class="search-bar" type="text" name="searchText" id="searchText" onkeyup="filterCourses(this.value)" placeholder="Search..."/>';
 	courses += '		<div class="tag-box">';
 	courses += '			<p><b>Filter by Tags</b></p>';
 	courses += '			<div class="checkboxes-col-1">';
-	courses += 					tagCheckboxes.children;
-	courses += 					tagCheckboxes.youth;
-	courses += 					tagCheckboxes.senior;
-	courses += 					tagCheckboxes.tccc;
+	for(var i = 0; i < Math.ceil(checkBoxesHTML.length/2); i++){
+		courses += checkBoxesHTML[i];
+	}
 	courses += '			</div>';
-	courses += '			<div class="checkboxes-col-2">';
-	courses += 					tagCheckboxes.all_ages;
-	courses += 					tagCheckboxes.adults_over_16;
-	courses += 					tagCheckboxes.sports_drop_in;
-	courses += 					tagCheckboxes.information_session;
+
+	// ALIGN THE CHECKBOXES
+	if(checkBoxesHTML.length%2 === 0){ //EVEN
+		courses += '			<div style="padding-left: 15px; padding-top: 5px; background-color: #ffffff; margin-left: 240px; margin-top: -' +(129 + 31*Math.ceil((checkBoxesHTML.length-8)/2)) +'px; margin-bottom: 0px;">';
+	}
+	else{ //ODD
+		courses += '			<div style="padding-left: 15px; padding-top: 5px; background-color: #ffffff; margin-left: 240px; margin-top: -' +(129 + 31*Math.ceil((checkBoxesHTML.length-8)/2)) +'px; margin-bottom: 31px;">';
+	}
+
+	for(var i = Math.ceil(checkBoxesHTML.length/2); i < checkBoxesHTML.length; i++){
+		courses += checkBoxesHTML[i];
+	}
 	courses += '			</div>';
-	courses += '		</div>'
+	courses += '		</div>';
 	courses += '	</div>';
+
+
 	courses += '    <div class="panel-group" id="profileaccordion">';
 
 
@@ -951,9 +989,8 @@ function showFilteredCourses(data, searchText, searchTags){
 	}
 
 	$("#searchText").focus();
-	var tmpStr = $("#searchText").val();
 	$("#searchText").val('');
-	$("#searchText").val(tmpStr);
+	$("#searchText").val(searchText);
 }
 
 

@@ -210,12 +210,12 @@ router.get('/user/profile/courses', function(req, res, callback) {
 	//alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
 	//console.log(alreadyRegCourses);
 
-	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.notes, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_language, a.course_days, a.default_fee FROM gibson.course a WHERE NOT EXISTS (SELECT course_id FROM gibson.user_course uc WHERE a.course_id = uc.course_id AND uc.user_id = '1') AND a.end_date >= NOW() ORDER BY a.course_id DESC;";
+	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.notes, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_language, a.course_days, a.default_fee, a.categories FROM gibson.course a WHERE NOT EXISTS (SELECT course_id FROM gibson.user_course uc WHERE a.course_id = uc.course_id AND uc.user_id = '1') AND a.end_date >= NOW() ORDER BY a.course_id DESC;";
 	nonRegCourses = mysql.format(nonRegCourses, inserts);
 	//console.log(nonRegCourses);
 
 	connection.getConnection(function(err, con){
-		if(err){		
+		if(err){
 			con.release();
 			console.log("cannot get connection");
 			return err;
@@ -243,10 +243,12 @@ router.get('/user/profile/courses', function(req, res, callback) {
 });
 
 router.get('/user/tags', function(req, res){
-    var sql = "SELECT category_id, category_string, category_type FROM category_matrix;";
+    var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix;";
 
     connection.getConnection(function(err, con){
-        con.query(sql, function(err, con){
+        con.query(sql, function(err, results){
+			con.release();
+
             if(err){
                 console.log("users.js: Cannot get a list of tags");
                 return err;
@@ -257,8 +259,8 @@ router.get('/user/tags', function(req, res){
             }
 
             res.send(results);
-        });        
-    })    
+        });
+    })
 });
 
 router.get('/user/profile/schedule', function(req, res, callback) {
@@ -553,7 +555,7 @@ router.post('/user/profile/history', function(req, res, next){
 	var decode = jwt.decode(req.cookies.access_token);
 	var sql = 'SELECT transaction_id, paypal_id, create_time, state, payer_first_name, payer_last_name, currency, total, tax, description FROM gibson.transaction_history th WHERE th.user_id = ? ORDER BY create_time DESC LIMIT ?';
 	var inserts = [decode.id, Number(sanitizer.sanitize(req.body.query_limit))];
-	
+
 	sql=mysql.format(sql, inserts);
 	console.log(sql);
 	connection.getConnection(function(err, con){
