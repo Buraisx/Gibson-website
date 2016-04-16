@@ -212,9 +212,10 @@ section h2 {
     font-size: 3em;
 }
 
-section.gibsonorange {
-    color: #F39C37;
+section.gibsonblue {
+    color: #3AAADA;
     background: #FFF;
+    background-color: #F8F8F8;
 }
 
 section.gibsongreen {
@@ -222,9 +223,11 @@ section.gibsongreen {
     background: #FFF;
 }
 
-section.gibsonblue {
-    color: #3AAADA;
+
+section.gibsonorange {
+    color: #F39C37;
     background: #FFF;
+    background-color: #F8F8F8;
 }
 
 p{
