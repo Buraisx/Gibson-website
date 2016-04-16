@@ -242,6 +242,24 @@ router.get('/user/profile/courses', function(req, res, callback) {
 	});
 });
 
+router.get('/user/tags', function(req, res){
+    var sql = "SELECT category_id, category_string, category_type FROM category_matrix;";
+
+    connection.getConnection(function(err, con){
+        con.query(sql, function(err, con){
+            if(err){
+                console.log("users.js: Cannot get a list of tags");
+                return err;
+            }
+
+            else if (!results.length){
+                console.log("users.js: No list of tags found")
+            }
+
+            res.send(results);
+        });        
+    })    
+});
 
 router.get('/user/profile/schedule', function(req, res, callback) {
 	var decode = jwt.decode(req.cookies.access_token);

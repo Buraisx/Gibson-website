@@ -289,7 +289,6 @@ router.post('/profile/:username/edit/studentinfo', function(req, res){
     });
 });
 
-
 router.get('/admin/profile/courses', function(req, res){
 
     //in query, counts the number of users who take each course from user_course table.
@@ -311,7 +310,7 @@ router.get('/admin/profile/courses', function(req, res){
             }
 
             //check if there is a user with the info
-            if(!results.length){
+            else if(!results.length){
                 console.log("adminqueries.js: No courses found!");
             }
 
@@ -321,6 +320,26 @@ router.get('/admin/profile/courses', function(req, res){
         });
     });
 });
+
+router.get('/admin/tags', function(req, res){
+    var sql = "SELECT category_id, category_string, category_type FROM category_matrix;";
+
+    connection.getConnection(function(err, con){
+        con.query(sql, function(err, con){
+            if(err){
+                console.log("adminqueries.js: Cannot get a list of tags");
+                return err;
+            }
+
+            else if (!results.length){
+                console.log("adminqueries.js: No list of tags found")
+            }
+
+            res.send(results);
+        });        
+    })    
+});
+
 
 // SENDS A LIST OF STUDENTS
 router.get('/admin/profile/courses/students', function(req, res){
