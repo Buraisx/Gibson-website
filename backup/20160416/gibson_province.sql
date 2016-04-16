@@ -37,6 +37,7 @@ CREATE TABLE `province` (
 
 LOCK TABLES `province` WRITE;
 /*!40000 ALTER TABLE `province` DISABLE KEYS */;
+INSERT INTO `province` VALUES (1,'Ontario','ON'),(2,'Quebec','QC'),(3,'Newfoundland and Labrador','NL'),(4,'New Brunswick','NB'),(5,'Northwest Territories','NT'),(6,'Nova Scotia','NS'),(7,'Manitoba','MB'),(8,'British Columbia','BC'),(9,'Prince Edward Island','PE'),(10,'Saskatchewan','SK'),(11,'Alberta','AB'),(12,'Yukon','YT'),(13,'Nunavut','NU');
 /*!40000 ALTER TABLE `province` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-16  0:27:29
+-- Dump completed on 2016-04-16  0:49:53
