@@ -629,3 +629,7 @@ div[class*="banner"]{
     background-color: #e74c3c;
 
 }
+
+.transaction-info{
+    font-size: 80%;
+}

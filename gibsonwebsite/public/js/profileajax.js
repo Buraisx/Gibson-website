@@ -958,7 +958,7 @@ function showFilteredCourses(data, searchText, searchTags){
 		courses += '         	         	<p id="cost' + i + '"><b>Cost:</b></p>';
 		courses += '        	    	</div>';
         courses += '          	  		<div class="col-sm-1">';
-		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee + '</p>';
+		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee.toFixed(2) + '</p>';
 		courses += '        	    	</div>';
 		courses += '            		<div class="col-sm-7 addbutton">';
 		courses += '            			<button type="button" class="btn btn-default course-submit" onclick="register(this)" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
