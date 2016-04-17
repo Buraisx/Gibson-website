@@ -1037,7 +1037,7 @@ function listschedule(){
             schedule += '                		<p id="descriptiontitle' + i + '"><b>NOTE: </b></p>';
             schedule += '        			</div>';
             schedule += '            		<div class="col-sm-8">';
-            schedule += '                		<p id="description' + i + '">' + data[i].course_notes + '</p>';
+            schedule += '                		<p id="description' + i + '">' + data[i].notes + '</p>';
             schedule += '        			</div>';
             schedule += '        		</div>';
 

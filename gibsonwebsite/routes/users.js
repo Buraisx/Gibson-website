@@ -210,7 +210,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 	//alreadyRegCourses = mysql.format(alreadyRegCourses, inserts);
 	//console.log(alreadyRegCourses);
 
-	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.notes, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_language, a.course_days, a.default_fee, a.categories FROM gibson.course a WHERE NOT EXISTS (SELECT course_id FROM gibson.user_course uc WHERE a.course_id = uc.course_id AND uc.user_id = '1') AND a.end_date >= NOW() ORDER BY a.course_id DESC;";
+	var nonRegCourses = "SELECT a.course_id, a.course_code, a.course_description, a.notes, a.course_target, a.course_name, a.start_date, a.end_date, a.course_time, a.course_interval, a.course_language, a.course_days, a.default_fee, a.categories FROM gibson.course a WHERE NOT EXISTS (SELECT course_id FROM gibson.user_course uc WHERE a.course_id = uc.course_id AND uc.user_id = ?) AND a.end_date >= NOW() ORDER BY a.course_id DESC;";
 	nonRegCourses = mysql.format(nonRegCourses, inserts);
 	//console.log(nonRegCourses);
 
@@ -265,7 +265,7 @@ router.get('/user/tags', function(req, res){
 
 router.get('/user/profile/schedule', function(req, res, callback) {
 	var decode = jwt.decode(req.cookies.access_token);
-	var sql = "SELECT c.course_id, course_code, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_language, c.course_target, c.course_days, c.start_date, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
+	var sql = "SELECT c.course_id, course_code, c.course_name, c.course_time, c.course_interval, c.course_description, c.course_language, c.course_target, c.notes, c.course_days, c.start_date, c.end_date FROM course c INNER JOIN user_course uc ON c.course_id = uc.course_id  WHERE uc.user_id= ?;";
 	var inserts = decode.id;
 	sql = mysql.format(sql, inserts);
 
