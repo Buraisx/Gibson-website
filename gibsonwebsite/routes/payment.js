@@ -73,14 +73,14 @@ router.get('/payment/paypal', function(req, res, next){
             return next({errno: 500, msg: 'Error querying for courses.'}, null);
           }
           else{
-            next(null, results);
+            next(null, results, con);
           }
         });
       },
 
       // CALL PAYPAL
-      function(courseInfo, next){
-
+      function(courseInfo, con, next){
+        var id = jwt.decode(req.cookies.access_token).id;
         var item_list = [];
         var total = 0;
         var desc = '';
@@ -103,21 +103,34 @@ router.get('/payment/paypal', function(req, res, next){
         payment_json.transactions[0].amount.total = total.toString();
         payment_json.transactions[0].description += desc;
 
-        paypal.payment.create(payment_json, function (err, payment) {
-          if (err) {
-            return next({errno: 500, msg: 'Error creating payment.'}, null);
+        if(total === 0){
+          if(enroll(id, null, "Free", null, null, item_list, total, "CAD", 0, desc, con)){
+            return next({errno:200, msg:"Accepted $0.00 transaction."}, null);
           }
-          else {
-            next(null, payment);
+          else{
+            return next({errno: 500, msg: 'Error accepting $0.00 transaction.'}, null);
           }
-        });
+        }
+        else{
+          paypal.payment.create(payment_json, function (err, payment) {
+            if (err) {
+              return next({errno: 500, msg: 'Error creating payment.'}, null);
+            }
+            else {
+              next(null, payment);
+            }
+          });
+        }
       }],
 
       // THE ENDING FUNCTION
       function(err, payment){
         con.release();
 
-        if(err){
+        if(err.errno === 200){
+          res.redirect('/paymentsuccess');
+        }
+        else if(err){
           res.status(err.errno).send(err.msg);
         }
         else{
@@ -129,16 +142,12 @@ router.get('/payment/paypal', function(req, res, next){
             if (payment.links[i].rel == 'approval_url')
               redirectUrl = payment.links[i].href;
           }
-
-          
           res.redirect(redirectUrl);
           //---------------------------------------//
         }
       });
   });
 });
-
-
 
 
 router.get('/payment/execute', function(req,res,next){
@@ -252,5 +261,63 @@ router.get('/payment/execute', function(req,res,next){
 router.get('/paymentsuccess', function (req, res, next){
   res.render('paymentsuccess', {title: "Payment Success!"});
 });
+
+
+//============================================================
+//===Enrollment without payment===============================
+//============================================================
+function enroll(id, email, payment_method, first_name, last_name, item_list, total, currency, tax, description, con){
+  
+  async.waterfall([
+    
+      //Start Transaction
+      function (next){
+        con.query('START TRANSACTION;', function(err, results){
+          if(err){
+            return next(new Error("Failure starting enrollment transaction."), null);
+          }
+          else{
+            next(null);
+          }
+        });
+      },
+
+      //Insert transaction into transaction history table
+      function (next){
+        var user_transaction = "INSERT into gibson.transaction_history (paypal_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        var transaction_inserts = [null, new Date(), "Approved", "Purchase", payment_method, id, email, first_name, last_name, null, total, currency, tax, description];
+
+        user_transaction = mysql.format(user_transaction, transaction_inserts);
+        con.query(user_transaction, function (err, results){
+          if(err){
+            return next(new Error("Cannot add transaction to database."), null);
+          }
+          else{
+            next(null);
+          }
+        });
+      },
+      
+      //Insert all enrollments of each course into the database
+      function (next){
+        var user_course = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, transaction_id, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, ?, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?;";
+        
+        for(var i = 0; i < item_list.length; i++){
+
+        }
+      } 
+    ], function (err, results){
+      if(err){
+        con.query('ROLLBACK;', function(err, results){
+          return false;  
+        });
+      }
+      else{
+        con.query('COMMIT;', function(err, results){
+          return true;
+        });
+      }
+  });
+}
 
 module.exports = router;
