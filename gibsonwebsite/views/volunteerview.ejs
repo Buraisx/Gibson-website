@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include standardnavbar.ejs %>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="/css/tabstyles.css" />
+    <script src = "/js/passwordvalidation.js"></script>
+    <!-- datepicker CSS -->
+    <link href="/css/datepicker.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/rentaltables.css" />
+    <link href="/css/validation.css" rel="stylesheet">
+    <link href="/css/simple-sidebar.css" rel="stylesheet">
+    <title><%= title %></title>
+</head>
+
+<body>
+    <div class="page-wrap static-background" data-background="/img/gibsonpic.jpg">
+    <section class="container rcorners">
+        <div class="tabs tabs-style-linemove">
+            <nav>
+                <ul>
+                    <li><a href="#controlpanel"><i class="fa fa-user tabicon"></i><span>Control Panel</span></a></li>
+                    <li><a href="#users"><i class="fa fa-calendar tabicon"></i><span>Users</span></a></li>
+                    <li><a href="#courses"><i class="fa fa-list tabicon"></i><span>Courses</span></a></li>
+                    <li><a href="#rental"><i class="fa fa-tags tabicon"></i><span>Rental</span></a></li>
+                </ul>
+            </nav>
+            <div class="content-wrap">
+                <!--GET csrf token-->
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
+                <section id="controlpanel">
+                    <!-- Tab On-Click fills control panel-->
+                </section>
+                <section id="users">
+                    <!-- Tab On-Click fills users-->
+                </section>
+                <section id="courses">
+
+                    <!-- Tab On-Click fills courses-->
+                </section>
+                <section id="rental">
+                    <hr>
+                    <h1>Facility Rates from 2016 January</h1>
+                    <h4 class="h4title">Venue Rental</h4 class="h4title">
+                    <table class = "table table-bordered rentaltablemargin">
+                        <thead>
+                            <tr class = "tableheader">
+                                <th>Venues<br>(includes limited chairs and tables)</th>
+                                <th>Capacity</th>
+                                <th>Rental Fee/Hour</th>
+                                <th>Refundable Security Deposit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Carpet Area<br>(10 chairs +1 table)</td>
+                                <td>20 people</td>
+                                <td>$30.00</td>
+                                <td>$50.00</td>
+                            </tr>
+                            <tr>
+                                <td>Room 102<br>(40 chairs +3 tables)</td>
+                                <td>150 people</td>
+                                <td>$40.00</td>
+                                <td>$150.00</td>
+                            </tr>
+                            <tr>
+                                <td>Room 101<br>(50 chairs + 4 tables)</td>
+                                <td>200 people</td>
+                                <td>$45.00</td>
+                                <td>$150.00</td>
+                            </tr>
+                            <tr>
+                                <td>Open Area<br>(50 chairs + 4 tables)</td>
+                                <td>300 people</td>
+                                <td>$55.00</td>
+                                <td>$200.00</td>
+                            </tr>
+                            <tr>
+                                <td>Double Gymnasium<br>(80 chairs + 6 tables)</td>
+                                <td>500 people</td>
+                                <td>$100.00</td>
+                                <td>$300.00</td>
+                            </tr>
+                            <tr>
+                                <td>Cultural Cafe</td>
+                                <td>90 people</td>
+                                <td colspan="2">Refer to Cultural Café’s rental package</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><i>Note: Rental fees includes provision of certain number of tables and chairs, additional furniture and all other equipment and services may have charges applied.</i></p>
+
+                    <h4 class="h4title">AV Equipment Rental (For inside Centre Only)</h4 class="h4title">
+                    <table class = "table table-bordered rentaltablemargin">
+                        <thead>
+                            <tr class = "tableheader">
+                                <th>AV Equipment</th>
+                                <th>Rate (minimum 3 hours)</th>
+                                <th>Refundable Security Deposit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Portable PA System</td>
+                                <td>$15.00 per hour</td>
+                                <td>$150</td>
+                            </tr>
+                            <tr>
+                                <td>Portable Projector</td>
+                                <td>$5.00 per hour</td>
+                                <td>$50</td>
+                            </tr>
+                            <tr>
+                                <td>Mapex Meridian Blue 5-piece kit with Sabian cymbals & hardware</td>
+                                <td>$5.00 per hour</td>
+                                <td>$50</td>
+                            </tr>
+                            <tr>
+                                <td>Roland keyboard FP-7F, 88-key, includes amp, stand and bench</td>
+                                <td>$5.00 per hour</td>
+                                <td>$50</td>
+                            </tr>
+                            <tr>
+                                <td>PA system and Projector in the gym</td>
+                                <td>$30.00 per hour</td>
+                                <td>$200</td>
+                            </tr>
+                            <tr>
+                                <td>Operator Fee (mandatory for using the system in gym)</td>
+                                <td colspan="2">$25.00 per hour<br>*first half hour for set up and the last half hour for take down</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><i>Note: Refundable security deposit is refundable with condition after the last day of rental stated in the agreement, please refer to Rental Application Form.</i></p>
+
+                    <h4 class="h4title">Other Equipment and Furniture Rental (For inside Centre Only)</h4 class="h4title">
+                    <table class = "table table-bordered rentaltablemargin">
+                        <thead>
+                            <tr class = "tableheader">
+                                <th>Other Equipment</th>
+                                <th>Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Stage / podium (staff will help set up and take down)</td>
+                                <td>$50.00/time</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Chairs</td>
+                                <td>$1/chair</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Tables</td>
+                                <td>$3/table</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class = "sectionmargin"><b><u>Insurance Requirement</u></b><br>
+                    All applicants are required to provide a proof of liability/event insurance and put Toronto Christian Church, o/a105 Gibson Centre as the additional insured. Please refer to the Rental Agreement for more details.</p>
+
+                    <p class = "sectionmargin"><b><u>Additional Charge</u></b><br>
+                    105 Gibson Centre will charge the applicant before or after the agreement is signed to cover some extra operational expenses if the following situation applied:</p>
+                    <table class = "table table-bordered">
+                        <thead>
+                            <tr class = "tableheader">
+                                <th>Situation</th>
+                                <th>Charge</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Overtime Staff Cost per hour</td>
+                                <td>$50</td>
+                                <td>If the period of use is out of the Centre service hour</td>
+                            </tr>
+                            <tr>
+                                <td>Additional Staff Cost per staff per 8 hours</td>
+                                <td>$250</td>
+                                <td>If an additional staff is required for the event reservation</td>
+                            </tr>
+                            <tr>
+                                <td>Event overtime per room per 30 minute</td>
+                                <td>$25</td>
+                                <td>First 15 minutes is the Grace period, after first 15 minutes, $25 will be charged every 30 minutes, less than 30 minutes will be charged as 30 minutes.</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Cleaning per day</td>
+                                <td>$50</td>
+                                <td>Extra cleaning charge will be applied if applicant arrange own catering service</td>
+                            </tr>
+                            <tr>
+                                <td>Admission Fee Charged</td>
+                                <td>Subject to discuss</td>
+                                <td>If the applicant is running event that charge admission fee to their participant, 105 Gibson Centre will reserve the right to put an extra charge on the booking.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class = "nonscheduledheader">Non-Scheduled Drop-in Fees</p>
+                    <p>Reservations are only allowed 24 hours in advance and subject to availability.  These fees are available when there is no scheduled program in the gym and when equipment is available.  Users are required to setup and take down any equipment required under the supervision of Gibson staff.</p>
+                    <table class = "table table-bordered rentaltablemargin">
+                        <thead>
+                            <tr class = "tableheader">
+                                <th rowspan="2">Sports</th>
+                                <th colspan="2" class="centeredtext">Fee per Hour</th>
+                            </tr>
+                            <tr class = "tableheader">
+                                <th>Before 6:00 pm</th>
+                                <th>After 6:00 pm and Weekends</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Badminton Court</td>
+                                <td>$8 per court</td>
+                                <td>$10 per court</td>
+                            </tr>
+                            <tr>
+                                <td>Table Tennis Table</td>
+                                <td>$5 per table</td>
+                                <td>$6 per table</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">Volleyball Court</td>
+                                <td>$30 per court</td>
+                                <td>$45 per court</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">* Extra $15 per hour if they want to use the center court (i.e. full gym)</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">Basketball Court</td>
+                                <td>$30 per court</td>
+                                <td>$45 per court</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">* Extra $15 per hour if they want to use the center court (i.e. full gym)</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">Basketball court (Per person)</td>
+                                <td>$2.50 per person</td>
+                                <td>$3 per person</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Individuals who pay per head may be required to share the court with other individuals</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class = "sectionmargin"><b><u>Sport Equipment Charge:</u></b><br>
+                    Centre encourages participants to use their own balls. Additional charge may be applied if Centre offers the equipment.</p>
+
+                    <p>The above amount is before all applicable taxes. If you have any enquiries, please contact 105 Gibson Centre at 905.946.8787</p>
+                </section>
+            </div><!-- /content -->
+        </div><!-- /tabs -->
+    </section>
+
+
+    </div><!-- /container -->
+
+
+    <!-- Tabs JavaScript -->
+    <script src="/js/tabs.js"></script>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visible-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/jquery.validate.js"></script>
+    <script src="/js/sidebar-menu.js"></script>
+    <script src="/js/userHistory.js"></script>
+    <script src="/js/convertdate.js"></script>
+
+    <script src="/js/volunteerajax.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="/js/classie.js"></script>
+    <script src="/js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="/js/jqBootstrapValidation.js"></script>
+    <script src="/js/contact_me.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/freelancer.js"></script>
+
+
+    <!-- Set Background Javascript -->
+    <script src="/js/setBackgroundImage.js"></script>
+</div>
+</body>
+
+<%- include standardfooter %>
+
+</html>

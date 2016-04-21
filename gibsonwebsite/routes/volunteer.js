@@ -6,6 +6,12 @@ var connection = require('../mysqlpool');
 var async = require('async');
 
 
+// RENDERS VOLUNTEER PAGE
+router.get('/volunteer/portal', function(req, res){
+    res.render('volunteerview', {title: 'Volunteer Portal'});
+});
+
+
 // ROUTE FOR VALIDATING USERNAME.
 router.post('/volunteer/adduser/checkusername', function(req, res){
 
