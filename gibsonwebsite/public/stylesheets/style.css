@@ -421,6 +421,19 @@ hr {
     margin-left: 2em;
 }
 
+.editinfobutton {
+    margin-left: 20px;
+}
+
+.editinfoheader {
+    margin-top: 27px;
+    margin-bottom: 13px;
+}
+
+.deletecontactbutton {
+    margin-left: 350px;
+}
+
 /** admin profile styles **/
 .courseid {
     float: right;

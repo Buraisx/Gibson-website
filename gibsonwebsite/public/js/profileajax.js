@@ -98,7 +98,7 @@ function load_profile(){
     personalinfo+='	   <div class="tab-pane active" id="personalinfo">';
     personalinfo+='    <div id="page-content-wrapper" class="container-fluid xyz">';
     personalinfo+='    <div class="row">';
-    personalinfo+='    	  <h3 class="col-sm-12">Personal Information</h3>';
+    personalinfo+='        <h3 class="col-sm-8">Personal Information <button id="editpersonalinfo" class="btn btn-default editinfobutton" type="button" onclick="editpersonalinfo()">Edit</button></h3>';
     personalinfo+='    </div>';
     personalinfo+='    <div class="row">';
 	personalinfo+='        <div class="form-group col-sm-12">';
@@ -148,8 +148,6 @@ function load_profile(){
 		personalinfo+='    </div>';
 		}
 	}
-
-    + ", " + user_info.user.prov_abb + ", " + user_info.user.postal_code
 	personalinfo+='    <div class="row">';
 	personalinfo+='        <div class="form-group col-sm-12">';
 	personalinfo+='            <p><span class="col-sm-3 fieldname">Gender</span><span class="col-sm-9 fieldval">' + user_info.user.gender + '</span></p>';
@@ -182,7 +180,7 @@ function load_profile(){
 	{
 		studentinfo+='	  <div class="tab-pane" id="studentinfo">';
 		studentinfo+='	  <div id="page-content-wrapper" class="container-fluid xyz">';
-		studentinfo+='    <h3>Student Information</h3>';
+		studentinfo+='    <h3>Student Information <button id="editstudentinfo" class="btn btn-default editinfobutton" type="button" onclick="editstudentinfo()">Edit</button></h3>';
 		studentinfo+='    <div class="row">';
 		studentinfo+='        <div class="form-group col-sm-12">';
 		studentinfo+='            <p><span class="col-sm-3 fieldname">School Name</span><span class="col-sm-9 fieldval">' + user_info.student_info.school_name + '</span></p>';
@@ -233,7 +231,7 @@ function load_profile(){
 	var emergencyinfo='';
 	emergencyinfo+='	  <div class="tab-pane" id="emergencyinfo">';
 	emergencyinfo+='	  <div id="page-content-wrapper" class="container-fluid xyz">';
-	emergencyinfo+='      <h3>Emergency Contacts</h3>';
+	emergencyinfo+='      <h3>Emergency Contacts <button id="editcontactsinfo" class="btn btn-default editinfobutton" type="button" onclick="editcontactsinfo()">Edit</button></h3>';
 	for(var i=0; i<user_info.emergency_contacts.length; i++)
 	{
 		emergencyinfo+='    <h4>Contact #'+(i+1)+'</h4>';
@@ -691,6 +689,309 @@ var preventUser = function() {
     return "Your work will be lost";
 };
 
+function editpersonalinfo() {
+	jQuery.getJSON("/user/profile/info", function(user_info){
+		$('#personalinfo').contents().remove();
+		var editinfo='';
+		editinfo+='    <div id="page-content-wrapper" class="container-fluid xyz">';
+	    editinfo+='    <div class="row">';
+	    editinfo+='        <h3 class="col-sm-8 editinfoheader">Personal Information</h3>';
+	    editinfo+='    </div>';
+		editinfo+='    <form class="form-inline" name="editinformation" id="editinformation" action="/user/profile/edit" method="POST" role="form">';
+		editinfo+='    <input type="hidden" name="username" id="username" value="' + user_info.user.username + '">';
+		editinfo+='            <input type = "hidden" name="_csrf" value="'+ $('#_csrf').val() +'">';
+		editinfo+='    <div class="row">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>First Name: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "fname" id = "editfname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.fname + '">';
+		editinfo+='        </div>';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='			   <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Last Name: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "lname" id = "editlname" required pattern="[a-zA-Z0-9. ]+" value = "' + user_info.user.lname + '">';
+		editinfo+='        </div>';
+		editinfo+='    </div>';
+		editinfo+='    <div class="row">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Phone (Home): </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+		editinfo+='        </div>';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Phone (Cell): </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+		editinfo+='        </div>';
+		editinfo+='    </div>';
+		editinfo+='    <div class="row">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Gender: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <select class = "form-control col-sm-4 editselect" name = "gender" id = "editgender">';
+		editinfo+='                <option ';
+		if (user_info.user.gender == "Male") { editinfo+= 'selected '; }
+		editinfo+='value = "Male">Male</option>';
+		editinfo+='                <option ';
+		if (user_info.user.gender == "Female") { editinfo+= 'selected '; }
+		editinfo+='value = "Female">Female</option>';
+		editinfo+='                <option ';
+		if (user_info.user.gender == "Other") { editinfo+= 'selected '; }
+		editinfo+='value = "Other">Other</option>';
+		editinfo+='            </select>';
+		editinfo+='        </div>';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Date of Birth: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input type="text" class = "form-control datepicker" name="birth_date" id = "datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" value = "' + String(user_info.user.birth_date).substring(0, 10).replace(/-/g, "\/") + '">';
+		editinfo+='        </div>';
+		editinfo+='    </div>';
+		editinfo+='    <div class="row">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Address: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "address" id = "editaddress" pattern="^[a-zA-Z0-9._ ]*$" value = "' + user_info.user.address + '">';
+		editinfo+='        </div>';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Postal Code: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="A1A1A1" pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" value = "' + user_info.user.postal_code + '">';
+		editinfo+='        </div>';
+		editinfo+='    </div>';
+		editinfo+='    <div class="row">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Apt/Unit #: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input type = "number" class = "form-control col-sm-4" name = "apt" id = "apt" value = "' + user_info.user.unit_no + '">';
+		editinfo+='        </div>';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>City: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "city" id = "city" pattern="[a-zA-Z. ]+" value = "' + user_info.user.city + '">';
+		editinfo+='        </div>';
+		editinfo+='    </div>';
+		editinfo+='    <div class="row">';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Province: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <select class = "form-control col-sm-4 editselect" name = "editprovince" id = "editprovince">';
+		for (var i = 0; i < user_info.provinces_list.length; i++) {
+			//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+			editinfo+='                <option';
+			if (user_info.user.prov_abb == user_info.provinces_list[i].prov_abb) {
+				editinfo+=' selected';
+			}
+			editinfo+='>' + user_info.provinces_list[i].prov_abb + '</option>';
+		}
+		editinfo+='            </select>';
+		editinfo+='        </div>';
+		editinfo+='    </div>';
+		editinfo+='    <div class="row form-group col-sm-12 savechanges">';
+		editinfo+='        <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+		editinfo+='    </div>';
+		$('#personalinfo').append(editinfo);
+	});
+}
+
+function editstudentinfo() {
+	jQuery.getJSON("/user/profile/info", function(user_info){
+		$('#studentinfo').contents().remove();
+		var editinfo='';
+		editinfo+='	  <div id="page-content-wrapper" class="container-fluid xyz">';
+		if(user_info.user.student==1)
+		{
+		    editinfo+='    <div class="row">';
+		    editinfo+='        <h3 class="col-sm-8 editinfoheader">Student Information</h3>';
+	    	editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>School Name: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.school_name + '">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Grade/Year: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.grade + '">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Major: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "major" id = "editmajor" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.major + '">';
+			editinfo+='    	  </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>ESL Level: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "esl" id = "editesl" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.student_info.esl_level + '">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+		}
+		else {
+		    editinfo+='    <div class="row">';
+		    editinfo+='        <h3 class="col-sm-8 editinfoheader">Student Information</h3>';
+	    	editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>School Name: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "schoolname" id = "editschoolname" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Grade: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "grade" id = "editgrade" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Major: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "major" id = "editmajor" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='    	  </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>ESL Level: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "esl" id = "editesl" pattern="[a-zA-Z0-9. ]+" value = "">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+		}
+		editinfo+='    <div class="row form-group col-sm-12 savechanges">';
+		editinfo+='        <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+		editinfo+='    </div>';
+		editinfo+='    </div> <!-- page-content-wrapper -->';
+		$('#studentinfo').append(editinfo);
+	});
+}
+
+function editcontactsinfo() {
+	jQuery.getJSON("/user/profile/info", function(user_info){
+		$('#emergencyinfo').contents().remove();
+		var editinfo='';
+		editinfo+='	  <div id="page-content-wrapper" class="container-fluid xyz">';
+	    editinfo+='    <div class="row">';
+	    editinfo+='        <h3 class="col-sm-8 editinfoheader">Emergency Contacts</h3>';
+    	editinfo+='    </div>';
+		// The user's existing emergency contacts
+		for(var i=0; i<user_info.emergency_contacts.length; i++)
+		{
+			editinfo+='<div id = "contact' + (i+1) + '" class = "ECdisplay">';
+			editinfo+='    <h4>Contact #'+(i+1)+':</h4>';
+			editinfo+='    <div class="row" id = "contact' + (i+1) + '">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>First Name: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "emergencyfname' + (i+1) + '"  id = "emergencyfname' + (i+1) + '" placeholder= "" pattern= "[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].fname + '" >';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Last Name: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "emergencylname' + (i+1) + '"  id = "emergencylname' + (i+1) + '" placeholder="" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].lname + '" >';
+			editinfo+='        </div>';
+			// No delete button for the first contact
+			if (i != 0) {
+				editinfo+='        <button type = "button" class= "btn btn-danger" id = "delete' + (i+1) + '" onclick="deletecontact(' + (i+1) +')">Delete</button>';
+			}
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Relationship: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "relationship' + (i+1) + '" id = "relationship' + (i+1) + '" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].relationship + '">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Phone: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + (i+1) + '" id = "ephone' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone + '">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='</div>';
+		}
+		// Forms for not-yet-created emergency contacts
+		for (var i = user_info.emergency_contacts.length+1; i<=3; i++) {
+	        editinfo+='<div id = "contact' + i + '" class = "hidden">';
+	        editinfo+='    <h4>Contact #'+ i +':</h4>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>First Name: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "emergencyfname' + i + '"  id = "emergencyfname' + i + '"  placeholder= "" pattern= "[a-zA-Z0-9. ]+">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Last Name: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name = "emergencylname' + i + '"  id = "emergencylname' + i + '"  placeholder="" pattern="[a-zA-Z0-9. ]+">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Relationship: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "relationship' + i + '" id = "relationship' + i + '" pattern="[a-zA-Z0-9. ]+">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Phone: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="\w+">';
+			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='</div>';
+		}
+		// Add and remove contacts buttons
+		editinfo+='<div class="row">';
+		editinfo+='    <div class = "form-group col-sm-12 smallmargin">';
+		editinfo+='        <button type = "button" class = "btn btn-default" onclick="addcontact()" id = "addbutton"';
+		// Disables add contact button if user is at max
+		if (user_info.emergency_contacts.length == 3)
+		{
+			editinfo+=' disabled';
+		}
+		editinfo+='>Add a new contact</button>';
+		editinfo+='        <button type = "button" class = "btn btn-default';
+		if (user_info.emergency_contacts.length == 1) {
+			editinfo+=' hidden';
+		}
+		editinfo+='" onclick="removecontact()" id = "removebutton" disabled>Remove a new contact</button>';
+		editinfo+='    </div>';
+		editinfo+='</div>';
+		editinfo+='<div class="row form-group col-sm-12 savechanges">';
+		editinfo+='    <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+		editinfo+='</div>';
+		editinfo+='</div>';
+		editinfo+='</div>';
+				editinfo+='</div>';
+
+		$('#emergencyinfo').append(editinfo);
+	});
+}
 
 //Global variables
 var allAvailableCourses;
