@@ -3,6 +3,7 @@ var mysql = require('mysql');
 var jwt = require('jsonwebtoken');
 var connection = require('../mysqlpool');
 var autoemail = require('./auto_email');
+var async = require('async');
 
 // ONE-TIME TOKEN
 function generateOneUse(req, res, next){
@@ -195,34 +196,95 @@ function generateToken(req, res, next) {
           // IF ADMIN, GET THE ADMIN's secret_key
           if (req.user.rank_id > 1){
 
-            var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?';
-            secretQuery = mysql.format(secretQuery, req.user.rank_id);
+            async.waterfall([
+                function(next){
+                    if(req.user.rank_id == 4){
+                        con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = 4', function(err, results1){
+                          if (err){
+                              console.log('token.js: Error while querying the database for admin secret_key');
+                              return next(err);
+                          }
 
-            con.query(secretQuery, function(err, results1){
-              con.release();
+                          req.adminToken = jwt.sign({
+                            iss: config.jwt.issuer,
+                            id: req.user.user_id,
+                            user: req.user.username,
+                            rank: req.user.rank_id,
+                            lastLoggedIn: req.user.last_login_time
+                          },
+                            results1[0].secret_key, {
+                              expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
+                          });
+                          next(null);
+                        });
+                    }
+                    else{
+                        next(null);
+                    }
+                },
 
-              if (err){
-                console.log('token.js: Error while querying the database for admin secret_key');
-                return err;
-              }
+                function(next){
+                    if(req.user.rank_id >= 3){
+                        con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = 3', function(err, results2){
+                          if (err){
+                            console.log('token.js: Error while querying the database for staff secret_key');
+                            return next(err);
+                          }
 
-              req.user.adminSecretKey = results1[0].secret_key;
+                          req.staffToken = jwt.sign({
+                            iss: config.jwt.issuer,
+                            id: req.user.user_id,
+                            user: req.user.username,
+                            rank: req.user.rank_id,
+                            lastLoggedIn: req.user.last_login_time
+                          },
+                            results2[0].secret_key, {
+                              expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
+                          });
+                          next(null);
+                        });
+                    }
+                    else{
+                        next(null);
+                    }
+                },
 
-              // ADMIN -> ISSUE A SECOND TOKEN
-              req.adminToken = jwt.sign({
-                iss: config.jwt.issuer,
-                id: req.user.user_id,
-                user: req.user.username,
-                rank: req.user.rank_id,
-                lastLoggedIn: req.user.last_login_time
-              },
-                req.user.adminSecretKey, {
-                  expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
-              });
-              next();
+                function(next){
+                    if(req.user.rank_id >= 2){
+                        con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = 2', function(err, results3){
+                          if (err){
+                            console.log('token.js: Error while querying the database for volunteer secret_key');
+                            return next(err);
+                          }
+
+                          req.volunteerToken = jwt.sign({
+                            iss: config.jwt.issuer,
+                            id: req.user.user_id,
+                            user: req.user.username,
+                            rank: req.user.rank_id,
+                            lastLoggedIn: req.user.last_login_time
+                          },
+                            results3[0].secret_key, {
+                              expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
+                          });
+                          next(null);
+                        });
+                    }
+                    else{
+                        next(null);
+                    }
+                }
+            ],
+            function(err){
+                if(err){
+                    return err;
+                }
+                else{
+                    next();
+                }
             });
-          }
 
+          }
           else{
             next();
           }
@@ -243,9 +305,29 @@ function respond(req, res, next) {
 function adminRespond(req,res,next){
 
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
-  if (req.user.rank_id > 1) {
-    res.clearCookie('privilege');
-    res.cookie('privilege', req.adminToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+  if (req.user.rank_id == 4) {
+    res.clearCookie('admin');
+    res.cookie('admin', req.adminToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+  }
+  next();
+}
+
+function staffRespond(req,res,next){
+
+  // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
+  if (req.user.rank_id >= 3) {
+    res.clearCookie('staff');
+    res.cookie('staff', req.staffToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+  }
+  next();
+}
+
+function volunteerRespond(req,res,next){
+
+  // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
+  if (req.user.rank_id >= 2) {
+    res.clearCookie('volunteer');
+    res.cookie('volunteer', req.volunteerToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
   }
   next();
 }
@@ -261,5 +343,7 @@ module.exports.generateOneUse = generateOneUse;
 module.exports.generateToken = generateToken;
 module.exports.respond = respond;
 module.exports.adminRespond = adminRespond;
+module.exports.staffRespond = staffRespond;
+module.exports.volunteerRespond = volunteerRespond;
 module.exports.sendInfo = sendInfo;
 module.exports.resendToken = resendToken;

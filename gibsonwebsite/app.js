@@ -104,6 +104,7 @@ var resetpassword = require('./routes/resetpassword');
 var cart = require('./routes/cart');
 var payment = require('./routes/payment');
 var invoice = require('./routes/invoice');
+var volunteer = require('./routes/volunteer.js');
 
 // ================================================
 // ===ALWAYS LOOK FOR ALERTS ======================
@@ -178,7 +179,7 @@ app.use(function (req, res, next){
       // SETTING UP QUERIES NEEDED
       var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = 1;';
       //secretQuery = mysql.format(secretQuery, decoded.rank);
-      
+
       // QUERYING THE DATABASE FOR SECRET KEY
       con.query(secretQuery, function(err, results){
         if(err){
@@ -188,7 +189,7 @@ app.use(function (req, res, next){
           return next(new Error ('app.js: Error No Secret Key Found.'), con);
         }
         else{
-          next(null, con, results[0].secret_key); 
+          next(null, con, results[0].secret_key);
         }
       });
     },
@@ -197,13 +198,13 @@ app.use(function (req, res, next){
     function (con, secret_key, next){
       var passwordQuery = 'SELECT password FROM gibson.user WHERE user_id = ?;';
       passwordQuery = mysql.format(passwordQuery, decoded.id);
-      
+
       con.query(passwordQuery, function(err, results){
         if(err){
           return next(new Error('app.js:Error querying database for password'), con);
         }
         else if(!results.length){
-          return next(new Error('app.js:Error no password for user found'), con); 
+          return next(new Error('app.js:Error no password for user found'), con);
         }
         else{
           next(null, con, secret_key+results[0].password);
@@ -229,15 +230,15 @@ app.use(function (req, res, next){
         }
         if(err){
           res.clearCookie('access_token');
-          res.clearCookie('privilege');
+          res.clearCookie('admin');
+          res.clearCookie('volunteer');
+          res.clearCookie('staff');
           res.clearCookie('user_info');
-          console.log(err);
           //res.status(401).json({redirect_url: 'login'});
           res.redirect('/login');
           //res.end();
         }
         else{
-          console.log('app.js:User logged in!');
           next();
         }
   });
@@ -328,6 +329,8 @@ app.use(function (req, res, next){
 
 });
 */
+
+
 // =============================================
 // ===↓↓↓↓↓ AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // =============================================
@@ -336,13 +339,13 @@ app.use('/', cart);
 app.use('/', payment);
 app.use('/', invoice);
 
-
-//======↓↓↓↓↓AUTHENTICATION FOR ADMIN =========
-
+// ==========================================================
+// ===↑↑↑↑↑ NO VOLUNTEER AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
+// ==========================================================
 app.use(function (req, res, next){
 
   // LOOKING FOR TOKEN IN COOKIES
-  var token = req.cookies.privilege;
+  var token = req.cookies.volunteer;
   var decoded = jwt.decode(token);
 
   // TOKEN FOUND, TRYING TO VALIDATE
@@ -356,13 +359,76 @@ app.use(function (req, res, next){
         return err;
       }
 
-      if (decoded.rank > 1){
-              // SETTING UP QUERIES NEEDED
-          var secretQuery = 'SELECT secret_key FROM gibson.rank WHERE rank_id = ?;';
-          secretQuery = mysql.format(secretQuery, decoded.rank);
+      if (decoded.rank == 2){
 
         // QUERYING THE DATABASE FOR SECRET KEY
-        con.query(secretQuery, function(err, results){
+        con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = 2;', function(err, results){
+          if (err){
+            con.release();
+            console.log('app.js: Error querying the Database for secret_key');
+          //  res.end();
+            return err;
+          }
+
+          var secretKey = results[0].secret_key;
+
+          // VERIFYING TOKEN
+          jwt.verify(token, secretKey, function(err, volunteerInfo){
+            if (err){
+              con.release();
+              console.log('app.js: Error verifying token.');
+            //  res.end();
+              return err;
+            }
+            else{
+              con.release();
+              next();
+            }
+          });
+
+        });
+      }
+      else{
+        return err;
+      }
+
+    });
+  }
+  // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
+  else {
+    //res.end();
+    return err;
+  }
+});
+// =======================================================
+// ===↓↓↓↓↓ VOLUNTEER AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
+// =======================================================
+app.use('/', volunteer);
+
+// ======================================================
+// ===↑↑↑↑↑ NO ADMIN AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
+// ======================================================
+app.use(function (req, res, next){
+
+  // LOOKING FOR TOKEN IN COOKIES
+  var token = req.cookies.admin;
+  var decoded = jwt.decode(token);
+
+  // TOKEN FOUND, TRYING TO VALIDATE
+  if (token){
+    // CREATING CONNECTION
+    // var connection = mysql.createPool(config.db_config);
+    connection.getConnection(function(err, con){
+      if (err){
+        console.log('app.js: Error connecting to the DB.');
+        //res.end();
+        return err;
+      }
+
+      if (decoded.rank == 4){
+
+        // QUERYING THE DATABASE FOR SECRET KEY
+        con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = 4;', function(err, results){
           if (err){
             con.release();
             console.log('app.js: Error querying the Database for secret_key');
@@ -399,13 +465,14 @@ app.use(function (req, res, next){
     //res.end();
     return err;
   }
-
 });
-// =============================================
-//routes under here are admin only routes
-
-app.use('/', test_profile);
+// ===================================================
+// ===↓↓↓↓↓ ADMIN AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
+// ===================================================
 app.use('/', adminPages);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -583,7 +583,9 @@ router.post('/user/profile/history', function(req, res, next){
 router.get('/logout', function(req,res,next){
 	//clears cookie of account from browser
 	res.clearCookie('access_token');
-	res.clearCookie('privilege');
+	res.clearCookie('admin');
+	res.clearCookie('volunteer');
+	res.clearCookie('staff');
 	res.clearCookie('user_info');
 	res.clearCookie('gibson_user');
 	res.clearCookie('cart');

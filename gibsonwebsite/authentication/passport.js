@@ -103,10 +103,10 @@ module.exports = function(passport){
               }
               else{
                 var newUser = {
-                  username:null, password:null, lname:null, fname:null, birth_date:null,
-                  gender:null, address:null, unit_no:null, city:null, province_id:null,
-                  postal_code:null, primary_phone:null, secondary_phone:null, email:null,
-                  send_notification:null, student:null, user_id:null
+                  username:null, password:null, lname:null, fname:null, birth_date:null, gender:null,
+                  address:null, unit_no:null, city:null, province_id:null, postal_code:null,
+                  primary_phone:null, primary_extension:null, secondary_phone:null, secondary_extension:null,
+                  email:null, send_notification:null, student:null, user_id:null
                 };
 
                 // INITIALIZING newUser VALUES
@@ -361,7 +361,6 @@ module.exports = function(passport){
 
                 else{
                     con.release();
-                    console.log(results);
                     return done(null, results);
                 }
             });

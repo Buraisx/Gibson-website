@@ -45,7 +45,7 @@ router.post('/login', passport.authenticate('local-login',{
 	//successRedirect: '/user/profile'
 	//failureRedirect: '/login'	// Return to login when fail, and flash error
 
-}), token.generateToken, token.respond, token.adminRespond, token.sendInfo, redirect);
+}), token.generateToken, token.respond, token.volunteerRespond, token.staffRespond, token.adminRespond, token.sendInfo, redirect);
 
 // REDIRECT FOR LOGIN
 function redirect(req, res){
