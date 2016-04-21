@@ -667,6 +667,7 @@ function savechanges() {
 
 		})
 		.done(function (res){
+			load_profile();
 			swal({
 				title: "Profile updated.",
 				type: "success"
