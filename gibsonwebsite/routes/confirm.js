@@ -32,7 +32,7 @@ router.get('/confirm', function(req, res){
         // CHECKING IF THE TOKEN IS BLACKLISTED OR NOT
         function(decoded, next){
           con.query('SELECT blacklisted FROM gibson.active_tokens WHERE token_id = ?', [decoded.token_id], function(err, results){
-            if(err){
+            if(err || results.length === 0){
               console.log('confirm.js: Error while checking if token is blacklisted');
               return next({no:500, msg:'Error while checking token.'});
             }
