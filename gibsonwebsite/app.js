@@ -359,7 +359,7 @@ app.use(function (req, res, next){
         return err;
       }
 
-      if (decoded.rank == 2){
+      if (decoded.rank >= 2){
 
         // QUERYING THE DATABASE FOR SECRET KEY
         con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = 2;', function(err, results){
