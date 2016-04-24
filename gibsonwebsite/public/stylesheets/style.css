@@ -434,6 +434,12 @@ hr {
     margin-left: 350px;
 }
 
+/** volunteer profile styles **/
+
+.sidetabs {
+    margin-bottom: 50px;
+}
+
 /** admin profile styles **/
 .courseid {
     float: right;
@@ -575,6 +581,7 @@ td{
 
 .refund{
     font-size: 8pt;
+    margin: 3px;
 }
 /** Shopping Cart - Buttons **/
 

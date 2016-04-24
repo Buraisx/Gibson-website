@@ -5,7 +5,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="/css/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="/css/tabstyles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/tabstylesvolunteer.css" />
     <script src = "/js/passwordvalidation.js"></script>
     <!-- datepicker CSS -->
     <link href="/css/datepicker.css" rel="stylesheet">
@@ -27,11 +27,67 @@
                     <li><a href="#rental"><i class="fa fa-tags tabicon"></i><span>Rental</span></a></li>
                 </ul>
             </nav>
-            <div class="content-wrap">
+            <div class="content-wrap sidetabs">
                 <!--GET csrf token-->
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
                 <section id="controlpanel">
-                    <!-- Tab On-Click fills control panel-->
+                    <hr>
+                    <div class="col-sm-4">
+                        <div id="sidebar-wrapper">
+                            <ul class="sidebar-nav nav-stacked" id="menu">
+                            <li class="active"><a class="menucolour" href="#adduser" data-toggle="tab"><i class="fa fa-user-plus"></i> Add New User</a></li>
+                            <li><a class="menucolour" href="#addlimiteduser" data-toggle="tab"><i class="fa fa-user"></i> Add Limited User</a></li>
+                            <li><a class="menucolour" href="#addcourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add Course</a></li>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+
+                    <div class = "tab-content">
+                        <div class="tab-pane active" id="adduser">
+                            <div id="page-content-wrapper" class="container-fluid xyz">
+                                <h3>Add New User</h3>
+                                <div class = "row">
+                                    <div class = "form-group col-sm-5">
+                                        <label><span class="requiredasterisk">*</span>First Name:</label>
+                                        <input type = "text" class = "form-control reqIn" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                    </div>
+                                    <div class = "form-group col-sm-5">
+                                        <label><span class="requiredasterisk">*</span>Last Name:</label>
+                                        <input type = "text" class = "form-control reqIn" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
+                                    </div>
+                                </div>
+
+
+                                <div class = "row">
+                                    <div class="form-group col-sm-5">
+                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>
+                                        <input class = "form-control reqIn" type="email" name = "email" id="email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
+                                    </div>
+                                    <div class = "form-group col-sm-5">
+                                        <label class = "control-label">Phone (Home):</label>
+                                        <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}"><!--Character restrictions-->
+                                    </div>
+                                </div>
+
+                                <div class = "row">
+                                    <div class = "col-sm-10 text-right">
+                                        <button type = "button" class = "btn btn-default">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="addlimiteduser">
+                            <div id="page-content-wrapper" class="container-fluid xyz">
+                                <h3>Add Limited User</h3>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="addcourse">
+                            <div id="page-content-wrapper" class="container-fluid xyz">
+                                <h3>Add Course</h3>
+                            </div>
+                        </div>
+                    </div>
                 </section>
                 <section id="users">
                     <!-- Tab On-Click fills users-->
@@ -284,6 +340,7 @@
     <script src="/js/convertdate.js"></script>
 
     <script src="/js/volunteerajax.js"></script>
+    <script src="/js/volcontrolpanel.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
