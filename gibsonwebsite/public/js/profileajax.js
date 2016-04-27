@@ -1420,7 +1420,7 @@ function listschedule(){
 		//If there are no courses in search
 		if(data.length < 1)
 		{
-			schedule+= '<div>You no courses in your schedule. Sign up today using the Courses tab!</div>';
+			schedule+= '<div>You have no courses in your schedule. Sign up today using the Courses tab!</div>';
 		}
 		schedule += '</div>';
 		schedule += '</div>';

@@ -243,8 +243,12 @@ ul.profiletab{
 	max-width: 800px;
 }
 
-.panel-primary > .panel-heading {
+.panel-primary > .panel-heading : nth-child(odd) {
 	background-color: #6BC3E9;
+}
+
+.panel-primary > .panel-heading : nth-child(even) {
+	background-color: #0066ff;
 }
 
 .btn-primary {
