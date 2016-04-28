@@ -126,7 +126,7 @@ module.exports = function(passport){
                 newUser.secondary_phone = req.body.secondary_phone.replace(/\D+/g, '');
                 newUser.secondary_extension = (!req.body.secondary_extension)? null:req.body.secondary_extension.replace(/\D+/g, '');
                 newUser.email = req.body.email;
-                newUser.send_notification = (!req.body.send_notifications)? 0:req.body.send_notifications;
+                newUser.send_notification = (!req.body.send_notification)? 0:req.body.send_notification;
                 newUser.student = (!req.body.student)? 0:req.body.student;
 
                 // CREATING QUERY
