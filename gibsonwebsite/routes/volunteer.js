@@ -4,6 +4,8 @@ var config = require('../server_config');
 var mysql = require('mysql');
 var connection = require('../mysqlpool');
 var async = require('async');
+var bcrypt = require('bcrypt-nodejs');
+var sanitizer = require('sanitizer');
 
 
 // RENDERS VOLUNTEER PAGE
@@ -19,7 +21,7 @@ router.post('/volunteer/adduser/checkusername', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('volunteer.js: Error connecting to database; /volunteer/adduser/checkusername');
-            res.status(500).sent('Internal Server Error.');
+            res.status(500).send('Internal Server Error.');
         }
         else{
 
@@ -50,7 +52,7 @@ router.post('/volunteer/adduser/checkemail', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('volunteer.js: Error connecting to database; /volunteer/adduser/checkusername');
-            res.status(500).sent('Internal Server Error.');
+            res.status(500).send('Internal Server Error.');
         }
         else{
 
@@ -82,7 +84,7 @@ router.post('/volunteer/adduser', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('volunteer.js: Error connecting to database; /volunteer/adduser/checkusername');
-            res.status(500).sent('Internal Server Error.');
+            res.status(500).send('Internal Server Error.');
         }
         else{
 
@@ -258,12 +260,12 @@ router.post('/volunteer/addlimited', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('volunteer.js: Error connecting to database; /volunteer/addlimited');
-            res.status(500).sent('Internal Server Error.');
+            res.status(500).send('Internal Server Error.');
         }
         else{
 
             var query =  'INSERT INTO gibson.user ';
-                query += '(type, lname, fname, primary_phone, primary_extension, secondary_phone, secondary_extension, send_notifications) ';
+                query += '(type, lname, fname, primary_phone, primary_extension, secondary_phone, secondary_extension, send_notification) ';
                 query += '(?, ?, ?, ?, ?, ?, ?, 1);';
 
             var inserts = ['LIMITED', req.body.lname, req.body.fname, req.body.primary_phone, req.body.primary_extension,
@@ -287,5 +289,165 @@ router.post('/volunteer/addlimited', function(req, res){
     });
 });
 
+
+// ROUTE FOR CONVERTING A LIMITED USER TO A REGULAR USER
+router.post('volunteer/convertlimited', function(req, res){
+
+    // GETTING CONNECTION
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('volunteer.js: Error connecting to database; /volunteer/convertlimited')
+            res.status(500).send
+        }
+        else{
+
+            // BIG BOSS WANTS WATERFALL, SO GRAVITY ASSISTED FUNCTIONS:
+            async.waterfall([
+
+                // FUNCTION TO SANITIZE INFO COMING FROM THE FRONT, RETURNS user OBJECT
+                function(next){
+                    // GENERATING SALT FOR THE HASHING PROCESS
+                    bcrypt.genSalt(Math.floor(3*Math.random())+10, function(err, salt){
+                        if(err){
+                            return next({no:500, msg:'Error generating salt for password'});
+                        }
+                        else{
+                            // HASHING THE PASSWORD
+                            bcrypt.hash(sanitizer.sanitize(req.body.password), salt, null, function(err, passwordSaltedHashed){
+                                if(err){
+                                    return next({no:500, msg:'Error hashing the password'});
+                                }
+                                else{
+                                    var user = {
+                                        rank_id: 1,
+                                        type: 'REGULAR',
+                                        username: sanitizer.sanitize(req.body.username),
+                                        password: passwordSaltedHashed,
+                                        lname: sanitizer.sanitize(req.body.lname),
+                                        fname: sanitizer.sanitize(req.body.fname),
+                                        birth_date: sanitizer.sanitize(req.body.birth_date),
+                                        gender: sanitizer.sanitize(req.body.gender),
+                                        address: sanitizer.sanitize(req.body.address),
+                                        unit_no: sanitizer.sanitize(req.body.unit_no),
+                                        city: sanitizer.sanitize(req.body.city),
+                                        province_id: sanitizer.sanitize(req.body.province_id),
+                                        postal_code: sanitizer.sanitize(req.body.postal_code)toUpperCase().replace(/ /g,''),
+                                        primary_phone: sanitizer.sanitize(req.body.primary_phone).replace(/\D+/g, ''),
+                                        primary_extension: sanitizer.sanitize(req.body.primary_extension).replace(/\D+/g, ''),
+                                        secondary_phone: sanitizer.sanitize(req.body.secondary_phone).replace(/\D+/g, ''),
+                                        secondary_extension: sanitizer.sanitize(req.body.secondary_extension).replace(/\D+/g, ''),
+                                        email: sanitizer.sanitize(req.body.email),
+                                        send_notification: sanitizer.sanitize(req.body.send_notification),
+                                        student: sanitizer.sanitize(req.body.student)
+                                    };
+
+                                    next(null, user);
+                                }
+                            });
+                        }
+                    });
+                },
+
+                // STARTS TRANSACTION WITH THE DATABASE
+                function(user, next){
+                    con.query('START TRANSACTION;', function(err, results){
+                        if(err){
+                            return next({no:500, msg:'Error starting transaction'});
+                        }
+                        else{
+                            next(null, user);
+                        }
+                    });
+                },
+
+                // UPDATE DATABASE WITH NEW INFORMATION
+                function(user, next){
+                    var query = 'UPDATE gibson.user SET rank_id=?, type=?, username=?, password=?, lname=?, fname=?, birth_date=?, gender=?, address=?, unit_no=?, city=? province_id=?, postal_code=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, email=?, send_notification=?, student=? WHERE user_id = ?;';
+                    var inserts = [user.rank_id, user.type, user.username, user.password, user.lname, user.fname, user.birth_date, user.gender, user.address, user.unit_no, user.city, user.province_id, user.postal_code, user.primary_phone, user.primary_extension, user.secondary_phone, user.secondary_extension, user.email, user.send_notification, user.student, req.body.user_id];
+
+                    con.query(query, inserts, function(err, results){
+                        if(err){
+                            return next({no:500, msg:'Error updating user information'});
+                        }
+                        else{
+                            next(null, user.student);
+                        }
+                    });
+                },
+
+                // CREATE STUDENT ENTRY IN STUDENT TABLE IF USER IS A STUDENT
+                function(student, next){
+                    if(student == 0){
+                        next(null);
+                    }
+                    else if (student == 1){
+                        query = 'INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level) VALUES (?, ?, ?, ?, ?);';
+                        inserts = [req.body.user_id, sanitizer.sanitize(req.body.school_name), sanitizer.sanitize(req.body.grade), sanitizer.sanitize(req.body.major), sanitizer.sanitize(req.body.esl_level)];
+
+                        con.query(query, inserts, function(err, results){
+                            if(err){
+                                return next({no:500, msg:'Error inserting student information'});
+                            }
+                            else{
+                                next(null);
+                            }
+                        });
+                    }
+                    else{
+                        return next({no:500, msg:'student is not 0 or 1... You dun goofed, son'});
+                    }
+                },
+
+                // INSERT EMERGENCY CONTACTS INFORMATION
+                // function(next){
+                //     var emergency1 = {
+                //         fname: sanitizer.sanitize(req.body.emergencyfname1),
+                //         lname: sanitizer.sanitize(req.body.emergencylname1),
+                //         rel: sanitizer.sanitize(req.body.relationship1),
+                //         phone: sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''),
+                //     };
+                // }
+            ],
+
+            // FINAL FUNCTION -> HANDLES ERROR
+            function(err){
+                if(err){
+                    console.log('volunteer.js: ' +err.msg +'; volunteer/convertlimited')
+
+                    con.query('ROLLBACK;', function(err, results){
+                        con.release();
+                    });
+                }
+                else{
+                    con.query('COMMIT;', function(err, results){
+                        con.release();
+                    });
+                }
+            });
+        }
+    });
+});
+
+
+// var user = {
+//     rank_id: 1,
+//     type: 'REGULAR',
+//     username: sanitizer.sanitize(req.body.username),
+//     password: bcrypt.hashSync(sanitizer.sanitize(req.body.password), bcrypt.genSaltSync(Math.floor(3*Math.random())+10)),
+//     lname: sanitizer.sanitize(req.body.lname),
+//     fname: sanitizer.sanitize(req.body.fname),
+//     birth_date: sanitizer.sanitize(req.body.birth_date),
+//     gender: sanitizer.sanitize(req.body.gender),
+//     address: ,
+//     unit_no: ,
+//     city: ,
+//     province_id: ,
+//     postal_code: ,
+//     primary_phone:,
+//
+// }
+//
+// var query = 'UPDATE gibson.user SET rank_id=?, type=?, username=?, password=?, lname=?, fname=?, birth_date=?, gender=?, address=?, unit_no=?, city=? province_id=?, postal_code=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, email=?, send_notification=?, student=? WHERE user_id = ?;';
+// var inserts = [];
 
 module.exports = router;
