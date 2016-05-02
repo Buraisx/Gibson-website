@@ -14,64 +14,127 @@ router.get('/volunteer/portal', function(req, res){
 });
 
 
-// ROUTE FOR VALIDATING USERNAME.
-router.post('/volunteer/adduser/checkusername', function(req, res){
+// ENROLLING USER/L.USER INTO COURSE
+router.post('/volunteer/enrolluser', function(req, res){
 
     // GETTING CONNECTION
     connection.getConnection(function(err, con){
         if(err){
-            console.log('volunteer.js: Error connecting to database; /volunteer/adduser/checkusername');
+            console.log('volunteer.js: Error connecting to database; /volunteer/enrolluser');
             res.status(500).send('Internal Server Error.');
         }
         else{
+            async.waterfall([
 
-            // CHECKING IF USERNAME ALREADY EXIST
-            con.query('SELECT user_id FROM gibson.user WHERE username = ?;', [req.body.username], function(err, results){
+                // STARTS TRANSACTION WITH THE DATABASE
+                function(next){
+                    con.query('START TRANSACTION;', function(err, con){
+                        if(err){
+                            return next({msg: 'Error starting transaction'});
+                        }
+                        else{
+                            next(null);
+                        }
+                    });
+                },
 
-                con.release();
+                // GENERATE DESCRIPTION
+                function(next){
 
-                if(err){
-                    console.log('volunteer.js: Error querying for user_id; /volunteer/adduser/validateusername');
-                    res.status(500).send('Internal Server Error.');
+                    var query = 'SELECT course_code FROM gibson.course WHERE course_id IN (course_ids);';
+                    var course_ids = '';
+
+                    for(var i in req.body.course_ids){
+                        course_ids += mysql.escape(req.body.course_ids[i]) + ', ';
+                    }
+
+                    course_ids = course_ids.slice(0, -2);
+                    query = query.replace('course_ids', course_ids);
+
+                    con.query(query, function(err, results){
+                        if(err){
+                            return next({msg: 'Error querying for course codes'});
+                        }
+                        else if (results.length === 0){
+                            return next({msg: 'No course codes found'});
+                        }
+                        else{
+
+                            var description = 'Signup fee for course(s): ';
+
+                            for (var i in results){
+                                description += results[i].course_code +', ';
+                            }
+
+                            next(null, description.slice(0, -2))
+                        }
+                    });
                 }
-                else if (results.length > 0){
-                    res.status(500).send('Username already taken.');
-                }
-                else{
-                    res.status(200).send('Good username.');
-                }
-            });
-        }
-    });
-});
 
-// ROUTE FOR VALIDATING EMAIL.
-router.post('/volunteer/adduser/checkemail', function(req, res){
+                // INSERTING PAYMENT HISTORY
+                function(description, next){
 
-    // GETTING CONNECTION
-    connection.getConnection(function(err, con){
-        if(err){
-            console.log('volunteer.js: Error connecting to database; /volunteer/adduser/checkusername');
-            res.status(500).send('Internal Server Error.');
-        }
-        else{
+                    var query  = 'INSERT INTO gibson.transaction_history (payment_id, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, total, currency, description) ';
+                        query += 'SELECT ?, "approved", "sale", ?, user.user_id, user.email, user.fname, user.lname, ? , "CAD", ? ';
+                        query += 'FROM gibson.user WHERE user_id = ?;';
 
-            // CHECKING IF USERNAME ALREADY EXIST
-            con.query('SELECT email FROM gibson.user WHERE username = ?;', [req.body.username], function(err, results){
+                    var inserts = [
+                        sanitizer.sanitize(req.body.payment_id),
+                        sanitizer.sanitize(req.body.payment_method),
+                        sanitizer.sanitize(req.body.total),
+                        description,
+                        sanitizer.sanitize(req.body.user_id)
+                    ];
 
-                con.release();
+                    con.query(query, inserts, function(err, results){
+                        if(err){
+                            return next({msg: 'Error inserting payment history'});
+                        }
+                        else{
+                            next(results.insertId, sanitizer.sanitize(req.body.total));
+                        }
+                    });
+                },
 
-                if(err){
-                    console.log('volunteer.js: Error querying for email; /volunteer/adduser/validateusername');
-                    res.status(500).send('Internal Server Error.');
+                // INSERTING USER INTO COURSE(S)
+                function(transaction_id, total, next){
+
+                    var query =  'INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, transaction_id, start_date, end_date, status, notes) ';
+                        query += 'SELECT ?, course.course_id, ?, course.default_fee, ?, 1, ?, course.start_date, course.end_date, "Enrolled", ? ';
+                        query += 'FROM gibson.course WHERE course_id = ?; ';
+
+                    var multiQuery = '';
+
+                    for (var i in req.body.course_list){
+
+                        var today = new Date().toJSON().slice(0,10);
+                        var notes = 'Registered for course ID: ' +sanitizer.sanitize(req.body.course_list[i])
+
+                        var inserts = [
+                            sanitizer.sanitize(req.body.user_id), 
+                            today,
+                            total,
+                            transaction_id,
+                            notes,
+                            sanitizer.sanitize(req.body.course_list[i])
+                        ];
+
+                        multiQuery += mysql.format(query, inserts);
+                    }
+
+                    con.query(multiQuery, function(err, results){
+                        if(err){
+                            return next({msg: 'Error inserting user into course(s)'});
+                        }
+                        else{
+                            next (null);
+                        }
+                    });
                 }
-                else if (results.length > 0){
-                    res.status(500).send('Email already taken.');
-                }
-                else{
-                    res.status(200).send('Good email.');
-                }
-            });
+            ],
+
+            // FINAL FUNCTION -> HANDLES ERROR/SUCCESS
+            function(err){});
         }
     });
 });
@@ -331,7 +394,7 @@ router.post('volunteer/convertlimited', function(req, res){
                                         unit_no: sanitizer.sanitize(req.body.unit_no),
                                         city: sanitizer.sanitize(req.body.city),
                                         province_id: sanitizer.sanitize(req.body.province_id),
-                                        postal_code: sanitizer.sanitize(req.body.postal_code)toUpperCase().replace(/ /g,''),
+                                        postal_code: sanitizer.sanitize(req.body.postal_code).toUpperCase().replace(/ /g,''),
                                         primary_phone: sanitizer.sanitize(req.body.primary_phone).replace(/\D+/g, ''),
                                         primary_extension: sanitizer.sanitize(req.body.primary_extension).replace(/\D+/g, ''),
                                         secondary_phone: sanitizer.sanitize(req.body.secondary_phone).replace(/\D+/g, ''),
@@ -398,7 +461,7 @@ router.post('volunteer/convertlimited', function(req, res){
                     }
                 },
 
-                // INSERT EMERGENCY CONTACTS INFORMATION
+                // TODO: INSERT EMERGENCY CONTACTS INFORMATION
                 // function(next){
                 //     var emergency1 = {
                 //         fname: sanitizer.sanitize(req.body.emergencyfname1),
@@ -429,25 +492,5 @@ router.post('volunteer/convertlimited', function(req, res){
 });
 
 
-// var user = {
-//     rank_id: 1,
-//     type: 'REGULAR',
-//     username: sanitizer.sanitize(req.body.username),
-//     password: bcrypt.hashSync(sanitizer.sanitize(req.body.password), bcrypt.genSaltSync(Math.floor(3*Math.random())+10)),
-//     lname: sanitizer.sanitize(req.body.lname),
-//     fname: sanitizer.sanitize(req.body.fname),
-//     birth_date: sanitizer.sanitize(req.body.birth_date),
-//     gender: sanitizer.sanitize(req.body.gender),
-//     address: ,
-//     unit_no: ,
-//     city: ,
-//     province_id: ,
-//     postal_code: ,
-//     primary_phone:,
-//
-// }
-//
-// var query = 'UPDATE gibson.user SET rank_id=?, type=?, username=?, password=?, lname=?, fname=?, birth_date=?, gender=?, address=?, unit_no=?, city=? province_id=?, postal_code=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, email=?, send_notification=?, student=? WHERE user_id = ?;';
-// var inserts = [];
 
 module.exports = router;

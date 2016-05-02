@@ -1,4 +1,4 @@
-
+z
 html, body {
   height: 100%;
 }
@@ -173,6 +173,7 @@ ul.profiletab{
     background-color: #ffffff;
     margin-bottom: 20px;
     margin-top: 20px;
+    min-height: 100px;
 }
 
 .search-bar {
