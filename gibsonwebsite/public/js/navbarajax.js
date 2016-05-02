@@ -18,6 +18,12 @@ $(document).ready(function(){
 		if (rank == 4) {
 			userdisplay += '	<li><a href="/admin/profile">Admin Menu</a></li>';
 		}
+		if (rank == 3) {
+			userdisplay += '	<li><a href="/admin/profile">Staff Menu</a></li>'; //link needs to be add for the staff
+		}
+		if (rank == 2) {
+			userdisplay += '	<li><a href="/volunteer/portal">Volunteer Menu</a></li>';
+		}
 		userdisplay += '	<li><a href="/logout">Logout</a></li>';
 		userdisplay += '</ul>';
 	}
