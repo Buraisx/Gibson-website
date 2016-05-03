@@ -380,11 +380,17 @@ router.post('/volunteer/addlimited', function(req, res){
         else{
 
             var query =  'INSERT INTO gibson.user ';
-                query += '(type, lname, fname, primary_phone, primary_extension, secondary_phone, secondary_extension, send_notification) ';
-                query += '(?, ?, ?, ?, ?, ?, ?, 1);';
+                query += '(type, lname, fname, primary_phone, primary_extension, email, send_notification) ';
+                query += 'VALUES (?, ?, ?, ?, ?, ?, 1);';
 
-            var inserts = ['LIMITED', req.body.lname, req.body.fname, req.body.primary_phone, req.body.primary_extension,
-                           req.body.secondary_phone, req.body.secondary_extension];
+            var inserts = [
+                'LIMITED',
+                sanitizer.sanitize(req.body.lname),
+                sanitizer.sanitize(req.body.fname),
+                sanitizer.sanitize(req.body.primary_phone),
+                sanitizer.sanitize(req.body.primary_extension),
+                sanitizer.sanitize(req.body.email),
+            ];
 
             query = mysql.format(query, inserts);
 
@@ -394,6 +400,7 @@ router.post('/volunteer/addlimited', function(req, res){
 
                 if(err){
                     console.log('volunteer.js: Error inserting LIMITED user.');
+                    console.log(query);
                     res.status(500).send('ERROR CREATING USER.');
                 }
                 else{
