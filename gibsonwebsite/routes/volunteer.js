@@ -13,7 +13,7 @@ router.get('/volunteer/portal', function(req, res){
 
 
     // GETTING CONNECTION
-    connection.getConnection(function(err, results){
+    connection.getConnection(function(err, con){
         if(err){
             console.log('volunteer.js: Error getting connection; /volunteer/portal');
             res.status(500);
@@ -42,7 +42,7 @@ router.get('/volunteer/portal', function(req, res){
                     res.status(500).send("Failure");
                 }
                 else{
-                    res.render('volunteerview', { title: 'Volunteer Portal', province_list: results.province_list, age_group_list: results.age_group_list, MAX: 3, captcha: recaptcha.render()});
+                    res.render('volunteerview', { title: 'Volunteer Portal', province_list: results.province_list, age_group_list: results.age_group_list, MAX: 3});
                 }
             });
         }
