@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,33 +20,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `website_alert`
+-- Table structure for table `category_matrix`
 --
 
-DROP TABLE IF EXISTS `website_alert`;
+DROP TABLE IF EXISTS `category_matrix`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `website_alert` (
-  `alert_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `init_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `end_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `alert_msg` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `alert_type` enum('SLOW','MAINTENANCE','EVENT','OTHER') CHARACTER SET utf8 DEFAULT 'OTHER',
-  `start_alert` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`alert_id`),
-  KEY `init_date_INDEX` (`init_date`)
+CREATE TABLE `category_matrix` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_string` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `category_type` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `category_id_UNIQUE` (`category_id`),
+  KEY `category_type` (`category_type`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `website_alert`
+-- Dumping data for table `category_matrix`
 --
 
-LOCK TABLES `website_alert` WRITE;
-/*!40000 ALTER TABLE `website_alert` DISABLE KEYS */;
-/*!40000 ALTER TABLE `website_alert` ENABLE KEYS */;
+LOCK TABLES `category_matrix` WRITE;
+/*!40000 ALTER TABLE `category_matrix` DISABLE KEYS */;
+/*!40000 ALTER TABLE `category_matrix` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -53,4 +60,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:05
+=======
 -- Dump completed on 2016-05-02 20:57:44
+>>>>>>> signupMod

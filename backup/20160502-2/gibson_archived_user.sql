@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -50,6 +54,8 @@ CREATE TABLE `archived_user` (
   KEY `rank_id_idx` (`rank_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+<<<<<<< HEAD
+=======
 
 --
 -- Dumping data for table `archived_user`
@@ -59,6 +65,7 @@ LOCK TABLES `archived_user` WRITE;
 /*!40000 ALTER TABLE `archived_user` DISABLE KEYS */;
 /*!40000 ALTER TABLE `archived_user` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -69,4 +76,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:05
+=======
 -- Dump completed on 2016-05-02 20:57:43
+>>>>>>> signupMod

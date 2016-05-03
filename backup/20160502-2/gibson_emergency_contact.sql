@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,30 +20,41 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `timestamps`
+-- Table structure for table `emergency_contact`
 --
 
-DROP TABLE IF EXISTS `timestamps`;
+DROP TABLE IF EXISTS `emergency_contact`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `timestamps` (
+CREATE TABLE `emergency_contact` (
+  `contact_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `browser` varchar(64) NOT NULL,
-  `ip` varchar(45) NOT NULL,
-  PRIMARY KEY (`user_id`),
-  CONSTRAINT `logged_in` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `lname` varchar(64) NOT NULL,
+  `fname` varchar(64) NOT NULL,
+  `relationship` varchar(64) NOT NULL,
+  `contact_phone` varchar(16) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`contact_id`),
+  UNIQUE KEY `contact_id_UNIQUE` (`contact_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `related_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Emergency contacts for each user - may have more than 1 per user';
+/*!40101 SET character_set_client = @saved_cs_client */;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Emergency contacts for each user - may have more than 1 per user';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `timestamps`
+-- Dumping data for table `emergency_contact`
 --
 
-LOCK TABLES `timestamps` WRITE;
-/*!40000 ALTER TABLE `timestamps` DISABLE KEYS */;
-/*!40000 ALTER TABLE `timestamps` ENABLE KEYS */;
+LOCK TABLES `emergency_contact` WRITE;
+/*!40000 ALTER TABLE `emergency_contact` DISABLE KEYS */;
+INSERT INTO `emergency_contact` VALUES (6,6,'Zhao','Benjamin','Myself','4162934186','2016-05-03 00:55:24');
+/*!40000 ALTER TABLE `emergency_contact` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -50,4 +65,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:05
+=======
 -- Dump completed on 2016-05-02 20:57:44
+>>>>>>> signupMod

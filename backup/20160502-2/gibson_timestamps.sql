@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,30 +20,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `province`
+-- Table structure for table `timestamps`
 --
 
-DROP TABLE IF EXISTS `province`;
+DROP TABLE IF EXISTS `timestamps`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `province` (
-  `province_id` int(13) unsigned NOT NULL AUTO_INCREMENT,
-  `province_name` varchar(45) NOT NULL,
-  `prov_abb` varchar(3) NOT NULL,
-  PRIMARY KEY (`province_id`),
-  UNIQUE KEY `province_id_UNIQUE` (`province_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='List of provinces in Canada (accurate as of February 15th, 2016)';
+CREATE TABLE `timestamps` (
+  `user_id` int(10) unsigned NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `browser` varchar(64) NOT NULL,
+  `ip` varchar(45) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `logged_in` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+<<<<<<< HEAD
+=======
 
 --
--- Dumping data for table `province`
+-- Dumping data for table `timestamps`
 --
 
-LOCK TABLES `province` WRITE;
-/*!40000 ALTER TABLE `province` DISABLE KEYS */;
-INSERT INTO `province` VALUES (1,'Ontario','ON'),(2,'Quebec','QC'),(3,'Newfoundland and Labrador','NL'),(4,'New Brunswick','NB'),(5,'Northwest Territories','NT'),(6,'Nova Scotia','NS'),(7,'Manitoba','MB'),(8,'British Columbia','BC'),(9,'Prince Edward Island','PE'),(10,'Saskatchewan','SK'),(11,'Alberta','AB'),(12,'Yukon','YT'),(13,'Nunavut','NU');
-/*!40000 ALTER TABLE `province` ENABLE KEYS */;
+LOCK TABLES `timestamps` WRITE;
+/*!40000 ALTER TABLE `timestamps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `timestamps` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -50,4 +57,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 20:57:42
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:05
+=======
+-- Dump completed on 2016-05-02 20:57:44
+>>>>>>> signupMod

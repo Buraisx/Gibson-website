@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,34 +20,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `course_days`
+-- Table structure for table `student`
 --
 
-DROP TABLE IF EXISTS `course_days`;
+DROP TABLE IF EXISTS `student`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `course_days` (
-  `course_id` int(10) unsigned NOT NULL,
-  `date` date NOT NULL,
-  `start_time` time(4) NOT NULL,
-  `end_time` time(4) NOT NULL,
-  `type` enum('SCHEDULED','ADHOC') NOT NULL DEFAULT 'ADHOC',
-  `status` enum('SCHEDULED','COMPLETED','CANCELLED') NOT NULL DEFAULT 'SCHEDULED',
-  `note` text COMMENT 'If classes are rescheduled, please mention in note',
-  KEY `course_id` (`course_id`),
-  KEY `date` (`date`),
-  CONSTRAINT `course` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `student` (
+  `user_id` int(10) unsigned NOT NULL,
+  `school_name` varchar(128) NOT NULL,
+  `grade` varchar(45) NOT NULL,
+  `major` varchar(128) DEFAULT NULL,
+  `esl_level` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`),
+  CONSTRAINT `student_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+<<<<<<< HEAD
+=======
 
 --
--- Dumping data for table `course_days`
+-- Dumping data for table `student`
 --
 
-LOCK TABLES `course_days` WRITE;
-/*!40000 ALTER TABLE `course_days` DISABLE KEYS */;
-/*!40000 ALTER TABLE `course_days` ENABLE KEYS */;
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (6,'University of Waterloo','3rd Year','Computer Science','');
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,4 +60,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:04
+=======
 -- Dump completed on 2016-05-02 20:57:43
+>>>>>>> signupMod

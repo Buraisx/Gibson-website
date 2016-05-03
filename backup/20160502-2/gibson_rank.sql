@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,33 +20,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `active_tokens`
+-- Table structure for table `rank`
 --
 
-DROP TABLE IF EXISTS `active_tokens`;
+DROP TABLE IF EXISTS `rank`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `active_tokens` (
-  `token_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(64) NOT NULL,
-  `blacklisted` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `expiry_date` date DEFAULT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `desc` text,
-  PRIMARY KEY (`token_id`),
-  UNIQUE KEY `token_id_UNIQUE` (`token_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+CREATE TABLE `rank` (
+  `rank_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rank_name` varchar(45) NOT NULL,
+  `secret_key` varchar(256) NOT NULL,
+  PRIMARY KEY (`rank_id`),
+  UNIQUE KEY `rank_id_UNIQUE` (`rank_id`),
+  UNIQUE KEY `rank_name_UNIQUE` (`rank_name`),
+  UNIQUE KEY `secret_key_UNIQUE` (`secret_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+<<<<<<< HEAD
+=======
 
 --
--- Dumping data for table `active_tokens`
+-- Dumping data for table `rank`
 --
 
-LOCK TABLES `active_tokens` WRITE;
-/*!40000 ALTER TABLE `active_tokens` DISABLE KEYS */;
-INSERT INTO `active_tokens` VALUES (4,'benjixd',1,'2016-04-30','2016-04-29 00:31:15','signup confirmation'),(5,'benji',1,'2016-05-04','2016-05-03 00:34:03','signup confirmation'),(6,'benji',1,'2016-05-04','2016-05-03 00:37:24','signup confirmation'),(7,'benjixd',1,'2016-05-04','2016-05-03 00:41:39','signup confirmation'),(8,'benjixd',1,'2016-05-04','2016-05-03 00:44:03','signup confirmation'),(9,'benjixd',1,'2016-05-04','2016-05-03 00:55:24','signup confirmation');
-/*!40000 ALTER TABLE `active_tokens` ENABLE KEYS */;
+LOCK TABLES `rank` WRITE;
+/*!40000 ALTER TABLE `rank` DISABLE KEYS */;
+INSERT INTO `rank` VALUES (1,'user','user_key'),(2,'volunteer','volunteer_key'),(3,'staff','staff_key'),(4,'admin','admin_key');
+/*!40000 ALTER TABLE `rank` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -53,4 +59,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 20:57:43
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:04
+=======
+-- Dump completed on 2016-05-02 20:57:42
+>>>>>>> signupMod

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,31 +20,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `category_matrix`
+-- Table structure for table `payment_period`
 --
 
-DROP TABLE IF EXISTS `category_matrix`;
+DROP TABLE IF EXISTS `payment_period`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `category_matrix` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_string` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `category_type` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_id_UNIQUE` (`category_id`),
-  KEY `category_type` (`category_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `payment_period` (
+  `payment_period_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `payment_start_date` date NOT NULL,
+  `payment_end_date` date NOT NULL,
+  PRIMARY KEY (`payment_period_id`),
+  UNIQUE KEY `payment_period_id_UNIQUE` (`payment_period_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Payment periods for courses';
 /*!40101 SET character_set_client = @saved_cs_client */;
+<<<<<<< HEAD
+=======
 
 --
--- Dumping data for table `category_matrix`
+-- Dumping data for table `payment_period`
 --
 
-LOCK TABLES `category_matrix` WRITE;
-/*!40000 ALTER TABLE `category_matrix` DISABLE KEYS */;
-/*!40000 ALTER TABLE `category_matrix` ENABLE KEYS */;
+LOCK TABLES `payment_period` WRITE;
+/*!40000 ALTER TABLE `payment_period` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payment_period` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -51,4 +56,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 20:57:44
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:04
+=======
+-- Dump completed on 2016-05-02 20:57:42
+>>>>>>> signupMod

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -37,6 +41,8 @@ CREATE TABLE `fee_history` (
   CONSTRAINT `enrollment_id` FOREIGN KEY (`user_course_id`) REFERENCES `user_course` (`enrollment_id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+<<<<<<< HEAD
+=======
 
 --
 -- Dumping data for table `fee_history`
@@ -46,6 +52,7 @@ LOCK TABLES `fee_history` WRITE;
 /*!40000 ALTER TABLE `fee_history` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fee_history` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -56,4 +63,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:04
+=======
 -- Dump completed on 2016-05-02 20:57:42
+>>>>>>> signupMod

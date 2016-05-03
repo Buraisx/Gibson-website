@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,16 +20,19 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `temp_user`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `temp_user`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `temp_user` (
+CREATE TABLE `user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `rank_id` int(10) unsigned NOT NULL DEFAULT '1',
-  `age_group_id` int(10) unsigned DEFAULT NULL,
+<<<<<<< HEAD
+=======
+  `age_group_id` int(10) DEFAULT NULL,
+>>>>>>> signupMod
   `type` varchar(16) NOT NULL,
   `username` varchar(32) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
@@ -44,23 +51,41 @@ CREATE TABLE `temp_user` (
   `secondary_extension` varchar(16) DEFAULT NULL,
   `email` varchar(128) NOT NULL,
   `send_notification` tinyint(1) unsigned NOT NULL DEFAULT '0',
+<<<<<<< HEAD
   `student` tinyint(1) unsigned DEFAULT '0',
+=======
+  `student` tinyint(1) unsigned NOT NULL DEFAULT '0',
+>>>>>>> signupMod
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
-  KEY `province_id` (`province_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  KEY `province_id` (`province_id`),
+  KEY `rank_id_idx` (`rank_id`),
+<<<<<<< HEAD
+  CONSTRAINT `province_id` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `rank_id` FOREIGN KEY (`rank_id`) REFERENCES `rank` (`rank_id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+=======
+  KEY `age_group_id_idx` (`age_group_id`),
+  CONSTRAINT `age_group_id` FOREIGN KEY (`age_group_id`) REFERENCES `age_group` (`age_group_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `province_id` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `rank_id` FOREIGN KEY (`rank_id`) REFERENCES `rank` (`rank_id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `temp_user`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `temp_user` WRITE;
-/*!40000 ALTER TABLE `temp_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `temp_user` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (6,1,3,'REGULAR','benjixd','$2a$11$pWh5rKjmA9n/UG2Eh2wguu1sCyTHrUUhCTbutB/3fuJJGPBivkYJK','Zhao','Benjamin',NULL,'Male','310 Goldhawk Trail','','toronto',1,'M1V4H2','4162934186',NULL,'6472938798',NULL,'benjamin.zhao1995@hotmail.com',0,1,'2016-05-03 00:55:24','2016-05-03 00:55:37');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -71,4 +96,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:04
+=======
 -- Dump completed on 2016-05-02 20:57:43
+>>>>>>> signupMod

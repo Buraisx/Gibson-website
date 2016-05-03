@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+>>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -16,35 +20,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `temp_emergency_contact`
+-- Table structure for table `interests`
 --
 
-DROP TABLE IF EXISTS `temp_emergency_contact`;
+DROP TABLE IF EXISTS `interests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `temp_emergency_contact` (
-  `contact_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL,
-  `lname` varchar(64) NOT NULL,
-  `fname` varchar(64) NOT NULL,
-  `relationship` varchar(64) NOT NULL,
-  `contact_phone` varchar(16) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`contact_id`),
-  UNIQUE KEY `contact_id_UNIQUE` (`contact_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `temp_user` FOREIGN KEY (`user_id`) REFERENCES `temp_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Emergency contacts for each user - may have more than 1 per user';
+CREATE TABLE `interests` (
+  `interest_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `interest_name` varchar(64) NOT NULL,
+  `weight` int(11) DEFAULT '1' COMMENT 'For weighted searching',
+  `update_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`interest_id`),
+  UNIQUE KEY `interest_id_UNIQUE` (`interest_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='An interesting table';
 /*!40101 SET character_set_client = @saved_cs_client */;
+<<<<<<< HEAD
+=======
 
 --
--- Dumping data for table `temp_emergency_contact`
+-- Dumping data for table `interests`
 --
 
-LOCK TABLES `temp_emergency_contact` WRITE;
-/*!40000 ALTER TABLE `temp_emergency_contact` DISABLE KEYS */;
-/*!40000 ALTER TABLE `temp_emergency_contact` ENABLE KEYS */;
+LOCK TABLES `interests` WRITE;
+/*!40000 ALTER TABLE `interests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `interests` ENABLE KEYS */;
 UNLOCK TABLES;
+>>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -55,4 +57,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 20:57:42
+<<<<<<< HEAD
+-- Dump completed on 2016-05-02 16:11:04
+=======
+-- Dump completed on 2016-05-02 20:57:43
+>>>>>>> signupMod
