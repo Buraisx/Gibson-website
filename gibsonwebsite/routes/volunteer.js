@@ -10,7 +10,45 @@ var sanitizer = require('sanitizer');
 
 // RENDERS VOLUNTEER PAGE
 router.get('/volunteer/portal', function(req, res){
-    res.render('volunteerview', {title: 'Volunteer Portal'});
+
+
+    // GETTING CONNECTION
+    connection.getConnection(function(err, results){
+        if(err){
+            console.log('volunteer.js: Error getting connection; /volunteer/portal');
+            res.status(500);
+        }
+        else{
+            //Run Queries in Parallel
+            async.parallel({
+                province_list: function(next){
+                    var sql = "SELECT province_id, province_name FROM gibson.province;";
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                },
+                age_group_list: function(next){
+                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                }
+            },
+            //Return results
+            function (err, results){
+                con.release();
+                if(err){
+                    console.log('volunteer.js: Database Query failed');
+                    res.status(500).send("Failure");
+                }
+                else{
+                    res.render('volunteerview', { title: 'Volunteer Portal', province_list: results.province_list, age_group_list: results.age_group_list, MAX: 3, captcha: recaptcha.render()});
+                }
+            });
+        }
+    });
+
+    //res.render('volunteerview', {title: 'Volunteer Portal'});
 });
 
 
@@ -505,6 +543,32 @@ router.post('volunteer/convertlimited', function(req, res){
     });
 });
 
+router.get('/volunteer/portal/courses', function(req, res){
+
+    var sql = "SELECT course_id, course_name, course_code, default_fee, start_date, end_date, course_time, categories, course_interval, course_language, course_target, course_description, notes, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC";
+
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log("adminqueries.js: Cannot get connection");
+            return err;
+        }
+
+        con.query(sql, function(err, results){
+            con.release();
+
+            if(err){
+                console.log("volunteer.js: Query error for finding courses");
+                return err;
+            }
+            else if(!results.length){
+                console.log("volunteer.js: No courses found!");
+            }
+            else{
+                res.send(results);
+            }
+        });
+    });
+});
 
 
 module.exports = router;
