@@ -331,7 +331,7 @@ router.post('volunteer/convertlimited', function(req, res){
                                         unit_no: sanitizer.sanitize(req.body.unit_no),
                                         city: sanitizer.sanitize(req.body.city),
                                         province_id: sanitizer.sanitize(req.body.province_id),
-                                        postal_code: sanitizer.sanitize(req.body.postal_code)toUpperCase().replace(/ /g,''),
+                                        postal_code: sanitizer.sanitize(req.body.postal_code).toUpperCase().replace(/ /g,''),
                                         primary_phone: sanitizer.sanitize(req.body.primary_phone).replace(/\D+/g, ''),
                                         primary_extension: sanitizer.sanitize(req.body.primary_extension).replace(/\D+/g, ''),
                                         secondary_phone: sanitizer.sanitize(req.body.secondary_phone).replace(/\D+/g, ''),

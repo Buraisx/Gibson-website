@@ -78,8 +78,8 @@ router.get('/confirm', function(req, res){
 
         // COPYING USER FROM TEMP TABLE TO PERMANENT TABLE
         function(username, tempUserId, student, next){
-          var query =  'INSERT INTO gibson.user (rank_id, type, username, password, lname, fname, birth_date, gender, address, unit_no, city, province_id, postal_code, primary_phone, primary_extension, secondary_phone, secondary_extension, email, send_notification, student, creation_date) ';
-              query += 'SELECT rank_id, type, username, password, lname, fname, birth_date, gender, address, unit_no, city, province_id, postal_code, primary_phone, primary_extension, secondary_phone, secondary_extension, email, send_notification, student, creation_date FROM gibson.temp_user WHERE user_id = ?;';
+          var query =  'INSERT INTO gibson.user (rank_id, age_group_id, type, username, password, lname, fname, birth_date, gender, address, unit_no, city, province_id, postal_code, primary_phone, primary_extension, secondary_phone, secondary_extension, email, send_notification, student, creation_date) ';
+              query += 'SELECT rank_id, age_group_id, type, username, password, lname, fname, birth_date, gender, address, unit_no, city, province_id, postal_code, primary_phone, primary_extension, secondary_phone, secondary_extension, email, send_notification, student, creation_date FROM gibson.temp_user WHERE user_id = ?;';
 
           query = mysql.format(query, [tempUserId]);
 

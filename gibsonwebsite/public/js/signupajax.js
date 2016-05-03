@@ -95,7 +95,7 @@ function signup() {
 	    fname: $('#fname').val(),
 	    lname: $('#lname').val(),
       //birth_date: $('#datepicker').val(),
-      age_group_id: $('#age_group').val();
+      age_group_id: $('#age_group').val(),
       gender: $('#gender').val(),
       address: $('#address').val(),
       postal_code: $('#postal_code').val(),

@@ -115,7 +115,7 @@ module.exports = function(passport){
                 newUser.lname = req.body.lname;
                 newUser.fname = req.body.fname;
                 //newUser.birth_date = req.body.birth_date;
-                newUser.age_group_id = req.body.age_group;
+                newUser.age_group_id = req.body.age_group_id;
                 newUser.gender = req.body.gender;
                 newUser.address = req.body.address;
                 newUser.unit_no = req.body.apt;
@@ -131,10 +131,10 @@ module.exports = function(passport){
                 newUser.student = (!req.body.student)? 0:req.body.student;
 
                 // CREATING QUERY
-                var createUser  = 'INSERT INTO gibson.temp_user (rank_id, type, age_group_id, username, password, lname, fname, birth_date, gender, address, ';
+                var createUser  = 'INSERT INTO gibson.temp_user (rank_id, age_group_id, type, username, password, lname, fname, birth_date, gender, address, ';
                     createUser +=                               'unit_no, city, province_id, postal_code, primary_phone, primary_extension, ';
                     createUser +=                               'secondary_phone, secondary_extension, email, send_notification, student) ';
-                    createUser += 'VALUES(1, "REGULAR", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+                    createUser += 'VALUES(1, ?, "REGULAR", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
                 var values = [
                   newUser.age_group_id, newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.birth_date, newUser.gender, newUser.address,
                   newUser.unit_no, newUser.city, newUser.province_id, newUser.postal_code, newUser.primary_phone, newUser.primary_extension,

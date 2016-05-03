@@ -39,7 +39,7 @@ router.get('/signup', function(req,res,next){
 						});
 					},
 					age_group_list: function(next){
-						var sql = "SELECT age_group_id, age_group_name FROM gibson.age_group;"
+						var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
 						con.query(sql, function (err, results){
 							next(err, results);
 						});
