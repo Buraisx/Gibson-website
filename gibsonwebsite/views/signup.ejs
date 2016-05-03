@@ -8,7 +8,7 @@
     <link href="/css/datepicker.css" rel="stylesheet">
     <link href = "/css/signupdesign.css" rel = "stylesheet">
     <link href = "/css/loader.css" rel = "stylesheet">
-    <script src = "/js/serializecontacts.js"></script>
+    <script src = "/js/serializecontacts.js"></script>  
     <script src = "/js/passwordvalidation.js"></script>
     <script src = "/js/studentinputboxes.js"></script>
     <script src = "/js/signupajax.js"></script>
@@ -97,7 +97,7 @@
                    </div>
                     <div class = "panel-body">
 
-                        <!--Input Username-->
+                        <!--Input First/Last Name-->
                         <div class = "row">
                             <div class = "form-group col-sm-offset-1 col-sm-5">
                                 <label><span class="requiredasterisk">*</span>First Name:</label>
@@ -109,11 +109,20 @@
                             </div>
                         </div>
 
-                        <!--Input Password-->
+                        <!--Input Age-->
                         <div class = "row">
                                     <div class = "form-group col-sm-offset-1 col-sm-5">
-                                <label><span class="requiredasterisk">*</span>Birthdate:</label>
-                                <input type="text" class = "form-control datepicker reqIn" name="birth_date" id="datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" required>
+                                <label><span class="requiredasterisk">*</span>Age Group:</label>
+                                <select class = "form-control" name = "age_group" id = "age_group" placeholder="Age Group">
+                                    <option value="" disabled selected>Please Select</option>
+                                    <% for(var i=0; i<age_group_list.length; i++) { %>
+                                        <li>
+                                            <option value = <%= age_group_list[i].age_group_id %>>
+                                                <%= age_group_list[i].age_group_name + " (" + age_group_list[i].age_group_description + ")" %>
+                                            </option>
+                                        </li>
+                                    <% } %>
+                                </select>
                             </div>
                             <div class = "form-group col-sm-5">
                                 <label class = "control-label"><span class="requiredasterisk">*</span>Gender:</label>

@@ -37,8 +37,7 @@
                             <ul class="sidebar-nav nav-stacked" id="menu">
                             <li class="active"><a class="menucolour" href="#adduser" data-toggle="tab"><i class="fa fa-user-plus"></i> Add New User</a></li>
                             <li><a class="menucolour" href="#addlimiteduser" data-toggle="tab"><i class="fa fa-user"></i> Add Limited User</a></li>
-                            <li><a class="menucolour" href="#addcourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add Course</a></li>
-                            </li>
+                            <li><a class="menucolour" href="#addusertocourse" data-toggle="tab"><i class="fa fa-user"></i> Add User To Course</a></li>
                         </ul>
                         </div>
                     </div>
@@ -47,6 +46,13 @@
                         <div class="tab-pane active" id="adduser">
                             <div id="page-content-wrapper" class="container-fluid xyz">
                                 <h3>Add New User</h3>
+                                
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="addlimiteduser">
+                            <div id="page-content-wrapper" class="container-fluid xyz">
+                                <form name="frm" action = "/volunteer/addlimited" method = "post" role = "form" id= "frm">
+                                <h3>Add Limited User</h3>
                                 <div class = "row">
                                     <div class = "form-group col-sm-5">
                                         <label><span class="requiredasterisk">*</span>First Name:</label>
@@ -57,7 +63,6 @@
                                         <input type = "text" class = "form-control reqIn" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->
                                     </div>
                                 </div>
-
 
                                 <div class = "row">
                                     <div class="form-group col-sm-5">
@@ -75,16 +80,13 @@
                                         <button type = "button" class = "btn btn-default">Add</button>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
-                        <div class="tab-pane" id="addlimiteduser">
+                        <div class="tab-pane" id="addusertocourse">
                             <div id="page-content-wrapper" class="container-fluid xyz">
-                                <h3>Add Limited User</h3>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="addcourse">
-                            <div id="page-content-wrapper" class="container-fluid xyz">
-                                <h3>Add Course</h3>
+                                <h3>Add User To Course</h3>
+                                
                             </div>
                         </div>
                     </div>
