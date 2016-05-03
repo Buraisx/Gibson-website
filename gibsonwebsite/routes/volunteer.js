@@ -400,7 +400,6 @@ router.post('/volunteer/addlimited', function(req, res){
 
                 if(err){
                     console.log('volunteer.js: Error inserting LIMITED user.');
-                    console.log(query);
                     res.status(500).send('ERROR CREATING USER.');
                 }
                 else{
