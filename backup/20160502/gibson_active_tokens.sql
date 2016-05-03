@@ -31,7 +31,7 @@ CREATE TABLE `active_tokens` (
   `desc` text,
   PRIMARY KEY (`token_id`),
   UNIQUE KEY `token_id_UNIQUE` (`token_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `active_tokens` (
 
 LOCK TABLES `active_tokens` WRITE;
 /*!40000 ALTER TABLE `active_tokens` DISABLE KEYS */;
-INSERT INTO `active_tokens` VALUES (4,'benjixd',1,'2016-04-30','2016-04-29 00:31:15','signup confirmation');
+INSERT INTO `active_tokens` VALUES (4,'benjixd',1,'2016-04-30','2016-04-29 00:31:15','signup confirmation'),(5,'benji',1,'2016-05-04','2016-05-03 00:34:03','signup confirmation'),(6,'benji',1,'2016-05-04','2016-05-03 00:37:24','signup confirmation'),(7,'benjixd',1,'2016-05-04','2016-05-03 00:41:39','signup confirmation'),(8,'benjixd',1,'2016-05-04','2016-05-03 00:44:03','signup confirmation'),(9,'benjixd',1,'2016-05-04','2016-05-03 00:55:24','signup confirmation');
 /*!40000 ALTER TABLE `active_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 19:13:32
+-- Dump completed on 2016-05-02 20:57:43

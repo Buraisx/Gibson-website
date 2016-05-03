@@ -34,7 +34,7 @@ CREATE TABLE `emergency_contact` (
   UNIQUE KEY `contact_id_UNIQUE` (`contact_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `related_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Emergency contacts for each user - may have more than 1 per user';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Emergency contacts for each user - may have more than 1 per user';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `emergency_contact` (
 
 LOCK TABLES `emergency_contact` WRITE;
 /*!40000 ALTER TABLE `emergency_contact` DISABLE KEYS */;
-INSERT INTO `emergency_contact` VALUES (3,3,'Lee','Allen','Friend','1111111111','2016-04-29 00:31:15');
+INSERT INTO `emergency_contact` VALUES (6,6,'Zhao','Benjamin','Myself','4162934186','2016-05-03 00:55:24');
 /*!40000 ALTER TABLE `emergency_contact` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 19:13:32
+-- Dump completed on 2016-05-02 20:57:44

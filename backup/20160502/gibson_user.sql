@@ -56,7 +56,7 @@ CREATE TABLE `user` (
   CONSTRAINT `age_group_id` FOREIGN KEY (`age_group_id`) REFERENCES `age_group` (`age_group_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `province_id` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `rank_id` FOREIGN KEY (`rank_id`) REFERENCES `rank` (`rank_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,1,3,'REGULAR','benjixd','$2a$12$s3ckeSpV6Td.toDOD9wRZOtvZiSQJhQZg0HL2Hzc.jqVMwFBcLpju','Zhao','Benjamin','1995-09-02','Male','310 Goldhawk Trail','','Toronto',1,'M1V4H2','4162934186',NULL,'',NULL,'benjamin.zhao1995@hotmail.com',0,1,'2016-04-29 00:31:15','2016-04-29 00:51:56');
+INSERT INTO `user` VALUES (6,1,3,'REGULAR','benjixd','$2a$11$pWh5rKjmA9n/UG2Eh2wguu1sCyTHrUUhCTbutB/3fuJJGPBivkYJK','Zhao','Benjamin',NULL,'Male','310 Goldhawk Trail','','toronto',1,'M1V4H2','4162934186',NULL,'6472938798',NULL,'benjamin.zhao1995@hotmail.com',0,1,'2016-05-03 00:55:24','2016-05-03 00:55:37');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -78,4 +78,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 19:13:31
+-- Dump completed on 2016-05-02 20:57:43

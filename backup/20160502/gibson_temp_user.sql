@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `temp_user`;
 CREATE TABLE `temp_user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `rank_id` int(10) unsigned NOT NULL DEFAULT '1',
+  `age_group_id` int(10) unsigned DEFAULT NULL,
   `type` varchar(16) NOT NULL,
   `username` varchar(32) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
@@ -49,7 +50,7 @@ CREATE TABLE `temp_user` (
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `province_id` (`province_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,4 +71,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 19:13:32
+-- Dump completed on 2016-05-02 20:57:43
