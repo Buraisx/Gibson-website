@@ -427,12 +427,12 @@ hr {
 }
 
 .editinfobutton {
-    margin-left: 20px;
+    color: #2CC185;
+    cursor: pointer;
 }
 
-.editinfoheader {
-    margin-top: 27px;
-    margin-bottom: 13px;
+.editinfoheader { /******************************************************************************************************************/
+    margin-left: 42px;
 }
 
 .deletecontactbutton {
