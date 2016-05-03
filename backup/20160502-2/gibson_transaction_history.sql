@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `transaction_history`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `transaction_history` (
   `transaction_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `paypal_id` varchar(64) DEFAULT NULL,
+  `payment_id` varchar(64) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
   `state` varchar(64) NOT NULL,
@@ -45,15 +45,6 @@ CREATE TABLE `transaction_history` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='Record for transaction history from paypal';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `transaction_history`
---
-
-LOCK TABLES `transaction_history` WRITE;
-/*!40000 ALTER TABLE `transaction_history` DISABLE KEYS */;
-/*!40000 ALTER TABLE `transaction_history` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -64,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02 21:48:27
+-- Dump completed on 2016-05-02 21:51:09
