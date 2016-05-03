@@ -108,7 +108,7 @@ router.post('/volunteer/enrolluser', function(req, res){
                     for (var i in req.body.course_list){
 
                         var today = new Date().toJSON().slice(0,10);
-                        var notes = 'Registered for course ID: ' +sanitizer.sanitize(req.body.course_list[i])
+                        var notes = 'Registered for course ID: ' +sanitizer.sanitize(req.body.course_list[i]);
 
                         var inserts = [
                             sanitizer.sanitize(req.body.user_id),
@@ -134,7 +134,21 @@ router.post('/volunteer/enrolluser', function(req, res){
             ],
 
             // FINAL FUNCTION -> HANDLES ERROR/SUCCESS
-            function(err){});
+            function(error){
+                if(error){
+                    con.query('ROLLBACK;', function(err, results){
+                        con.release();
+                        console.log('volunteer.js: ' +error.msg +'; /volunteer/enrolluser');
+                        res.status(500).send('Failed to enroll user.');
+                    });
+                }
+                else{
+                    con.query('COMMIT;', function(err, results){
+                        con.release();
+                        res.status(200).send('User enrolled into course.');
+                    });
+                }
+            });
         }
     });
 });
