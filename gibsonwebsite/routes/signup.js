@@ -6,6 +6,7 @@ var token = require('../authentication/token');
 var email = require('../authentication/auto_email');
 var recaptcha = require('express-recaptcha');
 var sanitizer = require('sanitizer');
+var async = require('async');
 // CREATING CONNECTION
 var connection = require('../mysqlpool');
 
@@ -23,6 +24,42 @@ router.get('/signup', function(req,res,next){
 	 }
 	else
 	{
+		connection.getConnection(function (err, con){
+			if(err){
+				console.log('signup.js: Cannot Connect to database');
+				res.status(500).send("Cannot Signup");
+			}
+			else{
+				//Run Queries in Parallel
+				async.parallel({
+					province_list: function(next){
+						var sql = "SELECT province_id, province_name FROM gibson.province;";
+						con.query(sql, function (err, results){
+							next(err, results);
+						});
+					},
+					age_group_list: function(next){
+						var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+						con.query(sql, function (err, results){
+							next(err, results);
+						});
+					}	
+				},
+				//Return results
+				function (err, results){
+					//results is {province_list:values, age_group_list:values}
+					con.release();
+					if(err){
+						console.log('signup.js: Database Query failed');
+						res.status(500).send("Cannot Signup");
+					}
+					else{
+						res.render('signup', { title: 'Sign Up', province_list: results.province_list, age_group_list: results.age_group_list, MAX: 3, captcha: recaptcha.render()});
+					}
+				});
+			}
+		});
+		/*
 		// MAKING THE QUERY STRING
 		var sql = "SELECT province_id, province_name FROM gibson.province;";
 
@@ -35,7 +72,7 @@ router.get('/signup', function(req,res,next){
 						//Sends Sign up Title, List of Canada Provinces, Max emergency contact
 						res.render('signup', { title: 'Sign Up', province_list: results,  MAX: 3, captcha: recaptcha.render()});
 				});
-		});
+		});*/
 	}
 });
 

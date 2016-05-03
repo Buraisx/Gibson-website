@@ -260,6 +260,13 @@ router.get('/paymentsuccess', function (req, res, next){
   res.render('paymentsuccess', {title: "Payment Success!"});
 });
 
+/*
+router.get('/enroll', passport.authenticate('local-login',{
+  session: false,
+  //successRedirect: '/user/profile'
+  //failureRedirect: '/login' // Return to login when fail, and flash error
+
+}));*/
 
 //============================================================
 //===Enrollment without payment===============================
