@@ -109,6 +109,8 @@ function signup() {
 	    esl: $('#esl').val(),
 	    primary_phone: $('#primary_phone').val(),
 	    secondary_phone: $('#secondary_phone').val(),
+      primary_extension: $('#primary_extension').val(),
+      secondary_extension: $('#secondary_extension').val(),
         emergencyfname1: $('#emergencyfname1').val(),
         emergencyfname2: $('#emergencyfname2').val(),
         emergencyfname3: $('#emergencyfname3').val(),
