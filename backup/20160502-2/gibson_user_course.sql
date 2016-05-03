@@ -1,8 +1,4 @@
-<<<<<<< HEAD
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
-=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
->>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -45,10 +41,6 @@ CREATE TABLE `user_course` (
   KEY `course_id` (`course_id`),
   CONSTRAINT `course_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-<<<<<<< HEAD
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='History of users currently enrolled into courses';
-/*!40101 SET character_set_client = @saved_cs_client */;
-=======
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='History of users currently enrolled into courses';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -60,7 +52,6 @@ LOCK TABLES `user_course` WRITE;
 /*!40000 ALTER TABLE `user_course` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_course` ENABLE KEYS */;
 UNLOCK TABLES;
->>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -71,8 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
--- Dump completed on 2016-05-02 16:11:05
-=======
--- Dump completed on 2016-05-02 20:57:44
->>>>>>> signupMod
+-- Dump completed on 2016-05-02 21:48:29

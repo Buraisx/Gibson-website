@@ -1,8 +1,4 @@
-<<<<<<< HEAD
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
-=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
->>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -38,10 +34,6 @@ CREATE TABLE `temp_emergency_contact` (
   UNIQUE KEY `contact_id_UNIQUE` (`contact_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `temp_user` FOREIGN KEY (`user_id`) REFERENCES `temp_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-<<<<<<< HEAD
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Emergency contacts for each user - may have more than 1 per user';
-/*!40101 SET character_set_client = @saved_cs_client */;
-=======
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Emergency contacts for each user - may have more than 1 per user';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,7 +45,6 @@ LOCK TABLES `temp_emergency_contact` WRITE;
 /*!40000 ALTER TABLE `temp_emergency_contact` DISABLE KEYS */;
 /*!40000 ALTER TABLE `temp_emergency_contact` ENABLE KEYS */;
 UNLOCK TABLES;
->>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -64,8 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
--- Dump completed on 2016-05-02 16:11:04
-=======
--- Dump completed on 2016-05-02 20:57:42
->>>>>>> signupMod
+-- Dump completed on 2016-05-02 21:48:28

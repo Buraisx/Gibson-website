@@ -1,8 +1,4 @@
-<<<<<<< HEAD
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
-=======
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
->>>>>>> signupMod
 --
 -- Host: localhost    Database: gibson
 -- ------------------------------------------------------
@@ -29,10 +25,7 @@ DROP TABLE IF EXISTS `temp_user`;
 CREATE TABLE `temp_user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `rank_id` int(10) unsigned NOT NULL DEFAULT '1',
-<<<<<<< HEAD
-=======
   `age_group_id` int(10) unsigned DEFAULT NULL,
->>>>>>> signupMod
   `type` varchar(16) NOT NULL,
   `username` varchar(32) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
@@ -57,10 +50,6 @@ CREATE TABLE `temp_user` (
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `province_id` (`province_id`)
-<<<<<<< HEAD
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-=======
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,7 +61,6 @@ LOCK TABLES `temp_user` WRITE;
 /*!40000 ALTER TABLE `temp_user` DISABLE KEYS */;
 /*!40000 ALTER TABLE `temp_user` ENABLE KEYS */;
 UNLOCK TABLES;
->>>>>>> signupMod
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -83,8 +71,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
--- Dump completed on 2016-05-02 16:11:05
-=======
--- Dump completed on 2016-05-02 20:57:43
->>>>>>> signupMod
+-- Dump completed on 2016-05-02 21:48:29
