@@ -69,7 +69,7 @@ router.post('/volunteer/enrolluser', function(req, res){
                             next(null, description.slice(0, -2))
                         }
                     });
-                }
+                },
 
                 // INSERTING PAYMENT HISTORY
                 function(description, next){
@@ -111,7 +111,7 @@ router.post('/volunteer/enrolluser', function(req, res){
                         var notes = 'Registered for course ID: ' +sanitizer.sanitize(req.body.course_list[i])
 
                         var inserts = [
-                            sanitizer.sanitize(req.body.user_id), 
+                            sanitizer.sanitize(req.body.user_id),
                             today,
                             total,
                             transaction_id,
