@@ -427,8 +427,13 @@ hr {
 }
 
 .editinfobutton {
-    color: #2CC185;
+    color: #74777b;
     cursor: pointer;
+}
+
+.editinfobutton:hover
+{
+    color: #2CC185;
 }
 
 .deletecontactbutton {
