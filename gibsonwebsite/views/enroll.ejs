@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="/js/enrollscripts.js"> </script>
+	</head>
+
+	<body>
+	<form action = "/enroll" method = "post" role = "form">
+	<!--sending csrf token-->
+
+        <input type="hidden" id= "_csrf" name="_csrf" value="<%= csrfToken %>">
+		<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+
+			<div class="carousel-inner" role="listbox">
+    			<div class="item active">
+    				<div class = "signup-container"><!--panel div-->
+                		<div class = "panel panel-default shadowy signuppanel"><!-- panel start-->
+                   			<div class = "panel-heading" id="signup1">
+                   				<h2 class = "text-center">Step 1: Search For User</h2>
+                   			</div>
+                   			<div class = "panel-body">
+                        		<div class = "row">
+                            		<div class="form-group col-sm-offset-1 col-sm-5">
+                                		<label class="control-label"><span class="requiredasterisk">*</span>Email:</label>
+                                		<span id = "checkemail"></span>
+                                		<input class = "form-control reqIn" type="text" name ="email" id="email" placeholder = "Enter Email" onchange="displayUser(this.value);" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
+                                		<!--Character restrictions-->
+                            		</div>
+                            	</div>
+                            	<div  class = "row">
+                            		<!-- show user info -->
+                            		<div class="col-sm-5">
+	                            		<p id="userid"></p>
+    	                        		<p id="email"></p>
+                            			<p id="fname"></p>
+                            			<p id="lname"></p>
+                            		</div>
+                            	</div>
+                            		<!-- Next Button -->
+                            		<div class = "row">
+		                            	<div class = "col-sm-offset-6 col-sm-5">
+                                			<button type = "button" class = "btn btn-success topage2 next-button" href="#myCarousel" data-slide="next">Next&nbsp;&nbsp;&nbsp;&rarr;</button>
+                            			</div>
+                        			</div>   
+	                        	</div>
+    						</div> <!--panel body-->
+    					</div><!--panel default-->
+    				</div><!-- signup container -->
+
+    			<div class="item">
+      				<img src="img_chania2.jpg" alt="Chania">
+    			</div>
+  			</div>
+		</div>
+	</form>
+	</body>
+</html>
