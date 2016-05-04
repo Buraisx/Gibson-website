@@ -137,7 +137,7 @@ function controlpanel () {
     adduser+='    <div class = "  col-sm-4">';
     adduser+='        <label for="student"><input type="checkbox" id="student" name = "student"> I am a student.</label>';
     adduser+='    </div>';
-    adduser+='    <div class="col-sm-6" pull-left" id="signup-notifications"">';
+    adduser+='    <div class="col-sm-6 pull-left" id="signup-notifications">';
     adduser+='        <label><input type="checkbox" id="send_notifications" name = "send_notifications"> Signup for email newsletters.</label>';
     adduser+='    </div>';
     adduser+='</div>';
