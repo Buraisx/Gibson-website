@@ -129,10 +129,6 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 	padding-right:0px;
 }
 
-#step2{
-    background-color: #3AAADA;
-}
-
 #step3{
     background-color: #97CD51;
 }
@@ -152,7 +148,6 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 }
 
 /*	Step 1 Specific	*/
-
 /* Panel Colour */
 #step1{
     background-color: #F39C37;
@@ -160,4 +155,10 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 
 #user-info{
 	display:none;
+}
+
+/*	Step 2 Specific	*/
+/* Panel Colour */
+#step2{
+    background-color: #3AAADA;
 }
