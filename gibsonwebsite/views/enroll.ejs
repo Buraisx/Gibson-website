@@ -5,7 +5,7 @@
 
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-		<link href = "/css/signupdesign.css" rel = "stylesheet">
+        <link href = "/css/enrolldesign.css" rel = "stylesheet">
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<script src="/js/enrollscripts.js"> </script>
@@ -20,9 +20,9 @@
 
 			<div class="carousel-inner" role="listbox">
     			<div class="item active">
-    				<div class = "signup-container"><!--panel div-->
-                		<div class = "panel panel-default shadowy signuppanel"><!-- panel start-->
-                   			<div class = "panel-heading" id="signup1">
+    				<div class = "step-container"><!--panel div-->
+                		<div class = "panel panel-default shadowy steppanel"><!-- panel start-->
+                   			<div class = "panel-heading" id="step1">
                    				<h2 class = "text-center">Step 1: Search For User</h2>
                    			</div>
                    			<div class = "panel-body">
@@ -34,27 +34,27 @@
                                 		<!--Character restrictions-->
                             		</div>
                             	</div>
-                            	<div class = "panel panel-default shadowy signuppanel col-sm-offset-1 col-sm-5"><!-- panel start-->
+                            	<div class = "panel panel-default steppanel col-sm-offset-1 col-sm-5" id="user-info"><!-- panel start-->
                             		<div  class = "row">
                             			<!-- show user info -->
                             			<div>
-	                            			<p id="userid"></p>
-    	                        			<p id="email"></p>
-                            				<p id="fname"></p>
-                            				<p id="lname"></p>
+	                            			<p id="user-id"></p>
+    	                        			<p id="user-email"></p>
+                            				<p id="user-fname"></p>
+                            				<p id="user-lname"></p>
                             			</div>
                             		</div>
                             	</div>
-                            		<!-- Next Button -->
-                            		<div class = "row">
-		                            	<div class = "col-sm-offset-6 col-sm-5">
-                                			<button type = "button" class = "btn btn-success topage2 next-button" href="#myCarousel" data-slide="next">Next&nbsp;&nbsp;&nbsp;&rarr;</button>
-                            			</div>
-                        			</div>   
-	                        	</div>
-    						</div> <!--panel body-->
-    					</div><!--panel default-->
-    				</div><!-- signup container -->
+                            	<!-- Next Button -->
+                            	<div class = "row">
+		                            <div class = "col-sm-offset-6 col-sm-5">
+                                		<button type = "button" class = "btn btn-success topage2 next-button next-hidden" href="#myCarousel" data-slide="next" id="next-step1" disabled>Next&nbsp;&nbsp;&nbsp;&rarr;</button>
+                            		</div>
+                        		</div>   
+	                        </div>
+    					</div> <!--panel body-->
+    				</div><!--panel default-->
+    			</div><!-- step container -->
 
     			<div class="item">
       				<img src="img_chania2.jpg" alt="Chania">

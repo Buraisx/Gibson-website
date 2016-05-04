@@ -1,16 +1,21 @@
 function clearUserData(){
-	$('#userid').empty();
-	$('#email').empty();
-	$('#fname').empty();
-	$('#lname').empty();
+	$('#user-info').hide("slow", function(){
+		$('#userid').empty();
+		$('#email').empty();
+		$('#fname').empty();
+		$('#lname').empty();
+	});
 }
 
 
 function fillUserData(user_data){
-	$('#userid').text(user_data[0].user_id);
-	$('#email').text(user_data[0].email);
-	$('#fname').text(user_data[0].fname);
-	$('#lname').text(user_data[0].lname);
+	$('#user-id').text(user_data[0].user_id);
+	$('#user-email').text(user_data[0].email);
+	$('#user-fname').text(user_data[0].fname);
+	$('#user-lname').text(user_data[0].lname);
+	$('#user-info').show("slow");
+	$('#next-step1').removeProp("disabled");
+	$('#next-step1').show("slow");
 }
 
 
@@ -21,12 +26,12 @@ function displayUser(email){
 	})
 	.done(function (res){
 		console.log("You have found the user!");
-		console.log(res);
 		clearUserData();
 		fillUserData(res);
 	})
 	.fail(function (err){
 		console.log("This user does not exist.");
 		clearUserData();
+		//fillUserData([{user_id:1, email:"Benjamin.zhao1995@hotmail.com", fname:"Benji", lname:"Zhao"}]);
 	});
 }

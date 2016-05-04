@@ -1,0 +1,163 @@
+#progressBar {
+	margin-left: 25%;
+	width: 50%;
+	height: 22px;
+}
+
+#progressBar div {
+	height: 100%;
+	color: #fff;
+	text-align: right;
+	font-size: 12px;
+	line-height: 22px;
+	width: 0;
+}
+.progressdisp
+{
+	border-radius: 4px;
+	background: #FFF;
+	border: 1px solid #AAA;
+	overflow: hidden;
+}
+.progressdisp div
+{
+	background-image: url(/img/pbar-ani.gif);
+	border-right: 1px solid #AAA;
+}
+
+.absolute{
+	position:absolute;
+	top:4%;
+}
+.shadowy{
+	opacity: 0.9;
+	-webkit-box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
+box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
+}
+
+.step-container {
+	width: 90%;
+	max-width: 800px;
+	margin: 0 auto;
+	padding-top: 80px;
+}
+
+.steppanel
+{
+	/*margin-top: 80px;*/
+	margin-bottom: 100px;
+}
+.fill {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+.nav{
+	margin-bottom: 0px;
+}
+.navbar{
+	margin-bottom: 0px;
+}
+.carousel,.item,.active{height:100%;}
+	.carousel-inner{height:100%;}
+#dimmer
+{
+    background-color:#000;
+    opacity:0.5;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:none;
+    z-index: 999;
+}
+.g-recaptcha
+{
+	position:fixed;
+    top:40%;
+    left:40%;
+	display: none;
+	opacity:1;
+	z-index: 9999;
+}
+
+.next-hidden{
+	display:none;
+}
+
+.next-button{
+	float:right;
+}
+
+.register-button{
+    margin-right: 0px;
+    margin-left: auto;
+}
+
+#removebutton{
+	float:right;
+}
+
+#btnsubmit{
+	float: right;
+}
+
+#signup-notifications{
+	float: right;
+}
+
+.extend{
+	margin-bottom: 2%;
+}
+
+.btnedit{
+	padding: 10px 24px;
+}
+
+.stoppaddingleft{
+	padding-left:0px;
+}
+
+.stoppaddingright
+{
+	padding-right:0px;
+}
+
+#step2{
+    background-color: #3AAADA;
+}
+
+#step3{
+    background-color: #97CD51;
+}
+
+
+/* mobile */
+@media (max-width: 767px)
+{
+	#frm {
+		height: auto;
+	}
+
+	.carousel-overflow{
+		display: table;
+		width: 100%;
+	}
+}
+
+/*	Step 1 Specific	*/
+
+/* Panel Colour */
+#step1{
+    background-color: #F39C37;
+}
+
+#user-info{
+	display:none;
+}
