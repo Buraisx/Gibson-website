@@ -283,7 +283,7 @@ function controlpanel () {
     limiteduser+='                            </div>';
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "col-sm-10 text-right">';
-    limiteduser+='                                    <button type = "button" class = "btn btn-default">Add</button>';
+    limiteduser+='                                    <button type = "button" class = "btn btn-success">Add</button>';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
     limiteduser+='                            </form>';

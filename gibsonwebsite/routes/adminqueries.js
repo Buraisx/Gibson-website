@@ -11,7 +11,7 @@ var readSQL = require('../public/js/readSQL');
 
 
 router.get('/admin/portal', function(req, res, next) {
-  res.render('adminviews', { title: 'Admin Profile' });
+  res.render('adminviews', { title: 'Admin Portal' });
 });
 
 // It's very roomy in here LOL.

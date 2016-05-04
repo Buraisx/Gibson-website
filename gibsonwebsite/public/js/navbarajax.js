@@ -16,7 +16,7 @@ $(document).ready(function(){
 		userdisplay += '	<li><a href="/user/profile">Profile</a></li>';
 		// Adds link to admin views if user is an admin
 		if (rank == 4) {
-			userdisplay += '	<li><a href="/admin/profile">Admin Menu</a></li>';
+			userdisplay += '	<li><a href="/admin/portal">Admin Portal</a></li>';
 		}
 		if (rank == 3) {
 			userdisplay += '	<li><a href="/admin/profile">Staff Menu</a></li>'; //link needs to be add for the staff
