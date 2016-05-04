@@ -24,7 +24,88 @@ $("a[href$='#addcourses']").ready(function(){
 
 // LOADS CONTROL PANEL
 function load_controlpanel(){
-    
+	jQuery.getJSON("/volunteer/portal", function(user_info){ //route might needs to be changed
+	$('#controlpanel').contents().remove();
+    var nav = '';
+    nav+='                <hr>';
+    nav+='                <div class="col-sm-4">';
+    nav+='                    <div id="sidebar-wrapper">';
+    nav+='                        <ul class="sidebar-nav nav-stacked" id="menu">';
+    nav+='                        <li class="active"><a class="menucolour" href="#adduser" data-toggle="tab"><i class="fa fa-user-plus"></i> Add New User</a></li>';
+    nav+='                        <li><a class="menucolour" href="#addlimiteduser" data-toggle="tab"><i class="fa fa-user"></i> Add Limited User</a></li>';
+    nav+='                        <li><a class="menucolour" href="#addusertocourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add User To Course</a></li>';
+    nav+='                    </ul>';
+    nav+='                    </div>';
+    nav+='                </div>';
+    var controlpanel='';
+    controlpanel+='      <div class="tab-content">';
+
+    var adduser='';
+    adduser+='                    <div class="tab-pane active" id="adduser">';
+    adduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
+    adduser+='                            <h3>Add New User</h3>';
+    adduser+='                        </div>';
+    adduser+='                    </div>';
+
+    var limiteduser='';
+    limiteduser+='                    <div class="tab-pane" id="addlimiteduser">';
+    limiteduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
+    limiteduser+='                            <form name="frm" action = "/volunteer/addlimited" method = "post" role = "form" id= "frm">';
+    limiteduser+='                            <h3>Add Limited User</h3>';
+    limiteduser+='                            <div class = "row">';
+    limiteduser+='                                <div class = "form-group col-sm-5">';
+    limiteduser+='                                    <label><span class="requiredasterisk">*</span>First Name:</label>';
+    limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+">';
+    limiteduser+='                                </div>';
+    limiteduser+='                                <div class = "form-group col-sm-5">';
+    limiteduser+='                                    <label><span class="requiredasterisk">*</span>Last Name:</label>';
+    limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+">';
+    limiteduser+='                                </div>';
+    limiteduser+='                            </div>';
+    limiteduser+='                            <div class = "row">';
+    limiteduser+='                                <div class="form-group col-sm-5">';
+    limiteduser+='                                    <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
+    limiteduser+='                                    <input class = "form-control reqIn" type="email" name = "email" id="email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+    limiteduser+='                                </div>';
+    limiteduser+='                                <div class = "form-group col-sm-5">';
+    limiteduser+='                                    <label class = "control-label">Phone (Home):</label>';
+    limiteduser+='                                    <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}">';
+    limiteduser+='                                </div>';
+    limiteduser+='                            </div>';
+    limiteduser+='                            <div class = "row">';
+    limiteduser+='                                <div class = "col-sm-10 text-right">';
+    limiteduser+='                                    <button type = "button" class = "btn btn-default">Add</button>';
+    limiteduser+='                                </div>';
+    limiteduser+='                            </div>';
+    limiteduser+='                            </form>';
+    limiteduser+='                        </div>';
+    limiteduser+='                    </div>';
+
+    var addusertocourse='';
+    addusertocourse+='                    <div class="tab-pane" id="addusertocourse">';
+    addusertocourse+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
+    addusertocourse+='                            <h3>Add User To Course</h3>';                           
+    addusertocourse+='                        </div>';
+    addusertocourse+='                    </div>';
+
+     
+    controlpanel+=adduser;
+    controlpanel+=limiteduser;
+    controlpanel+=addusertocourse;
+
+    //Submit Tab
+    controlpanel+='                   </div>';   //closing tab div
+
+    $('#controlPanel').append(nav);
+    $('#controlPanel').append(controlpanel);
+    //ON JSON APPEND COMPLETE ATTACH FADE IN ANIMATION
+    }).done(function(){
+        $( "#sidebar-wrapper" ).tabs({
+            activate: function( event, ui ) {
+                ui.newPanel.hide().fadeIn(500);
+            }
+        });
+    });
 }
 
 
