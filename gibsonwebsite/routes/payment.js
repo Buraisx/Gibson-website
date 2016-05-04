@@ -193,12 +193,12 @@ router.get('/payment/execute', function(req,res,next){
 
         // INSERTING INTO PAYMENT INFORMATION INTO gibson.transaction_history
         function(payment, next){
-          var decode = jwt.decode(req.cookies.access_token); 
-          var sql = "INSERT into gibson.transaction_history (paypal_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-          var inserts = [payment.id, payment.create_time.replace('T', ' ').replace('Z', ''), payment.state, 
+          var decode = jwt.decode(req.cookies.access_token);
+          var sql = "INSERT into gibson.transaction_history (payment_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+          var inserts = [payment.id, payment.create_time.replace('T', ' ').replace('Z', ''), payment.state,
                         payment.intent, payment.payer.payment_method, decode.id,
-                        payment.payer.payer_info.email, payment.payer.payer_info.first_name, payment.payer.payer_info.last_name, 
-                        payment.payer.payer_info.payer_id, payment.transactions[0].amount.total, payment.transactions[0].amount.currency, 
+                        payment.payer.payer_info.email, payment.payer.payer_info.first_name, payment.payer.payer_info.last_name,
+                        payment.payer.payer_info.payer_id, payment.transactions[0].amount.total, payment.transactions[0].amount.currency,
                         payment.transactions[0].amount.details.tax, payment.transactions[0].description];
           sql = mysql.format(sql, inserts);
 
