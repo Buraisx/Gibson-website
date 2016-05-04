@@ -520,14 +520,7 @@ router.post('volunteer/convertlimited', function(req, res){
                 },
 
                 // TODO: INSERT EMERGENCY CONTACTS INFORMATION
-                // function(next){
-                //     var emergency1 = {
-                //         fname: sanitizer.sanitize(req.body.emergencyfname1),
-                //         lname: sanitizer.sanitize(req.body.emergencylname1),
-                //         rel: sanitizer.sanitize(req.body.relationship1),
-                //         phone: sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''),
-                //     };
-                // }
+                // function(next){}
             ],
 
             // FINAL FUNCTION -> HANDLES ERROR
@@ -549,9 +542,11 @@ router.post('volunteer/convertlimited', function(req, res){
     });
 });
 
+
+// GETTING A LIST OF COURSES
 router.get('/volunteer/portal/courses', function(req, res){
 
-    var sql = "SELECT course_id, course_name, course_code, default_fee, start_date, end_date, course_time, categories, course_interval, course_language, course_target, course_description, notes, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC";
+    var sql = "SELECT course_id, course_name, course_code, default_fee, start_date, end_date, course_time, categories, course_interval, course_language, course_target, course_description, notes, course_days, course_limit, (SELECT COUNT(*) FROM user_course uc WHERE uc.course_id=co.course_id) AS enroll_count FROM gibson.course co ORDER BY course_id DESC;";
 
     connection.getConnection(function(err, con){
         if(err){
@@ -575,6 +570,38 @@ router.get('/volunteer/portal/courses', function(req, res){
         });
     });
 });
+
+
+// SENDS A LIST OF STUDENTS
+router.get('/volunteer/portal/courses/students', function(req, res){
+
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('volunteer.js: Error connecting to the database.');
+            res.status(500).send("Internal Server Error");
+        }
+        else{
+
+            var query =  'SELECT user.user_id, user.username, user.fname, user.lname, user.email ';
+                query += 'FROM gibson.user INNER JOIN gibson.user_course ';
+                query += 'ON user_course.user_id = user.user_id ';
+                query += 'WHERE user_course.course_id = ?;';
+
+            con.query(query, [sanitizer.sanitize(req.query.course_id)], function(err, results){
+                con.release();
+
+                if(err){
+                    console.log("volunteer.js: Error querying for list of students.");
+                    res.status(500).send("Internal Server Error.");
+                }
+                else{
+                    res.status(200).send(results);
+                }
+            });
+        }
+    });
+});
+
 
 
 module.exports = router;

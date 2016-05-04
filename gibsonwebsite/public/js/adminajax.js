@@ -110,7 +110,7 @@ function addCourse(course_add){
 
 // Generate List of users HTML
 function listusers(){
-	jQuery.getJSON("/admin/profile/info", function(user_info){
+	jQuery.getJSON("/staff/portal/info", function(user_info){
 		$('#profile').contents().remove();
 
 		var users = '';
@@ -174,7 +174,7 @@ function listusers(){
 			users += '                        <div class = "row">';
 			users += '                            <div class = "col-sm-6">';
 			users += '                                <p><strong>Address: </strong>' + user_info[i].address + '</p>';
-			users += '								  <a href="/profile/'+ user_info[i].username +'" <button type="button" class="btn btn-success"> Detailed User Page</button></a>';
+			users += '								  <a href="/staff/portal/detailedprofile?user='+ user_info[i].username +'" <button type="button" class="btn btn-success"> Detailed User Page</button></a>';
 			users += '                            </div>';
 			users += '                        </div>';
 
@@ -280,12 +280,12 @@ var checkedBoxes = [];
 
 //Generates List of Courses HTML
 function listcourses(){
-	jQuery.getJSON("/admin/profile/courses", function(data_unfiltered){
+	jQuery.getJSON("/volunteer/portal/courses", function(data_unfiltered){
 
 		allAvailableCourses = data_unfiltered;
 	})
 	.done(function(res){
-		jQuery.getJSON("/admin/tags", function(tags){
+		jQuery.getJSON("/user/tags", function(tags){
 			allTags = tags;
 			showFilteredCourses(allAvailableCourses, '', []);
 		});
@@ -576,7 +576,7 @@ function showFilteredCourses(data, searchText, searchTags){
 
 function listEnrolled(course_id, index){
 	// List of registered students
-	jQuery.getJSON("/admin/profile/courses/students?course_id="+course_id, function(students){
+	jQuery.getJSON("/volunteer/portal/courses/students?course_id="+course_id, function(students){
 		var studentslist = '';
 			//studentslist+='    <section width = "20%">';
 
@@ -1045,7 +1045,7 @@ function validateCourse(){
 	var adhoc_days = addAdhoc();
 
 	//$("#courseform").slideToggle();
-	$.post("/validateCourse",{
+	$.post("/staff/portal/validateCourse",{
 		"course_name": $('#addcoursename').val(),
 		"course_code": $('#addcoursecode').val(),
 		"addcost":$('#addcost').val(),
@@ -1065,13 +1065,15 @@ function validateCourse(){
 		"_csrf": $('#_csrf').val()
 	})
 	.done(function (res){
-		alert(res);
 		submitCourse();
 	})
 	.fail(function (err){
 		//$("#courseform").slideToggle();
-		console.log(err.responseText);
-		alert(err.responseText);
+		swal({
+			title: err.responseText,
+			type: "error"
+		});
+
 	});
 	//$("#courseform").submit();
 }
@@ -1085,7 +1087,7 @@ function submitCourse(){
 	//console.log(scheduled_days);
 	//console.log(adhoc_days);
 
-	$.post("/admin/profile/addCourse",{
+	$.post("/staff/portal/addCourse",{
 		"addcoursecode":$('#addcoursecode').val(),
 		"addcoursename":$('#addcoursename').val(),
 		"addcost":$('#addcost').val(),
@@ -1105,7 +1107,10 @@ function submitCourse(){
 		"_csrf": $('#_csrf').val()
 	})
 	.done(function (res){
-		alert(res);
+		swal({
+			title: res,
+			type: "success"
+		});
 	});
 }
 

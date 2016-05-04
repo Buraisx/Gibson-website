@@ -105,6 +105,7 @@ var cart = require('./routes/cart');
 var payment = require('./routes/payment');
 var invoice = require('./routes/invoice');
 var volunteer = require('./routes/volunteer.js');
+var staff = require('./routes/staff.js');
 
 // ================================================
 // ===ALWAYS LOOK FOR ALERTS ======================
@@ -403,7 +404,75 @@ app.use(function (req, res, next){
 // =======================================================
 // ===↓↓↓↓↓ VOLUNTEER AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // =======================================================
+
 app.use('/', volunteer);
+
+// ======================================================
+// ===↑↑↑↑↑ NO STAFF AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
+// ======================================================
+app.use(function (req, res, next){
+
+  // LOOKING FOR TOKEN IN COOKIES
+  var token = req.cookies.staff;
+  var decoded = jwt.decode(token);
+
+  // TOKEN FOUND, TRYING TO VALIDATE
+  if (token){
+    // CREATING CONNECTION
+    // var connection = mysql.createPool(config.db_config);
+    connection.getConnection(function(err, con){
+      if (err){
+        console.log('app.js: Error connecting to the DB.');
+        //res.end();
+        return err;
+      }
+
+      if (decoded.rank >= 3){
+
+        // QUERYING THE DATABASE FOR SECRET KEY
+        con.query('SELECT secret_key FROM gibson.rank WHERE rank_id = 3;', function(err, results){
+          if (err){
+            con.release();
+            console.log('app.js: Error querying the Database for secret_key');
+          //  res.end();
+            return err;
+          }
+
+          var secretKey = results[0].secret_key;
+
+          // VERIFYING TOKEN
+          jwt.verify(token, secretKey, function(err, volunteerInfo){
+            if (err){
+              con.release();
+              console.log('app.js: Error verifying token.');
+            //  res.end();
+              return err;
+            }
+            else{
+              con.release();
+              next();
+            }
+          });
+
+        });
+      }
+      else{
+        return err;
+      }
+
+    });
+  }
+  // NO TOKEN FOUND -> REDIRECTS TO LOGIN TO GET A TOKEN
+  else {
+    //res.end();
+    return err;
+  }
+});
+// ===================================================
+// ===↓↓↓↓↓ STAFF AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
+// ===================================================
+
+app.use('/', staff);
 
 // ======================================================
 // ===↑↑↑↑↑ NO ADMIN AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===

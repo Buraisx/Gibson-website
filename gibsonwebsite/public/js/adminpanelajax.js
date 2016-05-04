@@ -1,5 +1,5 @@
 function makeEvent(){
-  $.post('/admin/addEvent', {
+  $.post('/staff/portal/addEvent', {
     _csrf: $('#_csrf').val(),
     startdate: $('#startdate').val(),
     enddate: $('#enddate').val(),
