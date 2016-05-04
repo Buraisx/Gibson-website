@@ -65,11 +65,11 @@ function load_controlpanel(){
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class="form-group col-sm-5">';
     limiteduser+='                                    <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-    limiteduser+='                                    <input class = "form-control reqIn" type="email" name = "email" id="email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+    limiteduser+='                                    <input class = "form-control reqIn" type="email" name = "email" id="email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
     limiteduser+='                                </div>';
     limiteduser+='                                <div class = "form-group col-sm-5">';
     limiteduser+='                                    <label class = "control-label">Phone (Home):</label>';
-    limiteduser+='                                    <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity('Invalid phone number.')" onchange="try{setCustomValidity('')}catch(e){}">';
+    limiteduser+='                                    <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity("")}catch(e){}">';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
     limiteduser+='                            <div class = "row">';
