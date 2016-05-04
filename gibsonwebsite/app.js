@@ -16,6 +16,7 @@ var jwt = require('jsonwebtoken');
 var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
 var connection = require('./mysqlpool');
+var enroll = require('./routes/enroll').router;
 
 
 //CSRF Protection
@@ -406,6 +407,7 @@ app.use(function (req, res, next){
 // =======================================================
 
 app.use('/', volunteer);
+app.use('/', enroll);
 
 // ======================================================
 // ===↑↑↑↑↑ NO STAFF AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
