@@ -98,7 +98,7 @@ function load_profile(){
     personalinfo+='	   <div class="tab-pane active" id="personalinfo">';
     personalinfo+='    <div id="page-content-wrapper" class="container-fluid xyz">';
     personalinfo+='    <div class="row">';
-    personalinfo+='        <h3 class="col-sm-8"><i class="fa fa-pencil-square-o fa-lg editinfobutton" aria-hidden="true" onclick="editpersonalinfo()"></i> Personal Information</h3>';
+    personalinfo+='        <h3 class="col-sm-8">Personal Information <i class="fa fa-pencil-square-o fa-lg editinfobutton" aria-hidden="true" onclick="editpersonalinfo()"></i></h3>';
     personalinfo+='    </div>';
     personalinfo+='    <div class="row">';
 	personalinfo+='        <div class="form-group col-sm-12">';
@@ -180,7 +180,7 @@ function load_profile(){
 	{
 		studentinfo+='	  <div class="tab-pane" id="studentinfo">';
 		studentinfo+='	  <div id="page-content-wrapper" class="container-fluid xyz">';
-		studentinfo+='    <h3><i class="fa fa-pencil-square-o fa-lg editinfobutton" aria-hidden="true" onclick="editstudentinfo()"></i> Student Information</h3>';
+		studentinfo+='    <h3>Student Information <i class="fa fa-pencil-square-o fa-lg editinfobutton" aria-hidden="true" onclick="editstudentinfo()"></i></h3>';
 		studentinfo+='    <div class="row">';
 		studentinfo+='        <div class="form-group col-sm-12">';
 		studentinfo+='            <p><span class="col-sm-3 fieldname">School Name</span><span class="col-sm-9 fieldval">' + user_info.student_info.school_name + '</span></p>';
@@ -231,7 +231,7 @@ function load_profile(){
 	var emergencyinfo='';
 	emergencyinfo+='	  <div class="tab-pane" id="emergencyinfo">';
 	emergencyinfo+='	  <div id="page-content-wrapper" class="container-fluid xyz">';
-	emergencyinfo+='      <h3><i class="fa fa-pencil-square-o fa-lg editinfobutton" aria-hidden="true" onclick="editcontactsinfo()"></i> Emergency Contacts</button></h3>';
+	emergencyinfo+='      <h3>Emergency Contacts <i class="fa fa-pencil-square-o fa-lg editinfobutton" aria-hidden="true" onclick="editcontactsinfo()"></i> </h3>';
 	for(var i=0; i<user_info.emergency_contacts.length; i++)
 	{
 		emergencyinfo+='    <h4>Contact #'+(i+1)+'</h4>';
@@ -696,7 +696,7 @@ function editpersonalinfo() {
 		var editinfo='';
 		editinfo+='    <div id="page-content-wrapper" class="container-fluid xyz">';
 	    editinfo+='    <div class="row">';
-	    editinfo+='        <h3 class="col-sm-8 editinfoheader">Personal Information</h3>';
+	    editinfo+='        <h3 class="col-sm-8">Personal Information</h3>';
 	    editinfo+='    </div>';
 		editinfo+='    <form class="form-inline" name="editinformation" id="editinformation" action="/user/profile/edit" method="POST" role="form">';
 		editinfo+='    <input type="hidden" name="username" id="username" value="' + user_info.user.username + '">';
@@ -813,7 +813,7 @@ function editstudentinfo() {
 		if(user_info.user.student==1)
 		{
 		    editinfo+='    <div class="row">';
-		    editinfo+='        <h3 class="col-sm-8 editinfoheader">Student Information</h3>';
+		    editinfo+='        <h3 class="col-sm-8">Student Information</h3>';
 	    	editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
@@ -846,7 +846,7 @@ function editstudentinfo() {
 		}
 		else {
 		    editinfo+='    <div class="row">';
-		    editinfo+='        <h3 class="col-sm-8 editinfoheader">Student Information</h3>';
+		    editinfo+='        <h3 class="col-sm-8">Student Information</h3>';
 	    	editinfo+='    </div>';
 			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
@@ -891,7 +891,7 @@ function editcontactsinfo() {
 		var editinfo='';
 		editinfo+='	  <div id="page-content-wrapper" class="container-fluid xyz">';
 	    editinfo+='    <div class="row">';
-	    editinfo+='        <h3 class="col-sm-8 editinfoheader">Emergency Contacts</h3>';
+	    editinfo+='        <h3 class="col-sm-8">Emergency Contacts</h3>';
     	editinfo+='    </div>';
 		// The user's existing emergency contacts
 		for(var i=0; i<user_info.emergency_contacts.length; i++)
