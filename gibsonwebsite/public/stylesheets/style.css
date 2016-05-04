@@ -431,7 +431,7 @@ hr {
     cursor: pointer;
 }
 
-.editinfoheader { /******************************************************************************************************************/
+.editinfoheader {
     margin-left: 42px;
 }
 
@@ -451,6 +451,10 @@ hr {
 }
 .coursecap {
     text-align: right;
+}
+
+.sidebarmargin {
+    margin-bottom: 350px;
 }
 
 /** admin panel **/
