@@ -168,7 +168,7 @@ function listusers(){
 			users += '                                <p><strong>Gender: </strong>' + user_info[i].gender + '</p>';
 			users += '                            </div>';
 			users += '                            <div class = "col-sm-6">';
-			users += '                                <p><strong>Date of Birth: </strong>' + convertdate(String(user_info[i].birth_date).substring(0, 10)) + '</p>';
+			users += '                                <p><strong>Age Group: </strong>' + user_info[i].age_group_name + ' (' + user_info[i].age_group_description + ')' + '</p>';
 			users += '                            </div>';
 			users += '                        </div>';
 			users += '                        <div class = "row">';

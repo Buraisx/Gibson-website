@@ -1,10 +1,21 @@
 //List users on page ready
+
+
+
 $("a[href$='#controlPanel']").ready(function(){
-    controlpanel();
+	jQuery.getJSON('/admin/portal/listfiller', function(req){
+		dropdown_info = {provinces: req.provinces, age_groups: req.age_groups};
+		controlpanel(dropdown_info);
+	});
 });
 
-function controlpanel () {
 
+// AGE GROUP AND PROVINCE BOTH PROVIDE ID. USE age_group: $('#age_group option:selected').val() TO GET THE VALUE (SIMILAR FOR PROVINCE)
+
+
+function controlpanel (dropdown_info) {
+
+	
     var csrfmeta = $("meta[name=_csrf]");
     var nav = '';
     nav+='                <hr>';
@@ -81,13 +92,12 @@ function controlpanel () {
     adduser+='        <label><span class="requiredasterisk">*</span>Age Group:</label>';
     adduser+='        <select class = "form-control" name = "age_group" id = "age_group" placeholder="Age Group">';
     adduser+='            <option value="" disabled selected>Please Select</option>';
-    // adduser+='            <% for(var i=0; i<age_group_list.length; i++) { %>';
-    // adduser+='                <li>';
-    // adduser+='                    <option value = <%= age_group_list[i].age_group_id %>>';
-    // adduser+='                        <%= age_group_list[i].age_group_name + " (" + age_group_list[i].age_group_description + ")" %>';
-    // adduser+='                    </option>';
-    // adduser+='                </li>';
-    // adduser+='            <% } %>';
+    for (var i = 0; i < dropdown_info.age_groups.length; i++) {
+			//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+		adduser+='            <option';
+		adduser+=' value=' + dropdown_info.age_groups[i].age_group_id;
+		adduser+='>' + dropdown_info.age_groups[i].age_group_description + '</option>';
+	}
     adduser+='        </select>';
     adduser+='    </div>';
     adduser+='    <div class = "form-group col-sm-5">';
@@ -124,13 +134,12 @@ function controlpanel () {
     adduser+='        <label class = "control-label"><span class="requiredasterisk">*</span>Province:</label>';
     adduser+='        <select class = "form-control" name = "province" id = "province" placeholder="Province">';
     adduser+='            <option value="" disabled selected>Please Select</option>';
-    // adduser+='            <% for(var i=0; i<province_list.length; i++) { %>';
-    // adduser+='                <li>';
-    // adduser+='                    <option value = <%= province_list[i].province_id %>>';
-    // adduser+='                        <%= province_list[i].province_name %>';
-    // adduser+='                    </option>';
-    // adduser+='                </li>';
-    // adduser+='            <% } %>';
+    for (var i = 0; i < dropdown_info.provinces.length; i++) {
+			//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+		adduser+='            <option';
+		adduser+=' value=' + dropdown_info.provinces[i].province_id;
+		adduser+='>' + dropdown_info.provinces[i].prov_abb + '</option>';
+	}
     adduser+='        </select>';
     adduser+='    </div>';
     adduser+='</div>';
