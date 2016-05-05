@@ -1,13 +1,11 @@
 <html>
+<%- include standardnavbar.ejs %>
 	<head>
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <link href = "/css/enrolldesign.css" rel = "stylesheet">
 		<!-- Latest compiled JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
 		<script src="/js/enrollscripts.js"> </script>
 	</head>
 
@@ -72,8 +70,11 @@
                                 </div>
                                 <!-- Next Button -->
                                 <div class = "row">
-                                    <div class = "col-sm-offset-6 col-sm-5">
-                                        <button type = "button" class = "btn btn-success topage2 next-button" href="#myCarousel" data-slide="next" id="next-step2" onclick="addCheckedCourses()" disabled>Next&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                    <div class = "col-sm-offset-1 col-sm-5">
+                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default" href="#myCarousel" data-slide="prev" id="prev-step1">Back&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                    </div>
+                                    <div class = "col-sm-5">
+                                        <button type = "button" class = "btn btn-success topage2 next-button" href="#myCarousel" data-slide="next" id="next-step2" onclick="addCheckedCourses();"disabled>Next&nbsp;&nbsp;&nbsp;&rarr;</button>
                                     </div>
                                 </div>   
                             </div>
@@ -81,8 +82,75 @@
                     </div><!--panel default-->
                 </div><!-- step2 container -->
 
+                <div class="item">
+                    <div class = "step-container"><!--panel div-->
+                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->
+                            <div class = "panel-heading" id="step3">
+                                <h2 class = "text-center">Step 3: Confirm Selected Courses </h2>
+                            </div>
+
+                            <div class = "panel-body">
+                                <div>
+                                <div class ="row">
+                                    <div id="shoppingcart" class="rcorners">
+                                         <!--GET csrf token-->
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
+                                        <h1>MY SHOPPING CART</h1>
+                                        <table id="cart-table">
+                                            <tr class="shoppingheader">
+                                                <td id="cart-header-code">Course Code</td>
+                                                <td id="cart-header-name">Course Name</td>
+                                                <td id="cart-header-cost">Cost</td>
+                                            </tr>
+                                        </table>
+                                        <div id="empty-cart">
+                                            <p id="empty-cart-text1">Oops! Your shopping cart is empty!</p>
+                                        </div> 
+                                        <div id="shoppingcart-buttons">                    
+                                        </div>
+                                        <div id="refundpolicy">
+                                        <h3>Refund Policy</h3>
+                                        <p class="refund">Registrant may receive full refund if they decide to withdraw 2 weeks before the first class.</p>
+                                        <p class="refund">If the program is cancelled due to insufficient enrollment or other unforeseen circumstances, the registered participants will receive a full refund.</p>
+                                        <p class="refund">Program fee is not transferable and is only applicable to the activity listed on the receipt.</p>
+                                        <p class="refund">105 Gibson Centre reserves the right to cancel or postpone any program/event.</p>
+                                        <p class="refund">NO CLASSES on public holidays. Please pay attention to the announcement in class.</p>
+                                    </div>
+                                </div>
+                                 <!-- Next Button -->
+                                <div class = "row">
+                                    <div class = "col-sm-offset-1 col-sm-5">
+                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default" href="#myCarousel" data-slide="prev" id="prev-step2">Back&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                    </div>
+                                    <div class = "col-sm-5">
+                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default" href="#myCarousel" data-slide="next" onClick = "confirmationAlert();" id="next-step3">Next&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                    </div>
+                                </div>  
+                            </div>
+                            </div>   
+                            </div>
+                        </div> <!--panel body-->
+                    </div><!--panel default-->
+                </div>
+
+                <div class="item">
+                    <div class = "step-container"><!--panel div-->
+                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->
+                            <div class = "panel-heading" id="step3">
+                                <h2 class = "text-center">Step 4: Enter The Transaction Details </h2>
+                            </div>
+
+                            <div class = "panel-body">
+   
+                            </div>
+                        </div> <!--panel body-->
+                    </div><!--panel default-->
+
+                </div>
+
   			</div>
 		</div>
 	</form>
+    <%- include standardfooter %>
 	</body>
 </html>
