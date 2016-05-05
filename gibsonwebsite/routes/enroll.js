@@ -14,6 +14,37 @@ router.get('/enroll', function (req, res, next){
   
 });
 
+router.get('/enroll/courses', function (req, res, next){
+
+  var sql = "SELECT c.course_id, c.course_code, c.course_name, c.course_limit, uc.user_list from gibson.course c LEFT JOIN (SELECT count(*) AS user_list, course_id from gibson.user_course GROUP BY course_id) uc ON uc.course_id = c.course_id";
+  console.log(sql);
+
+  connection.getConnection(function (err, con){
+    if(err) {
+      con.release();
+      console.log("cannot get connection");
+      return err;
+    }
+
+    con.query(sql, function (err, courses){
+      con.release();
+      if(err){
+        console.log("enroll.js: Cannot query for available courses.");
+        res.status(500).send();
+      }
+
+      if(!courses.length){
+        console.log('enroll.js: No courses');
+        res.status(404).send();
+      }
+      else{
+        console.log(courses);
+        res.status(200).send(courses);
+      }
+    });
+  });
+});
+
 router.post('/enroll/search/user', function (req, res, next){
 
   var sql = "SELECT user_id, email, fname, lname FROM gibson.user WHERE email = ?;";
@@ -31,12 +62,12 @@ router.post('/enroll/search/user', function (req, res, next){
     con.query(sql, function(err, results){
       con.release();
       if(err) {
-        console.log("enroll.js:Query error for finding user info");
+        console.log("enroll.js: Query error for finding user info");
         res.status(500).send();
       }
             //check if there is a user with the info
       if(!results.length) {
-        console.log("enroll.js:No User");
+        console.log("enroll.js: No User");
         res.status(404).send(); 
       }
       //send all course info to client
@@ -49,7 +80,52 @@ router.post('/enroll/search/user', function (req, res, next){
 
 router.post('/enroll', function (req, res, next){
 
+});
 
+router.post('/enroll/courses', function (req, res, next){
+  var sql = "SELECT course_id, course_code, course_name,instructor_name, default_fee, course_limit, start_date,end_date, course_language, course_description FROM gibson.course WHERE course_id IN (course_list);";
+  var courses = '';
+
+  connection.getConnection(function (err, con){
+    if(err){
+      console.log('enroll.js: Error connecting to database.');
+      res.status(401).send();
+      return err;
+    }
+    
+    else{
+      if(!req.body.selected_courses.length){
+        
+        //Add Courses
+        for (var i = 0; i < req.cookies.cart.course_list.length; i++){
+          courses += mysql.escape(req.body.selected_courses[i]);
+          courses += ',';
+        }
+
+        //Remove ending ,
+        courses=courses.slice(0, -1);
+        sql = sql.replace('course_list', courses);
+
+        //Query For Selected Course Details
+        con.query(sql, function(err, results){
+          con.release();
+          if(err){
+            console.log("enroll.js: Could not get selected courses");
+            res.status(404).send();
+            return err;
+          }
+
+          else{
+            res.status(200).send(results);
+          }
+        });  
+      }
+      else{
+        //EMPTY LIST
+        res.status(200).send([]);
+      }
+    }
+  });
 });
 
 
