@@ -546,6 +546,42 @@ router.post('volunteer/convertlimited', function(req, res){
                 // INSERT EMERGENCY CONTACTS INFORMATION
                 function(next){
 
+                    // SOME FINE HARDCODING
+                    var emContacts = [];
+
+                    if(req.body.emergencyfname3 && req.body.emergencylname3 && req.body.relationship3 && req.body.ephone3){
+                      emContacts = [
+                        [req.body.user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, '')],
+                        [req.body.user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, '')],
+                        [req.body.user_id, sanitizer.sanitize(req.body.emergencylname3), sanitizer.sanitize(req.body.emergencyfname3), sanitizer.sanitize(req.body.relationship3), sanitizer.sanitize(req.body.ephone3).replace(/\D+/g, '')]
+                      ];
+                    }
+                    else if (req.body.emergencyfname2 && req.body.emergencylname2 && req.body.relationship2 && req.body.ephone2){
+                      emContacts = [
+                        [req.body.user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, '')],
+                        [req.body.user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, '')]
+                      ];
+                    }
+                    else{
+                      emContacts = [
+                        [req.body.user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, '')]
+                      ];
+                    }
+
+                    // GENERATING THE INSERT QUERY
+                    var insertEmContacts = '';
+                    for (var ecnum = 0; ecnum < emContacts.length; ecnum++){
+                      insertEmContacts += mysql.format('INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone) VALUES(?, ?, ?, ?, ?); ', emContacts[ecnum]);
+                    }
+
+                    con.query(insertEmContacts, function(err, results){
+                        if(err){
+                            return next({no:500, msg:'Error inserting emeregency contacts'});
+                        }
+                        else{
+                            next(null);
+                        }
+                    });
                 }
             ],
 
