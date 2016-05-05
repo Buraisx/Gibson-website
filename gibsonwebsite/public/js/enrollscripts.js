@@ -5,7 +5,7 @@ $( document ).ready(function() {
 function cat(){
 	//recordTransaction();
 	//alert("hi");
-	alert($('#fname').val());
+	alert($('#user-fname').val());
 }
 
 var courses;
@@ -27,10 +27,6 @@ function fillUserData(user_data){
 	$('#user-email').text(user_data[0].email);
 	$('#user-fname').text(user_data[0].fname);
 	$('#user-lname').text(user_data[0].lname);
-	$('#user-id').val(user_data[0].user_id);
-	$('#user-email').val(user_data[0].email);
-	$('#user-fname').val(user_data[0].fname);
-	$('#user-lname').val(user_data[0].lname);
 	$('#user-info').show("slow");
 	$('#next-step1').removeProp("disabled");
 	$('#next-step1').show("slow");
