@@ -23,7 +23,7 @@ router.get('/payment/paypal', function(req, res, next){
         payment_method: "paypal"
     },
     redirect_urls: {
-        return_url: config.domains[0] +"/payment/execute",
+        return_url: config.domains[0] +"/payment/execute?user_id=" +jwt.decode(req.cookies.access_token).id,
         cancel_url: config.domains[0] +"/cart"
     },
     transactions: [{
@@ -102,7 +102,6 @@ router.get('/payment/paypal', function(req, res, next){
         payment_json.transactions[0].item_list.items = item_list;
         payment_json.transactions[0].amount.total = total.toString();
         payment_json.transactions[0].description += desc;
-        console.log(desc)
 
         if(total === 0){
           enroll(id, null, null, "Free", null, null, item_list, total, "CAD", 0, desc, con, next);
@@ -193,10 +192,10 @@ router.get('/payment/execute', function(req,res,next){
 
         // INSERTING INTO PAYMENT INFORMATION INTO gibson.transaction_history
         function(payment, next){
-          var decode = jwt.decode(req.cookies.access_token);
+
           var sql = "INSERT into gibson.transaction_history (payment_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
           var inserts = [payment.id, payment.create_time.replace('T', ' ').replace('Z', ''), payment.state,
-                        payment.intent, payment.payer.payment_method, decode.id,
+                        payment.intent, payment.payer.payment_method, req.query.user_id,
                         payment.payer.payer_info.email, payment.payer.payer_info.first_name, payment.payer.payer_info.last_name,
                         payment.payer.payer_info.payer_id, payment.transactions[0].amount.total, payment.transactions[0].amount.currency,
                         payment.transactions[0].amount.details.tax, payment.transactions[0].description];
@@ -215,13 +214,12 @@ router.get('/payment/execute', function(req,res,next){
         // INSERTING USER INTO gibson.user_course
         function(payment, transaction_id, next){
 
-          var decode = jwt.decode(req.cookies.access_token);
           var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, transaction_id, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, ?, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?;";
           var query = '';
 
           for (var i = 0; i < payment.transactions[0].item_list.items.length; i++){
             var course_id = payment.transactions[0].item_list.items[i].sku;
-            query += mysql.format(query_register, [decode.id, course_id, transaction_id, 'Enrolled', 'Registered for course ID: ' + course_id, course_id]);
+            query += mysql.format(query_register, [req.query.user_id, course_id, transaction_id, 'Enrolled', 'Registered for course ID: ' + course_id, course_id]);
           }
 
           con.query(query, function(err, reg_res){
