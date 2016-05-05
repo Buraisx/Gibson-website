@@ -85,6 +85,7 @@ router.post('/enroll', function (req, res, next){
 router.post('/enroll/courses', function (req, res, next){
   var sql = "SELECT course_id, course_code, course_name,instructor_name, default_fee, course_limit, start_date,end_date, course_language, course_description FROM gibson.course WHERE course_id IN (course_list);";
   var courses = '';
+  var selected_courses = sanitizeJSONArray(req.body.selected_courses);
 
   connection.getConnection(function (err, con){
     if(err){
@@ -94,11 +95,11 @@ router.post('/enroll/courses', function (req, res, next){
     }
     
     else{
-      if(!req.body.selected_courses.length){
+      if(!selected_courses.length){
         
         //Add Courses
-        for (var i = 0; i < req.cookies.cart.course_list.length; i++){
-          courses += mysql.escape(req.body.selected_courses[i]);
+        for (var i = 0; i < selected_courses.length; i++){
+          courses += mysql.escape(selected_courses[i]);
           courses += ',';
         }
 
@@ -205,9 +206,19 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
   });
 }
 
+function sanitizeJSONArray (a) {
+  if (a == null)
+    return [];
+  else if (a.constructor === Array)
+    return a;
+  else return [a];
+}
+
+
 //module.exports = router;
 //module.exports = enroll;
 module.exports = {
     router: router,
     enroll: enroll
 }
+

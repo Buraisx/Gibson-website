@@ -2,10 +2,11 @@ $( document ).ready(function() {
 	loadCourses();
 });
 
-
+/*
 $("#next-step2").click(function(){
 	addCheckedCourses();
 });
+*/
 
 var courses;
 var coursesChecked = [];
@@ -17,7 +18,7 @@ function addCheckedCourses (){
 			coursesChecked.push($('#'+courses[i].course_id).val());
 		}
 	}
-
+	console.log(coursesChecked);
 	$.post("/enroll/courses", {
 		selected_courses: coursesChecked
 	})
