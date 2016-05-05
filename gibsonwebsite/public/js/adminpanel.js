@@ -3,7 +3,7 @@
 
 
 $("a[href$='#controlPanel']").ready(function(){
-	jQuery.getJSON('/admin/portal/listfiller', function(req){
+	jQuery.getJSON('/user/listfiller', function(req){
 		dropdown_info = {provinces: req.provinces, age_groups: req.age_groups};
 		controlpanel(dropdown_info);
 	});
@@ -15,7 +15,7 @@ $("a[href$='#controlPanel']").ready(function(){
 
 function controlpanel (dropdown_info) {
 
-	
+
     var csrfmeta = $("meta[name=_csrf]");
     var nav = '';
     nav+='                <hr>';
@@ -305,9 +305,9 @@ function controlpanel (dropdown_info) {
     var addusertocourse='';
     addusertocourse+='                    <div class="tab-pane" id="addusertocourse">';
     addusertocourse+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
-    addusertocourse+='                            <h3>Add User To Course</h3>'; 
+    addusertocourse+='                            <h3>Add User To Course</h3>';
     addusertocourse+='                            <p>Please click here to add a user to a course.</p>';
-    addusertocourse+='                            <button type = "button" class= "btn btn-success">Add User</button>';                           
+    addusertocourse+='                            <button type = "button" class= "btn btn-success">Add User</button>';
     addusertocourse+='                        </div>';
     addusertocourse+='                    </div>';
 
@@ -315,7 +315,7 @@ function controlpanel (dropdown_info) {
     addcourse+='            <div class="tab-pane" id="addcourse">';
     addcourse+='                <div id="page-content-wrapper" class="container-fluid xyz">';
     addcourse+='                <form name="frm" role = "form" id="courseform" onsubmit="validateCourse();return false">';
-    addcourse+='                    <h3>Add Course</h3>';  
+    addcourse+='                    <h3>Add Course</h3>';
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-4">';
     addcourse+='                            <label><span class="requiredasterisk">*</span>Course Name:</label>';
@@ -377,7 +377,7 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <label><span class="requiredasterisk">*</span>Instructor Biography:</label>';
     addcourse+='                            <textarea class = "form-control" rows = "6" name = "instructor_bio" id = "instructor_bio"></textarea>';
     addcourse+='                        </div>';
-    addcourse+='                    </div>';   
+    addcourse+='                    </div>';
     addcourse+='                   <div class = "row">';
     addcourse+='                    <div class = "form-group col-sm-8">';
     addcourse+='                        <label class = "addcoursepadding"><span class="requiredasterisk">*</span>Date:</label><br>';
@@ -471,7 +471,7 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <button type = "submit" class= "btn btn-success" id = "validate">Submit</button>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
-    addcourse+='                </form>';                     
+    addcourse+='                </form>';
     addcourse+='                </div>';
     addcourse+='            </div>';
 
@@ -480,16 +480,16 @@ function controlpanel (dropdown_info) {
     modifycourse+='                         <div id="page-content-wrapper" class="container-fluid xyz">';
     modifycourse+='                             <h3>Modify Course</h3>';
     modifycourse+='                                 <p>Please click here to modify a course.</p>';
-    modifycourse+='                                 <button type = "button" class= "btn btn-success">Modify</button>';                         
+    modifycourse+='                                 <button type = "button" class= "btn btn-success">Modify</button>';
     modifycourse+='                         </div>';
     modifycourse+='                     </div>';
 
     var modifyuser='';
     modifyuser+='                    <div class="tab-pane" id="modifyuser">';
     modifyuser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
-    modifyuser+='                            <h3>Modify User Info</h3>'; 
+    modifyuser+='                            <h3>Modify User Info</h3>';
     modifyuser+='                            <p>Please click here to modify a user Information.</p>';
-    modifyuser+='                            <button type = "button" class= "btn btn-success">Modify</button>';                            
+    modifyuser+='                            <button type = "button" class= "btn btn-success">Modify</button>';
     modifyuser+='                        </div>';
     modifyuser+='                    </div>';
 
@@ -536,9 +536,9 @@ function controlpanel (dropdown_info) {
     var changerank='';
     changerank+='                    <div class="tab-pane" id="changerank">';
     changerank+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
-    changerank+='                            <h3>Change User Rank</h3>';    
+    changerank+='                            <h3>Change User Rank</h3>';
     changerank+='                            <p>Please click here to change a user\'s rank.</p>';
-    changerank+='                            <button type = "button" class= "btn btn-success">Change</button>';                         
+    changerank+='                            <button type = "button" class= "btn btn-success">Change</button>';
     changerank+='                        </div>';
     changerank+='                    </div>';
 

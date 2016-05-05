@@ -172,7 +172,7 @@ router.get('/user/profile/info', function(req, res, next) {
 				},
 
 				function(next){
-				
+
 					//Piggybacking off of this function, querying for age group list ;P
 					con.query('SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group', function(err, results){
 						if (err){
@@ -196,7 +196,7 @@ router.get('/user/profile/info', function(req, res, next) {
 						}
 					});
 				},
-				
+
 				function(next){
 					var sql = 'SELECT age_group_name, age_group_description FROM gibson.age_group WHERE age_group_id = (SELECT age_group_id FROM gibson.user WHERE user_id = ?)';
 					var insert = decode.id;
@@ -604,6 +604,47 @@ router.post('/user/profile/history', function(req, res, next){
 				res.send(results);
 			}
 		});
+	});
+});
+
+router.get('/user/listfiller', function(req, res){
+
+	var response = {};
+	connection.getConnection(function(err, con){
+        if(err){
+            console.log('user.js: Error getting connection; /volunteer/portal');
+            res.status(500);
+        }
+        else{
+            //Run Queries in Parallel
+            async.parallel({
+                province_list: function(next){
+                    var sql = "SELECT province_id, prov_abb FROM gibson.province;";
+                    con.query(sql, function (err, results){
+						response.provinces = results;
+                        next(err, results);
+                    });
+                },
+                age_group_list: function(next){
+                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+                    con.query(sql, function (err, results){
+						response.age_groups = results;
+                        next(err, results);
+                    });
+                }
+            },
+            //Return results
+            function (err, results){
+                con.release();
+                if(err){
+                    console.log('user.js: Database Query failed');
+                    res.status(500).send("Fail to get dropdown list info");
+                }
+                else{
+                    res.send(response);
+                }
+            });
+        }
 	});
 });
 
