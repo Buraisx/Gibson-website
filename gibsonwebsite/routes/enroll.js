@@ -14,6 +14,37 @@ router.get('/enroll', function (req, res, next){
   
 });
 
+router.get('/enroll/courses', function (req, res, next){
+
+  var sql = "SELECT c.course_id, c.course_code, c.course_name, c.course_limit, uc.user_list from gibson.course c LEFT JOIN (SELECT count(*) AS user_list, course_id from gibson.user_course GROUP BY course_id) uc ON uc.course_id = c.course_id";
+  console.log(sql);
+
+  connection.getConnection(function (err, con){
+    if(err) {
+      con.release();
+      console.log("cannot get connection");
+      return err;
+    }
+
+    con.query(sql, function (err, courses){
+      con.release();
+      if(err){
+        console.log("enroll.js: Cannot query for available courses.");
+        res.status(500).send();
+      }
+
+      if(!courses.length){
+        console.log('enroll.js: No courses');
+        res.status(404).send();
+      }
+      else{
+        console.log(courses);
+        res.status(200).send(courses);
+      }
+    });
+  });
+});
+
 router.post('/enroll/search/user', function (req, res, next){
 
   var sql = "SELECT user_id, email, fname, lname FROM gibson.user WHERE email = ?;";
