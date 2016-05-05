@@ -703,7 +703,10 @@ function savechanges() {
 				relationship3: $('#relationship3').val(),
 				ephone1: $('#ephone1').val(),
 				ephone2: $('#ephone2').val(),
-				ephone3: $('#ephone3').val()
+				ephone3: $('#ephone3').val(),
+				ephoneext1: $('#ephoneext1').val(),
+				ephoneext2: $('#ephoneext2').val(),
+				ephoneext3: $('#ephoneext3').val(),
 
 		})
 		.done(function (res){
@@ -995,11 +998,23 @@ function editcontactsinfo() {
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "relationship' + (i+1) + '" id = "relationship' + (i+1) + '" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].relationship + '">';
 			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="editfieldname col-sm-12">';
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + (i+1) + '" id = "ephone' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone + '">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Phone ext.: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephoneext' + (i+1) + '" id = "ephoneext' + (i+1) + '" maxlength="16" pattern="\w+" value="'
+			if (user_info.emergency_contacts[i].contact_phone_extension){
+			editinfo+=user_info.emergency_contacts[i].contact_phone_extension;
+			}
+			editinfo+='">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='</div>';
@@ -1029,11 +1044,19 @@ function editcontactsinfo() {
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "relationship' + i + '" id = "relationship' + i + '" pattern="[a-zA-Z0-9. ]+">';
 			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="editfieldname col-sm-12">';
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="\w+">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Phone ext.: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephoneext' + i + '" id = "ephoneext' + i + '" maxlength="16" pattern="\w+">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='</div>';
