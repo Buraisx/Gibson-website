@@ -11,7 +11,6 @@ var sanitizer = require('sanitizer');
 // RENDERS VOLUNTEER PAGE
 router.get('/volunteer/portal', function(req, res){
 
-
     // GETTING CONNECTION
     connection.getConnection(function(err, con){
         if(err){
@@ -47,8 +46,6 @@ router.get('/volunteer/portal', function(req, res){
             });
         }
     });
-
-    //res.render('volunteerview', {title: 'Volunteer Portal'});
 });
 
 
@@ -519,8 +516,8 @@ router.post('volunteer/convertlimited', function(req, res){
                     }
                 },
 
-                // TODO: INSERT EMERGENCY CONTACTS INFORMATION
-                // function(next){}
+                // INSERT EMERGENCY CONTACTS INFORMATION
+                function(next){}
             ],
 
             // FINAL FUNCTION -> HANDLES ERROR

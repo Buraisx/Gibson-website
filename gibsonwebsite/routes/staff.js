@@ -12,8 +12,43 @@ var adminFunctions = require('../public/js/bulkQueries');
 var readSQL = require('../public/js/readSQL');
 
 // RENDERING STAFF PAGE
-router.get('staff/portal', function(req, res){
-    res.render('staffview', {title: 'Staff Portal'});
+router.get('/staff/portal', function(req, res){
+
+    // GETTING CONNECTION
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('staff.js: Error getting connection; /volunteer/portal');
+            res.status(500);
+        }
+        else{
+            //Run Queries in Parallel
+            async.parallel({
+                province_list: function(next){
+                    var sql = "SELECT province_id, province_name FROM gibson.province;";
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                },
+                age_group_list: function(next){
+                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                }
+            },
+            //Return results
+            function (err, results){
+                con.release();
+                if(err){
+                    console.log('staff.js: Database Query failed');
+                    res.status(500).send("Failure");
+                }
+                else{
+                    res.render('staffview', { title: 'Staff Portal', province_list: results.province_list, age_group_list: results.age_group_list, MAX: 3});
+                }
+            });
+        }
+    });
 });
 
 
@@ -344,7 +379,7 @@ router.post('/staff/portal/validateCourse', function(req, res){
                         return next(new Error("Course name or course code already exists!"), null);
                     }
                     else{
-						console.log("adminqueries.js:Checked Course name/code is unique");
+						//console.log("adminqueries.js:Checked Course name/code is unique");
                         next();
                     }
                 });
@@ -367,7 +402,7 @@ router.post('/staff/portal/validateCourse', function(req, res){
                         return next(new Error ("Language field " + (i+1) + " is missing!"), null);
                     }
                     else if(i == languages.length - 1){
-						console.log("adminqueries.js:Checked cost, target, description, Languages");
+						//console.log("adminqueries.js:Checked cost, target, description, Languages");
                         next();
                     }
                 }
@@ -392,19 +427,19 @@ router.post('/staff/portal/validateCourse', function(req, res){
             else if(req.body.addenddate==null || req.body.addenddate=='')
                 return next(new Error("Ending Date field is missing!"), null);
             else if(req.body.addinterval==null || req.body.addinterval==''){
-				console.log(req.body.addinterval);
+				//console.log(req.body.addinterval);
                 return next(new Error("No Interval field selected!"), null);
 			}
             else if(!checkSchedule(course_days)){
-				console.log("adminqueries.js:Checking scheduled days");
+				//console.log("adminqueries.js:Checking scheduled days");
                 return next(new Error("Bad schedule field found!"), null);
             }
 			else if (!checkSchedule(adhoc_days)) {
-				console.log("adminqueries.js:Checking ad-hoc days");
+				//console.log("adminqueries.js:Checking ad-hoc days");
 				return next(new Error("Bad ad-hoc day field found!"), null);
 			}
             else{
-				console.log("Checked start & end date, interval, scheduled days");
+				//console.log("Checked start & end date, interval, scheduled days");
                 next();
             }
         }
@@ -417,7 +452,7 @@ router.post('/staff/portal/validateCourse', function(req, res){
                 res.status(400).send(err.message);
             }
             else{
-                console.log("adminqueries.js: Validated " + req.body.course_name + "!");
+                //console.log("adminqueries.js: Validated " + req.body.course_name + "!");
                 res.status(200).send("Validated!");
             }
         });
@@ -476,19 +511,19 @@ router.post('/staff/portal/addCourse', function(req, res){
     adhoc_days_dml = createAdhocDaysDML(adhoc_days);
 
     var inserts = [
-        sanitizer.santize(req.body.addcoursecode),
-        sanitizer.santize(req.body.addcoursename),
-        sanitizer.santize(req.body.instructor_username),
-        sanitizer.santize(req.body.instructor_name),
-        sanitizer.santize(req.body.addcost),
-        sanitizer.santize(req.body.course_limit),
-        sanitizer.santize(req.body.addstartdate),
-        sanitizer.santize(req.body.addenddate),
-        sanitizer.santize(req.body.addinterval),
-        sanitizer.santize(req.body.addtarget),
-        sanitizer.santize(req.body.adddescription),
-        sanitizer.santize(req.body.instructor_bio),
-        sanitizer.santize(req.body.notes)
+        req.body.addcoursecode,
+        req.body.addcoursename,
+        req.body.instructor_username,
+        req.body.instructor_name,
+        req.body.addcost,
+        req.body.course_limit,
+        req.body.addstartdate,
+        req.body.addenddate,
+        req.body.addinterval,
+        req.body.addtarget,
+        req.body.adddescription,
+        req.body.instructor_bio,
+        req.body.notes
     ];
 
     sql = mysql.format(sql, inserts);
@@ -670,19 +705,23 @@ function checkSchedule(course_days){
 	for (var i = course_days.length - 1; i >= 0; i--){
 		if (course_days[i].day == '' || course_days[i].day == null) {
 			faulty = true;
-			console.log("adminqueries.js: schedule " + i + "'s day is not filled in!");
+			//console.log("adminqueries.js: schedule " + i + "'s day is not filled in!");
 		}
 		if (course_days[i].start_time == '' || course_days[i].start_time == null) {
 			faulty = true;
-			console.log("adminqueries.js: schedule " + i + "'s start_time is not filled in!");
+			//console.log("adminqueries.js: schedule " + i + "'s start_time is not filled in!");
 		}
 		if (course_days[i].end_time == '' || course_days[i].end_time == null) {
 			faulty = true;
-			console.log("adminqueries.js: schedule " + i + "'s end time is not filled in!");
+			//console.log("adminqueries.js: schedule " + i + "'s end time is not filled in!");
 		}
 		if (faulty) return false;
 	}
 	return true;
 }
+
+
+// ROUTE FOR GRABBING COURSE INFORMATION FOR MODIFYING COURSES.
+
 
 module.exports = router;
