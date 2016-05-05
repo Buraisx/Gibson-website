@@ -576,7 +576,7 @@ router.post('volunteer/convertlimited', function(req, res){
 
                     con.query(insertEmContacts, function(err, results){
                         if(err){
-                            return next({no:500 msg:'Error inserting emeregency contacts'});
+                            return next({no:500, msg:'Error inserting emeregency contacts'});
                         }
                         else{
                             next(null);
