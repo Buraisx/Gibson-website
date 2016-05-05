@@ -8,43 +8,14 @@ var jwt = require('jsonwebtoken');
 var readSQL = require('../public/js/readSQL');
 var paypal = require('paypal-rest-sdk');
 
+//load html page of enroll UI
 router.get('/enroll', function (req, res, next){
 
   res.render('enroll', { title: "Enroll a Student"});
   
 });
 
-router.get('/enroll/courses', function (req, res, next){
-
-  var sql = "SELECT c.course_id, c.course_code, c.course_name, c.course_limit, uc.user_list from gibson.course c LEFT JOIN (SELECT count(*) AS user_list, course_id from gibson.user_course GROUP BY course_id) uc ON uc.course_id = c.course_id";
-  console.log(sql);
-
-  connection.getConnection(function (err, con){
-    if(err) {
-      con.release();
-      console.log("cannot get connection");
-      return err;
-    }
-
-    con.query(sql, function (err, courses){
-      con.release();
-      if(err){
-        console.log("enroll.js: Cannot query for available courses.");
-        res.status(500).send();
-      }
-
-      if(!courses.length){
-        console.log('enroll.js: No courses');
-        res.status(404).send();
-      }
-      else{
-        console.log(courses);
-        res.status(200).send(courses);
-      }
-    });
-  });
-});
-
+//search for the user's information given the email 
 router.post('/enroll/search/user', function (req, res, next){
 
   var sql = "SELECT user_id, email, fname, lname FROM gibson.user WHERE email = ?;";
@@ -78,10 +49,39 @@ router.post('/enroll/search/user', function (req, res, next){
   });
 });
 
-router.post('/enroll', function (req, res, next){
+//load all available courses to the user
+router.get('/enroll/courses', function (req, res, next){
 
+  var sql = "SELECT c.course_id, c.course_code, c.course_name, c.course_limit, uc.user_list from gibson.course c LEFT JOIN (SELECT count(*) AS user_list, course_id from gibson.user_course GROUP BY course_id) uc ON uc.course_id = c.course_id";
+  console.log(sql);
+
+  connection.getConnection(function (err, con){
+    if(err) {
+      con.release();
+      console.log("cannot get connection");
+      return err;
+    }
+
+    con.query(sql, function (err, courses){
+      con.release();
+      if(err){
+        console.log("enroll.js: Cannot query for available courses.");
+        res.status(500).send();
+      }
+
+      if(!courses.length){
+        console.log('enroll.js: No courses');
+        res.status(404).send();
+      }
+      else{
+        console.log(courses);
+        res.status(200).send(courses);
+      }
+    });
+  });
 });
 
+//give frontend all the course information for the courses they selected
 router.post('/enroll/courses', function (req, res, next){
   var sql = "SELECT course_id, course_code, course_name,instructor_name, default_fee, course_limit, start_date,end_date, course_language, course_description FROM gibson.course WHERE course_id IN (course_list);";
   var courses = '';
@@ -132,6 +132,10 @@ router.post('/enroll/courses', function (req, res, next){
   });
 });
 
+//enroll the user into the course
+router.post('/enroll', function (req, res, next){
+
+});
 
 //============================================================
 //===Enrollment without payment===============================
@@ -217,9 +221,6 @@ function sanitizeJSONArray (a) {
   else return [a];
 }
 
-
-//module.exports = router;
-//module.exports = enroll;
 module.exports = {
     router: router,
     enroll: enroll

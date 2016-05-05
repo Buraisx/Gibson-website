@@ -2,37 +2,16 @@ $( document ).ready(function() {
 	loadCourses();
 });
 
+function cat(){
+	//recordTransaction();
+	//alert("hi");
+	alert($('#fname').val());
+}
+
 var courses;
 var cartCourses;
 
-function confirmationAlert(){
-	swal({  
-		title: "Please Pay The Transaction.",
-        type: "success"
-    });
-}
-function addCheckedCourses (){
-
-	var coursesChecked = [];
-
-	for(var i = 0; i <courses.length; i++){
-		if($('#'+courses[i].course_id).is(':checked')){
-			coursesChecked.push($('#'+courses[i].course_id).val());
-		}
-	}
-	console.log(coursesChecked);
-	$.post("/enroll/courses", {
-		selected_courses: coursesChecked,
-		_csrf: $('#_csrf').val()
-	})
-	.done(function (res){
-		cartCourses = res;
-		load_cart();
-	})
-	.fail(function (err){
-	});
-}
-
+//-- search for user with the email in the database and dropdown the information of the user if exists --//
 function clearUserData(){
 	$('#user-info').hide("slow", function(){
 		$('#userid').empty();
@@ -48,6 +27,10 @@ function fillUserData(user_data){
 	$('#user-email').text(user_data[0].email);
 	$('#user-fname').text(user_data[0].fname);
 	$('#user-lname').text(user_data[0].lname);
+	$('#user-id').val(user_data[0].user_id);
+	$('#user-email').val(user_data[0].email);
+	$('#user-fname').val(user_data[0].fname);
+	$('#user-lname').val(user_data[0].lname);
 	$('#user-info').show("slow");
 	$('#next-step1').removeProp("disabled");
 	$('#next-step1').show("slow");
@@ -68,6 +51,30 @@ function displayUser(email){
 		console.log("This user does not exist.");
 		clearUserData();
 		//fillUserData([{user_id:1, email:"Benjamin.zhao1995@hotmail.com", fname:"Benji", lname:"Zhao"}]);
+	});
+}
+
+
+//-- load courses and check if courses have checked or not to enable/disable next button --//
+function addCheckedCourses (){
+
+	var coursesChecked = [];
+
+	for(var i = 0; i <courses.length; i++){
+		if($('#'+courses[i].course_id).is(':checked')){
+			coursesChecked.push($('#'+courses[i].course_id).val());
+		}
+	}
+	console.log(coursesChecked);
+	$.post("/enroll/courses", {
+		selected_courses: coursesChecked,
+		_csrf: $('#_csrf').val()
+	})
+	.done(function (res){
+		cartCourses = res;
+		load_cart();
+	})
+	.fail(function (err){
 	});
 }
 
@@ -109,6 +116,7 @@ function loadCourses(){
 	});
 }
 
+//-- load the cart of courses to show payer the transaction total and items --//
 function load_cart(){
 		var cart_table = $('#cart-table');
 
@@ -147,4 +155,33 @@ function load_cart(){
             cart_table.append(cart_total_html);
 
         }
+}
+
+//-- confirmation alert to tell the payer to pay the payment right now --//
+function confirmationAlert(){
+	swal({  
+		title: "Please Pay The Transaction.",
+        type: "success"
+    });
+}
+
+//-- record transaction to database --//
+function recordTransaction(){
+
+	$.post("/enroll", {
+			_csrf: $('#_csrf').val(),
+			email: $('#email').val(),
+
+	})
+	.done(function (res){
+		console.log("You have found the user!");
+		clearUserData();
+		fillUserData(res);
+	})
+	.fail(function (err){
+		console.log("This user does not exist.");
+		clearUserData();
+		//fillUserData([{user_id:1, email:"Benjamin.zhao1995@hotmail.com", fname:"Benji", lname:"Zhao"}]);
+	});
+
 }

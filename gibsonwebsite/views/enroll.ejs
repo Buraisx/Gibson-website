@@ -36,10 +36,10 @@
                             		<div  class = "row">
                             			<!-- show user info -->
                             			<div>
-	                            			<p id="user-id"></p>
-    	                        			<p id="user-email"></p>
-                            				<p id="user-fname"></p>
-                            				<p id="user-lname"></p>
+	                            			<p id="user-id" value =""></p>
+    	                        			<p id="user-email" value =""></p>
+                            				<p id="user-fname" value=""></p>
+                            				<p id="user-lname" value=""></p>
                             			</div>
                             		</div>
                             	</div>
@@ -141,6 +141,37 @@
                             </div>
 
                             <div class = "panel-body">
+
+                            <!-- to do: add the fields the admin/volunteer/staff needs to enter for the transcation-->
+                                <div class = "row">
+                                    <div class="form-group col-sm-offset-1 col-sm-5">
+                                        <label class="control-label"><span class="requiredasterisk">*</span>Paypal ID:</label>
+                                        <span id = "checkPaymentID"></span>
+                                        <input class = "form-control reqIn" type="text" name ="trans_id" id="trans_id" placeholder = "Enter The Payer's Paypal ID">
+                                    </div>
+                                </div>
+
+                                <div class = "row">
+                                    <div class="form-group col-sm-offset-1 col-sm-5">
+                                        <label class="control-label"><span class="requiredasterisk">*</span>Payment Type:</label>
+                                        <span id = "checkPaymentType"></span>
+                                        <input class = "form-control reqIn" type="text" name ="payment_method" id="payment_method" placeholder = "Enter Payment Type">
+                                    </div>
+                                </div>
+
+                                <div class = "row">
+                                    <div class="form-group col-sm-offset-1 col-sm-5">
+                                        <label class="control-label"><span class="requiredasterisk">*</span>Description:</label>
+                                        <span id = "checkDescription"></span>
+                                        <input class = "form-control reqIn" type="text" name ="description" id="description" placeholder = "Enter a Description of the Transaction.">
+                                    </div>
+                                </div>
+
+                                <div class = "row">
+                                    <div class = "col-sm-5">
+                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default"  onclick = "cat();"> Submit&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                    </div>
+                                </div>
    
                             </div>
                         </div> <!--panel body-->
