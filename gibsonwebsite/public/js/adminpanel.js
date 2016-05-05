@@ -678,6 +678,7 @@ function submitLimitedUser(){
         "primary_phone":$('#primary_phone').val(),
         "primary_extension":$('#primary_extension').val(),
         "email": $('#email').val(),
+        "_csrf": $('#_csrf').val()
     })
     .done(function (res){
         swal({

@@ -359,8 +359,8 @@ function load_controlpanel(){
     //Submit Tab
     controlpanel+='                   </div>';   //closing tab div
 
-    $('#controlPanel').append(nav);
-    $('#controlPanel').append(controlpanel);
+    $('#controlpanel').append(nav);
+    $('#controlpanel').append(controlpanel);
     //ON JSON APPEND COMPLETE ATTACH FADE IN ANIMATION
     }).done(function(){
         $( "#sidebar-wrapper" ).tabs({
