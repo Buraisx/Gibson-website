@@ -218,9 +218,10 @@ router.get('/user/profile/info', function(req, res, next) {
 				function(err){
 					con.release();
 					if(err){
+						res.status(500).send();
 						return err;
 					}
-					res.send(response);
+					res.status(200).send(response);
 				}
 			);
 		}
