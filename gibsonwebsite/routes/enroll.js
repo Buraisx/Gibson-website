@@ -96,13 +96,15 @@ router.post('/enroll/courses', function (req, res, next){
     
     else{
       if(!selected_courses.length){
-        
+        //EMPTY LIST
+        res.status(200).send([]);
+      }
+      else{
         //Add Courses
         for (var i = 0; i < selected_courses.length; i++){
           courses += mysql.escape(selected_courses[i]);
           courses += ',';
         }
-
         //Remove ending ,
         courses=courses.slice(0, -1);
         sql = sql.replace('course_list', courses);
@@ -110,6 +112,7 @@ router.post('/enroll/courses', function (req, res, next){
         console.log(selected_courses);
         console.log(courses);
         console.log(sql);
+
         //Query For Selected Course Details
         con.query(sql, function(err, results){
           con.release();
@@ -120,13 +123,10 @@ router.post('/enroll/courses', function (req, res, next){
           }
 
           else{
+            console.log(results);
             res.status(200).send(results);
           }
-        });  
-      }
-      else{
-        //EMPTY LIST
-        res.status(200).send([]);
+        });
       }
     }
   });

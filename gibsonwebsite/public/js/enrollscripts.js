@@ -104,12 +104,13 @@ function loadCourses(){
 }
 
 function load_cart(){
-
 		var cart_table = $('#cart-table');
 
 		var cart_total = 0;
 
         var cart_empty = true;
+
+        console.log(cartCourses);
 
 		for(var i = 0; i < cartCourses.length; i++){
 			cart_total += cartCourses[i].default_fee;
