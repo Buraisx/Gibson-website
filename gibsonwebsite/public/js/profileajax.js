@@ -116,7 +116,7 @@ function load_profile(){
 	personalinfo+='        </div>';
 	personalinfo+='    </div>';
 	//Checks if phone number exist
-	if(user_info.user.primary_phone||user_info.user.secondary_phone)
+	/*if(user_info.user.primary_phone||user_info.user.secondary_phone)
 	{
 		if(user_info.user.primary_phone&&user_info.user.secondary_phone)
 		{
@@ -130,24 +130,32 @@ function load_profile(){
 		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell)</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
 		personalinfo+='        </div>';
 		personalinfo+='    </div>';
-		}
-		else if(user_info.user.primary_phone)
+		} */
+		if(user_info.user.primary_phone)
 		{
 		personalinfo+='    <div class="row">';
 		personalinfo+='        <div class="form-group col-sm-12">';
-		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Home)</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
+		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Home)</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone;
+		if (user_info.user.primary_extension){
+		personalinfo+=' ext. ' + user_info.user.primary_extension;
+		}
+		personalinfo+='</span></p>';
 		personalinfo+='        </div>';
 		personalinfo+='    </div>';
 		}
-		else
+		if (user_info.user.secondary_phone)
 		{
 		personalinfo+='    <div class="row">';
 		personalinfo+='        <div class="form-group col-sm-12">';
-		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell)</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell)</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone;
+		if (user_info.user.secondary_extension){
+		personalinfo+=' ext. ' + user_info.user.secondry_extension;
+		}
+		personalinfo+='</span></p>';
 		personalinfo+='        </div>';
 		personalinfo+='    </div>';
 		}
-	}
+	//}
 	personalinfo+='    <div class="row">';
 	personalinfo+='        <div class="form-group col-sm-12">';
 	personalinfo+='            <p><span class="col-sm-3 fieldname">Gender</span><span class="col-sm-9 fieldval">' + user_info.user.gender + '</span></p>';
@@ -251,7 +259,11 @@ function load_profile(){
 		emergencyinfo+='    </div>';
 		emergencyinfo+='    <div class="row">';
 		emergencyinfo+='        <div class="form-group col-sm-12">';
-		emergencyinfo+='            <p><span class="col-sm-3 fieldname">Phone</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].contact_phone + '</span></p>';
+		emergencyinfo+='            <p><span class="col-sm-3 fieldname">Phone</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].contact_phone;
+		if(user_info.emergency_contacts[i].contact_phone_extension){
+		emergencyinfo+=' ext. ' + user_info.emergency_contacts[i].contact_phone_extension;
+		}
+		emergencyinfo+='</span></p>';
 		emergencyinfo+='        </div>';
 		emergencyinfo+='    </div>';
 	}

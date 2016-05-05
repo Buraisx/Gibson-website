@@ -110,7 +110,7 @@ router.get('/user/profile/info', function(req, res, next) {
 		else{
 			async.waterfall([
 				function(next){
-					var sql = "SELECT username, lname, fname, birth_date, age_group_id, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
+					var sql = "SELECT username, lname, fname, birth_date, age_group_id, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, primary_extension, secondary_phone, secondary_extension, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
@@ -134,7 +134,7 @@ router.get('/user/profile/info', function(req, res, next) {
 				},
 
 				function(next){
-					var sql = 'SELECT contact_id, lname, fname, relationship, contact_phone FROM gibson.emergency_contact WHERE user_id = ?;';
+					var sql = 'SELECT contact_id, lname, fname, relationship, contact_phone, contact_phone_extension FROM gibson.emergency_contact WHERE user_id = ?;';
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
