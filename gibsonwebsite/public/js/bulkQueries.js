@@ -10,7 +10,7 @@ var connection = require('../../mysqlpool');
 		interval	how many days in between, e.g. weekly, bi-weekly
 		days	  	the days of the week this course is held
  days be in array of jsons pls
- 
+
 */
 var DAILY = 1;
 var WEEKLY = 7;
@@ -21,14 +21,14 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 		if(err){
 			return err;
 		}
-		console.log(days);
+		//console.log(days);
 		async.map(days, function(this_day, callback){
 				var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
 
 				var start = new Date(start_date);
 				var course_date = new Date(start_date);
 				var end = new Date(end_date);
-				console.log(this_day);
+				//console.log(this_day);
 				this_day = JSON.parse(this_day);
 
 				course_date.setDate(start.getDate() + (parseDay(this_day.day) - start.getDay() + 7) % 7);
@@ -36,7 +36,7 @@ exports.getScheduledDays = function (course_id, start_date, end_date, interval, 
 				(function loop_schedule(course_date, start, end, interval, this_day){
 					if(course_date <= end){
 						con.query(mysql.format(template, [course_id, course_date, parseTime(this_day.start_time), parseTime(this_day.end_time), 'SCHEDULED', 'SCHEDULED', 'Scheduled Course Time']), function(err, results){
-							console.log("INSERTED " + course_date);
+							///console.log("INSERTED " + course_date);
 						});
 
 						setTimeout(function(){
@@ -69,18 +69,18 @@ exports.getAdhocDays = function (course_id, days){
 		if(err){
 			return err;
 		}
-		
+
 		async.map(days, function (this_day, callback){
 			var template = 'INSERT INTO gibson.course_days VALUES (?, ?, ?, ?, ?, ?, ?);';
 			this_day = JSON.parse(this_day);
-			
+
 			template = mysql.format(template, [course_id, this_day.day, parseTime(this_day.start_time), parseTime(this_day.end_time), 'ADHOC', 'SCHEDULED', 'AD-HOC COURSE TIME']);
-			
+
 			con.query(template, function (err, results){
-				console.log("INSERTED AD-HOC " + this_day.day);
+				//console.log("INSERTED AD-HOC " + this_day.day);
 			});
 			callback(null);
-		}, 
+		},
 		function(err){
 			con.release();
 			if (err) {
@@ -90,7 +90,7 @@ exports.getAdhocDays = function (course_id, days){
 				return null;
 			}
 		});
-		
+
 	});
 };
 
@@ -103,7 +103,7 @@ function parseTime(time){
 		values[0] = toTwentyFour.toString();
 	}
 
-	return (values[0] + ':' + values[1] + ':' + '00');  
+	return (values[0] + ':' + values[1] + ':' + '00');
 }
 
 function getInterval(interval){

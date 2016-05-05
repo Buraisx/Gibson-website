@@ -1083,10 +1083,6 @@ function submitCourse(){
 	var scheduled_days = addSchedule();
 	var adhoc_days = addAdhoc();
 
-	//console.log(languages);
-	//console.log(scheduled_days);
-	//console.log(adhoc_days);
-
 	$.post("/staff/portal/addCourse",{
 		"addcoursecode":$('#addcoursecode').val(),
 		"addcoursename":$('#addcoursename').val(),
