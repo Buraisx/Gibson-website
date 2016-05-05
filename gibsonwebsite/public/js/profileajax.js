@@ -645,7 +645,7 @@ function savechanges() {
 				primary_phone: $('#editprimary_phone').val(),
 				secondary_phone: $('#editsecondary_phone').val(),
 				gender: $('#editgender').val(),
-				birth_date: $('#datepicker').val(),
+				age_group: $('#editagegroup option:selected').val(),
 				address: $('#editaddress').val(),
 				postal_code: $('#postal_code').val(),
 				city: $('#city').val(),
