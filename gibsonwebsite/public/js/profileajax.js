@@ -292,7 +292,7 @@ function load_profile(){
 	changePassword+='           </div>';
 	changePassword+='       </div>';
 	changePassword+='       <div class="row">';
-	changePassword+='            	<button id="changepassbutton" class="btn btn-default submitbutton" type="submit">Change</button>';
+	changePassword+='            	<button id="changepassbutton" class="btn btn-default submitbutton btn-success" type="submit">Change</button>';
 	changePassword+='       </div>';
 	changePassword+='        </form>';
 	changePassword+='    </div>';
@@ -577,7 +577,7 @@ function load_profile(){
 	editinfo+='    </div>';
 	editinfo+='</div>';
 	editinfo+='<div class="row form-group col-sm-12 savechanges">';
-	editinfo+='    <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+	editinfo+='    <button type="button" class="btn btn-default btn-success" onclick="savechanges()">Save Changes</button>';
 	editinfo+='</div>';
 	editinfo+='</div>';
 	editinfo+='</div>';
@@ -813,7 +813,7 @@ function editpersonalinfo() {
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row form-group col-sm-12 savechanges">';
-		editinfo+='        <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+		editinfo+='        <button type="button" class="btn btn-default btn-success" onclick="savechanges()">Save Changes</button>';
 		editinfo+='    </div>';
 		$('#personalinfo').append(editinfo);
 	});
@@ -892,7 +892,7 @@ function editstudentinfo() {
 			editinfo+='    </div>';
 		}
 		editinfo+='    <div class="row form-group col-sm-12 savechanges">';
-		editinfo+='        <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+		editinfo+='        <button type="button" class="btn btn-default btn-success" onclick="savechanges()">Save Changes</button>';
 		editinfo+='    </div>';
 		editinfo+='    </div> <!-- page-content-wrapper -->';
 		$('#studentinfo').append(editinfo);
@@ -998,7 +998,7 @@ function editcontactsinfo() {
 		editinfo+='    </div>';
 		editinfo+='</div>';
 		editinfo+='<div class="row form-group col-sm-12 savechanges">';
-		editinfo+='    <button type="button" class="btn btn-default" onclick="savechanges()">Save Changes</button>';
+		editinfo+='    <button type="button" class="btn btn-default btn-success" onclick="savechanges()">Save Changes</button>';
 		editinfo+='</div>';
 		editinfo+='</div>';
 		editinfo+='</div>';
@@ -1277,7 +1277,7 @@ function showFilteredCourses(data, searchText, searchTags){
 		courses += '         	         	<p id="cost' + i + '">$' + data[i].default_fee.toFixed(2) + '</p>';
 		courses += '        	    	</div>';
 		courses += '            		<div class="col-sm-7 addbutton">';
-		courses += '            			<button type="button" class="btn btn-default course-submit" onclick="register(this)" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
+		courses += '            			<button type="button" class="btn btn-default course-submit btn-success" onclick="register(this)" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
 		courses += '            		</div>';
 		courses += '       			</div>';
 
