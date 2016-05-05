@@ -51,34 +51,6 @@ router.get('/staff/portal', function(req, res){
     });
 });
 
-
-// GET ALL USERS
-router.get('/staff/portal/info', function(req, res) {
-
-    var sql = 'SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, send_notification, student FROM gibson.user;';
-
-    connection.getConnection(function(err, con) {
-        if(err) {
-          console.log('cannot get connection');
-          res.status(500).send('Internal Server Error');
-        }
-        else{
-            con.query(sql, function(err, results){
-                con.release();
-
-                if(err) {
-                    console.log('staff.js: Query error for finding user info; /staff/portal/info');
-                    res.status(500).send({msg: 'Error querying DB for users.'});
-                }
-                else{
-                    res.send(results);
-                }
-            });
-        }
-    });
-});
-
-
 // ROUTE FOR GETTING DETAILED INFORMATION OF A USER
 router.get('/staff/portal/detailedprofile', function(req, res){
 

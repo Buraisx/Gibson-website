@@ -49,6 +49,33 @@ router.get('/volunteer/portal', function(req, res){
 });
 
 
+// GET ALL USERS
+router.get('/volunteer/portal/info', function(req, res) {
+
+    var sql = 'SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, send_notification, student FROM gibson.user;';
+
+    connection.getConnection(function(err, con) {
+        if(err) {
+          console.log('volunteer.js: Cannot get connection to database; /volunteer/portal/info');
+          res.status(500).send('Internal Server Error');
+        }
+        else{
+            con.query(sql, function(err, results){
+                con.release();
+
+                if(err) {
+                    console.log('volunteer.js: Query error for finding user info; /staff/portal/info');
+                    res.status(500).send({msg: 'Error querying DB for users.'});
+                }
+                else{
+                    res.send(results);
+                }
+            });
+        }
+    });
+});
+
+
 // ENROLLING USER/L.USER INTO COURSE
 router.post('/volunteer/enrolluser', function(req, res){
 
@@ -517,7 +544,9 @@ router.post('volunteer/convertlimited', function(req, res){
                 },
 
                 // INSERT EMERGENCY CONTACTS INFORMATION
-                function(next){}
+                function(next){
+
+                }
             ],
 
             // FINAL FUNCTION -> HANDLES ERROR
