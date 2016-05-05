@@ -7,8 +7,8 @@ var cartCourses;
 
 function confirmationAlert(){
 	swal({  
-		title: "Username already taken.",
-        type: "error"
+		title: "Please Pay The Transaction.",
+        type: "success"
     });
 }
 function addCheckedCourses (){
