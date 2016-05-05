@@ -3,10 +3,11 @@ $( document ).ready(function() {
 });
 
 var courses;
-var coursesChecked = [];
 
 function addCheckedCourses (){
 
+	var coursesChecked = [];
+	
 	for(var i = 0; i <courses.length; i++){
 		if($('#'+courses[i].course_id).is(':checked')){
 			coursesChecked.push($('#'+courses[i].course_id).val());
