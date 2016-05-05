@@ -116,13 +116,13 @@ router.post('/enroll/courses', function (req, res, next){
           }
 
           else{
-            res.send(results);
+            res.status(200).send(results);
           }
         });  
       }
       else{
         //EMPTY LIST
-        res.send([]);
+        res.status(200).send([]);
       }
     }
   });
