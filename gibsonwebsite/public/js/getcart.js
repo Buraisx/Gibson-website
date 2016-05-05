@@ -65,9 +65,6 @@ function load_cart(){
             //add buttons
         	var button_div = $('#shoppingcart-buttons');
         	var button_content = '';
-        		button_content+= '<div>';
-                button_content+=	'<a href="/user/profile#courses"><button type="button" class="btn btn-primary smallmargin" id="backtoprofile">Back to Profile</button></a>';
-                button_content+= '</div>';
                 button_content+= '<div>';
                 button_content+=    '<a href="/payment/paypal"><button type="button" class="btn btn-primary smallmargin" id="paypal-button">Checkout</button></a>';
                 button_content+= '</div>';

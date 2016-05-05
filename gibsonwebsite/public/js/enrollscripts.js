@@ -5,6 +5,12 @@ $( document ).ready(function() {
 var courses;
 var cartCourses;
 
+function confirmationAlert(){
+	swal({  
+		title: "Username already taken.",
+        type: "error"
+    });
+}
 function addCheckedCourses (){
 
 	var coursesChecked = [];
@@ -140,16 +146,5 @@ function load_cart(){
 
             cart_table.append(cart_total_html);
 
-            //add buttons
-        	var button_div = $('#shoppingcart-buttons');
-        	var button_content = '';
-        		button_content+= '<div>';
-                button_content+=	'<a href="/user/profile#courses"><button type="button" class="btn btn-primary smallmargin" id="backtoprofile">Back to Profile</button></a>';
-                button_content+= '</div>';
-                button_content+= '<div>';
-                button_content+=    '<a href="/payment/paypal"><button type="button" class="btn btn-primary smallmargin" id="paypal-button">Checkout</button></a>';
-                button_content+= '</div>';
-
-        	    button_div.append(button_content);
         }
 }

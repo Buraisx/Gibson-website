@@ -1,13 +1,14 @@
 <html>
+<%- include standardnavbar.ejs %>
 	<head>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
+        <link href = "/css/bootstrap.min.css" rel = "stylesheet">
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <link href = "/css/enrolldesign.css" rel = "stylesheet">
 		<!-- Latest compiled JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
 		<script src="/js/enrollscripts.js"> </script>
 	</head>
 
@@ -89,6 +90,7 @@
                             </div>
 
                             <div class = "panel-body">
+                                <div class ="row">
                                 <div class = "page-wrap absolute-background">
                                     <div id="shoppingcart" class="rcorners">
                                          <!--GET csrf token-->
@@ -116,10 +118,11 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                                 <!-- Next Button -->
                                 <div class = "row">
                                     <div class = "col-sm-offset-6 col-sm-5">
-                                        <button type = "button" class = "btn btn-success topage2 next-button" href="#myCarousel" data-slide="next" id="next-step3" disabled>Next&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default" href="#myCarousel" data-slide="next" onClick = "confirmationAlert();" id="next-step3">Next&nbsp;&nbsp;&nbsp;&rarr;</button>
                                     </div>
                                 </div>   
                             </div>
@@ -130,5 +133,6 @@
   			</div>
 		</div>
 	</form>
+    <%- include standardfooter %>
 	</body>
 </html>
