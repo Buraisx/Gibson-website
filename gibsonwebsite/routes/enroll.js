@@ -85,7 +85,7 @@ router.post('/enroll', function (req, res, next){
 router.post('/enroll/courses', function (req, res, next){
   var sql = "SELECT course_id, course_code, course_name,instructor_name, default_fee, course_limit, start_date,end_date, course_language, course_description FROM gibson.course WHERE course_id IN (course_list);";
   var courses = '';
-  var selected_courses = sanitizeJSONArray(req.body.selected_courses);
+  var selected_courses = sanitizeJSONArray(req.body["selected_courses[]"]);
 
   connection.getConnection(function (err, con){
     if(err){
@@ -107,6 +107,9 @@ router.post('/enroll/courses', function (req, res, next){
         courses=courses.slice(0, -1);
         sql = sql.replace('course_list', courses);
 
+        console.log(selected_courses);
+        console.log(courses);
+        console.log(sql);
         //Query For Selected Course Details
         con.query(sql, function(err, results){
           con.release();
