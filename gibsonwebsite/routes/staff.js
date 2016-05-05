@@ -12,8 +12,43 @@ var adminFunctions = require('../public/js/bulkQueries');
 var readSQL = require('../public/js/readSQL');
 
 // RENDERING STAFF PAGE
-router.get('staff/portal', function(req, res){
-    res.render('staffview', {title: 'Staff Portal'});
+router.get('/staff/portal', function(req, res){
+
+    // GETTING CONNECTION
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('staff.js: Error getting connection; /volunteer/portal');
+            res.status(500);
+        }
+        else{
+            //Run Queries in Parallel
+            async.parallel({
+                province_list: function(next){
+                    var sql = "SELECT province_id, province_name FROM gibson.province;";
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                },
+                age_group_list: function(next){
+                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                }
+            },
+            //Return results
+            function (err, results){
+                con.release();
+                if(err){
+                    console.log('staff.js: Database Query failed');
+                    res.status(500).send("Failure");
+                }
+                else{
+                    res.render('staffview', { title: 'Staff Portal', province_list: results.province_list, age_group_list: results.age_group_list, MAX: 3});
+                }
+            });
+        }
+    });
 });
 
 
