@@ -26,7 +26,7 @@ function controlpanel () {
     var controlpanel='';
     controlpanel+='      <div class="tab-content">';
 
-var adduser='';
+    var adduser='';
     adduser+='                    <div class="tab-pane active" id="adduser">';
     adduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
     adduser+='                            <form name="frm" action = "/signup" method = "post" role = "form" id= "frm">';
