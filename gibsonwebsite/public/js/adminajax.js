@@ -110,7 +110,7 @@ function addCourse(course_add){
 
 // Generate List of users HTML
 function listusers(){
-	jQuery.getJSON("/staff/portal/info", function(user_info){
+	jQuery.getJSON("/volunteer/portal/info", function(user_info){
 		$('#profile').contents().remove();
 
 		var users = '';

@@ -62,12 +62,12 @@ router.post('/enroll/search/user', function (req, res, next){
     con.query(sql, function(err, results){
       con.release();
       if(err) {
-        console.log("enroll.js:Query error for finding user info");
+        console.log("enroll.js: Query error for finding user info");
         res.status(500).send();
       }
             //check if there is a user with the info
       if(!results.length) {
-        console.log("enroll.js:No User");
+        console.log("enroll.js: No User");
         res.status(404).send(); 
       }
       //send all course info to client
@@ -80,7 +80,52 @@ router.post('/enroll/search/user', function (req, res, next){
 
 router.post('/enroll', function (req, res, next){
 
+});
 
+router.post('/enroll/courses', function (req, res, next){
+  var sql = "SELECT course_id, course_code, course_name,instructor_name, default_fee, course_limit, start_date,end_date, course_language, course_description FROM gibson.course WHERE course_id IN (course_list);";
+  var courses = '';
+
+  connection.getConnection(function (err, con){
+    if(err){
+      console.log('enroll.js: Error connecting to database.');
+      res.status(401).send();
+      return err;
+    }
+    
+    else{
+      if(!req.body.selected_courses.length){
+        
+        //Add Courses
+        for (var i = 0; i < req.cookies.cart.course_list.length; i++){
+          courses += mysql.escape(req.body.selected_courses[i]);
+          courses += ',';
+        }
+
+        //Remove ending ,
+        courses=courses.slice(0, -1);
+        sql = sql.replace('course_list', courses);
+
+        //Query For Selected Course Details
+        con.query(sql, function(err, results){
+          con.release();
+          if(err){
+            console.log("enroll.js: Could not get selected courses");
+            res.status(404).send();
+            return err;
+          }
+
+          else{
+            res.send(results);
+          }
+        });  
+      }
+      else{
+        //EMPTY LIST
+        res.send([]);
+      }
+    }
+  });
 });
 
 

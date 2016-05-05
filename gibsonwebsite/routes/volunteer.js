@@ -11,7 +11,6 @@ var sanitizer = require('sanitizer');
 // RENDERS VOLUNTEER PAGE
 router.get('/volunteer/portal', function(req, res){
 
-
     // GETTING CONNECTION
     connection.getConnection(function(err, con){
         if(err){
@@ -47,8 +46,33 @@ router.get('/volunteer/portal', function(req, res){
             });
         }
     });
+});
 
-    //res.render('volunteerview', {title: 'Volunteer Portal'});
+
+// GET ALL USERS
+router.get('/volunteer/portal/info', function(req, res) {
+
+    var sql = 'SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, send_notification, student FROM gibson.user;';
+
+    connection.getConnection(function(err, con) {
+        if(err) {
+          console.log('volunteer.js: Cannot get connection to database; /volunteer/portal/info');
+          res.status(500).send('Internal Server Error');
+        }
+        else{
+            con.query(sql, function(err, results){
+                con.release();
+
+                if(err) {
+                    console.log('volunteer.js: Query error for finding user info; /staff/portal/info');
+                    res.status(500).send({msg: 'Error querying DB for users.'});
+                }
+                else{
+                    res.send(results);
+                }
+            });
+        }
+    });
 });
 
 
@@ -519,8 +543,10 @@ router.post('volunteer/convertlimited', function(req, res){
                     }
                 },
 
-                // TODO: INSERT EMERGENCY CONTACTS INFORMATION
-                // function(next){}
+                // INSERT EMERGENCY CONTACTS INFORMATION
+                function(next){
+
+                }
             ],
 
             // FINAL FUNCTION -> HANDLES ERROR

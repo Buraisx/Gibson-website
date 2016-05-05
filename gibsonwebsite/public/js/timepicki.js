@@ -40,11 +40,11 @@
 
 			// developer can specify which arrow makes the numbers go up or down
 			var top_arrow_button = (settings.increase_direction === 'down') ?
-				"<div class='prev action-prev'></div>" :
-				"<div class='prev action-next'></div>";
+				"<div class='timeprev action-prev'></div>" :
+				"<div class='timeprev action-next'></div>";
 			var bottom_arrow_button = (settings.increase_direction === 'down') ?
-				"<div class='next action-next'></div>" :
-				"<div class='next action-prev'></div>";
+				"<div class='timenext action-next'></div>" :
+				"<div class='timenext action-prev'></div>";
 
 			var new_ele = $(
 				"<div class='timepicker_wrap " + settings.custom_classes + "'>" +

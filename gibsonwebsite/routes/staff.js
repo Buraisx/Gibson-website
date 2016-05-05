@@ -12,37 +12,44 @@ var adminFunctions = require('../public/js/bulkQueries');
 var readSQL = require('../public/js/readSQL');
 
 // RENDERING STAFF PAGE
-router.get('staff/portal', function(req, res){
-    res.render('staffview', {title: 'Staff Portal'});
-});
+router.get('/staff/portal', function(req, res){
 
-
-// GET ALL USERS
-router.get('/staff/portal/info', function(req, res) {
-
-    var sql = 'SELECT fname, lname, username, email, primary_phone, secondary_phone, gender, birth_date, address, send_notification, student FROM gibson.user;';
-
-    connection.getConnection(function(err, con) {
-        if(err) {
-          console.log('cannot get connection');
-          res.status(500).send('Internal Server Error');
+    // GETTING CONNECTION
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('staff.js: Error getting connection; /volunteer/portal');
+            res.status(500);
         }
         else{
-            con.query(sql, function(err, results){
+            //Run Queries in Parallel
+            async.parallel({
+                province_list: function(next){
+                    var sql = "SELECT province_id, province_name FROM gibson.province;";
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                },
+                age_group_list: function(next){
+                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+                    con.query(sql, function (err, results){
+                        next(err, results);
+                    });
+                }
+            },
+            //Return results
+            function (err, results){
                 con.release();
-
-                if(err) {
-                    console.log('staff.js: Query error for finding user info; /staff/portal/info');
-                    res.status(500).send({msg: 'Error querying DB for users.'});
+                if(err){
+                    console.log('staff.js: Database Query failed');
+                    res.status(500).send("Failure");
                 }
                 else{
-                    res.send(results);
+                    res.render('staffview', { title: 'Staff Portal', province_list: results.province_list, age_group_list: results.age_group_list, MAX: 3});
                 }
             });
         }
     });
 });
-
 
 // ROUTE FOR GETTING DETAILED INFORMATION OF A USER
 router.get('/staff/portal/detailedprofile', function(req, res){
