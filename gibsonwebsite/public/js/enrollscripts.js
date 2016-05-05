@@ -2,11 +2,6 @@ $( document ).ready(function() {
 	loadCourses();
 });
 
-
-$("#next-step2").click(function(){
-	addCheckedCourses();
-});
-
 var courses;
 var coursesChecked = [];
 
@@ -19,7 +14,8 @@ function addCheckedCourses (){
 	}
 
 	$.post("/enroll/courses", {
-		selected_courses: coursesChecked
+		selected_courses: coursesChecked,
+		_csrf: $('#_csrf').val()
 	})
 	.done(function (res){
 		alert("HAPPY MEALS");
