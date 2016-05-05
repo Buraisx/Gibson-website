@@ -155,7 +155,7 @@ function load_profile(){
 	personalinfo+='    </div>';
 	personalinfo+='    <div class="row">';
 	personalinfo+='        <div class="form-group col-sm-12">';
-	personalinfo+='            <p><span class="col-sm-3 fieldname">Date of Birth</span><span class="col-sm-9 fieldval">' + convertdate(String(user_info.user.birth_date).substring(0, 10)) + '</span></p>';
+	personalinfo+='            <p><span class="col-sm-3 fieldname">Age Group</span><span class="col-sm-9 fieldval">' + user_info.user_age_group + '</span></p>';
 	personalinfo+='        </div>';
 	personalinfo+='    </div>';
 	personalinfo+='    <div class="row">';
@@ -752,9 +752,19 @@ function editpersonalinfo() {
 		editinfo+='        </div>';
 		editinfo+='        <div class="form-group col-sm-5">';
 		editinfo+='            <label class="editfieldname col-sm-12">';
-		editinfo+='                <p>Date of Birth: </p>';
+		editinfo+='                <p>Age Group: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type="text" class = "form-control datepicker" name="birth_date" id = "datepicker" placeholder="YYYY/MM/DD" data-date-end-date="0d" value = "' + String(user_info.user.birth_date).substring(0, 10).replace(/-/g, "\/") + '">';
+		editinfo+='            <select class = "form-control col-sm-4 editselect" name = "editagegroup" id = "editagegroup">';
+		for (var i = 0; i < user_info.age_group.length; i++) {
+			//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+			editinfo+='                <option';
+			if (user_info.user.age_group_id == user_info.age_group[i].age_group_id) {
+				editinfo+=' selected';
+			}
+			editinfo+=' value=' + user_info.age_group[i].age_group_id;
+			editinfo+='>' + user_info.age_group[i].age_group_description + '</option>';
+		}
+		editinfo+='            </select>';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';

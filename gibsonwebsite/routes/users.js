@@ -110,7 +110,7 @@ router.get('/user/profile/info', function(req, res, next) {
 		else{
 			async.waterfall([
 				function(next){
-					var sql = "SELECT username, lname, fname, birth_date, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
+					var sql = "SELECT username, lname, fname, birth_date, age_group_id, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, secondary_phone, secondary_phone, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
@@ -172,6 +172,17 @@ router.get('/user/profile/info', function(req, res, next) {
 				},
 
 				function(next){
+				
+					//Piggybacking off of this function, querying for age group list ;P
+					con.query('SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group', function(err, results){
+						if (err){
+							console.log('user.js: Unable to query for age groups; /user/profile/info');
+							return next(err);
+						}
+						else{
+							response.age_group = results;
+						}
+					});
 
 					// QUERYING FOR A LIST OF PROVINCES
 					con.query('SELECT province_id, prov_abb FROM gibson.province;', function(err, results){
@@ -183,6 +194,24 @@ router.get('/user/profile/info', function(req, res, next) {
 							response.provinces_list = results;
 							next(null);
 						}
+					});
+				},
+				
+				function(next){
+					var sql = 'SELECT age_group_name, age_group_description FROM gibson.age_group WHERE age_group_id = (SELECT age_group_id FROM gibson.user WHERE user_id = ?)';
+					var insert = decode.id;
+					sql = mysql.format(sql, insert);
+					con.query(sql, function(err, results){
+						if (err || results.length == 0) {
+							console.log("user.js: Failed to query for age group info");
+							return next(err);
+						}
+						else {
+							var groupname = results[0].age_group_name + ' (' + results[0].age_group_description + ')';
+							response.user_age_group = groupname;
+						}
+
+						next(null);
 					});
 				}
 			],
