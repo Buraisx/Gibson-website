@@ -26,9 +26,10 @@ function controlpanel () {
     var controlpanel='';
     controlpanel+='      <div class="tab-content">';
 
-    var adduser='';
+var adduser='';
     adduser+='                    <div class="tab-pane active" id="adduser">';
     adduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
+    adduser+='                            <form name="frm" action = "/signup" method = "post" role = "form" id= "frm">';
     adduser+='                            <h3>Add New User</h3>';
 
     // Step 1
@@ -123,13 +124,13 @@ function controlpanel () {
     adduser+='        <label class = "control-label"><span class="requiredasterisk">*</span>Province:</label>';
     adduser+='        <select class = "form-control" name = "province" id = "province" placeholder="Province">';
     adduser+='            <option value="" disabled selected>Please Select</option>';
-    //adduser+='            <% for(var i=0; i<province_list.length; i++) { %>';
-    //adduser+='                <li>';
-    //adduser+='                    <option value = <%= province_list[i].province_id %>>';
-    //adduser+='                        <%= province_list[i].province_name %>';
-    //adduser+='                    </option>';
-    //adduser+='                </li>';
-    //adduser+='            <% } %>';
+    // adduser+='            <% for(var i=0; i<province_list.length; i++) { %>';
+    // adduser+='                <li>';
+    // adduser+='                    <option value = <%= province_list[i].province_id %>>';
+    // adduser+='                        <%= province_list[i].province_name %>';
+    // adduser+='                    </option>';
+    // adduser+='                </li>';
+    // adduser+='            <% } %>';
     adduser+='        </select>';
     adduser+='    </div>';
     adduser+='</div>';
@@ -245,14 +246,12 @@ function controlpanel () {
     adduser+='        <button type = "button" class= "btn btn-info hidden btnedit" onclick="removecontact()" id = "removebutton">Remove a contact</button>';
     adduser+='    </div>';
     adduser+='</div>';
-
-
     adduser+='<div class = "row signupbuttons">';
     adduser+='    <div class = "col-sm-5">';
     adduser+='        <button type = "button" class = "btn btn-success" name="btnsubmit" onclick="signup()" id="createbutton">Create User</button>';
     adduser+='    </div>';
     adduser+='</div>';
-
+    adduser+='                            </form>';
     adduser+='                        </div> <!-- page-content-wrapper -->';
     adduser+='                    </div> <!-- tab-pane -->';
 
@@ -470,7 +469,7 @@ function controlpanel () {
     var modifycourse='';
     modifycourse+='                     <div class="tab-pane" id="modifycourse">';
     modifycourse+='                         <div id="page-content-wrapper" class="container-fluid xyz">';
-    modifycourse+='                             <h3>Modify Course</h3>'; 
+    modifycourse+='                             <h3>Modify Course</h3>';
     modifycourse+='                                 <p>Please click here to modify a course.</p>';
     modifycourse+='                                 <button type = "button" class= "btn btn-success">Modify</button>';                         
     modifycourse+='                         </div>';
@@ -489,7 +488,7 @@ function controlpanel () {
     scheduleevent+='                <div class="tab-pane" id="scheduleevent">';
     scheduleevent+='                     <div id="page-content-wrapper" class="container-fluid xyz">';
     scheduleevent+='                        <h3>Schedule Event</h3>';
-    scheduleevent+='                        <form action="/admin/addEvent" method="post" class="centeredtool">';
+    scheduleevent+='                        <form action="/admin/addEvent" method="post">';
     scheduleevent+='                            <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
     scheduleevent+='                            <div class = "row">';
     scheduleevent+='                                <div class = "form-group col-sm-6" required>';
@@ -500,7 +499,7 @@ function controlpanel () {
     scheduleevent+='                                        <input type="text" class="input form-control" name="enddate" id="enddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
     scheduleevent+='                                    </div>';
     scheduleevent+='                                </div>';
-    scheduleevent+='                                <div class = "form-group col-sm-3">';
+    scheduleevent+='                                <div class = "form-group col-sm-4">';
     scheduleevent+='                                    <label><span class="requiredasterisk">*</span>Type:</label>';
     scheduleevent+='                                        <select class="form-control" name="eventtype" id="eventtype" required>';
     scheduleevent+='                                            <option value="">Select a type</option>';
@@ -511,14 +510,14 @@ function controlpanel () {
     scheduleevent+='                                </div>';
     scheduleevent+='                            </div>';
     scheduleevent+='                            <div class = "row">';
-    scheduleevent+='                                <div class = "form-group col-sm-9">';
+    scheduleevent+='                                <div class = "form-group col-sm-10">';
     scheduleevent+='                                    <label><span class="requiredasterisk">*</span>Description:</label>';
     scheduleevent+='                                    <textarea class = "form-control" rows = "3" name = "message" id = "message" required></textarea>';
     scheduleevent+='                                </div>';
     scheduleevent+='                            </div>';
     scheduleevent+='                            <div class = "row">';
     scheduleevent+='                                <div class = "col-sm-8">';
-    scheduleevent+='                                    <button type = "button" onclick="makeEvent()" class= "btn eventsubmit" id = "validate">Submit</button>';
+    scheduleevent+='                                    <button type = "button" onclick="makeEvent()" class= "btn btn-success eventsubmit" id = "validate">Submit</button>';
     scheduleevent+='                                </div>';
     scheduleevent+='                            </div>';
     scheduleevent+='                        </form>';
