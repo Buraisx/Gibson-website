@@ -145,9 +145,35 @@
                             <!-- to do: add the fields the admin/volunteer/staff needs to enter for the transcation-->
                                 <div class = "row">
                                     <div class="form-group col-sm-offset-1 col-sm-5">
-                                        <label class="control-label"><span class="requiredasterisk">*</span>Paypal ID:</label>
+                                        <label class="control-label"><span class="requiredasterisk">*</span>Payment ID:</label>
                                         <span id = "checkPaymentID"></span>
                                         <input class = "form-control reqIn" type="text" name ="trans_id" id="trans_id" placeholder = "Enter The Payer's Paypal ID">
+                                    </div>
+                                </div>
+
+                                <div class = "row">
+                                    <div class="form-group col-sm-offset-1 col-sm-5">
+                                        <label class="control-label"> Account User Id:</label>
+                                        <span id = "checkUserID"></span>
+                                        <input class = "form-control reqIn" type="text" name ="user_id" id="user_id" disabled>
+                                    </div>
+                                </div>
+
+                                <div class = "row">
+                                    <div class="form-group col-sm-offset-1 col-sm-5">
+                                        <label class="control-label">First Name:</label>
+                                        <span id = "checkFirstName"></span>
+                                        <input class = "form-control reqIn" type="text" name ="first_name" id="first_name" disabled>
+                                    </div>
+                                    <button type = "button" class = "btn btn-warning btn-default"  id="notUser" onclick="editIDAndNames();"> I Am Not the User.&nbsp;&nbsp;&nbsp;&rarr;</button><br>
+                                    <button type = "button" class = "btn btn-success btn-default"  id="theUser" onclick="backToDefault();" disabled> I Am the User.&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                </div>
+
+                                <div class = "row">
+                                    <div class="form-group col-sm-offset-1 col-sm-5">
+                                        <label class="control-label">Last Name:</label>
+                                        <span id = "checkLastName"></span>
+                                        <input class = "form-control reqIn" type="text" name ="last_name" id="last_name" disabled>
                                     </div>
                                 </div>
 
@@ -167,9 +193,11 @@
                                     </div>
                                 </div>
 
+                                <input type="text" name ="password" id="password" value = "" hidden>
+
                                 <div class = "row">
                                     <div class = "col-sm-5">
-                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default"  onclick = "cat();"> Submit&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default"  onclick ="askForPassword();"> Submit&nbsp;&nbsp;&nbsp;&rarr;</button>
                                     </div>
                                 </div>
    

@@ -2,14 +2,9 @@ $( document ).ready(function() {
 	loadCourses();
 });
 
-function cat(){
-	//recordTransaction();
-	//alert("hi");
-	alert($('#user-fname').val());
-}
-
 var courses;
 var cartCourses;
+var cartTotal;
 
 //-- search for user with the email in the database and dropdown the information of the user if exists --//
 function clearUserData(){
@@ -46,7 +41,6 @@ function displayUser(email){
 	.fail(function (err){
 		console.log("This user does not exist.");
 		clearUserData();
-		//fillUserData([{user_id:1, email:"Benjamin.zhao1995@hotmail.com", fname:"Benji", lname:"Zhao"}]);
 	});
 }
 
@@ -148,6 +142,8 @@ function load_cart(){
                 cart_total_html+= 		'<td class="cart-total-cost"><span class="dollar">$</span>' + cart_total.toFixed(2) + '</td>';
                 cart_total_html+= '</tr>'
 
+            cartTotal = cart_total.toFixed(2);
+
             cart_table.append(cart_total_html);
 
         }
@@ -159,6 +155,64 @@ function confirmationAlert(){
 		title: "Please Pay The Transaction.",
         type: "success"
     });
+
+    firstName();
+    lastName();
+    userID();
+}
+
+//--give front end names of account --//
+
+function userID(){
+	$('#user_id').attr("placeholder", $('#user-id').text());
+	$('#user_id').val($('#user-id').text());
+}
+
+function firstName(){
+	$('#first_name').attr("placeholder", $('#user-fname').text());
+	$('#first_name').val($('#user-fname').text());
+}
+
+function lastName(){
+	$('#last_name').attr("placeholder", $('#user-lname').text());
+	$('#last_name').val($('#user-lname').text());
+}
+
+//--edit the name of the user to see who is actually paying --//
+function editIDAndNames(){
+	$('#user_id').removeProp("disabled");
+	$('#first_name').removeProp("disabled");
+	$('#last_name').removeProp("disabled");
+	$('#notUser').prop("disabled", true);
+	$("#theUser").prop("disabled", false);
+}
+
+//-- i am the user who is actually paying --
+function backToDefault(){
+	firstName();
+    lastName();
+    userID();
+    $('#user_id').prop("disabled", true);
+	$('#first_name').prop("disabled", true);
+	$('#last_name').prop("disabled", true);
+	$('#notUser').prop('disabled', false);
+	$("#theUser").prop("disabled", true);
+}
+
+//-- prompt volunteer/admin/staff for password in order to record the transaction --
+function askForPassword (){
+
+	swal({
+		title: "Enter The Administrative Password.",
+		type: "input",
+		inputType: "password",
+		animation: "slide-from-top",   
+		inputPlaceholder: "Password"},
+		function(typedPassword){
+			$('#password').val(typedPassword);
+			recordTransaction();
+		});
+			
 }
 
 //-- record transaction to database --//
@@ -167,17 +221,22 @@ function recordTransaction(){
 	$.post("/enroll", {
 			_csrf: $('#_csrf').val(),
 			email: $('#email').val(),
+			first_name: $('#first_name').val(),
+			last_name: $('#last_name').val(),
+			user_id: $('#user_id').val(),
+			trans_id: $('#trans_id').val(),
+			payment_method: $('#payment_method').val(),
+			desciption: $('#description').val(),
+			total: cartTotal,
+			item_list: cartCourses,
+			password: $('#password').val()
 
 	})
 	.done(function (res){
-		console.log("You have found the user!");
-		clearUserData();
-		fillUserData(res);
+		console.log("You have recorded the transaction!");
 	})
 	.fail(function (err){
-		console.log("This user does not exist.");
-		clearUserData();
-		//fillUserData([{user_id:1, email:"Benjamin.zhao1995@hotmail.com", fname:"Benji", lname:"Zhao"}]);
+		console.log("Failed to record the transaction.");
 	});
 
 }

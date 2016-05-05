@@ -7,6 +7,7 @@ var async = require('async');
 var jwt = require('jsonwebtoken');
 var readSQL = require('../public/js/readSQL');
 var paypal = require('paypal-rest-sdk');
+var bcrypt = require('bcrypt-nodejs');
 
 //load html page of enroll UI
 router.get('/enroll', function (req, res, next){
@@ -135,6 +136,36 @@ router.post('/enroll/courses', function (req, res, next){
 //enroll the user into the course
 router.post('/enroll', function (req, res, next){
 
+    var sql ="SELECT password FROM gibson.user WHERE user_id = ?";
+    var inserts = jwt.decode(req.cookies.access_token).id;
+    sql = mysql.format(sql, inserts);
+
+    connection.getConnection(function (err, con){
+    if(err) {
+      con.release();
+      console.log("cannot get connection");
+      return err;
+    }
+
+    con.query(sql, function (err, password){
+      con.release();
+      if(err){
+        console.log("enroll.js: Cannot query for password.");
+        res.status(500).send();
+      }
+
+      if(!password.length){
+        console.log('enroll.js: No User with this information.');
+        res.status(404).send();
+      }
+      else if (!bcrypt.compareSync(req.body.password, password[0].password)){
+        res.status(404).send();
+      }
+      else{
+        enroll(req.body.user_id, req.body.email, req.body.trans_id, req.body.payment_method, req.body.first_name, req.body.last_name, req.body.item_list, req.body.total, 'CAD', '0.00', req.body.description, con, next);
+      }
+    });
+  });
 });
 
 //============================================================
@@ -158,7 +189,7 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
 
       //Insert transaction into transaction history table
       function (next){
-        var user_transaction = "INSERT into gibson.transaction_history (paypal_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        var user_transaction = "INSERT into gibson.transaction_history (payment_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         var transaction_inserts = [trans_id, new Date(), "Approved", "Purchase", payment_method, id, email, first_name, last_name, null, total, currency, tax, description];
 
         user_transaction = mysql.format(user_transaction, transaction_inserts);
