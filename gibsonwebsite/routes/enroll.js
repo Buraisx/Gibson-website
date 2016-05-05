@@ -63,7 +63,7 @@ router.post('/enroll/courses', function (req, res, next){
     }
     
     else{
-      if(!req.body.selected_courses.length)){
+      if(!req.body.selected_courses.length){
         
         //Add Courses
         for (var i = 0; i < req.cookies.cart.course_list.length; i++){
