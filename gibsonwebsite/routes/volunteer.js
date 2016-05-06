@@ -54,6 +54,7 @@ router.get('/volunteer/portal/info', function(req, res) {
 
     var sql = 'SELECT fname, lname, username, email, primary_phone, primary_extension, secondary_phone, secondary_extension, gender, address, send_notification, student, age_group_name, age_group_description FROM gibson.user u INNER JOIN gibson.age_group a ON u.age_group_id=a.age_group_id;';
 
+
     connection.getConnection(function(err, con) {
         if(err) {
           console.log('volunteer.js: Cannot get connection to database; /volunteer/portal/info');
