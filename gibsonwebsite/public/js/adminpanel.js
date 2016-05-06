@@ -39,7 +39,7 @@ function controlpanel (dropdown_info) {
     var adduser='';
     adduser+='      <div class="tab-pane active" id="adduser">';
     adduser+='          <div id="page-content-wrapper" class="container-fluid xyz">';
-    adduser+='              <form name="frm" action = "/signup" method = "post" role = "form" id= "frm">';
+    adduser+='              <form name="frm" action = "/volunteer/adduser" method = "post" role = "form" id= "frm">';
     adduser+='                  <div id="myCarousel" class="carousel-overflow carousel slide" style="height:600px;" data-interval="false"><!--Carouselstart-->';
     adduser+='                     <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
     adduser+='                      <div class = "carousel-inner"><!--Items inside carousel-->';
@@ -233,8 +233,14 @@ function controlpanel (dropdown_info) {
     adduser+='                            </div>';
     for(var i=1; i <= 3; i++) {
         adduser+='<div id = "contact' + i + '"';
+        if (i==1)
+        {
+            adduser +='class = "col-sm-offset-1"';
+        }
         if (i != 1) {
-            adduser+=' class = "hidden col-sm-offset-1"';
+
+            adduser+=' class = " col-sm-offset-1 hidden"';
+
         }
         adduser+='>';
         adduser+='    <div class = "row">';
@@ -297,7 +303,7 @@ function controlpanel (dropdown_info) {
     adduser+='                                        <button type = "button" class = "btn btn-warning " id="back" href="#myCarousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>';
     adduser+='                                    </div> ';
     adduser+='                                    <div class = "register-button col-sm-5">';
-    adduser+='                                        <button type = "button" class = "btn btn-success" name="btnsubmit" onclick="signup()" id="btnsubmit">Complete Signup</button>';
+    adduser+='                                        <button type = "button" class = "btn btn-success" name="btnsubmit" onclick="addUserAccount()" id="btnsubmit">Complete Signup</button>';
     adduser+='                                    </div>';
     adduser+='                                </div>';
     adduser+='                         </div><!--panelbody-->';
@@ -769,6 +775,66 @@ function controlpanel (dropdown_info) {
                 required: true
             }
         }
+    });
+}
+function trueOrFalse(arg){
+    if (arg) return 1;
+    return 0;
+}
+function addUserAccount(){
+    
+$.post("/volunteer/adduser", {
+        _csrf: $('#_csrf').val(),
+        username: $('#username').val(),
+      password: $('#password').val(),
+      email: $('#email').val(),
+        fname: $('#fname').val(),
+        lname: $('#lname').val(),
+      //birth_date: $('#datepicker').val(),
+      age_group_id: $('#age_group').val(),
+      gender: $('#gender').val(),
+      address: $('#address').val(),
+      postal_code: $('#postal_code').val(),
+      apt: $('#apt').val(),
+      city: $('#city').val(),
+      province: $('#province').val(),
+      send_notifications: trueOrFalse($('#send_notifications').is(':checked')),
+      student: trueOrFalse($('#student').is(':checked')),
+      schoolname: $('#schoolname').val(),
+      grade: $('#grade').val(),
+        major: $('#major').val(),
+        esl: $('#esl').val(),
+        primary_phone: $('#primary_phone').val(),
+        secondary_phone: $('#secondary_phone').val(),
+      primary_extension: $('#primary_extension').val(),
+      secondary_extension: $('#secondary_extension').val(),
+        emergencyfname1: $('#emergencyfname1').val(),
+        emergencyfname2: $('#emergencyfname2').val(),
+        emergencyfname3: $('#emergencyfname3').val(),
+        emergencylname1: $('#emergencylname1').val(),
+        emergencylname2: $('#emergencylname2').val(),
+        emergencylname3: $('#emergencylname3').val(),
+        relationship1: $('#relationship1').val(),
+        relationship2: $('#relationship2').val(),
+        relationship3: $('#relationship3').val(),
+        ephone1: $('#ephone1').val(),
+        ephone2: $('#ephone2').val(),
+        ephone3: $('#ephone3').val(),
+        ephoneext1: $('#ephoneext').val(),
+        ephoneext2: $('#ephoneext2').val(),
+        ephoneext3: $('#ephoneext3').val()
+    })
+    .done(function (res){
+            swal({
+                title: "User Created.",
+                type: "success"
+            });
+    })
+    .fail(function (err){
+        swal({
+            title: 'User was not added.',
+            type: 'error'
+        });
     });
 }
 

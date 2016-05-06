@@ -246,7 +246,7 @@ router.post('/volunteer/adduser', function(req, res){
                 // INSERTING USER INTO PERMANENT TABLE
                 function(next){
                     var newUser = {
-                      username:null, password:null, lname:null, fname:null, birth_date:null, gender:null,
+                      username:null, password:null, lname:null, fname:null, age_group_id:null, gender:null,
                       address:null, unit_no:null, city:null, province_id:null, postal_code:null,
                       primary_phone:null, primary_extension:null, secondary_phone:null, secondary_extension:null,
                       email:null, send_notification:null, student:null, user_id:null
@@ -257,7 +257,10 @@ router.post('/volunteer/adduser', function(req, res){
                     newUser.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(Math.floor(3*Math.random())+10));
                     newUser.lname = req.body.lname;
                     newUser.fname = req.body.fname;
-                    newUser.birth_date = req.body.birth_date;
+                    newUser.age_group_id = req.body.age_group_id;
+                    console.log(newUser.age_group_id);
+                    console.log(req.body.age_group_id);
+                   // newUser.birth_date = req.body.birth_date;
                     newUser.gender = req.body.gender;
                     newUser.address = req.body.address;
                     newUser.unit_no = req.body.apt;
@@ -273,12 +276,12 @@ router.post('/volunteer/adduser', function(req, res){
                     newUser.student = (!req.body.student)? 0:req.body.student;
 
                     // CREATING QUERY
-                    var createUser  = 'INSERT INTO gibson.user (rank_id, type, username, password, lname, fname, birth_date, gender, address, ';
+                    var createUser  = 'INSERT INTO gibson.user (rank_id, type, username, password, lname, fname, age_group_id, gender, address, ';
                         createUser +=                               'unit_no, city, province_id, postal_code, primary_phone, primary_extension, ';
                         createUser +=                               'secondary_phone, secondary_extension, email, send_notification, student) ';
                         createUser += 'VALUES(1, "REGULAR", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
                     var values = [
-                      newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.birth_date, newUser.gender, newUser.address,
+                      newUser.username, newUser.password, newUser.lname, newUser.fname, newUser.age_group_id, newUser.gender, newUser.address,
                       newUser.unit_no, newUser.city, newUser.province_id, newUser.postal_code, newUser.primary_phone, newUser.primary_extension,
                       newUser.secondary_phone, newUser.secondary_extension, newUser.email, newUser.send_notification, newUser.student
                     ];
@@ -301,27 +304,27 @@ router.post('/volunteer/adduser', function(req, res){
 
                     if(req.body.emergencyfname3 && req.body.emergencylname3 && req.body.relationship3 && req.body.ephone3){
                       emContacts = [
-                        [userId, req.body.emergencylname1, req.body.emergencyfname1, req.body.relationship1, req.body.ephone1.replace(/\D+/g, '')],
-                        [userId, req.body.emergencylname2, req.body.emergencyfname2, req.body.relationship2, req.body.ephone2.replace(/\D+/g, '')],
-                        [userId, req.body.emergencylname3, req.body.emergencyfname3, req.body.relationship3, req.body.ephone3.replace(/\D+/g, '')]
+                        [userId, req.body.emergencylname1, req.body.emergencyfname1, req.body.relationship1, req.body.ephone1.replace(/\D+/g, ''),req.body.ephoneext1],
+                        [userId, req.body.emergencylname2, req.body.emergencyfname2, req.body.relationship2, req.body.ephone2.replace(/\D+/g, ''),req.body.ephoneext2],
+                        [userId, req.body.emergencylname3, req.body.emergencyfname3, req.body.relationship3, req.body.ephone3.replace(/\D+/g, ''),req.body.ephoneext3]
                       ];
                     }
                     else if (req.body.emergencyfname2 && req.body.emergencylname2 && req.body.relationship2 && req.body.ephone2){
                       emContacts = [
-                        [userId, req.body.emergencylname1, req.body.emergencyfname1, req.body.relationship1, req.body.ephone1.replace(/\D+/g, '')],
-                        [userId, req.body.emergencylname2, req.body.emergencyfname2, req.body.relationship2, req.body.ephone2.replace(/\D+/g, '')]
+                        [userId, req.body.emergencylname1, req.body.emergencyfname1, req.body.relationship1, req.body.ephone1.replace(/\D+/g, ''),req.body.ephoneext1],
+                        [userId, req.body.emergencylname2, req.body.emergencyfname2, req.body.relationship2, req.body.ephone2.replace(/\D+/g, ''),req.body.ephoneext2]
                       ];
                     }
                     else{
                       emContacts = [
-                        [userId, req.body.emergencylname1, req.body.emergencyfname1, req.body.relationship1, req.body.ephone1.replace(/\D+/g, '')]
+                        [userId, req.body.emergencylname1, req.body.emergencyfname1, req.body.relationship1, req.body.ephone1.replace(/\D+/g, ''),req.body.ephoneext1]
                       ];
                     }
 
                     // GENERATING THE INSERT QUERY
                     var insertEmContacts = '';
                     for (var ecnum = 0; ecnum < emContacts.length; ecnum++){
-                      insertEmContacts += mysql.format('INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone) VALUES(?, ?, ?, ?, ?); ', emContacts[ecnum]);
+                      insertEmContacts += mysql.format('INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone, contact_phone_extension) VALUES(?, ?, ?, ?, ?,?); ', emContacts[ecnum]);
                     }
 
                     con.query(insertEmContacts, function(err, results){
@@ -391,7 +394,6 @@ router.post('/volunteer/adduser', function(req, res){
         }
     });
 });
-
 
 // ROUTE FOR ADDING A LIMITED ACCESS USER.
 router.post('/volunteer/addlimited', function(req, res){
