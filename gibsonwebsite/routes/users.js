@@ -527,20 +527,26 @@ router.post('/user/profile/edit', function(req, res, next){
 
 			                    if(req.body.emergencyfname3 && req.body.emergencylname3 && req.body.relationship3 && req.body.ephone3){
 			                      emContacts = [
-			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneextension1, results[0]? results[0].contact_id:null],
-			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, req.body.ephoneextension2,results[1]? results[1].contact_id:null],
-			                        [userId, req.body.emergencyfname3, req.body.emergencylname3, req.body.relationship3, req.body.ephone3, req.body.ephoneextension3,results[2]? results[2].contact_id:null]
+
+			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneext1, results[0]? results[0].contact_id:null],
+			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, req.body.ephoneext2, results[1]? results[1].contact_id:null],
+			                        [userId, req.body.emergencyfname3, req.body.emergencylname3, req.body.relationship3, req.body.ephone3, req.body.ephoneext3, results[2]? results[2].contact_id:null]
+
 			                      ];
 			                    }
 			                    else if (req.body.emergencyfname2 && req.body.emergencylname2 && req.body.relationship2 && req.body.ephone2){
 			                      emContacts = [
-			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneextension1,results[0]? results[0].contact_id:null],
-			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, req.body.ephoneextension2,results[1]? results[1].contact_id:null]
+
+			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneext1, results[0]? results[0].contact_id:null],
+			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, req.body.ephoneext2, results[1]? results[1].contact_id:null]
+
 			                      ];
 			                    }
 			                    else{
 			                      emContacts = [
-			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneextension1, results[0]? results[0].contact_id:null]
+
+			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneext1, results[0]? results[0].contact_id:null]
+
 			                      ];
 			                    }
 
@@ -548,9 +554,10 @@ router.post('/user/profile/edit', function(req, res, next){
 
 													for (var i = 0; i < emContacts.length; i++){
 														if (i < results.length)
-															query += mysql.format('UPDATE gibson.emergency_contact SET user_id = ?, fname = ?, lname = ?, relationship = ?, contact_phone = ?, contact_phone_extension=? WHERE contact_id = ?;', emContacts[i]);
+
+															query += mysql.format('UPDATE gibson.emergency_contact SET user_id = ?, fname = ?, lname = ?, relationship = ?, contact_phone = ?, contact_phone_extension = ? WHERE contact_id = ?;', emContacts[i]);
 														else
-															query += mysql.format('INSERT INTO gibson.emergency_contact (user_id, fname, lname, relationship, contact_phone, contact_phone_extension) VALUES (?, ?, ?, ?, ?,?);', emContacts[i]);
+															query += mysql.format('INSERT INTO gibson.emergency_contact (user_id, fname, lname, relationship, contact_phone, contact_phone_extension) VALUES (?, ?, ?, ?, ?, ?);', emContacts[i]);
 													}
 
 													con.query(query, function(err, results){
