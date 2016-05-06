@@ -464,7 +464,7 @@ router.post('/user/profile/edit/personalinfo', function(req, res){
         }
         else{
 
-			var query = 'UPDATE gibson.user SET fname=?, lname=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, gender=?, age_group_id=?, address=?, postal_code=?, unit_no=?, city=?, province_id=? WHERE user_id = ?;';
+			var query = 'UPDATE gibson.user SET fname=?, lname=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, gender=?, age_group_id=?, address=?, postal_code=?, unit_no=?, city=?, province_id=(SELECT province_id from gibson.province WHERE prov_abb = ?) WHERE user_id = ?;';
 			var inserts = [
 				sanitizer.sanitize(req.body.fname),
 				sanitizer.sanitize(req.body.lname),
@@ -478,7 +478,7 @@ router.post('/user/profile/edit/personalinfo', function(req, res){
 				sanitizer.sanitize(req.body.postal_code).toUpperCase().replace(/ /g,''),
 				sanitizer.sanitize(req.body.unit_no),
 				sanitizer.sanitize(req.body.city),
-				sanitizer.sanitize(req.body.province_id),
+				sanitizer.sanitize(req.body.province),
 				jwt.decode(req.cookies.access_token).id
 			];
 			query = mysql.format(query, inserts);
