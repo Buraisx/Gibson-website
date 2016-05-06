@@ -57,7 +57,7 @@ function checkPass()
                 }
                 else {
                     if(message != null) {
-                        message.innerHTML = "<strong>Password is invalid!</strong>";
+                        message.innerHTML = "<strong>Password must include at least 1 letter and 1 number.</strong>";
                     }
                 }
             }
