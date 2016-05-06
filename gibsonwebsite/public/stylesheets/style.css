@@ -56,6 +56,19 @@ body{
   height: 235px;
 }
 
+/** when footer collapses **/
+@media(max-width: 973px)
+{
+    .page-wrap {
+        /* equal to collapsed footer height */
+        margin-bottom: -492px;
+    }
+
+    .site-footer, .page-wrap:after {
+        height: 492px;
+    }
+}
+
 /*removed line in links*/
 a {
   text-decoration: none !important;
