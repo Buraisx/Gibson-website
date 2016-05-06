@@ -5,6 +5,13 @@ var connection = require('../mysqlpool');
 var autoemail = require('./auto_email');
 var async = require('async');
 
+// CHANGE COMMENT WHEN CHANGING THE AGE
+// COOKIE AGE: 1 DAY (24 hours/day * 60 minutes/hour * 60 seconds/minute * 1000 milliseconds/second)
+var cookie_age = 24*60*60*1000;
+
+// JWT TOKEN AGE: 1 DAY (24 hours/day * 60 minutes/hour * 60 seconds/minute)
+var jwt_age = 24*60*60
+
 // ONE-TIME TOKEN
 function generateOneUse(req, res, next){
 
@@ -42,7 +49,7 @@ function generateOneUse(req, res, next){
         type: config.jwt.type.signup
       },
       config.jwt.oneUseSecret, {
-        expiresIn: 24*60*60
+        expiresIn: jwt_age
       });
 
       next();
@@ -97,7 +104,7 @@ function resendToken(username, callback){
                 type: config.jwt.type.signup
               },
               config.jwt.oneUseSecret, {
-                expiresIn: 24*60*60
+                expiresIn: jwt_age
               });
 
               callback(null, {username: username, email: email, token: token});
@@ -146,7 +153,7 @@ function forgotPasswordToken (email, username){
           type: config.jwt.type.forgotpassword
         },
         config.jwt.oneUseSecret, {
-          expiresIn: 24*60*60
+          expiresIn: jwt_age
         });
 
       // SENDS EMAIL WITH URL TO RESET PASSWORD
@@ -190,7 +197,7 @@ function generateToken(req, res, next) {
             lastLoggedIn: req.user.last_login_time
           },
           req.user.secretKey, {
-            expiresIn: 14*24*60*60 // 14 day
+            expiresIn: jwt_age
           });
 
           // IF ADMIN, GET THE ADMIN's secret_key
@@ -213,7 +220,7 @@ function generateToken(req, res, next) {
                             lastLoggedIn: req.user.last_login_time
                           },
                             results1[0].secret_key, {
-                              expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
+                              expiresIn: jwt_age
                           });
                           next(null);
                         });
@@ -239,7 +246,7 @@ function generateToken(req, res, next) {
                             lastLoggedIn: req.user.last_login_time
                           },
                             results2[0].secret_key, {
-                              expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
+                              expiresIn: jwt_age
                           });
                           next(null);
                         });
@@ -265,7 +272,7 @@ function generateToken(req, res, next) {
                             lastLoggedIn: req.user.last_login_time
                           },
                             results3[0].secret_key, {
-                              expiresIn: 14*24*60*60 // 12 hours 12 * 60 * 60
+                              expiresIn: jwt_age
                           });
                           next(null);
                         });
@@ -298,7 +305,7 @@ function generateToken(req, res, next) {
 // PLACING THE TOKEN IN A COOKIE (MaxAge in MILLISECONDS)
 function respond(req, res, next) {
 	res.clearCookie('access_token');
-	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+	res.cookie('access_token', req.token, {secure: true, httpOnly: true, maxAge: cookie_age});
   next();
 }
 
@@ -307,7 +314,7 @@ function adminRespond(req,res,next){
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
   if (req.user.rank_id == 4) {
     res.clearCookie('admin');
-    res.cookie('admin', req.adminToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+    res.cookie('admin', req.adminToken, {secure: true, httpOnly: true, maxAge: cookie_age});
   }
   next();
 }
@@ -317,7 +324,7 @@ function staffRespond(req,res,next){
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
   if (req.user.rank_id >= 3) {
     res.clearCookie('staff');
-    res.cookie('staff', req.staffToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+    res.cookie('staff', req.staffToken, {secure: true, httpOnly: true, maxAge: cookie_age});
   }
   next();
 }
@@ -327,14 +334,14 @@ function volunteerRespond(req,res,next){
   // IF ADMIN, GIVE EXTRA TOKEN (MaxAge in MILLISECONDS)
   if (req.user.rank_id >= 2) {
     res.clearCookie('volunteer');
-    res.cookie('volunteer', req.volunteerToken, {secure: true, httpOnly: true, maxAge: 14*24*60*60*1000});
+    res.cookie('volunteer', req.volunteerToken, {secure: true, httpOnly: true, maxAge: cookie_age});
   }
   next();
 }
 
 function sendInfo(req,res,next) {
   res.clearCookie('user_info');
-  res.cookie('user_info', {username: req.user.username, rank: req.user.rank_id}, {maxAge: 14*24*60*60*1000});
+  res.cookie('user_info', {username: req.user.username, rank: req.user.rank_id}, {maxAge: cookie_age});
   next();
 }
 
