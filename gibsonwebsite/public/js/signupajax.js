@@ -1,6 +1,6 @@
 //GLOBAL TIMER
 var typingTimer;
-var delay = 1000;
+var delay = 500;
 //
 //Check username availability
 function checkusername(){
@@ -24,21 +24,42 @@ function checkusername(){
 
 //check email availability
 function checkemail(){
-      $.post("/signup/email", {
-            _csrf: $('#_csrf').val(),
-            email: $('#email').val()
-      })
-      .done(function (res){
-            if(!res){
-                swal({
-                  title: "Email already taken.",
-                  type: "error"
-                });
-            }
-      })
-      .fail(function (err){
-            console.log('Bad email');
-      });
+
+    if($('#email').val()){
+        $.post("/signup/email", {
+              _csrf: $('#_csrf').val(),
+              email: $('#email').val()
+        })
+        .done(function (res){
+              if(!res){
+                  swal({
+                    title: "Email already taken.",
+                    type: "error"
+                  });
+              }
+        })
+        .fail(function (err){
+              console.log('Bad email');
+        });
+    }
+    else if($('#limited_email').val()) {
+        $.post("/signup/email", {
+              _csrf: $('#_csrf').val(),
+              email: $('#limited_email').val()
+        })
+        .done(function (res){
+              if(!res){
+                  swal({
+                    title: "Email already taken.",
+                    type: "error"
+                  });
+              }
+        })
+        .fail(function (err){
+              console.log('Bad email');
+        });
+    }
+
 }
 
 function delayUsername(){
@@ -56,7 +77,7 @@ function delayEmail(){
 
       clearTimeout(typingTimer);
 
-      if($('#email').val()){
+      if($('#email').val() || $('#limited_email').val()){
             typingTimer = setTimeout(checkemail, delay);
       }
 

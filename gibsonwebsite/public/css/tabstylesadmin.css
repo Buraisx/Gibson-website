@@ -68,3 +68,15 @@
 	-webkit-transform: translate3d(0,8px,0);
 	transform: translate3d(0,8px,0);
 }
+.panel-default
+{
+	border-color: #6c8b93;
+}
+.stoppaddingleft{
+	padding-left:0px;
+}
+
+.stoppaddingright
+{
+	padding-right:0px;
+}
