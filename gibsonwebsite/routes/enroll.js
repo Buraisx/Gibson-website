@@ -209,7 +209,7 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
 
       //Insert transaction into transaction history table
       function (next){
-        var user_transaction = "INSERT into gibson.transaction_history (paypal_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        var user_transaction = "INSERT into gibson.transaction_history (payment_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         var transaction_inserts = [trans_id, new Date(), "Approved", "Purchase", payment_method, id, email, first_name, last_name, null, total, currency, tax, description];
 
         user_transaction = mysql.format(user_transaction, transaction_inserts);
