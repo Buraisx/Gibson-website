@@ -308,38 +308,39 @@ function load_controlpanel(){
     adduser+='                        </div> <!-- page-content-wrapper -->';
     adduser+='                    </div> <!-- tab-pane -->';
 
-    var limiteduser='';
+	var limiteduser='';
     limiteduser+='                    <div class="tab-pane" id="addlimiteduser">';
     limiteduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
-    limiteduser+='                            <form name="frm" action = "/volunteer/addlimited" method = "post" role = "form" id= "frm">';
+    limiteduser+='                            <form name="frm" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
+    limiteduser+='                            <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
     limiteduser+='                            <h3>Add Limited User</h3>';
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "form-group col-sm-5">';
     limiteduser+='                                    <label><span class="requiredasterisk">*</span>First Name:</label>';
-    limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "fname" id = "fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+">';
+    limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "limited_fname" id = "limited_fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+">';
     limiteduser+='                                </div>';
     limiteduser+='                                <div class = "form-group col-sm-5">';
     limiteduser+='                                    <label><span class="requiredasterisk">*</span>Last Name:</label>';
-    limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "lname" id = "lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+">';
+    limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "limited_lname" id = "limited_lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+">';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class="form-group col-sm-5">';
     limiteduser+='                                    <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-    limiteduser+='                                    <input class = "form-control reqIn" type="email" name = "email" id="email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+    limiteduser+='                                    <input class = "form-control reqIn" type="email" name = "limited_email" id="limited_email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
     limiteduser+='                                </div>';
     limiteduser+='                                <div class = "form-group col-sm-3 stoppaddingright">';
     limiteduser+='                                    <label class = "control-label">Phone:</label>';
-    limiteduser+='                                    <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_phone" id = "limited_primary_phone" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
     limiteduser+='                                </div>';
     limiteduser+='                                <div class = "form-group col-sm-2 stoppaddingleft">';
     limiteduser+='                                    <label class = "control-label">Ext:</label>';
-    limiteduser+='                                    <input class = "form-control" type = "text" name = "primary_extension" id = "primary_extension" maxlength="6" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid Extension.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_extension" id = "limited_primary_extension" maxlength="6" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid Extension.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "col-sm-10 text-right">';
-    limiteduser+='                                    <button type = "submit" class = "btn btn-default">Add</button>';
+    limiteduser+='                                    <button type = "button" class = "btn btn-success" onclick="submitLimitedUser()">Add</button>';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
     limiteduser+='                            </form>';
@@ -373,15 +374,31 @@ function load_controlpanel(){
             }
         });
     });
+
+    $('#limiteduser').validate({
+        rules: {
+            limited_fname: {
+                required: true
+            },
+            limited_lname: {
+                required: true
+            },
+            limited_email: {
+                required: true
+            }
+        }
+    });
+
 }
 
 function submitLimitedUser(){
     $.post("/volunteer/addlimited",{
-        "lname":$('#lname').val(),
-        "fname":$('#fname').val(),
-        "primary_phone":$('#primary_phone').val(),
-        "primary_extension":$('#primary_extension').val(),
-        "email": $('#email').val()
+        "lname":$('#limited_lname').val(),
+        "fname":$('#limited_fname').val(),
+        "primary_phone":$('#limited_primary_phone').val(),
+        "primary_extension":$('#limited_primary_extension').val(),
+        "email": $('#limited_email').val(),
+        "_csrf": $('#_csrf').val()
     })
     .done(function (res){
         swal({
