@@ -22,7 +22,6 @@ router.post('/enroll/search/user', function (req, res, next){
   var sql = "SELECT user_id, email, fname, lname FROM gibson.user WHERE email = ?;";
   var inserts = req.body.email;
   sql = mysql.format(sql, inserts);
-  console.log(sql);
 
   connection.getConnection(function(err, con) {
     if(err) {
@@ -54,7 +53,6 @@ router.post('/enroll/search/user', function (req, res, next){
 router.get('/enroll/courses', function (req, res, next){
 
   var sql = "SELECT c.course_id as sku, c.course_code, c.course_name, c.course_limit, uc.user_list from gibson.course c LEFT JOIN (SELECT count(*) AS user_list, course_id from gibson.user_course GROUP BY course_id) uc ON uc.course_id = c.course_id";
-  console.log(sql);
 
   connection.getConnection(function (err, con){
     if(err) {
@@ -110,10 +108,6 @@ router.post('/enroll/courses', function (req, res, next){
         courses=courses.slice(0, -1);
         sql = sql.replace('course_list', courses);
 
-        console.log(selected_courses);
-        console.log(courses);
-        console.log(sql);
-
         //Query For Selected Course Details
         con.query(sql, function(err, results){
           con.release();
@@ -168,6 +162,7 @@ router.post('/enroll', function (req, res, next){
             }
             
             else{
+
               next(null, req.body.user_id, req.body.email, req.body.trans_id, req.body.payment_method, req.body.first_name, req.body.last_name, JSON.parse(req.body.item_list), req.body.total, 'CAD', '0.00', req.body.description, con, next);
             }
           });
@@ -187,6 +182,12 @@ router.post('/enroll', function (req, res, next){
       }); 
     }
   }); 
+});
+
+router.get('/enrollSuccess', function (req, res, next){
+
+  res.render('enrollSuccess', { title: "Enroll Success!"});
+
 });
 
 //============================================================
