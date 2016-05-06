@@ -204,7 +204,7 @@ function load_controlpanel(){
     adduser+='            </div><!--panel-default-->';
     adduser+='                                    </div><!--second item end-->';
     adduser+='                                    <div class = "item"><!--third item-->';
-    adduser+='                                    <div class = "panel panel-default shadowy  signuppanel"><!-- panel start-->';
+    adduser+='                                    <div class = "panel panel-default signuppanel"><!-- panel start-->';
     adduser+='                       <div class = "panel-heading" id="signup3">';
     adduser+='                       <h2 class = "text-center">Contact Info</h2>';
     adduser+='                       </div>';
@@ -237,7 +237,7 @@ function load_controlpanel(){
     for(var i=1; i <= 3; i++) {
         adduser+='<div id = "contact' + i + '"';
         if (i != 1) {
-            adduser+=' class = "hidden"';
+            adduser+=' class = "hidden col-sm-offset-1"';
         }
         adduser+='>';
         adduser+='    <div class = "row">';
