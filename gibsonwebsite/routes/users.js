@@ -687,7 +687,7 @@ router.post('/user/profile/edit/emegencyinfo', function(req, res){
 					else{
 						var query = '';
 
-						for(int i = 0; i < records.length; i++){
+						for(var i = 0; i < records.length; i++){
 							if(i < newContacts.length){
 								newContacts[i].push(records[i]);
 								query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
@@ -716,7 +716,7 @@ router.post('/user/profile/edit/emegencyinfo', function(req, res){
 					else{
 						var query = '';
 
-						for(int i = 0; i < records.length; i++){
+						for(var i = 0; i < records.length; i++){
 							newContacts[i].push(records[i]);
 							query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
 						}
@@ -740,7 +740,7 @@ router.post('/user/profile/edit/emegencyinfo', function(req, res){
 					else{
 						var query = '';
 
-						for(int i = 0; i < newContacts.length; i++){
+						for(var i = 0; i < newContacts.length; i++){
 							if(i < records.length){
 								newContacts[i].push(records[i]);
 								query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
