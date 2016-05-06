@@ -272,13 +272,17 @@ function load_controlpanel(){
         }
         adduser+='>';
         adduser+='        </div>';
-        adduser+='        <div class = "form-group col-sm-5">';
+        adduser+='        <div class = "form-group col-sm-3 stoppaddingright">';
         adduser+='            <label><span class="requiredasterisk">*</span>Phone:</label>';
         adduser+='            <input type = "text" class = "form-control reqIn required" name = "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity("")}catch(e){}"';
         if (i == 1) {
             adduser+=' required';
         }
         adduser+='>';
+		adduser+='        </div>';
+		adduser+='        <div class = "form-group col-sm-2 stoppaddingleft">';
+		adduser+='            <label class="control-label">Ext.</label>';
+		adduser+='            <input type="text" class="form-control" type="text" name="ephoneext' + i + '" id="ephoneext' + i + '" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity("")}catch(e){}">';
         adduser+='        </div>';
         adduser+='    </div>';
         adduser+='</div>';
