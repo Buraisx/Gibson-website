@@ -368,7 +368,7 @@ function load_profile(){
 	editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_extension" id = "editprimary_extension" maxlength="16" pattern="\\w+" value = "';
 	if (user_info.user.primary_extension){
 	editinfo+=user_info.user.primary_extension;
-	} 
+	}
 	editinfo+='">';
 	editinfo+='        </div>';
 	editinfo+='    </div>';
@@ -387,7 +387,7 @@ function load_profile(){
 	editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_extension" id = "editsecondary_extension" maxlength="16" pattern="\\w+" value = "';
 	if (user_info.user.secondary_extension){
 	editinfo+=user_info.user.secondary_extension;
-	} 
+	}
 	editinfo+='">';
 	editinfo+='        </div>';
 	editinfo+='    </div>';
@@ -741,6 +741,108 @@ function savechanges() {
     }
 }
 
+function savechangesPersonal() {
+	// Tests for validity
+	if ($("#editinformation").valid()) {
+		$.post("/user/profile/edit/personalinfo", {
+				_csrf: $('#_csrf').val(),
+				username: $('#username').val(),
+				fname: $('#editfname').val(),
+				lname: $('#editlname').val(),
+				primary_phone: $('#editprimary_phone').val(),
+				primary_extension: $('#editprimary_extension').val(),
+				secondary_phone: $('#editsecondary_phone').val(),
+				secondary_extension: $('#editsecondary_extension').val(),
+				gender: $('#editgender').val(),
+				age_group: $('#editagegroup option:selected').val(),
+				address: $('#editaddress').val(),
+				postal_code: $('#postal_code').val(),
+				city: $('#city').val(),
+				unit_no: $('#apt').val(),
+				province: $('#editprovince option:selected').text(),
+		})
+		.done(function (res){
+			load_profile();
+			swal({
+				title: "Profile updated.",
+				type: "success"
+			});
+		})
+		.fail(function (err){
+			swal({
+				title: "Failed to save changes.",
+				type: "error"
+			});
+		});
+		window.onbeforeunload = null;
+    }
+}
+
+function savechangesStudent() {
+	// Tests for validity
+	if ($("#editinformation").valid()) {
+		$.post("/user/profile/edit/studentinfo", {
+				_csrf: $('#_csrf').val(),
+				schoolname: $('#editschoolname').val(),
+				grade: $('#editgrade').val(),
+				major: $('#editmajor').val(),
+				esl: $('#editesl').val(),
+		})
+		.done(function (res){
+			load_profile();
+			swal({
+				title: "Profile updated.",
+				type: "success"
+			});
+		})
+		.fail(function (err){
+			swal({
+				title: "Failed to save changes.",
+				type: "error"
+			});
+		});
+		window.onbeforeunload = null;
+    }
+}
+
+function savechangesEmergency() {
+	// Tests for validity
+	if ($("#editinformation").valid()) {
+		$.post("/user/profile/edit/emergencyinfo", {
+				_csrf: $('#_csrf').val(),
+				emergencyfname1: $('#emergencyfname1').val(),
+				emergencyfname2: $('#emergencyfname2').val(),
+				emergencyfname3: $('#emergencyfname3').val(),
+				emergencylname1: $('#emergencylname1').val(),
+				emergencylname2: $('#emergencylname2').val(),
+				emergencylname3: $('#emergencylname3').val(),
+				relationship1: $('#relationship1').val(),
+				relationship2: $('#relationship2').val(),
+				relationship3: $('#relationship3').val(),
+				ephone1: $('#ephone1').val(),
+				ephone2: $('#ephone2').val(),
+				ephone3: $('#ephone3').val(),
+				ephoneext1: $('#ephoneext1').val(),
+				ephoneext2: $('#ephoneext2').val(),
+				ephoneext3: $('#ephoneext3').val(),
+		})
+		.done(function (res){
+			load_profile();
+			swal({
+				title: "Profile updated.",
+				type: "success"
+			});
+		})
+		.fail(function (err){
+			swal({
+				title: "Failed to save changes.",
+				type: "error"
+			});
+		});
+		window.onbeforeunload = null;
+    }
+}
+
 var preventUser = function() {
     return "Your work will be lost";
 };
@@ -784,7 +886,7 @@ function editpersonalinfo() {
 		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_extension" id = "editprimary_extension" maxlength="16" pattern="\\w+" value = "';
 		if (user_info.user.primary_extension){
 		editinfo+=user_info.user.primary_extension;
-		} 
+		}
 		editinfo+='">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
@@ -802,7 +904,7 @@ function editpersonalinfo() {
 		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_extension" id = "editsecondary_extension" maxlength="16" pattern="\\w+" value = "';
 		if (user_info.user.secondary_extension){
 		editinfo+=user_info.user.secondary_extension;
-		} 
+		}
 		editinfo+='">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
@@ -886,7 +988,7 @@ function editpersonalinfo() {
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row form-group col-sm-12 savechanges">';
-		editinfo+='        <button type="button" class="btn btn-default btn-success" onclick="savechanges()">Save Changes</button>';
+		editinfo+='        <button type="button" class="btn btn-default btn-success" onclick="savechangesPersonal()">Save Changes</button>';
 		editinfo+='    </div>';
 		$('#personalinfo').append(editinfo);
 	});
@@ -965,7 +1067,7 @@ function editstudentinfo() {
 			editinfo+='    </div>';
 		}
 		editinfo+='    <div class="row form-group col-sm-12 savechanges">';
-		editinfo+='        <button type="button" class="btn btn-default btn-success" onclick="savechanges()">Save Changes</button>';
+		editinfo+='        <button type="button" class="btn btn-default btn-success" onclick="savechangesStudent()">Save Changes</button>';
 		editinfo+='    </div>';
 		editinfo+='    </div> <!-- page-content-wrapper -->';
 		$('#studentinfo').append(editinfo);
@@ -1095,7 +1197,7 @@ function editcontactsinfo() {
 		editinfo+='    </div>';
 		editinfo+='</div>';
 		editinfo+='<div class="row form-group col-sm-12 savechanges">';
-		editinfo+='    <button type="button" class="btn btn-default btn-success" onclick="savechanges()">Save Changes</button>';
+		editinfo+='    <button type="button" class="btn btn-default btn-success" onclick="savechangesEmergency()">Save Changes</button>';
 		editinfo+='</div>';
 		editinfo+='</div>';
 		editinfo+='</div>';

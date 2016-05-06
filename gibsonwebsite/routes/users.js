@@ -473,7 +473,7 @@ router.post('/user/profile/edit/personalinfo', function(req, res){
 				sanitizer.sanitize(req.body.secondary_phone).replace(/\D+/g, ''),
 				sanitizer.sanitize(req.body.secondary_extension).replace(/\D+/g, ''),
 				sanitizer.sanitize(req.body.gender),
-				sanitizer.sanitize(req.body.age_group_id),
+				sanitizer.sanitize(req.body.age_group),
 				sanitizer.sanitize(req.body.address),
 				sanitizer.sanitize(req.body.postal_code).toUpperCase().replace(/ /g,''),
 				sanitizer.sanitize(req.body.unit_no),
@@ -481,8 +481,9 @@ router.post('/user/profile/edit/personalinfo', function(req, res){
 				sanitizer.sanitize(req.body.province_id),
 				jwt.decode(req.cookies.access_token).id
 			];
+			query = mysql.format(query, inserts);
 
-			con.query(query, inserts, function(err, results){
+			con.query(query, function(err, results){
 				if(err){
 					console.log('users.js: Error updating personal information; /user/profile/edit/personalinfo');
 					res.status(500).send('Error updating personal information.');
