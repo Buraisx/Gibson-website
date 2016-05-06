@@ -456,10 +456,18 @@ function listusers(){
 			users += '                        </div>';
 			users += '                        <div class = "row">';
 			users += '                            <div class = "col-sm-6">';
-			users += '                                <p><strong>Phone (Home): </strong>' + user_info[i].primary_phone + '</p>';
+			users += '                                <p><strong>Phone (Home): </strong>' + user_info[i].primary_phone;
+			if(user_info[i].primary_extension){
+			users += ' ext. ' + user_info[i].primary_extension;
+			}
+			users += '</p>';
 			users += '                            </div>';
 			users += '                            <div class = "col-sm-6">';
-			users += '                                <p><strong>Phone (Cell): </strong>' + user_info[i].secondary_phone + '</p>';
+			users += '                                <p><strong>Phone (Cell): </strong>' + user_info[i].secondary_phone;
+			if(user_info[i].secondary_extension){
+			users += ' ext. ' + user_info[i].secondary_extension;
+			}
+			users += '</p>';
 			users += '                            </div>';
 			users += '                        </div>';
 			users += '                        <div class = "row">';
@@ -467,7 +475,7 @@ function listusers(){
 			users += '                                <p><strong>Gender: </strong>' + user_info[i].gender + '</p>';
 			users += '                            </div>';
 			users += '                            <div class = "col-sm-6">';
-			users += '                                <p><strong>Date of Birth: </strong>' + convertdate(String(user_info[i].birth_date).substring(0, 10)) + '</p>';
+			users += '                                <p><strong>Age Group: </strong>' + user_info[i].age_group_name + ' (' + user_info[i].age_group_description + ')' + '</p>';
 			users += '                            </div>';
 			users += '                        </div>';
 			users += '                        <div class = "row">';

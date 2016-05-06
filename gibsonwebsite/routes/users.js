@@ -620,7 +620,7 @@ router.post('/user/profile/edit/studentinfo', function(req, res){
 
 
 // ROUTE FOR EDITING STUDENT INFORMATION OF A USER
-router.post('/user/profile/edit/emegencyinfo', function(req, res){
+router.post('/user/profile/edit/emergencyinfo', function(req, res){
 
 	// GETTING CONNECTION
 	connection.getConnection(function(err, con){
