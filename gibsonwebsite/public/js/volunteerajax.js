@@ -312,11 +312,14 @@ function load_controlpanel(){
     adduser+='                        </div> <!-- page-content-wrapper -->';
     adduser+='                    </div> <!-- tab-pane -->';
 
+    //Limited user's tab
 	var limiteduser='';
     limiteduser+='                    <div class="tab-pane" id="addlimiteduser">';
     limiteduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
     limiteduser+='                            <form name="limiteduser" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
     limiteduser+='                            <h3>Add Limited User</h3>';
+
+    //The first name and last name input
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "form-group col-sm-5">';
     limiteduser+='                                    <label><span class="requiredasterisk">*</span>First Name:</label>';
@@ -327,6 +330,8 @@ function load_controlpanel(){
     limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "limited_lname" id = "limited_lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+">';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
+
+    //The row for email and phone number input
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class="form-group col-sm-5">';
     limiteduser+='                                    <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
@@ -341,6 +346,8 @@ function load_controlpanel(){
     limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_extension" id = "limited_primary_extension" maxlength="6" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid Extension.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
+
+    //Submit button
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "col-sm-10 text-right">';
     limiteduser+='                                    <button type = "button" class = "btn btn-success" onclick="submitLimitedUser()">Add</button>';
@@ -350,6 +357,7 @@ function load_controlpanel(){
     limiteduser+='                        </div>';
     limiteduser+='                    </div>';
 
+    //Add User To Course tab
     var addusertocourse='';
     addusertocourse+='                    <div class="tab-pane" id="addusertocourse">';
     addusertocourse+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
@@ -378,6 +386,7 @@ function load_controlpanel(){
         });
     });
 
+    //validate for limited users
     $('#limiteduser').validate({
         rules: {
             limited_fname: {
@@ -394,6 +403,7 @@ function load_controlpanel(){
 
 }
 
+//Creates the limited users
 function submitLimitedUser(){
     if ($("#limiteduser").valid()) {
         $.post("/volunteer/addlimited",{

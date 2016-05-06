@@ -87,7 +87,7 @@ function controlpanel (dropdown_info) {
     adduser+='                                        </div>';
     adduser+='                                    </div><!--Firstitem end-->';
     adduser+='                                    <div class = "item"><!--second item-->';
-    adduser+='                                     <div class = "panel panel-default  signuppanel"><!-- panel start-->';
+    adduser+='                                     <div class = "panel panel-default signuppanel"><!-- panel start-->';
     adduser+='               <div class = "panel-heading" id="signup2">';
     adduser+='               <h2 class = "text-center">User Information</h2>';
     adduser+='               </div>';
@@ -201,7 +201,7 @@ function controlpanel (dropdown_info) {
     adduser+='            </div><!--panel-default-->';
     adduser+='                                    </div><!--second item end-->';
     adduser+='                                    <div class = "item"><!--third item-->';
-    adduser+='                                    <div class = "panel panel-default shadowy  signuppanel"><!-- panel start-->';
+    adduser+='                                    <div class = "panel panel-default signuppanel"><!-- panel start-->';
     adduser+='                       <div class = "panel-heading" id="signup3">';
     adduser+='                       <h2 class = "text-center">Contact Info</h2>';
     adduser+='                       </div>';
@@ -234,7 +234,7 @@ function controlpanel (dropdown_info) {
     for(var i=1; i <= 3; i++) {
         adduser+='<div id = "contact' + i + '"';
         if (i != 1) {
-            adduser+=' class = "hidden"';
+            adduser+=' class = "hidden col-sm-offset-1"';
         }
         adduser+='>';
         adduser+='    <div class = "row">';
@@ -277,10 +277,10 @@ function controlpanel (dropdown_info) {
         }
         adduser+='>';
         adduser+='        </div>';
-		adduser+='        <div class = "form-group col-sm-2 stoppaddingleft">';
-		adduser+='            <label class = "control-label">Ext:</label>';
-		adduser+='            <input class = "form-control" type = "text" name = "ephoneext'+ i + '" id = "ephoneext'+ i + '" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
-		adduser+='        </div>';
+        adduser+='        <div class = "form-group col-sm-2 stoppaddingleft">';
+        adduser+='            <label class="control-label">Ext.</label>';
+        adduser+='            <input type="text" class="form-control" type="text" name="ephoneext' + i + '" id="ephoneext' + i + '" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity("")}catch(e){}">';
+        adduser+='        </div>';
         adduser+='    </div>';
         adduser+='</div>';
     }
@@ -309,12 +309,14 @@ function controlpanel (dropdown_info) {
     adduser+='                        </div> <!-- page-content-wrapper -->';
     adduser+='                    </div> <!-- tab-pane -->';
 
+    //Limited user's tab
     var limiteduser='';
     limiteduser+='                    <div class="tab-pane" id="addlimiteduser">';
     limiteduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
     limiteduser+='                            <form name="limiteduser" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
     limiteduser+='                            <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
     limiteduser+='                            <h3>Add Limited User</h3>';
+    //The first name and last name input
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "form-group col-sm-5">';
     limiteduser+='                                    <label><span class="requiredasterisk">*</span>First Name:</label>';
@@ -325,6 +327,8 @@ function controlpanel (dropdown_info) {
     limiteduser+='                                    <input type = "text" class = "form-control reqIn" name = "limited_lname" id = "limited_lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+">';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
+
+    //The row for email and phone number input
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class="form-group col-sm-5">';
     limiteduser+='                                    <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
@@ -339,6 +343,8 @@ function controlpanel (dropdown_info) {
     limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_extension" id = "limited_primary_extension" maxlength="6" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid Extension.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
+
+    //Submit button
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "col-sm-10 text-right">';
     limiteduser+='                                    <button type = "button" class = "btn btn-success" onclick="submitLimitedUser()">Add</button>';
@@ -348,6 +354,7 @@ function controlpanel (dropdown_info) {
     limiteduser+='                        </div>';
     limiteduser+='                    </div>';
 
+    //Add User To Course tab
     var addusertocourse='';
     addusertocourse+='                    <div class="tab-pane" id="addusertocourse">';
     addusertocourse+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
@@ -357,11 +364,14 @@ function controlpanel (dropdown_info) {
     addusertocourse+='                        </div>';
     addusertocourse+='                    </div>';
 
+    //Add Course tab
     var addcourse='';
     addcourse+='            <div class="tab-pane" id="addcourse">';
     addcourse+='                <div id="page-content-wrapper" class="container-fluid xyz">';
     addcourse+='                <form name="frm" role = "form" id="courseform" onsubmit="validateCourse();return false">';
     addcourse+='                    <h3>Add Course</h3>';
+
+    //The Course name and code input
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-4">';
     addcourse+='                            <label><span class="requiredasterisk">*</span>Course Name:</label>';
@@ -372,6 +382,8 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <input type = "text" class = "form-control" name = "addcoursecode" id = "addcoursecode" required>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //The Course's cost and capacity input
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-4">';
     addcourse+='                            <label><span class="requiredasterisk">*</span>Cost:</label>';
@@ -382,32 +394,44 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <input type = "number" class = "form-control" name = "course_limit" id = "course_limit" required>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //The Language input
     addcourse+='                    <div class = "row" id="language1">';
     addcourse+='                        <div class = "form-group col-sm-4">';
     addcourse+='                            <label><span class="requiredasterisk">*</span>Offered Language:</label>';
     addcourse+='                            <input type = "text" class = "form-control" name = "course_language1" id = "course_language1" required>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //Buttons to add or remove language input boxes
     addcourse+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="nextLanguages()">Add Another Language</button>';
     addcourse+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
+    
+    //The Target Audience input
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-8">';
     addcourse+='                            <label class = "targetmargin"><span class="requiredasterisk">*</span>Target Audience:</label>';
     addcourse+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //The Description Box
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-8">';
     addcourse+='                            <label><span class="requiredasterisk">*</span>Description:</label>';
     addcourse+='                            <textarea class = "form-control" rows = "6" name = "adddescription" id = "adddescription"></textarea>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //The Notes Box
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-8">';
     addcourse+='                            <label><span class="requiredasterisk">*</span>Notes:</label>';
     addcourse+='                            <textarea class = "form-control" rows = "4" name = "course_notes" id = "course_notes"></textarea>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //The Instructor's name and username input
     addcourse+='                   <div class = "row">';
     addcourse+='                       <div class = "form-group col-sm-4">';
     addcourse+='                           <label><span class="requiredasterisk">*</span>Instructor\'s Name:</label>';
@@ -418,32 +442,37 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <input type = "text" class = "form-control" name = "instructor_username" id = "instructor_username" required>';
     addcourse+='                       </div>';
     addcourse+='                   </div>';
+
+    //The Instructor Biography box
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-8">';
     addcourse+='                            <label><span class="requiredasterisk">*</span>Instructor Biography:</label>';
     addcourse+='                            <textarea class = "form-control" rows = "6" name = "instructor_bio" id = "instructor_bio"></textarea>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //The Date of when the course starts and ends
     addcourse+='                   <div class = "row">';
     addcourse+='                    <div class = "form-group col-sm-8">';
     addcourse+='                        <label class = "addcoursepadding"><span class="requiredasterisk">*</span>Date:</label><br>';
     //addcourse+='                        <label class = "addcoursepadding"><span class="requiredasterisk">*</span>Date:</label><label id="addstartdate-error" id="addenddate-error" class="error" for="addstartdate addenddate"></label><br>';
     //addcourse+='<label id="addenddate-error" class="error hidden" for="addenddate">This field is required.</label>';
 
-
+    //Choose range of startdate and end date
     addcourse+='                        <div class="input-daterange input-group rangedatepicker">';
     addcourse+='                            <input type="text" class="input-sm-4 form-control" name="addstartdate" id="addstartdate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
     addcourse+='                            <span class="input-group-addon">to</span>';
     addcourse+='                            <input type="text" class="input-sm-4 form-control" name="addenddate" id="addenddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
     addcourse+='                        </div>';
 
+    //Generates custum errors for rangedatepicker
     addcourse+='                        <label id="addstartdate-error" class="error" for="addstartdate"></label>';
     addcourse+='                        <label id="addenddate-error" class="error alignparent" for="addenddate"></label>';
 
-
-
     addcourse+='                    </div>';
     addcourse+='                   </div>';
+
+    //Class Interval input
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-4" required>';
     addcourse+='                            <label class="addcoursepadding"><span class="requiredasterisk">*</span>Class Interval:</label><label id="addinterval-error" class="error" for="addinterval"></label><br>';
@@ -456,6 +485,7 @@ function controlpanel (dropdown_info) {
     addcourse+='                        </div>';
     addcourse+='                    </div>';
 
+    //Add Course's days and time
     addcourse+='                    <div class = "row" name="day0" id="day0">';  //Cannot be delete tag for reference
     addcourse+='                        <div>';
     addcourse+='                         <label class="form-group col-sm-4">Course Days:</label>';
@@ -463,6 +493,8 @@ function controlpanel (dropdown_info) {
     addcourse+='                         <label class="form-group col-sm-2">End Time:</label><br>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //Dropdown for the days
     addcourse+='                    <div class = "row" name="day1" id="day1">';
     addcourse+='                        <div class = "form-group col-sm-4" required>';
     addcourse+='                         <select class="form-control" name="day-of-week1" id="day-of-week1">';
@@ -476,17 +508,25 @@ function controlpanel (dropdown_info) {
     addcourse+='                             <option value="Sunday">Sunday</option>';
     addcourse+='                         </select>';
     addcourse+='                        </div>';
+
+    //time_element for start time
     addcourse+='                        <div class = "form-group col-sm-2" required>';
     addcourse+='                             <input type = "text" class = "form-control time_element" name = "starttime1" id = "starttime1" required>';
     addcourse+='                             <label id="starttime1-error" class="error smalltext" for="starttime1" style="display:none;"></label>';
     addcourse+='                        </div>';
+
+    //time_element for end time
     addcourse+='                        <div class = "form-group col-sm-2" required>';
     addcourse+='                             <input type = "text" class = "form-control time_element" name = "endtime1" id = "endtime1" required>';
     addcourse+='                             <label id="endtime1-error" class="error smalltext" for="endtime1" style="display:none;"></label>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //buttons to add more dates
     addcourse+='                    <button type = "button" class= "btn btn-default" id = "addschedule" onClick="addTime()">Add a schedule</button>';
     addcourse+='                    <button type = "button" class= "btn btn-default" id = "removeschedule" onClick="removeTime()">Remove schedule</button>';
+
+    //add hoc days
     addcourse+='                    <div class = "row" name="adhoc0" id="adhoc0">';
     addcourse+='                     <div>';
     addcourse+='                         <label class = "form-group col-sm-4">Ad-Hoc Days:</label>';
@@ -494,25 +534,35 @@ function controlpanel (dropdown_info) {
     addcourse+='                         <label class = "form-group col-sm-2">End Time:</label>';
     addcourse+='                     </div>';
     addcourse+='                    </div>';
+
+    //Choose a date
     addcourse+='                   <div class = "row" id="adhoc1">';
     addcourse+='                    <div class = "form-group col-sm-4">';
     addcourse+='                        <div class="input-daterange input-group rangedatepicker">';
     addcourse+='                            <input type="text" class="input-sm-4 form-control" name="adhocstartdate1" id="adhocstartdate1" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    //time_element for start time
     addcourse+='                    <div class = "form-group col-sm-2" required>';
     addcourse+='                        <input type = "text" class = "form-control time_element" name = "startadhoc1" id = "startadhoc1" required>';
     addcourse+='                        <label id="startadhoc1-error" class="error smalltext" for="startadhoc1" style="display:none;"></label>';
     addcourse+='                    </div>';
+
+    //time_element for end time
     addcourse+='                    <div class = "form-group col-sm-2" required>';
     addcourse+='                        <input type = "text" class = "form-control time_element" name = "endadhoc1" id = "endadhoc1" required>';
     addcourse+='                        <label id="endadhoc1-error" class="error smalltext" for="endadhoc1" style="display:none;"></label>';
     addcourse+='                    </div>';
     addcourse+='                    </div>';
+
+    //buttons to add more dates
     addcourse+='                    <button type = "button" class= "btn btn-default" id = "addadhoc" onClick="addAdhocTime()">Add a custom schedule</button>';
     addcourse+='                    <button type = "button" class= "btn btn-default" id = "removeadhoc" onClick="removeAdhocTime()">Remove schedule</button>';
     addcourse+='                    <div class="row form-group">';
     //addcourses+='                    <br>';
+
+    //submit button
     addcourse+='                        <div class = "col-sm-8 reducepadding">';
     addcourse+='                            <button type = "submit" class= "btn btn-success" id = "validate">Submit</button>';
     addcourse+='                        </div>';
@@ -521,6 +571,7 @@ function controlpanel (dropdown_info) {
     addcourse+='                </div>';
     addcourse+='            </div>';
 
+    //Modify Course tab
     var modifycourse='';
     modifycourse+='                     <div class="tab-pane" id="modifycourse">';
     modifycourse+='                         <div id="page-content-wrapper" class="container-fluid xyz">';
@@ -530,6 +581,7 @@ function controlpanel (dropdown_info) {
     modifycourse+='                         </div>';
     modifycourse+='                     </div>';
 
+    //Modify User tab
     var modifyuser='';
     modifyuser+='                    <div class="tab-pane" id="modifyuser">';
     modifyuser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
@@ -539,12 +591,15 @@ function controlpanel (dropdown_info) {
     modifyuser+='                        </div>';
     modifyuser+='                    </div>';
 
+    //Add schedule event tab
     var scheduleevent='';
     scheduleevent+='                <div class="tab-pane" id="scheduleevent">';
     scheduleevent+='                     <div id="page-content-wrapper" class="container-fluid xyz">';
     scheduleevent+='                        <h3>Schedule Event</h3>';
-    scheduleevent+='                        <form action="/admin/addEvent" method="post">';
+    scheduleevent+='                        <form action="/admin/addEvent" method="post" name="scheduleevent" id="scheduleevent">';
     scheduleevent+='                            <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
+
+    //Creates the start date and end date inputs
     scheduleevent+='                            <div class = "row">';
     scheduleevent+='                                <div class = "form-group col-sm-6" required>';
     scheduleevent+='                                    <label><span class="requiredasterisk">*</span>Date:</label>';
@@ -554,6 +609,8 @@ function controlpanel (dropdown_info) {
     scheduleevent+='                                        <input type="text" class="input form-control" name="enddate" id="enddate" placeholder="YYYY/MM/DD" data-date-end-date="0d" required />';
     scheduleevent+='                                    </div>';
     scheduleevent+='                                </div>';
+
+    //Dropdown for the type of event
     scheduleevent+='                                <div class = "form-group col-sm-4">';
     scheduleevent+='                                    <label><span class="requiredasterisk">*</span>Type:</label>';
     scheduleevent+='                                        <select class="form-control" name="eventtype" id="eventtype" required>';
@@ -564,12 +621,16 @@ function controlpanel (dropdown_info) {
     scheduleevent+='                                        </select>';
     scheduleevent+='                                </div>';
     scheduleevent+='                            </div>';
+
+    //Creates a message box
     scheduleevent+='                            <div class = "row">';
     scheduleevent+='                                <div class = "form-group col-sm-10">';
     scheduleevent+='                                    <label><span class="requiredasterisk">*</span>Description:</label>';
     scheduleevent+='                                    <textarea class = "form-control" rows = "3" name = "message" id = "message" required></textarea>';
     scheduleevent+='                                </div>';
     scheduleevent+='                            </div>';
+
+    //submit button
     scheduleevent+='                            <div class = "row">';
     scheduleevent+='                                <div class = "col-sm-8">';
     scheduleevent+='                                    <button type = "button" onclick="makeEvent()" class= "btn btn-success eventsubmit" id = "validate">Submit</button>';
@@ -579,6 +640,7 @@ function controlpanel (dropdown_info) {
     scheduleevent+='                    </div>';
     scheduleevent+='                </div>';
 
+    //Change rank tab
     var changerank='';
     changerank+='                    <div class="tab-pane" id="changerank">';
     changerank+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
@@ -676,6 +738,7 @@ function controlpanel (dropdown_info) {
         }
     });
 
+    //validate for limited users
     $('#limiteduser').validate({
         rules: {
             limited_fname: {
@@ -690,8 +753,26 @@ function controlpanel (dropdown_info) {
         }
     });
 
+    //validate for limited users
+    $('#scheduleevent').validate({
+        rules: {
+            startdate: {
+                required: true
+            },
+            enddate: {
+                required: true
+            },
+            eventtype: {
+                required: true
+            },
+            message: {
+                required: true
+            }
+        }
+    });
 }
 
+//Creates the limited users
 function submitLimitedUser(){
     if ($("#limiteduser").valid()) {
         $.post("/volunteer/addlimited",{
@@ -718,6 +799,12 @@ function submitLimitedUser(){
     }
 }
 
+
+//Creates the Schedule Event
+function makeEvent(){
+    if ($("#scheduleevent").valid()) {
+    }
+}
 //==============================
 //ADD/REMOVE Languages
 //==============================
