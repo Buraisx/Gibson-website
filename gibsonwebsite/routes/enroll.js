@@ -53,7 +53,7 @@ router.post('/enroll/search/user', function (req, res, next){
 //load all available courses to the user
 router.get('/enroll/courses', function (req, res, next){
 
-  var sql = "SELECT c.course_id, c.course_code, c.course_name, c.course_limit, uc.user_list from gibson.course c LEFT JOIN (SELECT count(*) AS user_list, course_id from gibson.user_course GROUP BY course_id) uc ON uc.course_id = c.course_id";
+  var sql = "SELECT c.course_id as sku, c.course_code, c.course_name, c.course_limit, uc.user_list from gibson.course c LEFT JOIN (SELECT count(*) AS user_list, course_id from gibson.user_course GROUP BY course_id) uc ON uc.course_id = c.course_id";
   console.log(sql);
 
   connection.getConnection(function (err, con){
@@ -84,7 +84,7 @@ router.get('/enroll/courses', function (req, res, next){
 
 //give frontend all the course information for the courses they selected
 router.post('/enroll/courses', function (req, res, next){
-  var sql = "SELECT course_id, course_code, course_name,instructor_name, default_fee, course_limit, start_date,end_date, course_language, course_description FROM gibson.course WHERE course_id IN (course_list);";
+  var sql = "SELECT course_id AS sku, course_code, course_name,instructor_name, default_fee, course_limit, start_date,end_date, course_language, course_description FROM gibson.course WHERE course_id IN (course_list);";
   var courses = '';
   var selected_courses = sanitizeJSONArray(req.body["selected_courses[]"]);
 
@@ -143,36 +143,56 @@ router.post('/enroll', function (req, res, next){
     connection.getConnection(function (err, con){
     if(err) {
       con.release();
-      console.log("cannot get connection");
+      console.log("enroll.js: Cannot get connection.");
       return err;
     }
 
-    con.query(sql, function (err, password){
-      con.release();
-      if(err){
-        console.log("enroll.js: Cannot query for password.");
-        res.status(500).send();
-      }
+    else{
+        async.waterfall([
 
-      if(!password.length){
-        console.log('enroll.js: No User with this information.');
-        res.status(404).send();
-      }
-      else if (!bcrypt.compareSync(req.body.password, password[0].password)){
-        res.status(404).send();
-      }
-      else{
-        enroll(req.body.user_id, req.body.email, req.body.trans_id, req.body.payment_method, req.body.first_name, req.body.last_name, req.body.item_list, req.body.total, 'CAD', '0.00', req.body.description, con, next);
-      }
-    });
-  });
+        //check password
+        function (next){
+          con.query(sql, function (err, password){
+            if(err){
+              console.log("enroll.js: Cannot query for password.");
+              return next({errno:401, msg:"Cannot query for password."}, null);
+            }
+
+            else if (req.body.password == null || !req.body.password.length){
+              return next({errno:401, msg:"No Password Provided!"}, null);
+            }
+
+            else if (!bcrypt.compareSync(req.body.password, password[0].password)){
+              console.log('enroll.js: Bad password given.');
+              return next({errno:401, msg:"Bad Password!"}, null);
+            }
+            
+            else{
+              next(null, req.body.user_id, req.body.email, req.body.trans_id, req.body.payment_method, req.body.first_name, req.body.last_name, JSON.parse(req.body.item_list), req.body.total, 'CAD', '0.00', req.body.description, con, next);
+            }
+          });
+        },
+
+        //Enrollment
+        function (id, email, trans_id, payment_method, first_name, last_name, item_list, total, currency, tax, description, con, done){
+          enroll(id, email, trans_id, payment_method, first_name, last_name, item_list, total, currency, tax, description, con, done);  
+        }
+      ],
+      function (msg, results){
+        con.release();
+        if(msg){
+          console.log("enroll.js: " + msg.msg);
+          res.status(msg.errno).send();
+        }
+      }); 
+    }
+  }); 
 });
 
 //============================================================
 //===Enrollment without payment===============================
 //============================================================
 function enroll(id, email, trans_id, payment_method, first_name, last_name, item_list, total, currency, tax, description, con, done){
-  
   async.waterfall([
     
       //Start Transaction
@@ -189,7 +209,7 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
 
       //Insert transaction into transaction history table
       function (next){
-        var user_transaction = "INSERT into gibson.transaction_history (payment_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        var user_transaction = "INSERT into gibson.transaction_history (paypal_id, create_time, state, intent, payment_method, user_id, payer_email, payer_first_name, payer_last_name, payer_id, total, currency, tax, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         var transaction_inserts = [trans_id, new Date(), "Approved", "Purchase", payment_method, id, email, first_name, last_name, null, total, currency, tax, description];
 
         user_transaction = mysql.format(user_transaction, transaction_inserts);
@@ -210,7 +230,6 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
             var user_course = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, transaction_id, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, ?, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?;";
             var inserts = [id, item.sku, insertId, 'Enrolled', 'Registered for course ID: ' + item.sku, item.sku];
             user_course = mysql.format(user_course, inserts);
-            console.log(user_course);
             con.query(user_course, function (err, results){
               if(err){
                 callback({errno:500, message:"payment.js: Cannot enroll user into courses"},null);
@@ -231,14 +250,13 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
     ], function (err, results){
       if(err){
         con.query('ROLLBACK;', function(err, results){
-          return done({errno: 500, msg: 'Error accepting $0.00 transaction.'}, null); 
-          
+          return done({errno: 500, msg: 'Error accepting $' + total + ' transaction.'}, null); 
         });
       }
       else{
         con.query('COMMIT;', function(err, results){
           console.log('payment.js: Enrolled user to courses');
-          return done({errno:200, msg:"Accepted $0.00 transaction."}, null);
+          return done({errno:200, msg:"Accepted $" + total + " transaction."}, null);
         });
       }
   });

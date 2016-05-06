@@ -51,8 +51,8 @@ function addCheckedCourses (){
 	var coursesChecked = [];
 
 	for(var i = 0; i <courses.length; i++){
-		if($('#'+courses[i].course_id).is(':checked')){
-			coursesChecked.push($('#'+courses[i].course_id).val());
+		if($('#'+courses[i].sku).is(':checked')){
+			coursesChecked.push($('#'+courses[i].sku).val());
 		}
 	}
 	console.log(coursesChecked);
@@ -73,7 +73,7 @@ function atLeastOneCourseChecked (){
 	var coursesChecked = 0;
 
 	for(var i = 0; i <courses.length; i++){
-		if($('#'+courses[i].course_id).is(':checked')){
+		if($('#'+courses[i].sku).is(':checked')){
 			$('#next-step2').removeProp("disabled");
 			coursesChecked += 1;
 		}
@@ -94,7 +94,7 @@ function loadCourses(){
 		for(var i = 0; i < res.length; i++){
 			courselists += '<div class="row">';
 			courselists += '<div>';
-			courselists += '<input type="checkbox" id="'+ res[i].course_id +'" name="'+ res[i].course_id +'" value="' + res[i].course_id +'" onclick="atLeastOneCourseChecked ();">' + res[i].course_name + ',' + res[i].course_code;
+			courselists += '<input type="checkbox" id="'+ res[i].sku +'" name="'+ res[i].sku +'" value="' + res[i].sku +'" onclick="atLeastOneCourseChecked ();">' + res[i].course_name + ',' + res[i].course_code;
 			courselists += '</div>';
 			courselists += '</div>';
 		}
@@ -215,9 +215,19 @@ function askForPassword (){
 			
 }
 
+function cartCodes(){
+	var item_list=[];
+
+	for(var i = 0; i < cartCourses.length; i++){
+		item_list.push({sku: cartCourses[i].sku});
+	}
+	console.log(item_list);
+	return item_list;
+}
+
 //-- record transaction to database --//
 function recordTransaction(){
-
+	console.log(cartCourses);
 	$.post("/enroll", {
 			_csrf: $('#_csrf').val(),
 			email: $('#email').val(),
@@ -226,13 +236,14 @@ function recordTransaction(){
 			user_id: $('#user_id').val(),
 			trans_id: $('#trans_id').val(),
 			payment_method: $('#payment_method').val(),
-			desciption: $('#description').val(),
+			description: $('#description').val(),
 			total: cartTotal,
-			item_list: cartCourses,
+			item_list: JSON.stringify(cartCodes()),
 			password: $('#password').val()
 
 	})
 	.done(function (res){
+		console.log(cartCourses);
 		console.log("You have recorded the transaction!");
 	})
 	.fail(function (err){
