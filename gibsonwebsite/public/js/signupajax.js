@@ -123,7 +123,10 @@ function signup() {
         relationship3: $('#relationship3').val(),
         ephone1: $('#ephone1').val(),
         ephone2: $('#ephone2').val(),
-        ephone3: $('#ephone3').val()
+        ephone3: $('#ephone3').val(),
+        ephoneextension1: $('#ephoneextension1').val(),
+        ephoneextension2: $('#ephoneextension2').val(),
+        ephoneextension3: $('#ephoneextension3').val()
 	})
 	.done(function(res){
             window.location.href = res.redirect_url;

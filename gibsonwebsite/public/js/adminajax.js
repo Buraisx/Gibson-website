@@ -157,6 +157,7 @@ function listusers(){
 			users += '                        </div>';
 			users += '                        <div class = "row">';
 			users += '                            <div class = "col-sm-6">';
+
 			users += '                                <p><strong>Phone (Home): </strong>' + user_info[i].primary_phone;
 			if (user_info[i].primary_extension){
 			users += ' ext. ' + user_info[i].primary_extension;
@@ -169,6 +170,7 @@ function listusers(){
 			users += ' ext. ' + user_info[i].secondary_extension;
 			}
 			users += '</p>';
+
 			users += '                            </div>';
 			users += '                        </div>';
 			users += '                        <div class = "row">';
