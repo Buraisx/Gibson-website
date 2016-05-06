@@ -44,7 +44,6 @@ function displayUser(email){
 	});
 }
 
-
 //-- load courses and check if courses have checked or not to enable/disable next button --//
 function addCheckedCourses (){
 
@@ -55,7 +54,7 @@ function addCheckedCourses (){
 			coursesChecked.push($('#'+courses[i].sku).val());
 		}
 	}
-	console.log(coursesChecked);
+
 	$.post("/enroll/courses", {
 		selected_courses: coursesChecked,
 		_csrf: $('#_csrf').val()
@@ -74,12 +73,30 @@ function atLeastOneCourseChecked (){
 
 	for(var i = 0; i <courses.length; i++){
 		if($('#'+courses[i].sku).is(':checked')){
+			
+			//move checked course to the right div
+			$('#selectedcourselist').append($('#course'+[i]).clone());
+			$('#course'+[i]).remove();
+			//disable next button
 			$('#next-step2').removeProp("disabled");
+
 			coursesChecked += 1;
+		}
+
+		//move unchecked course to the left div if in the right div
+		else if ((!$('#'+courses[i].sku).is(':checked')) && ($('#'+courses[i].sku).parents('#selectedcourselist').length == 1)){
+			
+			var contents = $('#course'+[i]);
+			$('#course'+[i]).remove();
+			$('#courselist').append(contents);
+			//$('#courselist').append('<div> hi </div>');
+			
 		}
 	}
 
 	if(coursesChecked == 0){
+
+		//enable next button
 		$('#next-step2').prop("disabled", true);
 	}
 }
@@ -90,11 +107,11 @@ function loadCourses(){
 		console.log("Loaded courses.");
 		courses = res;
 		var courselists = '';
-		console.log(res);
+	
 		for(var i = 0; i < res.length; i++){
-			courselists += '<div class="row">';
+			courselists += '<div id="course'+ [i] +'" class="row">';
 			courselists += '<div>';
-			courselists += '<input type="checkbox" id="'+ res[i].sku +'" name="'+ res[i].sku +'" value="' + res[i].sku +'" onclick="atLeastOneCourseChecked ();">' + res[i].course_name + ',' + res[i].course_code;
+			courselists += '<label id ="label'+ res[i].sku +'"><input type="checkbox" id="'+ res[i].sku +'" name="'+ res[i].sku +'" value="' + res[i].sku +'" onclick="atLeastOneCourseChecked ();">' + res[i].course_name + ',' + res[i].course_code +'</label>';
 			courselists += '</div>';
 			courselists += '</div>';
 		}
@@ -114,7 +131,7 @@ function load_cart(){
 
         var cart_empty = true;
 
-        console.log(cartCourses);
+        
 
 		for(var i = 0; i < cartCourses.length; i++){
 			cart_total += cartCourses[i].default_fee;
@@ -149,6 +166,29 @@ function load_cart(){
         }
 }
 
+//--clear the cart on back clip of step 3-- //
+
+function clearCart(){
+	//clear the cart-table and rebuild the html
+	$('#cart-table').contents().remove();
+
+	var item = '';
+    item+='<tr class="shoppingheader">';
+    item+='<td id="cart-header-code">Course Code</td>';
+    item+='<td id="cart-header-name">Course Name</td>';
+    item+='<td id="cart-header-cost">Cost</td>';
+    item+='</tr>';
+
+    $('#cart-table').append(item);
+
+    //clear cart and rebuild
+    $('#empty-cart').contents().remove();
+    var emptytext = '<p id="empty-cart-text1">Oops! Your shopping cart is empty!</p>';
+    $('#empty-cart').append(emptytext);
+
+
+}
+
 //-- confirmation alert to tell the payer to pay the payment right now --//
 function confirmationAlert(){
 	swal({  
@@ -156,47 +196,45 @@ function confirmationAlert(){
         type: "success"
     });
 
-    firstName();
-    lastName();
     userID();
 }
 
 //--give front end names of account --//
 
 function userID(){
-	$('#user_id').attr("placeholder", $('#user-id').text());
 	$('#user_id').val($('#user-id').text());
 }
 
 function firstName(){
-	$('#first_name').attr("placeholder", $('#user-fname').text());
 	$('#first_name').val($('#user-fname').text());
 }
 
 function lastName(){
-	$('#last_name').attr("placeholder", $('#user-lname').text());
 	$('#last_name').val($('#user-lname').text());
 }
 
-//--edit the name of the user to see who is actually paying --//
-function editIDAndNames(){
-	$('#user_id').removeProp("disabled");
-	$('#first_name').removeProp("disabled");
-	$('#last_name').removeProp("disabled");
-	$('#notUser').prop("disabled", true);
-	$("#theUser").prop("disabled", false);
+//-- autofill the first name, last name, and id fields with account information --//
+function autoFill(){
+
+	firstName();
+	lastName();
 }
 
-//-- i am the user who is actually paying --
-function backToDefault(){
-	firstName();
-    lastName();
-    userID();
-    $('#user_id').prop("disabled", true);
-	$('#first_name').prop("disabled", true);
-	$('#last_name').prop("disabled", true);
-	$('#notUser').prop('disabled', false);
-	$("#theUser").prop("disabled", true);
+//-- clear the fields of first name, last name, and id fields --//
+function clearFields(){
+
+	$('#first_name').val("");
+	$('#last_name').val("");
+}
+
+function toggleFields(){
+
+	if(($('#first_name').val() == "" ) || ($('#last_name').val() == "" )){
+		autoFill();
+	}
+	else{
+		clearFields();
+	}	
 }
 
 //-- prompt volunteer/admin/staff for password in order to record the transaction --
@@ -221,13 +259,13 @@ function cartCodes(){
 	for(var i = 0; i < cartCourses.length; i++){
 		item_list.push({sku: cartCourses[i].sku});
 	}
-	console.log(item_list);
+
 	return item_list;
 }
 
 //-- record transaction to database --//
 function recordTransaction(){
-	console.log(cartCourses);
+
 	$.post("/enroll", {
 			_csrf: $('#_csrf').val(),
 			email: $('#email').val(),
@@ -243,11 +281,12 @@ function recordTransaction(){
 
 	})
 	.done(function (res){
-		console.log(cartCourses);
 		console.log("You have recorded the transaction!");
+		window.location.href = '/enrollSuccess';
 	})
 	.fail(function (err){
 		console.log("Failed to record the transaction.");
+		swal({ title: "Incorrect Password", type: "error"});
 	});
 
 }

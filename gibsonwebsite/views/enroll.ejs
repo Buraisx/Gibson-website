@@ -11,7 +11,7 @@
 	</head>
 
 <body>
-    <div class="page-wrap">
+    <div class="page-wrap static-background">
         <form action = "/enroll" class="enroll-form" method = "post" role = "form">
                     <!--sending csrf token-->
             <input type="hidden" id= "_csrf" name="_csrf" value="<%= csrfToken %>">
@@ -64,15 +64,18 @@
                             </div>
 
                             <div class = "panel-body">
-                                <div class ="row">
-                                    <div id="courselist" class ="col-sm-offset-1 col-sm-5">
-
+                                <div class ="row">                          
+                                    <div id="courselist" class ="col-sm-offset-1 col-sm-5 courselist">
+                                        <h4> Available Courses </h4>
+                                    </div>
+                                    <div id="selectedcourselist" class ="col-sm-offset-1 col-sm-5 courselist">
+                                        <h4> Selected Courses </h4>
                                     </div>
                                 </div>
                                 <!-- Next Button -->
                                 <div class = "row">
                                     <div class = "col-sm-2">
-                                        <button type = "button" class = "btn btn-success topage1 next-button btn-default" href="#myCarousel" data-slide="prev" id="prev-step1">Back&larr;</button>
+                                        <button type = "button" class = "btn btn-info topage1 next-button" href="#myCarousel" data-slide="prev" id="prev-step1">Back&larr;</button>
                                     </div>
                                     <div class = "col-sm-10">
                                         <button type = "button" class = "btn btn-success topage3 next-button" href="#myCarousel" data-slide="next" id="next-step2" onclick="addCheckedCourses();"disabled>Next&nbsp;&nbsp;&nbsp;&rarr;</button>
@@ -96,13 +99,17 @@
                                          <!--GET csrf token-->
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
                                         <h1>MY SHOPPING CART</h1>
-                                        <table id="cart-table">
-                                            <tr class="shoppingheader">
-                                                <td id="cart-header-code">Course Code</td>
-                                                <td id="cart-header-name">Course Name</td>
-                                                <td id="cart-header-cost">Cost</td>
-                                            </tr>
-                                        </table>
+                                        <div id="table-wrapper">
+                                            <div id="table-scroll">
+                                                <table id="cart-table">
+                                                    <tr class="shoppingheader">
+                                                        <td id="cart-header-code">Course Code</td>
+                                                        <td id="cart-header-name">Course Name</td>
+                                                        <td id="cart-header-cost">Cost</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                         <div id="empty-cart">
                                             <p id="empty-cart-text1">Oops! Your shopping cart is empty!</p>
                                         </div> 
@@ -121,10 +128,10 @@
                                  <!-- Next Button -->
                                 <div class = "row">
                                     <div class = "col-sm-2">
-                                        <button type = "button" class = "btn btn-success topage2 next-button btn-default" href="#myCarousel" data-slide="prev" id="prev-step2">Back&nbsp;&nbsp;&nbsp;&larr;</button>
+                                        <button type = "button" class = "btn btn-info topage2 next-button" href="#myCarousel" data-slide="prev" onclick = "clearCart();" id="prev-step2">Back&nbsp;&nbsp;&nbsp;&larr;</button>
                                     </div>
                                     <div class = "col-sm-10">
-                                        <button type = "button" class = "btn btn-success topage4 next-button btn-default" href="#myCarousel" data-slide="next" onClick = "confirmationAlert();" id="next-step3">Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                        <button type = "button" class = "btn btn-success topage4 next-button" href="#myCarousel" data-slide="next" onClick = "confirmationAlert();" id="next-step3">Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;</button>
                                     </div>
                                 </div>  
                             </div><!--panel body-->  
@@ -145,11 +152,13 @@
                                         <label class="control-label"><span class="requiredasterisk">*</span>Payment ID:</label>
                                         <span id = "checkPaymentID"></span>
                                         <input class = "form-control reqIn" type="text" name ="trans_id" id="trans_id" placeholder = "Enter The Payer's Paypal ID">
+                                        <input  type="text" name ="user_id" id="user_id" hidden>
                                     </div>
+
                                     <div class="form-group col-sm-offset-1 col-sm-5">
-                                        <label class="control-label"> Account User Id:</label>
-                                        <span id = "checkUserID"></span>
-                                        <input class = "form-control reqIn" type="text" name ="user_id" id="user_id" disabled>
+                                        <label class="control-label"><span class="requiredasterisk">*</span>Payment Type:</label>
+                                        <span id = "checkPaymentType"></span>
+                                        <input class = "form-control reqIn" type="text" name ="payment_method" id="payment_method" placeholder = "Enter Payment Type">
                                     </div>
                                 </div>
 
@@ -157,47 +166,37 @@
                                     <div class="form-group col-sm-offset-1 col-sm-5">
                                         <label class="control-label">First Name:</label>
                                         <span id = "checkFirstName"></span>
-                                        <input class = "form-control reqIn" type="text" name ="first_name" id="first_name" disabled>
+                                        <input class = "form-control reqIn" type="text" name ="first_name" id="first_name" value = "" placeholder = "Enter First Name">
                                     </div>
 
                                     <div class="form-group col-sm-offset-1 col-sm-5">
                                         <label class="control-label">Last Name:</label>
                                         <span id = "checkLastName"></span>
-                                        <input class = "form-control reqIn" type="text" name ="last_name" id="last_name" disabled>
+                                        <input class = "form-control reqIn" type="text" name ="last_name" id="last_name" value = "" placeholder = "Enter Last Name">
                                     </div>
                                 </div>
 
                                 <div class = "row">
-                                    <div class="form-group col-sm-offset-1 col-sm-5">
-                                        <label class="control-label"><span class="requiredasterisk">*</span>Payment Type:</label>
-                                        <span id = "checkPaymentType"></span>
-                                        <input class = "form-control reqIn" type="text" name ="payment_method" id="payment_method" placeholder = "Enter Payment Type">
-                                    </div>
                                     <div class="form-group col-sm-offset-1 col-sm-5">
                                         <label class="control-label"><span class="requiredasterisk">*</span>Description:</label>
                                         <span id = "checkDescription"></span>
                                         <input class = "form-control reqIn" type="text" name ="description" id="description" placeholder = "Enter a Description of the Transaction.">
                                         <input type="text" name ="password" id="password" value = "" hidden>
                                     </div>
-                                </div>
 
-                                <div class="row">
                                     <div class="col-sm-5">
-                                        <div class="col-sm-5">
-                                            <button type = "button" class = "btn btn-warning btn-default"  id="notUser" onclick="editIDAndNames();"> Payee &nbsp;&nbsp;&nbsp;</button>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <button type = "button" class = "btn btn-success btn-default"  id="theUser" onclick="backToDefault();" disabled> Course Participant &nbsp;&nbsp;&nbsp;</button>
+                                        <div class="col-sm-10">
+                                            <button type ="button" class =" btn btn-info enroll-toggle" id="autofill" onclick="toggleFields()"> AutoFill &nbsp;&nbsp;&nbsp;</button>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class = "row">
                                     <div class = "col-sm-5">
-                                        <button type = "button" class = "btn btn-success btn-default" href="#myCarousel" data-slide="prev" id="prev-step3">Back&nbsp;&nbsp;&nbsp;&larr;</button>  
+                                        <button type = "button" class = "btn btn-primary" href="#myCarousel" data-slide="prev" id="prev-step3">Back&nbsp;&nbsp;&nbsp;&larr;</button>  
                                     </div>
                                     <div class = "col-sm-offset-5 ">
-                                        <button type = "button" class = "btn btn-success btn-default enroll-submit"  onclick ="askForPassword();"> Submit&nbsp;&nbsp;&nbsp;</button>
+                                        <button type = "button" class = "btn btn-success  enroll-submit"  onclick ="askForPassword();"> Submit&nbsp;&nbsp;&nbsp;</button>
                                     </div>
                                 </div>
    

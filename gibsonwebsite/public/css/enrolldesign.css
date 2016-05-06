@@ -148,7 +148,6 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 #step2{
     background-color: #3AAADA;
 }
-
 .enroll-cart{
     padding: 20px;
     margin: 20px 0px;
@@ -160,6 +159,27 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
     padding-right: 20px;
     float:right;
 }
+.courselist{
+    height: 300px;
+	overflow-y: scroll;
+}
+.enroll-toggle{
+	float:right;
+}
+.cart-item{
+	overflow-y: scroll;
+}
+/*
+#table-wrapper {
+  position:relative;
+}
+#table-scroll {
+  height:150px;
+  overflow:auto;  
+  margin-top:20px;
+}
+*/
+
 /* mobile */
 @media (max-width: 767px)
 {
