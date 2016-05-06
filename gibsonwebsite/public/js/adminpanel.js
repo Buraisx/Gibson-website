@@ -690,11 +690,11 @@ function controlpanel (dropdown_info) {
 
 function submitLimitedUser(){
     $.post("/volunteer/addlimited",{
-        "lname":$('#lname').val(),
-        "fname":$('#fname').val(),
-        "primary_phone":$('#primary_phone').val(),
-        "primary_extension":$('#primary_extension').val(),
-        "email": $('#email').val(),
+        "lname":$('#limited_lname').val(),
+        "fname":$('#limited_fname').val(),
+        "primary_phone":$('#limited_primary_phone').val(),
+        "primary_extension":$('#limited_primary_extension').val(),
+        "email": $('#limited_email').val(),
         "_csrf": $('#_csrf').val()
     })
     .done(function (res){
