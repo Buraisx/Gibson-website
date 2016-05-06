@@ -44,6 +44,7 @@ body{
 .page-wrap {
   min-height: 100%;
   /* equal to footer height */
+  position: relative;
   margin-bottom: -235px;
 }
 .page-wrap:after {

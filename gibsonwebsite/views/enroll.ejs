@@ -4,56 +4,56 @@
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <link href = "/css/enrolldesign.css" rel = "stylesheet">
+        <link href ="/stylesheets/style.css" rel = "stylesheet">
 		<!-- Latest compiled JavaScript -->
         <script src="/js/bootstrap.min.js"></script>
 		<script src="/js/enrollscripts.js"> </script>
 	</head>
 
-	<body>
+<body>
     <div class="page-wrap">
-	<form action = "/enroll" method = "post" role = "form">
-	<!--sending csrf token-->
+        <form action = "/enroll" class="enroll-form" method = "post" role = "form">
+                    <!--sending csrf token-->
+            <input type="hidden" id= "_csrf" name="_csrf" value="<%= csrfToken %>">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
-        <input type="hidden" id= "_csrf" name="_csrf" value="<%= csrfToken %>">
-		<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-
-			<div class="carousel-inner" role="listbox">
-    			<div class="item active">
-    				<div class = "step-container"><!--panel div-->
-                		<div class = "panel panel-default shadowy steppanel"><!-- panel start-->
-                   			<div class = "panel-heading" id="step1">
-                   				<h2 class = "text-center">Step 1: Search For User</h2>
-                   			</div>
-                   			<div class = "panel-body">
-                        		<div class = "row">
-                            		<div class="form-group col-sm-offset-1 col-sm-5">
-                                		<label class="control-label"><span class="requiredasterisk">*</span>Email:</label>
-                                		<span id = "checkemail"></span>
-                                		<input class = "form-control reqIn" type="text" name ="email" id="email" placeholder = "Enter Email" onchange="displayUser(this.value);" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
-                                		<!--Character restrictions-->
-                            		</div>
-                            	</div>
-                            	<div class = "panel panel-default steppanel col-sm-offset-1 col-sm-5" id="user-info"><!-- panel start-->
-                            		<div  class = "row">
-                            			<!-- show user info -->
-                            			<div>
-	                            			<p id="user-id" ></p>
-    	                        			<p id="user-email" ></p>
-                            				<p id="user-fname"></p>
-                            				<p id="user-lname"></p>
-                            			</div>
-                            		</div>
-                            	</div>
-                            	<!-- Next Button -->
-                            	<div class = "row">
-		                            <div class = "col-sm-offset-6 col-sm-5">
-                                		<button type = "button" class = "btn btn-success topage2 next-button next-hidden" href="#myCarousel" data-slide="next" id="next-step1" disabled>Next&nbsp;&nbsp;&nbsp;&rarr;</button>
-                            		</div>
-                        		</div>   
-	                        </div>
-    					</div> <!--panel body-->
-    				</div><!--panel default-->
-    			</div><!-- step container -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class = "step-container"><!--panel div-->
+                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->
+                            <div class = "panel-heading" id="step1">
+                                <h2 class = "text-center">Step 1: Search For User</h2>
+                            </div>
+                            <div class = "panel-body">
+                                <div class = "row">
+                                    <div class="form-group col-sm-offset-1 col-sm-5">
+                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>
+                                        <span id = "checkemail"></span>
+                                        <input class = "form-control reqIn" type="text" name ="email" id="email" placeholder = "Enter Email" onchange="displayUser(this.value);" required pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">
+                                        <!--Character restrictions-->
+                                    </div>
+                                </div>
+                                <div class = "panel panel-default steppanel col-sm-offset-1 col-sm-5" id="user-info"><!-- panel start-->
+                                    <div  class = "row">
+                                        <!-- show user info -->
+                                        <div>
+                                            <p id="user-id" ></p>
+                                            <p id="user-email" ></p>
+                                            <p id="user-fname"></p>
+                                            <p id="user-lname"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Next Button -->
+                                <div class = "row">
+                                    <div class = "col-sm-offset-6 col-sm-5">
+                                        <button type = "button" class = "btn btn-success topage2 next-button next-hidden" href="#myCarousel" data-slide="next" id="next-step1" disabled>Next&nbsp;&nbsp;&nbsp;&rarr;</button>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div> <!--panel body-->
+                    </div><!--panel default-->
+                </div><!-- step container -->
 
                 <!-- step2 container -->
                 <div class="item">
@@ -90,10 +90,9 @@
                                 <h2 class = "text-center">Step 3: Confirm Selected Courses </h2>
                             </div>
 
-                            <div class = "panel-body">
-                                
+                            <div class = "panel-body">                                
                                 <div class ="row">
-                                    <div id="shoppingcart" class="rcorners">
+                                    <div id="shoppingcart" class="enroll-cart">
                                          <!--GET csrf token-->
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="_csrf">
                                         <h1>MY SHOPPING CART</h1>
@@ -141,17 +140,12 @@
                             </div>
 
                             <div class = "panel-body">
-
-                            <!-- to do: add the fields the admin/volunteer/staff needs to enter for the transcation-->
                                 <div class = "row">
                                     <div class="form-group col-sm-offset-1 col-sm-5">
                                         <label class="control-label"><span class="requiredasterisk">*</span>Payment ID:</label>
                                         <span id = "checkPaymentID"></span>
                                         <input class = "form-control reqIn" type="text" name ="trans_id" id="trans_id" placeholder = "Enter The Payer's Paypal ID">
                                     </div>
-                                </div>
-
-                                <div class = "row">
                                     <div class="form-group col-sm-offset-1 col-sm-5">
                                         <label class="control-label"> Account User Id:</label>
                                         <span id = "checkUserID"></span>
@@ -165,11 +159,7 @@
                                         <span id = "checkFirstName"></span>
                                         <input class = "form-control reqIn" type="text" name ="first_name" id="first_name" disabled>
                                     </div>
-                                    <button type = "button" class = "btn btn-warning btn-default"  id="notUser" onclick="editIDAndNames();"> I Am Not the User.&nbsp;&nbsp;&nbsp;</button>
-                                    <button type = "button" class = "btn btn-success btn-default"  id="theUser" onclick="backToDefault();" disabled> I Am the User.&nbsp;&nbsp;&nbsp;</button>
-                                </div>
 
-                                <div class = "row">
                                     <div class="form-group col-sm-offset-1 col-sm-5">
                                         <label class="control-label">Last Name:</label>
                                         <span id = "checkLastName"></span>
@@ -183,9 +173,6 @@
                                         <span id = "checkPaymentType"></span>
                                         <input class = "form-control reqIn" type="text" name ="payment_method" id="payment_method" placeholder = "Enter Payment Type">
                                     </div>
-                                </div>
-
-                                <div class = "row">
                                     <div class="form-group col-sm-offset-1 col-sm-5">
                                         <label class="control-label"><span class="requiredasterisk">*</span>Description:</label>
                                         <span id = "checkDescription"></span>
@@ -194,25 +181,34 @@
                                     </div>
                                 </div>
 
-                                <div class = "row">
-                                    <div class = "col-sm-2">
-                                        <button type = "button" class = "btn btn-success topage3 next-button btn-default" href="#myCarousel" data-slide="prev" id="prev-step3">Back&nbsp;&nbsp;&nbsp;&larr;</button>  
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="col-sm-5">
+                                            <button type = "button" class = "btn btn-warning btn-default"  id="notUser" onclick="editIDAndNames();"> Payee &nbsp;&nbsp;&nbsp;</button>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <button type = "button" class = "btn btn-success btn-default"  id="theUser" onclick="backToDefault();" disabled> Course Participant &nbsp;&nbsp;&nbsp;</button>
+                                        </div>
                                     </div>
-                                    <div class = "col-sm-8">
-                                        <button type = "button" class = "btn btn-success next-button btn-default"  onclick ="askForPassword();"> Submit&nbsp;&nbsp;&nbsp;</button>
+                                </div>
+
+                                <div class = "row">
+                                    <div class = "col-sm-5">
+                                        <button type = "button" class = "btn btn-success btn-default" href="#myCarousel" data-slide="prev" id="prev-step3">Back&nbsp;&nbsp;&nbsp;&larr;</button>  
+                                    </div>
+                                    <div class = "col-sm-offset-5 ">
+                                        <button type = "button" class = "btn btn-success btn-default enroll-submit"  onclick ="askForPassword();"> Submit&nbsp;&nbsp;&nbsp;</button>
                                     </div>
                                 </div>
    
                             </div>
                         </div> <!--panel body-->
                     </div><!--panel default-->
-
                 </div>
-
-  			</div>
-		</div>
-	</form>
-</div>
+            </div>
+        </div>
+        </form>
+    </div>
     <%- include standardfooter %>
-	</body>
+</body>
 </html>

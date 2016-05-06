@@ -133,20 +133,6 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
     background-color: #97CD51;
 }
 
-
-/* mobile */
-@media (max-width: 767px)
-{
-	#frm {
-		height: auto;
-	}
-
-	.carousel-overflow{
-		display: table;
-		width: 100%;
-	}
-}
-
 /*	Step 1 Specific	*/
 /* Panel Colour */
 #step1{
@@ -161,4 +147,31 @@ box-shadow: -9px 9px 43px 0px rgba(0,0,0,0.75);
 /* Panel Colour */
 #step2{
     background-color: #3AAADA;
+}
+
+.enroll-cart{
+    padding: 20px;
+    margin: 20px 0px;
+}
+.enroll-form{
+    height:800px;
+}
+.enroll-submit{
+    padding-right: 20px;
+    float:right;
+}
+/* mobile */
+@media (max-width: 767px)
+{
+	#frm {
+		height: auto;
+	}
+
+	.carousel-overflow{
+		display: table;
+		width: 100%;
+	}
+	.enroll-form{
+    height:1200px;
+	}
 }
