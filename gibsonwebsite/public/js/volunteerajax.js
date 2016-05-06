@@ -312,7 +312,6 @@ function load_controlpanel(){
     limiteduser+='                    <div class="tab-pane" id="addlimiteduser">';
     limiteduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
     limiteduser+='                            <form name="frm" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
-    limiteduser+='                            <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
     limiteduser+='                            <h3>Add Limited User</h3>';
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "form-group col-sm-5">';
