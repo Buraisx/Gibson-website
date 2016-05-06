@@ -87,7 +87,7 @@ function controlpanel (dropdown_info) {
     adduser+='                                        </div>';
     adduser+='                                    </div><!--Firstitem end-->';
     adduser+='                                    <div class = "item"><!--second item-->';
-    adduser+='                                     <div class = "panel panel-default shadowy  signuppanel"><!-- panel start-->';
+    adduser+='                                     <div class = "panel panel-default  signuppanel"><!-- panel start-->';
     adduser+='               <div class = "panel-heading" id="signup2">';
     adduser+='               <h2 class = "text-center">User Information</h2>';
     adduser+='               </div>';
