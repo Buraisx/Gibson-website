@@ -204,6 +204,7 @@ router.get('/user/profile/info', function(req, res, next) {
 					con.query(sql, function(err, results){
 						if (err || results.length == 0) {
 							console.log("user.js: Failed to query for age group info");
+							console.log(sql);
 							return next(err);
 						}
 						else {
@@ -450,6 +451,337 @@ router.post('/register', function(req, res, next){
 		);
 	});
 });
+
+
+// ROUTE FOR EDITING PERSONAL INFORMATION USER
+router.post('/user/profile/edit/personalinfo', function(req, res){
+
+    connection.getConnection(function(err,con){
+        if(err){
+            console.log('user.js: Cannot get connection.');
+            res.status(500).send('Internal Server Error.');
+        }
+        else{
+
+			var query = 'UPDATE gibson.user SET fname=?, lname=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, gender=?, age_group_id=?, address=?, postal_code=?, unit_no=?, city=?, province_id=? WHERE user_id = ?;';
+			var inserts = [
+				sanitizer.sanitize(req.body.fname),
+				sanitizer.sanitize(req.body.lname),
+				sanitizer.sanitize(req.body.primary_phone).replace(/\D+/g, ''),
+				sanitizer.sanitize(req.body.primary_extension).replace(/\D+/g, ''),
+				sanitizer.sanitize(req.body.secondary_phone).replace(/\D+/g, ''),
+				sanitizer.sanitize(req.body.secondary_extension).replace(/\D+/g, ''),
+				sanitizer.sanitize(req.body.gender),
+				sanitizer.sanitize(req.body.age_group_id),
+				sanitizer.sanitize(req.body.address),
+				sanitizer.sanitize(req.body.postal_code).toUpperCase().replace(/ /g,''),
+				sanitizer.sanitize(req.body.unit_no),
+				sanitizer.sanitize(req.body.city),
+				sanitizer.sanitize(req.body.province_id),
+				jwt.decode(req.cookies.access_token).id
+			];
+
+			con.query(query, inserts, function(err, results){
+				if(err){
+					console.log('users.js: Error updating personal information; /user/profile/edit/personalinfo');
+					res.status(500).send('Error updating personal information.');
+				}
+				else{
+					res.status(200).send('Personal info updated.');
+				}
+			});
+		}
+    });
+});
+
+// ROUTE FOR EDITING STUDENT INFORMATION OF A USER
+router.post('/user/profile/edit/studentinfo', function(req, res){
+
+    // GETTING CONNECTION
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('users.js: Cannot get connection.');
+            res.status(500).send('Internal Server Error');
+        }
+        else{
+
+            async.waterfall([
+
+                // QUERYING DATABASE FOR user_id AND student
+                function(next){
+
+                    var query = 'SELECT student FROM gibson.user WHERE user_id = ?;';
+					var user_id = jwt.decode(req.cookies.access_token).id;
+
+                    con.query(query, [user_id], function(err, results){
+                        if(err){
+                            return next({msg: 'Error querying for user'});
+                        }
+                        else if(results.length === 0){
+                            return next({msg: 'User profile does not exist'});
+                        }
+                        else{
+                            next(null, user_id, results[0].student);
+                        }
+                    });
+                },
+
+                // START TRANSACTION WITH THE DATABASE
+                function(user_id, student, next){
+
+                    con.query('START TRANSACTION;', function(err, results){
+                        if(err){
+                            return next({msg: 'Error starting transaction with database'});
+                        }
+                        else{
+                            next(null, user_id, student);
+                        }
+                    });
+                },
+
+                // IF USER IS A STUDENT -> UPDATE USER'S STUDENT INFO
+                function(user_id, student, next){
+                    if(student == 0){
+                        next(null, user_id, student);
+                    }
+                    else{
+
+                        var query = 'UPDATE gibson.student SET school_name = ?, grade = ?, major = ?, esl_level = ? WHERE user_id = ?;';
+                        var inserts = [
+                            sanitizer.sanitize(req.body.schoolname),
+                            sanitizer.sanitize(req.body.grade),
+                            sanitizer.sanitize(req.body.major),
+                            sanitizer.sanitize(req.body.esl),
+                            user_id
+                        ];
+
+                        con.query(query, inserts, function(err, results){
+                            if(err){
+                                return next({msg: 'Error updating student information'});
+                            }
+                            else{
+                                next(null, user_id, student);
+                            }
+                        });
+                    }
+                },
+
+                // IF USER IS NOT A STUDENT INSERT NEW ENTRY IN STUDENT TABLE AND UPDATE user TABLE
+                function(user_id, student, next){
+                    if(student == 1){
+                        next(null);
+                    }
+                    else{
+
+                        var query =  'INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level) VALUES (?,?,?,?,?); ';
+                            query += 'UPDATE gibson.user SET student = 1 WHERE user_id =?;';
+                        var inserts = [
+                            user_id,
+                            sanitizer.sanitize(req.body.schoolname),
+                            sanitizer.sanitize(req.body.grade),
+                            sanitizer.sanitize(req.body.major),
+                            sanitizer.sanitize(req.body.esl),
+                            user_id
+                        ];
+
+                        con.query(query, inserts, function(err, results){
+                            if(err){
+                                return next({msg: 'Error updating student information'});
+                            }
+                            else{
+                                next(null);
+                            }
+                        });
+                    }
+                }
+            ],
+
+            // FINAL FUNCTION -> HANDLES ERROR/SUCCESS
+            function(error){
+                if(err){
+                    con.query('ROLLBACK;', function(err, results){
+                        con.release();
+                        console.log('users.js: ' +error.msg +'; /user/profile/edit/studentinfo');
+                        res.status(500).send('Failed to update student information.');
+                    });
+                }
+                else{
+                    con.query('COMMIT;', function(err, results){
+                        con.release();
+                        res.status(200).send('Student information updated.');
+                    });
+                }
+            });
+        }
+    });
+});
+
+
+// ROUTE FOR EDITING STUDENT INFORMATION OF A USER
+router.post('/user/profile/edit/emegencyinfo', function(req, res){
+
+	// GETTING CONNECTION
+	connection.getConnection(function(err, con){
+		if(err){
+			console.log('users.js: Cannot get connection.');
+            res.status(500).send('Internal Server Error');
+		}
+		else{
+
+			async.waterfall([
+
+				//COUNTS EMERGENCY CONTACTS
+				function(next){
+					var query = 'SELECT contact_id FROM gibson.emergency_contact WHERE user_id = ?;';
+					var user_id = jwt.decode(req.cookies.access_token).id;
+					var newContacts;
+
+					con.query(query, [user_id], function(err, results){
+						if(err){
+							return next({msg: 'Error counting emergency contacts'});
+						}
+						else{
+
+							if(req.body.emergencyfname3 && req.body.emergencylname3 && req.body.relationship3 && req.body.ephone3){
+								newContacts = [
+									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP'],
+			                        [user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext2).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP'],
+			                        [user_id, sanitizer.sanitize(req.body.emergencylname3), sanitizer.sanitize(req.body.emergencyfname3), sanitizer.sanitize(req.body.relationship3), sanitizer.sanitize(req.body.ephone3).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext3).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP']
+								];
+							}
+							else if (req.body.emergencyfname2 && req.body.emergencylname2 && req.body.relationship2 && req.body.ephone2){
+								newContacts = [
+									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP'],
+			                        [user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext2).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP']
+								];
+							}
+							else{
+								newContacts = [
+									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP']
+								];
+							}
+
+							next(null, results, newContacts);
+						}
+					});
+				},
+
+				// STARTS TRANSACTION
+				function(records, newContacts, next){
+					con.query('START TRANSACTION;', function(err, results){
+						if(err){
+							return next({msg: 'Error counting emergency contacts'});
+						}
+						else{
+							next(null, records, newContacts);
+						}
+					});
+				},
+
+				// CASE WHERE LESS CONTACT IS ENTERED THAN THERE IS IN DATABASE
+				function(records, newContacts, next){
+					if(newContacts.length >= records.length){
+						next(null, records, newContacts);
+					}
+					else{
+						var query = '';
+
+						for(int i = 0; i < records.length; i++){
+							if(i < newContacts.length){
+								newContacts[i].push(records[i]);
+								query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
+							}
+							else{
+								query += mysql.format('DELETE FROM gibson.emergency_contact WHERE contact_id = ?', [records[i]]);
+							}
+						}
+
+						con.query(query, function(err, results){
+							if(err){
+								return next({msg: 'Error in case 1'});
+							}
+							else{
+								next(null, records, newContacts);
+							}
+						});
+					}
+				},
+
+				// CASE WHERE EQUAL CONTACT IS ENTERED COMPARED TO RECORDS IN DATABASE
+				function(records, newContacts, next){
+					if(newContacts.length > records.length || newContacts.length < records.length){
+						next(null, records, newContacts);
+					}
+					else{
+						var query = '';
+
+						for(int i = 0; i < records.length; i++){
+							newContacts[i].push(records[i]);
+							query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
+						}
+
+						con.query(query, function(err, results){
+							if(err){
+								return next({msg: 'Error in case 2'});
+							}
+							else{
+								next(null, records, newContacts);
+							}
+						});
+					}
+				},
+
+				// CASE WHERE MORE CONTACT IS ENTERED THAN THERE IS IN DATABASE
+				function(records, newContacts, next){
+					if(newContacts.length <= records.length){
+						next(null);
+					}
+					else{
+						var query = '';
+
+						for(int i = 0; i < newContacts.length; i++){
+							if(i < records.length){
+								newContacts[i].push(records[i]);
+								query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
+							}
+							else{
+								newContacts[i].pop();
+								query += mysql.format('INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone, contact_phone_extension) VALUES(?, ?, ?, ?, ?, ?);', newContacts[i]);
+							}
+						}
+
+						con.query(query, function(err, results){
+							if(err){
+								return next({msg: 'Error in case 3'});
+							}
+							else{
+								next(null);
+							}
+						});
+					}
+				}
+			],
+
+			// FINAL FUNCTION -> HANDLES ERROR/SUCCESS
+			function(error){
+				if(err){
+					con.query('ROLLBACK;', function(err, results){
+						console.log('users.js: ' +error.msg +'; /user/profile/edit/emegencyinfo');
+						con.release();
+						res.status(500).send('Error updating emergency contact(s).');
+					});
+				}
+				else{
+					con.query('COMMIT;', function(err, results){
+						con.release();
+						res.status(200).send('Emergency contact(s) updated.');
+					});
+				}
+			});
+		}
+	});
+});
+
 
 router.post('/user/profile/edit', function(req, res, next){
 	// GETTING CONNECTION
