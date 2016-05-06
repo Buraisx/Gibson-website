@@ -312,7 +312,7 @@ function controlpanel (dropdown_info) {
     var limiteduser='';
     limiteduser+='                    <div class="tab-pane" id="addlimiteduser">';
     limiteduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
-    limiteduser+='                            <form name="frm" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
+    limiteduser+='                            <form name="limiteduser" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
     limiteduser+='                            <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
     limiteduser+='                            <h3>Add Limited User</h3>';
     limiteduser+='                            <div class = "row">';
@@ -693,20 +693,29 @@ function controlpanel (dropdown_info) {
 }
 
 function submitLimitedUser(){
-    $.post("/volunteer/addlimited",{
-        "lname":$('#limited_lname').val(),
-        "fname":$('#limited_fname').val(),
-        "primary_phone":$('#limited_primary_phone').val(),
-        "primary_extension":$('#limited_primary_extension').val(),
-        "email": $('#limited_email').val(),
-        "_csrf": $('#_csrf').val()
-    })
-    .done(function (res){
-        swal({
-            title: res,
-            type: "success"
+    if ($("#limiteduser").valid()) {
+        $.post("/volunteer/addlimited",{
+            "lname":$('#limited_lname').val(),
+            "fname":$('#limited_fname').val(),
+            "primary_phone":$('#limited_primary_phone').val(),
+            "primary_extension":$('#limited_primary_extension').val(),
+            "email": $('#limited_email').val(),
+            "_csrf": $('#_csrf').val()
+        })
+        .done(function (res){
+            swal({
+                title: res,
+                type: "success"
+            });
+        })
+        .fail(function (err){
+            swal({
+                title: "Signup was not valid",
+                type: "error"
+            });
         });
-    });
+        window.onbeforeunload = null;
+    }
 }
 
 //==============================

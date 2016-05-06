@@ -315,7 +315,7 @@ function load_controlpanel(){
 	var limiteduser='';
     limiteduser+='                    <div class="tab-pane" id="addlimiteduser">';
     limiteduser+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
-    limiteduser+='                            <form name="frm" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
+    limiteduser+='                            <form name="limiteduser" action = "/volunteer/addlimited" method = "post" role = "form" id= "limiteduser">';
     limiteduser+='                            <h3>Add Limited User</h3>';
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class = "form-group col-sm-5">';
@@ -395,20 +395,29 @@ function load_controlpanel(){
 }
 
 function submitLimitedUser(){
-    $.post("/volunteer/addlimited",{
-        "lname":$('#limited_lname').val(),
-        "fname":$('#limited_fname').val(),
-        "primary_phone":$('#limited_primary_phone').val(),
-        "primary_extension":$('#limited_primary_extension').val(),
-        "email": $('#limited_email').val(),
-        "_csrf": $('#_csrf').val()
-    })
-    .done(function (res){
-        swal({
-            title: res,
-            type: "success"
+    if ($("#limiteduser").valid()) {
+        $.post("/volunteer/addlimited",{
+            "lname":$('#limited_lname').val(),
+            "fname":$('#limited_fname').val(),
+            "primary_phone":$('#limited_primary_phone').val(),
+            "primary_extension":$('#limited_primary_extension').val(),
+            "email": $('#limited_email').val(),
+            "_csrf": $('#_csrf').val()
+        })
+        .done(function (res){
+            swal({
+                title: res,
+                type: "success"
+            });
+        })
+        .fail(function (err){
+            swal({
+                title: "Signup was not valid",
+                type: "error"
+            });
         });
-    });
+        window.onbeforeunload = null;
+    }
 }
 
 // LOADS LIST OF USERS
