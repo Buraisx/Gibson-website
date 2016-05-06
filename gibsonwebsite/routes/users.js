@@ -110,7 +110,9 @@ router.get('/user/profile/info', function(req, res, next) {
 		else{
 			async.waterfall([
 				function(next){
+
 					var sql = "SELECT username, lname, fname, birth_date, age_group_id, gender, email, address, unit_no, city, postal_code, prov_abb, primary_phone, primary_extension, secondary_phone, secondary_extension, student FROM gibson.user, gibson.province WHERE user_id = ? AND user.province_id = province.province_id;";
+
 					var inserts = decode.id;
 
 					sql = mysql.format(sql, inserts);
@@ -218,10 +220,9 @@ router.get('/user/profile/info', function(req, res, next) {
 				function(err){
 					con.release();
 					if(err){
-						res.status(500).send();
 						return err;
 					}
-					res.status(200).send(response);
+					res.send(response);
 				}
 			);
 		}
@@ -480,8 +481,9 @@ router.post('/user/profile/edit', function(req, res, next){
 						else{
 
 							// QUERYING TO UPDATE USER PROFILE
-							var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, secondary_phone = ?, gender = ?, age_group_id = ?, address = ?, city = ?, unit_no = ?, province_id = (select province_id from gibson.province where prov_abb = ?), postal_code = ? WHERE user_id = ?;';
-							var inserts = [req.body.fname, req.body.lname, req.body.primary_phone, req.body.secondary_phone, req.body.gender, req.body.age_group, req.body.address, req.body.city, req.body.unit_no, req.body.province, req.body.postal_code, userId];
+							var query = 'UPDATE gibson.user SET fname = ?, lname = ?, primary_phone = ?, primary_extension = ?, secondary_phone = ?, secondary_extension = ?, gender = ?, age_group_id = ?, address = ?, city = ?, unit_no = ?, province_id = (select province_id from gibson.province where prov_abb = ?), postal_code = ? WHERE user_id = ?;';
+							var inserts = [req.body.fname, req.body.lname, req.body.primary_phone, req.body.primary_extension, req.body.secondary_phone, req.body.secondary_extension, req.body.gender, req.body.age_group, req.body.address, req.body.city, req.body.unit_no, req.body.province, req.body.postal_code, userId];
+
 							query = mysql.format(query, inserts);
 
 							con.query(query, function(err, results){
@@ -525,20 +527,26 @@ router.post('/user/profile/edit', function(req, res, next){
 
 			                    if(req.body.emergencyfname3 && req.body.emergencylname3 && req.body.relationship3 && req.body.ephone3){
 			                      emContacts = [
-			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, results[0]? results[0].contact_id:null],
-			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, results[1]? results[1].contact_id:null],
-			                        [userId, req.body.emergencyfname3, req.body.emergencylname3, req.body.relationship3, req.body.ephone3, results[2]? results[2].contact_id:null]
+
+			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneext1, results[0]? results[0].contact_id:null],
+			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, req.body.ephoneext2, results[1]? results[1].contact_id:null],
+			                        [userId, req.body.emergencyfname3, req.body.emergencylname3, req.body.relationship3, req.body.ephone3, req.body.ephoneext3, results[2]? results[2].contact_id:null]
+
 			                      ];
 			                    }
 			                    else if (req.body.emergencyfname2 && req.body.emergencylname2 && req.body.relationship2 && req.body.ephone2){
 			                      emContacts = [
-			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, results[0]? results[0].contact_id:null],
-			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, results[1]? results[1].contact_id:null]
+
+			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneext1, results[0]? results[0].contact_id:null],
+			                        [userId, req.body.emergencyfname2, req.body.emergencylname2, req.body.relationship2, req.body.ephone2, req.body.ephoneext2, results[1]? results[1].contact_id:null]
+
 			                      ];
 			                    }
 			                    else{
 			                      emContacts = [
-			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, results[0]? results[0].contact_id:null]
+
+			                        [userId, req.body.emergencyfname1, req.body.emergencylname1, req.body.relationship1, req.body.ephone1, req.body.ephoneext1, results[0]? results[0].contact_id:null]
+
 			                      ];
 			                    }
 
@@ -546,9 +554,10 @@ router.post('/user/profile/edit', function(req, res, next){
 
 													for (var i = 0; i < emContacts.length; i++){
 														if (i < results.length)
-															query += mysql.format('UPDATE gibson.emergency_contact SET user_id = ?, fname = ?, lname = ?, relationship = ?, contact_phone = ? WHERE contact_id = ?;', emContacts[i]);
+
+															query += mysql.format('UPDATE gibson.emergency_contact SET user_id = ?, fname = ?, lname = ?, relationship = ?, contact_phone = ?, contact_phone_extension = ? WHERE contact_id = ?;', emContacts[i]);
 														else
-															query += mysql.format('INSERT INTO gibson.emergency_contact (user_id, fname, lname, relationship, contact_phone) VALUES (?, ?, ?, ?, ?);', emContacts[i]);
+															query += mysql.format('INSERT INTO gibson.emergency_contact (user_id, fname, lname, relationship, contact_phone, contact_phone_extension) VALUES (?, ?, ?, ?, ?, ?);', emContacts[i]);
 													}
 
 													con.query(query, function(err, results){

@@ -122,12 +122,12 @@ function load_profile(){
 		{
 		personalinfo+='    <div class="row">';
 		personalinfo+='        <div class="form-group col-sm-12">';
-		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Home)</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone + '</span></p>';
+		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Home)</span><span class="col-sm-3 fieldval">' + user_info.user.primary_phone + '</span><span class="col-sm-1 fieldname">Ext</span><span class="col-sm-3 fieldval">' + user_info.user.primary_extension + '</span></p>';
 		personalinfo+='        </div>';
 		personalinfo+='    </div>';
 		personalinfo+='    <div class="row">';
 		personalinfo+='        <div class="form-group col-sm-12">';
-		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell)</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone + '</span></p>';
+		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell)</span><span class="col-sm-3 fieldval">' + user_info.user.secondary_phone + '</span><span class="col-sm-1 fieldname">Ext</span><span class="col-sm-3 fieldval">' + user_info.user.secondary_extension + '</span></p>';
 		personalinfo+='        </div>';
 		personalinfo+='    </div>';
 		} */
@@ -135,11 +135,13 @@ function load_profile(){
 		{
 		personalinfo+='    <div class="row">';
 		personalinfo+='        <div class="form-group col-sm-12">';
+
 		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Home)</span><span class="col-sm-9 fieldval">' + user_info.user.primary_phone;
 		if (user_info.user.primary_extension){
 		personalinfo+=' ext. ' + user_info.user.primary_extension;
 		}
 		personalinfo+='</span></p>';
+
 		personalinfo+='        </div>';
 		personalinfo+='    </div>';
 		}
@@ -147,11 +149,13 @@ function load_profile(){
 		{
 		personalinfo+='    <div class="row">';
 		personalinfo+='        <div class="form-group col-sm-12">';
+
 		personalinfo+='            <p><span class="col-sm-3 fieldname">Phone (Cell)</span><span class="col-sm-9 fieldval">' + user_info.user.secondary_phone;
 		if (user_info.user.secondary_extension){
-		personalinfo+=' ext. ' + user_info.user.secondry_extension;
+		personalinfo+=' ext. ' + user_info.user.secondary_extension;
 		}
 		personalinfo+='</span></p>';
+
 		personalinfo+='        </div>';
 		personalinfo+='    </div>';
 		}
@@ -259,11 +263,13 @@ function load_profile(){
 		emergencyinfo+='    </div>';
 		emergencyinfo+='    <div class="row">';
 		emergencyinfo+='        <div class="form-group col-sm-12">';
+
 		emergencyinfo+='            <p><span class="col-sm-3 fieldname">Phone</span><span class="col-sm-9 fieldval">' + user_info.emergency_contacts[i].contact_phone;
 		if(user_info.emergency_contacts[i].contact_phone_extension){
 		emergencyinfo+=' ext. ' + user_info.emergency_contacts[i].contact_phone_extension;
 		}
 		emergencyinfo+='</span></p>';
+
 		emergencyinfo+='        </div>';
 		emergencyinfo+='    </div>';
 	}
@@ -352,13 +358,37 @@ function load_profile(){
 	editinfo+='            <label class="editfieldname col-sm-12">';
 	editinfo+='                <p>Phone (Home): </p>';
 	editinfo+='            </label>';
-	editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+	editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+	editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "primary_extension" id = "editprimary_extension" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_extension + '">';
 	editinfo+='        </div>';
+	editinfo+='        <div class="form-group col-sm-5">';
+	editinfo+='            <label class="editfieldname col-sm-12">';
+	editinfo+='                <p>Phone (Home) Ext.: </p>';
+	editinfo+='            </label>';
+	editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_extension" id = "editprimary_extension" maxlength="16" pattern="\\w+" value = "';
+	if (user_info.user.primary_extension){
+	editinfo+=user_info.user.primary_extension;
+	} 
+	editinfo+='">';
+	editinfo+='        </div>';
+	editinfo+='    </div>';
+	editinfo+='    <div class="row">';
 	editinfo+='        <div class="form-group col-sm-5">';
 	editinfo+='            <label class="editfieldname col-sm-12">';
 	editinfo+='                <p>Phone (Cell): </p>';
 	editinfo+='            </label>';
-	editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+	editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+	editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "secondary_extension" id = "editsecondary_extension" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_extension + '">';
+	editinfo+='        </div>';
+	editinfo+='        <div class="form-group col-sm-5">';
+	editinfo+='            <label class="editfieldname col-sm-12">';
+	editinfo+='                <p>Phone (Home) Ext.: </p>';
+	editinfo+='            </label>';
+	editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_extension" id = "editsecondary_extension" maxlength="16" pattern="\\w+" value = "';
+	if (user_info.user.secondary_extension){
+	editinfo+=user_info.user.secondary_extension;
+	} 
+	editinfo+='">';
 	editinfo+='        </div>';
 	editinfo+='    </div>';
 	editinfo+='    <div class="row">';
@@ -532,7 +562,8 @@ function load_profile(){
 		editinfo+='            <label class="editfieldname col-sm-12">';
 		editinfo+='                <p>Phone: </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + (i+1) + '" id = "ephone' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-2" name =  "ephone' + (i+1) + '" id = "ephone' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone + '">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-1" name =  "ephoneextension' + (i+1) + '" id = "ephoneextension' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone_extension + '">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='</div>';
@@ -567,6 +598,7 @@ function load_profile(){
 		editinfo+='                <p>Phone: </p>';
 		editinfo+='            </label>';
 		editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="\w+">';
+		editinfo+='            <input type = "text" class = "form-control col-sm-1" name =  "ephoneextension' + i + '" id = "ephoneextension' + i + '" maxlength="16" pattern="\w+">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='</div>';
@@ -655,7 +687,9 @@ function savechanges() {
 				fname: $('#editfname').val(),
 				lname: $('#editlname').val(),
 				primary_phone: $('#editprimary_phone').val(),
+				primary_extension: $('#editprimary_extension').val(),
 				secondary_phone: $('#editsecondary_phone').val(),
+				secondary_extension: $('#editsecondary_extension').val(),
 				gender: $('#editgender').val(),
 				age_group: $('#editagegroup option:selected').val(),
 				address: $('#editaddress').val(),
@@ -679,7 +713,12 @@ function savechanges() {
 				relationship3: $('#relationship3').val(),
 				ephone1: $('#ephone1').val(),
 				ephone2: $('#ephone2').val(),
-				ephone3: $('#ephone3').val()
+				ephone3: $('#ephone3').val(),
+
+				ephoneext1: $('#ephoneext1').val(),
+				ephoneext2: $('#ephoneext2').val(),
+				ephoneext3: $('#ephoneext3').val(),
+
 
 		})
 		.done(function (res){
@@ -736,13 +775,43 @@ function editpersonalinfo() {
 		editinfo+='            <label class="editfieldname col-sm-12">';
 		editinfo+='                <p>Phone (Home): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "primary_phone" id = "editprimary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_phone + '">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Extension (Home):</p>';
+		editinfo+='            </label>';
+		editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "primary_extension" id = "editprimary_extension" maxlength="16" pattern="\\w+" value = "' + user_info.user.primary_extension + '">';
 		editinfo+='        </div>';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Phone (Home) Ext.: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "primary_extension" id = "editprimary_extension" maxlength="16" pattern="\\w+" value = "';
+		if (user_info.user.primary_extension){
+		editinfo+=user_info.user.primary_extension;
+		} 
+		editinfo+='">';
+		editinfo+='        </div>';
+		editinfo+='    </div>';
+		editinfo+='    <div class="row">';
 		editinfo+='        <div class="form-group col-sm-5">';
 		editinfo+='            <label class="editfieldname col-sm-12">';
 		editinfo+='                <p>Phone (Cell): </p>';
 		editinfo+='            </label>';
-		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+		editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "secondary_phone" id = "editsecondary_phone" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_phone + '">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Extension (Cell):</p>';
+		editinfo+='            </label>';
+		editinfo+='            <input class = "form-control col-sm-2" type = "text" name = "secondary_extension" id = "editsecondary_extension" maxlength="16" pattern="\\w+" value = "' + user_info.user.secondary_extension + '">';
+		editinfo+='        </div>';
+		editinfo+='        <div class="form-group col-sm-5">';
+		editinfo+='            <label class="editfieldname col-sm-12">';
+		editinfo+='                <p>Phone (Home) Ext.: </p>';
+		editinfo+='            </label>';
+		editinfo+='            <input class = "form-control col-sm-4" type = "text" name = "secondary_extension" id = "editsecondary_extension" maxlength="16" pattern="\\w+" value = "';
+		if (user_info.user.secondary_extension){
+		editinfo+=user_info.user.secondary_extension;
+		} 
+		editinfo+='">';
 		editinfo+='        </div>';
 		editinfo+='    </div>';
 		editinfo+='    <div class="row">';
@@ -949,11 +1018,27 @@ function editcontactsinfo() {
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "relationship' + (i+1) + '" id = "relationship' + (i+1) + '" pattern="[a-zA-Z0-9. ]+" value = "' + user_info.emergency_contacts[i].relationship + '">';
 			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="editfieldname col-sm-12">';
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + (i+1) + '" id = "ephone' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone + '">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Extension:</p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-1" name =  "ephoneextension' + (i+1) + '" id = "ephoneextension' + (i+1) + '" maxlength="16" pattern="\w+" value = "' + user_info.emergency_contacts[i].contact_phone_extension + '">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Phone ext.: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephoneext' + (i+1) + '" id = "ephoneext' + (i+1) + '" maxlength="16" pattern="\w+" value="'
+			if (user_info.emergency_contacts[i].contact_phone_extension){
+			editinfo+=user_info.emergency_contacts[i].contact_phone_extension;
+			}
+			editinfo+='">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='</div>';
@@ -983,11 +1068,23 @@ function editcontactsinfo() {
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "relationship' + i + '" id = "relationship' + i + '" pattern="[a-zA-Z0-9. ]+">';
 			editinfo+='        </div>';
+			editinfo+='    </div>';
+			editinfo+='    <div class="row">';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="editfieldname col-sm-12">';
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="\w+">';
+			editinfo+='            <input type = "text" class = "form-control col-sm-3" name =  "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="\w+">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Extension: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-1" name =  "ephoneextension' + i + '" id = "ephoneextension' + i + '" maxlength="16" pattern="\w+">';
+			editinfo+='        </div>';
+			editinfo+='        <div class="form-group col-sm-5">';
+			editinfo+='            <label class="editfieldname col-sm-12">';
+			editinfo+='                <p>Phone ext.: </p>';
+			editinfo+='            </label>';
+			editinfo+='            <input type = "text" class = "form-control col-sm-4" name =  "ephoneext' + i + '" id = "ephoneext' + i + '" maxlength="16" pattern="\w+">';
 			editinfo+='        </div>';
 			editinfo+='    </div>';
 			editinfo+='</div>';
