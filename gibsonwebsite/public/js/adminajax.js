@@ -13,8 +13,8 @@ $("a[href$='#courses']").click(function() {
 	listcourses();
 });
 
-$("a[href$='#addcourses']").ready(function(){
-	courseform();
+//$("a[href$='#addcourses']").ready(function(){
+//	courseform();
 
 	/*var count = 0;
 	var count2=0;
@@ -72,7 +72,7 @@ $("a[href$='#addcourses']").ready(function(){
 			console.log("please fill")
 		}
 	});*/
-});
+//});
 
 
 
@@ -625,6 +625,8 @@ function listEnrolled(course_id, index){
 	});
 }
 
+
+/*
 function courseform(){
 	var nav = '';
     nav += '<hr>';
@@ -899,6 +901,7 @@ function courseform(){
 		}
 	});
 }
+*/
 
 //==============================
 //ADD/REMOVE Languages
