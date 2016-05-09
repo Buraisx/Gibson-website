@@ -675,3 +675,8 @@ div[class*="banner"]{
 .transaction-info{
     font-size: 80%;
 }
+
+/** Used on add course form**/
+.inlineform {
+    display: inline;
+}

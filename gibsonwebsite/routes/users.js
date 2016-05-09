@@ -973,6 +973,13 @@ router.get('/user/listfiller', function(req, res){
 						response.age_groups = results;
                         next(err, results);
                     });
+                },
+                course_categories_list: function(next){
+                    var sql = "SELECT category_id, category_string FROM gibson.category_matrix;"
+                    con.query(sql, function (err, results){
+						response.course_categories = results;
+                        next(err, results);
+                    });
                 }
             },
             //Return results

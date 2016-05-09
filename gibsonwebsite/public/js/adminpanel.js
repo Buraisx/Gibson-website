@@ -4,7 +4,7 @@
 
 $("a[href$='#controlPanel']").ready(function(){
 	jQuery.getJSON('/user/listfiller', function(req){
-		dropdown_info = {provinces: req.provinces, age_groups: req.age_groups};
+		dropdown_info = {provinces: req.provinces, age_groups: req.age_groups, course_categories: req.course_categories};
 		controlpanel(dropdown_info);
 	});
 });
@@ -411,7 +411,7 @@ function controlpanel (dropdown_info) {
 
     //Buttons to add or remove language input boxes
     addcourse+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="nextLanguages()">Add Another Language</button>';
-    addcourse+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()">Remove Language</button>';
+    addcourse+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()" disabled>Remove Language</button>';
     
     //The Target Audience input
     addcourse+='                    <div class = "row">';
@@ -420,6 +420,38 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
+
+    // Choose course tags
+    addcourse+='                     <div id = "tag-selection">'
+    addcourse+='                        <label>Course Tags:</label>';
+    // Lists all tags in the db, 3 per row
+    for (var i = 0; i < dropdown_info.course_categories.length; i++) {
+        var curr_tag = dropdown_info.course_categories[i].category_string;
+
+        // Starts a new row for every 3 tags
+        if (i % 3 == 0) {
+            addcourse+='                        <div class = "row">';
+        }
+        addcourse+='                        <div class = "col-sm-3">';
+        addcourse+='                            <input type="checkbox" name="tags" value="' + curr_tag + '"> ' + curr_tag;
+        addcourse+='                        </div>';
+        // Ends the row if 3 tags have been listed in the row AND this is not the final tag
+        if (((i+1) % 3 == 0) && i != dropdown_info.course_categories.length - 1) {
+            addcourse+='                        </div>';
+        }
+    }
+    if (dropdown_info.course_categories.length > 0) {
+        addcourse+='                        </div>'; // Div to close the final row
+    }
+    else {
+        addcourse+='<p class="smalltext">There are no tags. Create new tags by going to Manage Tags.</p>';
+    }
+    // // Add new tags
+    // addcourse+='                        <span id="tag0"></span>';
+    // // Buttons to add or remove new tag input boxes
+    // addcourse+='                        <button type = "button" class= "btn btn-default" id = "addnewtag" onClick="addTag()">Add a Custom Tag</button>';
+    // addcourse+='                        <button type = "button" class= "btn btn-default" id = "removenewtag" onClick="removeTag()" disabled>Remove a Tag</button>';
+    addcourse+='                    </div> <!-- tag-selection -->';
 
     //The Description Box
     addcourse+='                    <div class = "row">';
@@ -901,6 +933,8 @@ function nextLanguages(){
         maxlength: 20
     });
     COUNTLANGUAGE++;
+    // Enables remove button
+    $('#removelanguage').prop('disabled', false);
 }
 
 function removeLanguages(){
@@ -910,11 +944,66 @@ function removeLanguages(){
             $('#language'+COUNTLANGUAGE).remove();
             COUNTLANGUAGE--;
         });
+        // Disables remove button if there's only one language left
+        if (COUNTLANGUAGE == 2){
+            $('#removelanguage').prop('disabled', true);
+        }
     }
     else{
         console.log("Cannot Remove Default Language");
     }
 }
+
+//==============================
+//ADD/REMOVE Tags
+//==============================
+//==============================
+//reset onpage refresh
+// var COUNTTAG=0;
+
+// function addTag(){
+//     console.log("Adding " + COUNTTAG + " tags.");
+
+//     var newTag=COUNTTAG+1;
+
+//     var tag='';
+//     tag+='                    <div class = "row" id="tag' + newTag +'" style="display:none;">';
+//     tag+='                        <div class = "form-group col-sm-4">';
+//     tag+='                            <label><span class="requiredasterisk">*</span>New Tag:</label>';
+//     tag+='                            <input type = "text" class = "form-control" name = "course_tag' + newTag + '" id = "course_tag' + newTag + '">';
+//     tag+='                        </div>';
+//     tag+='                    </div>';
+
+//     $('#tag'+COUNTTAG).after(tag);
+//     $('#tag'+newTag).slideToggle();
+
+//     // Adds rules to the new tag
+//     $("#course_tag" + newTag).rules("add", {
+//         required: true,
+//         minlength: 1,
+//         maxlength: 20
+//     });
+//     COUNTTAG++;
+//     // Enables remove button
+//     $('#removenewtag').prop('disabled', false);
+// }
+
+// function removeTag(){
+//     if(COUNTTAG > 0){
+//         console.log("Removing " + COUNTTAG + " tags.");
+//         $('#tag'+COUNTTAG).slideToggle(function(){
+//             $('#tag'+COUNTTAG).remove();
+//             COUNTTAG--;
+//         });
+//         // Disables remove button if there's nothing to remove
+//         if (COUNTTAG == 1){
+//             $('#removenewtag').prop('disabled', true);
+//         }
+//     }
+//     else{
+//         console.log("No Tags To Remove");
+//     }
+// }
 
 //==============================
 //ADD/REMOVE Scheduled Days
