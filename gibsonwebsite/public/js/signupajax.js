@@ -1,6 +1,6 @@
 //GLOBAL TIMER
 var typingTimer;
-var delay = 500;
+var delay = 0;
 //
 //Check username availability
 function checkusername(){
