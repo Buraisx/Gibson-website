@@ -165,7 +165,11 @@ function load_cart(){
 
         }
 }
-
+//clear cart and addcheckedcourses
+function clearAndAdd(){
+	addCheckedCourses();
+	clearCart();
+}
 //--clear the cart on back clip of step 3-- //
 
 function clearCart(){
@@ -192,8 +196,7 @@ function clearCart(){
 //-- confirmation alert to tell the payer to pay the payment right now --//
 function confirmationAlert(){
 	swal({  
-		title: "Please Pay The Transaction.",
-        type: "success"
+		title: "Please Pay The Transaction."
     });
 
     userID();
