@@ -598,14 +598,19 @@ router.post('/staff/portal/removeTag', function(req, res){
 
                 // UPDATING THE COURSE TABLE
                 function(query, deleteTags, next){
-                    con.query(query, function(err, results){
-                        if(err){
-                            return next({msg: 'Error updating courses'});
-                        }
-                        else{
-                            next(null, deleteTags);
-                        }
-                    });
+                    if(query == ''){
+                        next(null, deleteTags);
+                    }
+                    else{
+                        con.query(query, function(err, results){
+                            if(err){
+                                return next({msg: 'Error updating courses'});
+                            }
+                            else{
+                                next(null, deleteTags);
+                            }
+                        });
+                    }
                 },
 
                 // DELETING TAGS IN THE CATEGORY MATRIX TABLE
