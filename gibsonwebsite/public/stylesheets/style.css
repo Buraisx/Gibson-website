@@ -675,3 +675,43 @@ div[class*="banner"]{
 .transaction-info{
     font-size: 80%;
 }
+
+#admin-managetags-add-button, #admin-managetags-remove-button{
+    margin-top: 25px;
+    margin-left: 16px;
+}
+
+#admin-managetags-hr{
+    margin-top: 50px;
+}
+
+.remove-tag-wrap {
+    margin-left: 16px;
+    width: 712px;
+}
+
+.remove-tag-wrap table{
+    width: 695px;
+    border: 1px solid black;
+    table-layout: fixed;
+}
+
+.remove-tag-select-td{
+    width: 80px;
+}
+
+.remove-tag-outer-table tr td{
+    background: #3AAADA;
+    border: 1px solid black;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.remove-tag-inner-table{
+    height: 250px;
+    overflow-y: auto;
+}
+
+.remove-tag-inner-table tr td{
+    border: 1px solid #3AAADA;
+}
