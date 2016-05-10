@@ -145,7 +145,6 @@ router.get('/staff/portal/detailedprofile', function(req, res){
     });
 });
 
-
 // ROUTE FOR EDITING PERSONAL INFORMATION OF A USER
 router.post('/staff/portal/edit/personalinfo', function(req, res){
 
@@ -324,6 +323,28 @@ router.post('/staff/portal/edit/studentinfo', function(req, res){
     });
 });
 
+//ROUTE FOR VIEWING DETAILED COURSE
+router.get('/staff/portal/detailedcourse', function (req, res, next){
+    res.render('detailedcourse', { title: 'Staff Portal'});
+});
+
+//GET COURSE DATA TO DISPLAY
+router.get('/staff/portal/detailedcourse/data', function (req, res, next){
+    var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
+    var inserts = [req.query.course_id];
+    sql = mysql.format(sql, inserts);
+
+    connection.getConnection(function (err, con){
+        if(err){
+            res.status(500).send();
+        }
+        else{
+            con.query(sql, function(err, results){
+                res.status(200).send(results);
+            });
+        }
+    });
+});
 
 // ROUTE FOR VALIDATING INFORMATION WHILE ADDING COURSE.
 router.post('/staff/portal/validateCourse', function(req, res){
