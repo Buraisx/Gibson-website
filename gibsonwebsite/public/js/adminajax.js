@@ -557,7 +557,8 @@ function showFilteredCourses(data, searchText, searchTags){
 		courses += '<table class="table table-bordered" id ="course_table'+ i +'" value='+ data[i].course_id +'>';
 		courses += '</table>';
 
-
+				//*** Button For Detailed Page ***//
+		courses += '<a href="/staff/portal/detailedcourse?course='+ data[i].course_id +'" <button type="button" class="btn btn-success"> Detailed Course Page</button></a>';
 				//*** Closes all divs ***//
 		courses += '        	</div>';
 		courses += '        	</div>';

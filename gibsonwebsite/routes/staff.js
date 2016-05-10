@@ -331,7 +331,7 @@ router.get('/staff/portal/detailedcourse', function (req, res, next){
 //GET COURSE DATA TO DISPLAY
 router.get('/staff/portal/detailedcourse/data', function (req, res, next){
     var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
-    var inserts = [req.query.course_id];
+    var inserts = [req.query.course];
     sql = mysql.format(sql, inserts);
 
     connection.getConnection(function (err, con){

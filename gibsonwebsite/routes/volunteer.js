@@ -445,7 +445,7 @@ router.post('volunteer/convertlimited', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('volunteer.js: Error connecting to database; /volunteer/convertlimited')
-            res.status(500).send
+            res.status(500).send();
         }
         else{
 
