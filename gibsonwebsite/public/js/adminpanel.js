@@ -955,57 +955,6 @@ function removeLanguages(){
 }
 
 //==============================
-//ADD/REMOVE Tags
-//==============================
-//==============================
-//reset onpage refresh
-// var COUNTTAG=0;
-
-// function addTag(){
-//     console.log("Adding " + COUNTTAG + " tags.");
-
-//     var newTag=COUNTTAG+1;
-
-//     var tag='';
-//     tag+='                    <div class = "row" id="tag' + newTag +'" style="display:none;">';
-//     tag+='                        <div class = "form-group col-sm-4">';
-//     tag+='                            <label><span class="requiredasterisk">*</span>New Tag:</label>';
-//     tag+='                            <input type = "text" class = "form-control" name = "course_tag' + newTag + '" id = "course_tag' + newTag + '">';
-//     tag+='                        </div>';
-//     tag+='                    </div>';
-
-//     $('#tag'+COUNTTAG).after(tag);
-//     $('#tag'+newTag).slideToggle();
-
-//     // Adds rules to the new tag
-//     $("#course_tag" + newTag).rules("add", {
-//         required: true,
-//         minlength: 1,
-//         maxlength: 20
-//     });
-//     COUNTTAG++;
-//     // Enables remove button
-//     $('#removenewtag').prop('disabled', false);
-// }
-
-// function removeTag(){
-//     if(COUNTTAG > 0){
-//         console.log("Removing " + COUNTTAG + " tags.");
-//         $('#tag'+COUNTTAG).slideToggle(function(){
-//             $('#tag'+COUNTTAG).remove();
-//             COUNTTAG--;
-//         });
-//         // Disables remove button if there's nothing to remove
-//         if (COUNTTAG == 1){
-//             $('#removenewtag').prop('disabled', true);
-//         }
-//     }
-//     else{
-//         console.log("No Tags To Remove");
-//     }
-// }
-
-//==============================
 //ADD/REMOVE Scheduled Days
 //==============================
 //==============================
@@ -1045,6 +994,8 @@ function addTime(){
     $('#day'+ newCourseDay).slideToggle();
     $('.time_element').timepicki({start_time: ["12", "00", "PM"]});
     COUNTCOURSEDAYS++;
+    // Enables remove button
+    $('#removeschedule').prop('disabled', false);
 }
 
 function removeTime(){
@@ -1054,6 +1005,10 @@ function removeTime(){
             $('#day'+COUNTCOURSEDAYS).remove();
             COUNTCOURSEDAYS--;
         });
+        // Disables remove button if there are no more days to remove
+        if (COUNTCOURSEDAYS == 1){
+            $('#removeschedule').prop('disabled', true);
+        }
     }
     else{
         console.log("Cannot Remove Default Time.");
@@ -1094,6 +1049,8 @@ function addAdhocTime(){
     $('.time_element').timepicki({start_time: ["12", "00", "PM"]});
     $('.rangedatepicker').not('.hasDatePicker').datepicker({format: 'yyyy/mm/dd', startDate: '1900/01/01'});
     COUNTADHOCDAYS++;
+    // Enables remove button
+    $('#removeadhoc').prop('disabled', false);
 }
 
 function removeAdhocTime(){
@@ -1103,6 +1060,10 @@ function removeAdhocTime(){
             $('#adhoc'+COUNTADHOCDAYS).remove();
             COUNTADHOCDAYS--;
         });
+        // Disables remove button if there are no more days to remove
+        if (COUNTADHOCDAYS == 1){
+            $('#removeadhoc').prop('disabled', true);
+        }
     }
     else{
         console.log("Cannot Remove Default Adhoc Schedule.");
