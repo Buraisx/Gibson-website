@@ -339,8 +339,39 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
             res.status(500).send();
         }
         else{
-            con.query(sql, function(err, results){
-                res.status(200).send(results);
+            async.parallel([
+                function (next){
+                    var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
+                    var inserts = [req.query.course];
+                    sql = mysql.format(sql, inserts);
+                    con.query(sql, function (err, results){
+                        if(err){
+                            return next(err, null);
+                        }
+                        else{
+                            next(null, results);
+                        }
+                    });
+                },
+                function (next){
+                    var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix;"
+                    con.query(sql, function (err, results){
+                        if(err){
+                            return next(err, null);
+                        }
+                        else{
+                            next(null, results);
+                        }
+                    });
+                }],
+                function (err, results){
+                    con.release();
+                    if(err){
+                        res.status(500).send();
+                    }
+                    else{
+                        res.status(200).send(results);
+                    }
             });
         }
     });

@@ -4,7 +4,8 @@
 <%- include standardnavbar.ejs %>
 
 <head>
-
+    <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <script src="/js/detailedcourse.js"></script>
 </head>
 
 <body>
@@ -15,10 +16,19 @@
                 <div class = "row">
                     <button type = "button" class = "btn btn-default col-sm-offset-5 col-sm-2" id = "edit-tags">Edit Tags</button>
                 </div>
+                <div class = "row">
+                    <div class = "col-sm-offset-2 col-sm-10 panel panel-default">
+                        <div class="panel-body">
+                            <h3>Course Tags</h3>
+                            <ul id="sortable-tags" class = "panel panel-default col-sm-6">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
-
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll visible-xs visible-sm">
         <a class="btn btn-primary" href="#page-top">
