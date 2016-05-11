@@ -111,7 +111,7 @@ function loadCourses(){
 		for(var i = 0; i < res.length; i++){
 			courselists += '<div id="course'+ [i] +'" class="row">';
 			courselists += '<div>';
-			courselists += '<label id ="label'+ res[i].sku +'"><input type="checkbox" id="'+ res[i].sku +'" name="'+ res[i].sku +'" value="' + res[i].sku +'" onclick="atLeastOneCourseChecked ();">' + res[i].course_name + ',' + res[i].course_code +'</label>';
+			courselists += '<label id ="label'+ res[i].sku +'"><input type="checkbox" id="'+ res[i].sku +'" name="'+ res[i].sku +'" value="' + res[i].sku +'" onclick="atLeastOneCourseChecked ();">' + res[i].course_code + ', ' + res[i].course_name +'</label>';
 			courselists += '</div>';
 			courselists += '</div>';
 		}

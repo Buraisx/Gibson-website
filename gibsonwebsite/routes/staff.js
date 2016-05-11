@@ -517,6 +517,176 @@ router.post('/staff/portal/addEvent', function(req, res){
 });
 
 
+// ROUTE FOR ADDING NEW TAGS
+router.post('/staff/portal/addTag', function(req, res){
+
+    // GETTING CONNECTION
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('staff.js: Error connecting to database; /staff/portal/addTag');
+            res.status(500).send('Internal Server Error');
+        }
+        else if(req.body.category_string && req.body.category_type){
+
+            var query = 'INSERT INTO gibson.category_matrix (category_string, category_type) VALUES (?, ?);';
+            var inserts = [sanitizer.sanitize(req.body.category_string), sanitizer.sanitize(req.body.category_type)];
+
+            con.query(query, inserts, function(err, results){
+                if(err){
+                    console.log('staff.js: Error inserting tag; /staff/portal/addTag');
+                    res.status(500).send('Unable to add tag.');
+                }
+                else{
+                    res.status(200).send('Tag added.');
+                }
+            });
+        }
+        else{
+            res.status(500).send('Nothing to add.');
+        }
+    });
+});
+
+
+// ROUTE FOR REMOVING TAGS
+router.post('/staff/portal/removeTag', function(req, res){
+
+    // GETTING CONNECTION
+    connection.getConnection(function(err, con){
+        if(err){
+            console.log('staff.js: Error connecting to database; /staff/portal/removeTag');
+            res.status(500).send('Internal Server Error');
+        }
+        else{
+
+            // BIG BOSS WANTS WATERFALL, SO GRAVITY ASSISTED FUNCTIONS
+            async.waterfall([
+
+                // QUERY FOR COURSE TAGS
+                function(next){
+                    con.query('SELECT course_id, course_tags FROM gibson.course;', function(err, results){
+                        if(err){
+                            return next({msg: 'Error querying for course tags'});
+                        }
+                        else{
+                            next(null, results);
+                        }
+                    });
+                },
+
+                // STARTS TRANSACTION
+                function (all_tags, next){
+                    con.query('START TRANSACTION;', function(err, results){
+                        if(err){
+                            return next({msg: 'Error starting transaction'});
+                        }
+                        else{
+                            next(null, all_tags);
+                        }
+                    });
+                },
+
+                // DIFFERENCE OF SETS -> QUERY GENERATION -> TOO MUCH MATH FOR ME
+                function(all_tags, next){
+
+                    var length1, element, i, j;
+                    var deleteTags = JSON.parse(req.body.tag_list);
+                    var length2 = deleteTags.length;
+                    var query = '';
+                    var difference = [];
+                    var course_count = all_tags.length;
+                    var hash_table = {};
+
+                    // DIFFERENCE OF SETS
+                    for(i = 0; i < length2; i++){
+                        hash_table[deleteTags[i]] = true;
+                    }
+
+                    for (i = 0; i < course_count; i++){
+
+                        // RESETTING VALUES AT EACH ITERATION
+                        array1 = JSON.parse(all_tags[i].course_tags);
+                        length1 = array1.length;
+                        difference = [];
+
+                        for(j = 0; j < length1; j++){
+                            element = array1[j];
+
+                            if(!(element in hash_table)){
+                                difference.push(Number(element));
+                            }
+                        }
+
+                        // GENERATING QUERY
+                        if(difference.length < length1){
+                            query += mysql.format('UPDATE gibson.course SET course_tags = JSON_ARRAY(?) WHERE course_id = ?;\n', [difference, all_tags[i].course_id]);
+                        }
+                    }
+                    query = query.slice(0, -1);
+
+                    next(null, query, deleteTags);
+                },
+
+                // UPDATING THE COURSE TABLE
+                function(query, deleteTags, next){
+                    if(query == ''){
+                        next(null, deleteTags);
+                    }
+                    else{
+                        con.query(query, function(err, results){
+                            if(err){
+                                return next({msg: 'Error updating courses'});
+                            }
+                            else{
+                                next(null, deleteTags);
+                            }
+                        });
+                    }
+                },
+
+                // DELETING TAGS IN THE CATEGORY MATRIX TABLE
+                function(deleteTags, next){
+
+                    var query = '';
+
+                    for(var i = 0; i < deleteTags.length; i++){
+                        query += mysql.format('DELETE FROM gibson.category_matrix WHERE category_id = ?;\n', [Number(deleteTags[i])]);
+                    }
+                    query = query.slice(0, -1);
+
+
+                    con.query(query, function(err, results){
+                        if(err){
+                            return next({msg: 'Error deleting tags'});
+                        }
+                        else{
+                            next(null);
+                        }
+                    });
+                }
+            ],
+
+            // FINAL FUNCTION HANDLES ERROR/SUCCESS
+            function(err){
+                if(err){
+                    console.log('staff.js: ' +err.msg +'; /staff/portal/removeTag');
+                    con.query('ROLLBACK;', function(err, results){
+                        con.release();
+                        res.status(500).send('Error removing tags.');
+                    });
+                }
+                else{
+                    con.query('COMMIT;', function(err, results){
+                        con.release();
+                        res.status(200).send('Selected tags removed.');
+                    });
+                }
+            });
+        }
+    });
+});
+
+
 // ROUTE FOR ADDING NEW COURSE
 router.post('/staff/portal/addCourse', function(req, res){
     var sql = readSQL.getSQL('dml_addcourse.txt');

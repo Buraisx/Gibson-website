@@ -25,6 +25,7 @@ function controlpanel (dropdown_info) {
     nav+='                        <li><a class="menucolour" href="#addlimiteduser" data-toggle="tab"><i class="fa fa-user"></i> Add Limited User</a></li>';
     nav+='                        <li><a class="menucolour" href="#addusertocourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add User To Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#addcourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add Course</a></li>';
+	nav+='                        <li><a class="menucolour" href="#managetags" data-toggle="tab"><i class="fa fa-tags"></i> Manage Tags</a></li>'
     nav+='                        <li><a class="menucolour" href="#modifycourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#modifyuser" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify User Info</a></li>';
     nav+='                        <li><a class="menucolour" href="#scheduleevent" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Schedule Event</a></li>';
@@ -412,7 +413,7 @@ function controlpanel (dropdown_info) {
     //Buttons to add or remove language input boxes
     addcourse+='                            <button type = "button" class= "btn btn-default" id = "addlanguage" onClick="nextLanguages()">Add Another Language</button>';
     addcourse+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()" disabled>Remove Language</button>';
-    
+
     //The Target Audience input
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-8">';
@@ -609,6 +610,12 @@ function controlpanel (dropdown_info) {
     addcourse+='                </div>';
     addcourse+='            </div>';
 
+
+	//Manage Course Tags
+	var managetags = '<div class="tab-pane" id="managetags"></div>';  // calls functions to fill this
+	manageTags();
+
+
     //Modify Course tab
     var modifycourse='';
     modifycourse+='                     <div class="tab-pane" id="modifycourse">';
@@ -692,6 +699,7 @@ function controlpanel (dropdown_info) {
     controlpanel+=limiteduser;
     controlpanel+=addusertocourse;
     controlpanel+=addcourse;
+	controlpanel+=managetags;
     controlpanel+=modifycourse;
     controlpanel+=modifyuser;
     controlpanel+=scheduleevent;
@@ -814,7 +822,7 @@ function trueOrFalse(arg){
     return 0;
 }
 function addUserAccount(){
-    
+
 $.post("/volunteer/adduser", {
         _csrf: $('#_csrf').val(),
         username: $('#username').val(),
@@ -1193,4 +1201,129 @@ function addAdhoc(){
     }
 
     return adhoc_days;
+}
+
+function updateType(){
+
+	var temp = '';
+
+	for(var i = 0; i < $('#admin-managetags-string').val().length; i++){
+		if($('#admin-managetags-string').val().charAt(i) == ' '){
+			temp += '_';
+		}
+		else{
+			temp += $('#admin-managetags-string').val().charAt(i).toLowerCase();
+		}
+	}
+
+	$('#admin-managetags-type').val(temp);
+}
+
+function addTag(){
+	if($('#admin-managetags-string').val() && $('#admin-managetags-type').val()){
+		$.post('/staff/portal/addTag', {
+			_csrf: $('#_csrf').val(),
+			category_string: $('#admin-managetags-string').val(),
+	        category_type: $('#admin-managetags-type').val()
+		})
+		.done(function(res){
+			$("#managetags").contents().remove();
+			manageTags();
+		});
+	}
+}
+
+function removeTag(){
+
+	var removeThese = [];
+	var i = 0;
+
+	while($('#remove-tag-'+i).val()){
+		if($('#remove-tag-'+i).is(':checked')){
+			removeThese.push($('#remove-tag-'+i).val());
+		}
+
+		i++;
+	}
+
+	$.post('/staff/portal/removeTag', {
+		_csrf: $('#_csrf').val(),
+		tag_list: JSON.stringify(removeThese)
+	})
+	.done(function(res){
+		$("#managetags").contents().remove();
+		manageTags();
+		swal({
+			title: 'Tags removed successfully!',
+			type: 'success'
+		})
+	})
+	.fail(function(res){
+		swal({
+			title: 'Failed to remove tags!',
+			type: 'error'
+		})
+	});
+}
+
+function manageTags(){
+	jQuery.getJSON('/user/tags', function(res){
+
+		var html='';
+		html+='						<div id="page-content-wrapper" class="container-fluid xyz">';
+	    html+='							<h3>Manage Tags</h3>';
+		html+='							<br>';
+		html+='							<h4>Add a Tag:</h4>';
+		html+='							<div class="row">';
+		html+='								<div class="form-inline col-sm-5">';
+		html+='									<label class="control-label"><span class="requiredasterisk">*</span>Name: </label>';
+		html+='									<input class="form-control reqIn" type="text" id="admin-managetags-string" onkeyup="updateType();" placeholder="What the users see"></input>';
+		html+='								</div>';
+		html+='								<div class="form-inline col-sm-5">';
+		html+='									<label class="control-label"><span class="requiredasterisk">*</span>Type: </label>';
+		html+='									<input class="form-control reqIn" type="text" id="admin-managetags-type" placeholder="Used in database"></input>';
+		html+='								</div>';
+		html+='							</div>'; // row
+		html+='							<div class="row">';
+		html+='								<div>';
+		html+='									<button class="col-sm-2 btn btn-success" id="admin-managetags-add-button" type="button" onclick="addTag();">Add</button>';
+		html+='								</div>';
+		html+='							</div>';
+
+		//Removing tags
+		html+='							<hr id="admin-managetags-hr">';
+		html+='							<h4>Remove Tags:</h4>';
+		html+='							<div class="row">';
+		html+='								<div class="remove-tag-wrap">';
+		html+='									<table class="remove-tag-outer-table">';
+		html+='										<tr>';
+		html+='											<td class="remove-tag-select-td">Select</td>';
+		html+='											<td>Category Name</td>';
+		html+='											<td>Category Type</td>';
+		html+='										</tr>';
+		html+='									</table>';
+		html+='									<div class="remove-tag-inner-table">';
+		html+='										<table>';
+
+		for (var i = 0; i < res.length; i++){
+			html+='										<tr>';
+			html+='											<td class="remove-tag-select-td"><input type="checkbox" id="remove-tag-' +i +'" value="' +res[i].category_id+ '"></td>';
+			html+='											<td>'+res[i].category_string +'</td>';
+			html+='											<td>'+res[i].category_type +'</td>';
+			html+='										</tr>';
+		}
+
+		html+='										</table>';
+		html+='									</div>'; //inner_table
+		html+='								</div>';
+		html+='							</div>';//row
+		html+='							<div class="row">';
+		html+='								<div>';
+		html+='									<button class="col-sm-3 btn btn-warning" id="admin-managetags-remove-button" type="button" onclick="removeTag();">Remove Selected</button>';
+		html+='								</div>';
+		html+='							</div>';
+	    html+='						</div>'; // page-content-wrapper
+
+		$("#managetags").append(html);
+	});
 }
