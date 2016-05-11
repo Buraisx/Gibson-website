@@ -354,6 +354,19 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                     });
                 },
                 function (next){
+                    var sql = "SELECT category_id, category_string, category_matrix FROM gibson.category_matrix WHERE category_id IN (SELECT JSON_EXTRACT(categories, '$[*]') FROM gibson.course WHERE course_id = ?);";
+                    var inserts = [req.query.course];
+                    sql = mysql.format(sql, inserts);
+                    con.query(sql, function (err, results){
+                        if(err){
+                            return next(err, null);
+                        }
+                        else{
+                            next(null, results);
+                        }
+                    });
+                },
+                function (next){
                     var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix;"
                     con.query(sql, function (err, results){
                         if(err){
@@ -367,6 +380,7 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                 function (err, results){
                     con.release();
                     if(err){
+                        console.log(err);
                         res.status(500).send();
                     }
                     else{
