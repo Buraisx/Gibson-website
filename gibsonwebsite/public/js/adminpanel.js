@@ -1229,6 +1229,12 @@ function addTag(){
 		.done(function(res){
 			$("#managetags").contents().remove();
 			manageTags();
+		})
+		.fail(function(res){
+			swal({
+				title: 'Failed to add tags',
+				type: 'error'
+			});
 		});
 	}
 }
@@ -1302,10 +1308,10 @@ function manageTags(){
 		html+='											<td>Category Type</td>';
 		html+='										</tr>';
 		html+='									</table>';
-		html+='									<div class="remove-tag-inner-table">';
+		html+='									<div class="remove-tag-inner-table" id="remove-tag-inner-table">';
 		html+='										<table>';
 
-		for (var i = 0; i < res.length; i++){
+		for (var i = res.length-1; i >= 0; i--){
 			html+='										<tr>';
 			html+='											<td class="remove-tag-select-td"><input type="checkbox" id="remove-tag-' +i +'" value="' +res[i].category_id+ '"></td>';
 			html+='											<td>'+res[i].category_string +'</td>';
