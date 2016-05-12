@@ -330,10 +330,6 @@ router.get('/staff/portal/detailedcourse', function (req, res, next){
 
 //GET COURSE DATA TO DISPLAY
 router.get('/staff/portal/detailedcourse/data', function (req, res, next){
-    var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
-    var inserts = [req.query.course];
-    sql = mysql.format(sql, inserts);
-
     connection.getConnection(function (err, con){
         if(err){
             res.status(500).send();
@@ -341,29 +337,41 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
         else{
             async.parallel([
                 function (next){
-                    var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
-                    var inserts = [req.query.course];
-                    sql = mysql.format(sql, inserts);
-                    con.query(sql, function (err, results){
-                        if(err){
-                            return next(err, null);
+                    async.waterfall([
+                        function (callback){
+                            var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
+                            con.query(sql,[req.query.course], function (err, results){
+                                if(err){
+                                    return callback(err, null);
+                                }
+                                else{
+                                    console.log(results);
+                                    callback(null, results[0]);
+                                }
+                            }); 
+                        },
+                        function (course, callback){
+                            var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix WHERE category_id IN (?);";
+                            console.log(course.categories);
+                            var inserts = [JSON.parse(course.categories)];
+                            sql = mysql.format(sql, inserts);
+                            console.log(sql);
+                            con.query(sql, function (err, results){
+                                if(err){
+                                    return callback (err, null, null);
+                                }
+                                else{
+                                    callback (null, course, results);
+                                }
+                            });
                         }
-                        else{
-                            next(null, results);
-                        }
-                    });
-                },
-                function (next){
-                    var sql = "SELECT category_id, category_string, category_matrix FROM gibson.category_matrix WHERE category_id IN (SELECT JSON_EXTRACT(categories, '$[*]') FROM gibson.course WHERE course_id = ?);";
-                    var inserts = [req.query.course];
-                    sql = mysql.format(sql, inserts);
-                    con.query(sql, function (err, results){
-                        if(err){
-                            return next(err, null);
-                        }
-                        else{
-                            next(null, results);
-                        }
+                        ],function (err, course, results){
+                           if(err){
+                                return next(err, null);
+                           }
+                           else{
+                                next(null, {course:course, categories:results});
+                           }
                     });
                 },
                 function (next){
@@ -384,6 +392,7 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                         res.status(500).send();
                     }
                     else{
+                        console.log(results);
                         res.status(200).send(results);
                     }
             });
