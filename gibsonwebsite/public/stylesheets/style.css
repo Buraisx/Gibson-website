@@ -216,6 +216,18 @@ ul.profiletab{
      margin-top: -80px;
  }
 
+@media (max-width: 768px) {
+  .tag-box{
+    display: block;
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+  .search-box
+  {
+    min-height: 200px;
+  }
+}
+
  .checkboxes-col-1 {
     padding-left: 15px;
     padding-top: 5px;
@@ -450,6 +462,12 @@ hr {
 
 .deletecontactbutton {
     margin-left: 350px;
+}
+
+@media (max-width: 768px) {
+    #profile{
+        min-height: 700px;
+    }
 }
 
 /** volunteer profile styles **/
