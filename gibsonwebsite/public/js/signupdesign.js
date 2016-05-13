@@ -17,13 +17,16 @@ $(document).ready(function(){
     $('#student').click(function(){
         if(document.getElementById('student').checked)
         {
-            // console.log('student true')
-            //set heightt 1000.log
+            console.log('student true')
+            $('#schoolname').addClass('reqIn');
+            $('#grade').addClass('reqIn');
             $('#myCarousel').animate({height: 1000});
         }
         else
         {
-            // console.log('student false')
+            console.log('student false')
+            $('#schoolname').removeClass('reqIn');
+            $('#grade').removeClass('reqIn');
             $('#myCarousel').animate({height: 700});
         }
     });
@@ -34,11 +37,15 @@ $(document).ready(function(){
 
     //checks for captcha
     $('#btnsubmit').click(function(){
-        $('#frm').submit(function(){
+      //  $('#frm').submit(function(){
             $(document).find('#dimmer').css("display","block");
             $(document).find('.g-recaptcha').css("display","block");
-            return false;
-        });
+        //    return false;
+      //  });
+    });
+    $('#dimmer').click(function(){
+        $(document).find('#dimmer').css("display","none");
+        $(document).find('.g-recaptcha').css("display","none");
     });
    /* $('#frm').submit(function(e){
     return false;
@@ -134,8 +141,11 @@ function progress(percent, $element)
     var progressBarWidth = percent * $element.width() / 100;
     $element.find('div').animate({ width: progressBarWidth }, 500);
 }
+function loadCaptcha()
+{
 
-function recaptchacallback()
+}
+/*function recaptchacallback()
 {
    document.getElementById('frm').submit();
-}
+}*/
