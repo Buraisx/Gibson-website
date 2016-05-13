@@ -461,7 +461,7 @@ router.post('/volunteer/addlimited', function(req, res){
 
 
 // ROUTE FOR CONVERTING A LIMITED USER TO A REGULAR USER
-router.post('volunteer/convertlimited', function(req, res){
+router.post('/volunteer/convertlimited', function(req, res){
 
     // GETTING CONNECTION
     connection.getConnection(function(err, con){
@@ -495,7 +495,7 @@ router.post('volunteer/convertlimited', function(req, res){
                                         password: passwordSaltedHashed,
                                         lname: sanitizer.sanitize(req.body.lname),
                                         fname: sanitizer.sanitize(req.body.fname),
-                                        birth_date: sanitizer.sanitize(req.body.birth_date),
+                                        age_group_id: sanitizer.sanitize(req.body.age_group_id),
                                         gender: sanitizer.sanitize(req.body.gender),
                                         address: sanitizer.sanitize(req.body.address),
                                         unit_no: sanitizer.sanitize(req.body.unit_no),
@@ -532,10 +532,11 @@ router.post('volunteer/convertlimited', function(req, res){
 
                 // UPDATE DATABASE WITH NEW INFORMATION
                 function(user, next){
-                    var query = 'UPDATE gibson.user SET rank_id=?, type=?, username=?, password=?, lname=?, fname=?, birth_date=?, gender=?, address=?, unit_no=?, city=? province_id=?, postal_code=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, email=?, send_notification=?, student=? WHERE user_id = ?;';
-                    var inserts = [user.rank_id, user.type, user.username, user.password, user.lname, user.fname, user.birth_date, user.gender, user.address, user.unit_no, user.city, user.province_id, user.postal_code, user.primary_phone, user.primary_extension, user.secondary_phone, user.secondary_extension, user.email, user.send_notification, user.student, req.body.user_id];
+                    var query = 'UPDATE gibson.user SET rank_id=?, type=?, username=?, password=?, lname=?, fname=?, age_group_id=?, gender=?, address=?, unit_no=?, city=?, province_id=?, postal_code=?, primary_phone=?, primary_extension=?, secondary_phone=?, secondary_extension=?, email=?, send_notification=?, student=? WHERE user_id = ?;';
+                    var inserts = [user.rank_id, user.type, user.username, user.password, user.lname, user.fname, user.age_group_id, user.gender, user.address, user.unit_no, user.city, user.province_id, user.postal_code, user.primary_phone, user.primary_extension, user.secondary_phone, user.secondary_extension, user.email, user.send_notification, user.student, req.body.user_id];
+                    query = mysql.format(query, inserts);
 
-                    con.query(query, inserts, function(err, results){
+                    con.query(query, function(err, results){
                         if(err){
                             return next({no:500, msg:'Error updating user information'});
                         }
@@ -617,11 +618,13 @@ router.post('volunteer/convertlimited', function(req, res){
 
                     con.query('ROLLBACK;', function(err, results){
                         con.release();
+                        res.status(500).send('Error converting user to regular user.');
                     });
                 }
                 else{
                     con.query('COMMIT;', function(err, results){
                         con.release();
+                        res.status(200).send('User converted successfully.');
                     });
                 }
             });

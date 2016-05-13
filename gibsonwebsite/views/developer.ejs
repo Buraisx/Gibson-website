@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title><%= title %></title>
+	</head>
+
+	<body>
+
+		<h2>LOL YOLO SWAG PAGE</h2>
+		<hr>
+
+		<br>
+		<h3>Convert Limited User</h3>
+		<div>
+			<form action="/volunteer/convertlimited" method="post" role="form">
+				<input type="hidden" id= "_csrf" name="_csrf" value="<%= csrfToken %>">
+				<label>User ID:</label><input type="number" name="user_id" id="user_id" value="8"> <br>
+				<label>Username:</label><input type="text" name="username" id="username" value="KEK1"> <br>
+				<label>Password:</label><input type="password" name="password" id="password" value="qwe123"> <br>
+				<label>Last Name:</label><input type="text" name="lname" id="lname" value="Lee"> <br>
+				<label>First Name:</label><input type="text" name="fname" id="fname" value="Bobby"> <br>
+				<label>Age Group ID:</label><input type="number" name="age_group_id" id="age_group_id" value="3"> <br>
+				<label>Gender:</label><input type="text" name="gender" id="gender" value="Male"> <br>
+				<label>Address:</label><input type="text" name="address" id="address" value="96 Barnwell Drive"> <br>
+				<label>Unit no.:</label><input type="number" name="unit_no" id="unit_no" value="403"> <br>
+				<label>City:</label><input type="text" name="city" id="city" value="Scarborough"> <br>
+				<label>Province ID:</label><input type="number" name="province_id" id="province_id" value="1"> <br>
+				<label>Postal Code:</label><input type="text" name="postal_code" id="postal_code" value="M1V 1Y9"> <br>
+				<label>Primary Phone:</label><input type="text" name="primary_phone" id="primary_phone" value="5197296543">
+				<label>Ext:</label><input type="text" name="primary_extension" id="primary_extension" value="11111"> <br>
+				<label>Secondary Phone:</label><input type="text" name="secondary_phone" id="secondary_phone" value="5197296543">
+				<label>Ext:</label><input type="text" name="secondary_extension" id="secondary_extension" value="22222"> <br>
+				<label>Email:</label><input type="text" name="email" id="email" value="bobby@yahoo.com"> <br>
+				<label>Spam Me?:</label><input type="number" name="send_notification" id="send_notification" value="1"> <br>
+				<label>Student?:</label><input type="number" name="student" id="student" value="1"> <br> <br>
+
+				<p>Student Information:</p>
+				<label>School Name:</label><input type="text" name="school_name" id="school_name" value="University of Waterloo"> <br>
+				<label>Grade:</label><input type="text" name="grade" id="grade" value="4"> <br>
+				<label>Major:</label><input type="text" name="major" id="major" value="Being Bobby"> <br>
+				<label>English Scrub Level:</label><input type="text" name="esl_level" id="esl_level" value="9001"> <br> <br>
+
+				<p>Contact 1:</p>
+				<label>Last Name:</label><input type="text" name="emergencylname1" id="emergencylname1" value="UEEEEE"> <br>
+				<label>First Name:</label><input type="text" name="emergencyfname1" id="emergencyfname1" value="EEEEEE"> <br>
+				<label>Relationship:</label><input type="text" name="relationship1" id="relationship1" value="EEEEEE"> <br>
+				<label>Phone:</label><input type="text" name="ephone1" id="ephone1" value="1111111111"> <br> <br>
+				<!-- <label>Ext:</label><input type="text" name="primary_extension" id="primary_extension" value="11111"> <br> -->
+
+				<p>Contact 2:</p>
+				<label>Last Name:</label><input type="text" name="emergencylname2" id="emergencylname2" value="LOLOL"> <br>
+				<label>First Name:</label><input type="text" name="emergencyfname2" id="emergencyfname2" value="LOLOLOL"> <br>
+				<label>Relationship:</label><input type="text" name="relationship2" id="relationship2" value="LOLOLOL"> <br>
+				<label>Phone:</label><input type="text" name="ephone2" id="ephone2" value="2222222222"> <br> <br>
+
+				<p>Contact 3:</p>
+				<label>Last Name:</label><input type="text" name="emergencylname3" id="emergencylname3" value="HIHIHIHI"> <br>
+				<label>First Name:</label><input type="text" name="emergencyfname3" id="emergencyfname3" value="HIHIHIHI"> <br>
+				<label>Relationship:</label><input type="text" name="relationship3" id="relationship3" value="HIHIHIHI"> <br>
+				<label>Phone:</label><input type="text" name="ephone3" id="ephone3" value="3333333333"> <br> <br>
+
+				<button type="submit" name="button">EL OH EL</button>
+			</form>
+		</div>
+	</body>
+</html>

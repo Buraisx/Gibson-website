@@ -11,7 +11,7 @@
 <body>
     <div class = "page-wrap">
         <div class = "container centered">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" id="_csrf" value="<%= csrfToken %>">
             <div class = "row">
                 <button type = "button" class = "btn btn-default col-sm-offset-5 col-sm-2" id = "tags-edit" onclick="editMode();">Edit Tags</button>
             </div>
@@ -23,7 +23,7 @@
                             <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
                                 <input type="text" class="form-control" id="tags-search" placeholder="Add a tag to the course." style="display:none;"></input>
                             </form>
-                            <button type = "button" class = "btn btn-default col-sm-2" id = "tags-add" style="display:none;">Add</button>
+                            <button type = "button" class = "btn btn-default col-sm-2" id = "tags-add" style="display:none;" onclick="addTag();">Add</button>
                         </div>
                         <hr id="tags-search-divider" style="display:none;">
                         <div class = "row">

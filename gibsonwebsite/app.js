@@ -96,7 +96,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 var signup = require('./routes/signup')(passport);
 var login = require('./routes/login')(passport);
-var test_profile = require('./routes/test_profile');
+var developer = require('./routes/developer');
 var confirm = require('./routes/confirm');
 var error = require('./routes/error');
 var adminPages = require('./routes/adminqueries');
@@ -541,6 +541,7 @@ app.use(function (req, res, next){
 // ===↓↓↓↓↓ ADMIN AUTHENTICATION NEEDED BELOW ↓↓↓↓↓===
 // ===================================================
 app.use('/', adminPages);
+app.use('/', developer);
 
 
 
