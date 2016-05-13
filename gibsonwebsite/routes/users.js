@@ -646,20 +646,20 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 
 							if(req.body.emergencyfname3 && req.body.emergencylname3 && req.body.relationship3 && req.body.ephone3){
 								newContacts = [
-									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP'],
-			                        [user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext2).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP'],
-			                        [user_id, sanitizer.sanitize(req.body.emergencylname3), sanitizer.sanitize(req.body.emergencyfname3), sanitizer.sanitize(req.body.relationship3), sanitizer.sanitize(req.body.ephone3).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext3).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP']
+									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, '')],
+			                        [user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext2).replace(/\D+/g, '')],
+			                        [user_id, sanitizer.sanitize(req.body.emergencylname3), sanitizer.sanitize(req.body.emergencyfname3), sanitizer.sanitize(req.body.relationship3), sanitizer.sanitize(req.body.ephone3).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext3).replace(/\D+/g, '')]
 								];
 							}
 							else if (req.body.emergencyfname2 && req.body.emergencylname2 && req.body.relationship2 && req.body.ephone2){
 								newContacts = [
-									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP'],
-			                        [user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext2).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP']
+									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, '')],
+			                        [user_id, sanitizer.sanitize(req.body.emergencylname2), sanitizer.sanitize(req.body.emergencyfname2), sanitizer.sanitize(req.body.relationship2), sanitizer.sanitize(req.body.ephone2).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext2).replace(/\D+/g, '')]
 								];
 							}
 							else{
 								newContacts = [
-									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, ''), 'CURRENT_TIMESTAMP']
+									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, '')]
 								];
 							}
 
@@ -682,6 +682,7 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 
 				// CASE WHERE LESS CONTACT IS ENTERED THAN THERE IS IN DATABASE
 				function(records, newContacts, next){
+
 					if(newContacts.length >= records.length){
 						next(null, records, newContacts);
 					}
@@ -690,8 +691,8 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 
 						for(var i = 0; i < records.length; i++){
 							if(i < newContacts.length){
-								newContacts[i].push(records[i]);
-								query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
+								newContacts[i].push(records[i].contact_id);
+								query += mysql.format('UPDATE gibson.emergency_contact SET user_id=?, lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? WHERE contact_id = ?;', newContacts[i]);
 							}
 							else{
 								query += mysql.format('DELETE FROM gibson.emergency_contact WHERE contact_id = ?', [records[i]]);
@@ -711,6 +712,7 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 
 				// CASE WHERE EQUAL CONTACT IS ENTERED COMPARED TO RECORDS IN DATABASE
 				function(records, newContacts, next){
+
 					if(newContacts.length > records.length || newContacts.length < records.length){
 						next(null, records, newContacts);
 					}
@@ -718,10 +720,9 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 						var query = '';
 
 						for(var i = 0; i < records.length; i++){
-							newContacts[i].push(records[i]);
-							query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
+							newContacts[i].push(records[i].contact_id);
+							query += mysql.format('UPDATE gibson.emergency_contact SET user_id=?, lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? WHERE contact_id = ?;', newContacts[i]);
 						}
-
 						con.query(query, function(err, results){
 							if(err){
 								return next({msg: 'Error in case 2'});
@@ -743,8 +744,8 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 
 						for(var i = 0; i < newContacts.length; i++){
 							if(i < records.length){
-								newContacts[i].push(records[i]);
-								query += mysql.format('UPDATE gibson.emergency_contact SET lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? creation_date=? WHERE contact_id = ?;', newContacts[i]);
+								newContacts[i].push(records[i].contact_id);
+								query += mysql.format('UPDATE gibson.emergency_contact SET user_id=?, lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? WHERE contact_id = ?;', newContacts[i]);
 							}
 							else{
 								newContacts[i].pop();
