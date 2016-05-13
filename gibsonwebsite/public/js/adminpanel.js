@@ -415,16 +415,17 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()" disabled>Remove Language</button>';
 
     //The Target Audience input
-    addcourse+='                    <div class = "row">';
-    addcourse+='                        <div class = "form-group col-sm-8">';
-    addcourse+='                            <label class = "targetmargin"><span class="requiredasterisk">*</span>Target Audience:</label>';
-    addcourse+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
+    addcourse+='                    <div class="row">';
+    addcourse+='                        <div class="form-group col-sm-8">';
+    addcourse+='                            <label class="targetmargin"><span class="requiredasterisk">*</span>Target Audience:</label>';
+    addcourse+='                            <input type="text" class = "form-control" name="addtarget" id="addtarget" required>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
 
     // Choose course tags
-    addcourse+='                     <div id = "tag-selection">'
-    addcourse+='                        <label>Course Tags:</label>';
+    addcourse+='                     <div id="tag-selection">'
+    addcourse+='                         <label>Course Tags:</label>';
+    addcourse+='                         <div class="tag-selection-list">';
     // Lists all tags in the db, 3 per row
     for (var i = 0; i < dropdown_info.course_categories.length; i++) {
         var curr_tag = dropdown_info.course_categories[i].category_string;
@@ -447,11 +448,7 @@ function controlpanel (dropdown_info) {
     else {
         addcourse+='<p class="smalltext">There are no tags. Create new tags by going to Manage Tags.</p>';
     }
-    // // Add new tags
-    // addcourse+='                        <span id="tag0"></span>';
-    // // Buttons to add or remove new tag input boxes
-    // addcourse+='                        <button type = "button" class= "btn btn-default" id = "addnewtag" onClick="addTag()">Add a Custom Tag</button>';
-    // addcourse+='                        <button type = "button" class= "btn btn-default" id = "removenewtag" onClick="removeTag()" disabled>Remove a Tag</button>';
+    addcourse+='                         </div> <!-- tag-selection-list-->';
     addcourse+='                    </div> <!-- tag-selection -->';
 
     //The Description Box

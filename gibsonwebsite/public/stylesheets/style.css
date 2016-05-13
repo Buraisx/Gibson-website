@@ -504,6 +504,12 @@ hr {
     padding: 10px;
 }
 
+.tag-selection-list {
+    height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 /** Shopping Cart Styles **/
 
 #shoppingcart{
