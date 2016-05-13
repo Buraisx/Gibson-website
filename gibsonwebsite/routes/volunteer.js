@@ -245,6 +245,11 @@ router.post('/volunteer/adduser', function(req, res){
 
                 // INSERTING USER INTO PERMANENT TABLE
                 function(next){
+
+                    for(var i in req.body){
+                        req.body[i] = sanitizer.sanitize(req.body[i]);
+                    }
+
                     var newUser = {
                       username:null, password:null, lname:null, fname:null, age_group_id:null, gender:null,
                       address:null, unit_no:null, city:null, province_id:null, postal_code:null,
