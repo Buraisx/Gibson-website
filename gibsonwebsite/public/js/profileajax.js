@@ -71,7 +71,6 @@ function load_profile(){
 	$('#profile').contents().remove();
 	var nav = '';
 	nav += '<hr>';
-	nav += '<div class="col-sm-4">';
 	nav += '	<div id="sidebar-wrapper">';
 	nav += '	<br>';
 	nav += '	<br>';
@@ -88,7 +87,6 @@ function load_profile(){
     nav += '        </li>';
     nav += '    </ul>';
     nav += '	</div>';
-    nav += '</div>';
 
     var profileinfo='';
     profileinfo+='		<div class="tab-content">';

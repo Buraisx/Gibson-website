@@ -14,8 +14,8 @@ $(document).ready(getCourseTags());
 
 function getCourseTags() {
 	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
-		var TAG_LIST = data[1];
-		var COURSE_TAG_LIST = data[0].categories;
+		TAG_LIST = data[1];
+		COURSE_TAG_LIST = data[0].categories;
 
 		//***// 
 		//data[0].course holds all the course info
@@ -56,10 +56,33 @@ function updateCourseTagsList(data){
 	}
 }
 
-function addTag(category_string){
+function addTag(){
+	var list_ids=[];
+	var category_string = $('#tags-search').val();
+
 	for(var i = 0; i < TAG_LIST.length; i++){
 		if(TAG_LIST[i].category_string === category_string){
+			COURSE_TAG_LIST.push(TAG_LIST[i]);
+
+			//*** GENERATE LIST OF IDS ***//
+			for(var i = 0; i < COURSE_TAG_LIST.length; i++){
+				list_ids.push(COURSE_TAG_LIST[i].category_id);
+			}
+
+			console.log(list_ids);	
+
 			//*** UPDATE COURSE TAGS IN DATABASE ***//
+			$.post('/staff/portal/detailedcourse/updateTags',{
+				categories: JSON.stringify(list_ids),
+				course_id: getParameterByName('course'),
+				_csrf: $('#_csrf').val()
+			}).done(function (res){
+				updateCourseTagsList(COURSE_TAG_LIST);
+			}).fail(function (){
+				console.log('ERROR ADDING COURSE TAG!');
+			});
+
+			break;
 		}
 	}
 }
