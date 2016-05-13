@@ -489,7 +489,7 @@ hr {
 }
 
 .adminsidebarmargin {
-    margin-bottom: 400px;
+    margin-bottom: 450px;
 }
 
 /** admin panel **/
@@ -502,6 +502,12 @@ hr {
     width: 80%;
     border: 4px;
     padding: 10px;
+}
+
+.tag-selection-list {
+    height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /** Shopping Cart Styles **/
@@ -761,4 +767,16 @@ div[class*="banner"]{
   background-clip: padding-box;
   *border-right-width: 2px;
   *border-bottom-width: 2px;
+}
+
+.course_tag{
+    border-spacing: 6px;
+    padding: 4px 10px;
+    display:inline-block;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #C9D0D0 !important;
+    border-style: solid;
+    border-width: 1px;
 }
