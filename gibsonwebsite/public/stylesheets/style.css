@@ -470,6 +470,10 @@ hr {
     }
 }
 
+.usersidebarmargin {
+    margin-bottom: 200px;
+}
+
 /** volunteer profile styles **/
 
 .sidetabs {
@@ -484,7 +488,7 @@ hr {
     text-align: right;
 }
 
-.sidebarmargin {
+.adminsidebarmargin {
     margin-bottom: 400px;
 }
 
