@@ -402,7 +402,7 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
 
 router.post('/staff/portal/detailedcourse/updateTags',function(req, res, next){
     var sql = "UPDATE gibson.course SET categories = JSON_ARRAY(?) WHERE course_id = ?;";
-    var inserts = [JSON.parse(req.body.categories), Number(req.body.course_id)];
+    var inserts = [Array.from(new Set(JSON.parse(req.body.categories))), Number(req.body.course_id)];
     sql = mysql.format(sql, inserts);
     connection.getConnection(function (err, con){
         if(err){
