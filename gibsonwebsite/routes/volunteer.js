@@ -239,7 +239,7 @@ router.post('/volunteer/adduser', function(req, res){
                         req.body.address === null || req.body.address == "" ||
                         req.body.apt === null || req.body.apt == "" ||
                         req.body.city === null || req.body.city == "" ||
-                        req.body.postal_code === null || req.body.postal_code == "" ||){
+                        req.body.postal_code === null || req.body.postal_code == ""){
                         return next({no: 400, msg:'Bad input'});
                         }
                     else if (req.body.age_group_id === null || req.body.province === null){
