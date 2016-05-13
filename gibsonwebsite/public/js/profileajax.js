@@ -829,7 +829,7 @@ function savechangesEmergency() {
 				ephone3: $('#ephone3').val(),
 				ephoneext1: $('#ephoneext1').val(),
 				ephoneext2: $('#ephoneext2').val(),
-				ephoneext3: $('#ephoneext3').val(),
+				ephoneext3: $('#ephoneext3').val()
 		})
 		.done(function (res){
 			load_profile();

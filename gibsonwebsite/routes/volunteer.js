@@ -474,6 +474,21 @@ router.post('/volunteer/convertlimited', function(req, res){
             // BIG BOSS WANTS WATERFALL, SO GRAVITY ASSISTED FUNCTIONS:
             async.waterfall([
 
+                // FUNCTION FOR VALIDATING UPGRADE
+                function(next){
+                    con.query('SELECT type FROM gibson.user WHERE user_id = ?;', [req.body.user_id], function(err, results){
+                        if(err || results.length === 0){
+                            return next({no:500, msg:'Unable to find user to convert'});
+                        }
+                        else if(results[0].type == 'REGULAR'){
+                            return next({no:400, msg:"Can't convert user who is not limited"});
+                        }
+                        else{
+                            next(null);
+                        }
+                    });
+                },
+
                 // FUNCTION TO SANITIZE INFO COMING FROM THE FRONT, RETURNS user OBJECT
                 function(next){
                     // GENERATING SALT FOR THE HASHING PROCESS
