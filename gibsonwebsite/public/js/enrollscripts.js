@@ -9,10 +9,10 @@ var cartTotal;
 //-- search for user with the email in the database and dropdown the information of the user if exists --//
 function clearUserData(){
 	$('#user-info').hide("slow", function(){
-		$('#userid').empty();
-		$('#email').empty();
-		$('#fname').empty();
-		$('#lname').empty();
+		$('#user-id').empty();
+		$('#user-email').empty();
+		$('#user-fname').empty();
+		$('#user-lname').empty();
 	});
 }
 
@@ -27,7 +27,6 @@ function fillUserData(user_data){
 	$('#next-step1').show("slow");
 }
 
-
 function displayUser(email){
 	$.post("/enroll/search/user", {
 			_csrf: $('#_csrf').val(),
@@ -41,6 +40,10 @@ function displayUser(email){
 	.fail(function (err){
 		console.log("This user does not exist.");
 		clearUserData();
+		$('#next-step1').prop("disabled", true);
+		swal({
+		title: "The User Does Not Exist."});
+
 	});
 }
 
@@ -243,7 +246,27 @@ function toggleFields(){
 //-- prompt volunteer/admin/staff for password in order to record the transaction --
 function askForPassword (){
 
-	swal({
+	if($('#payment_method').val() == ""){
+		swal({
+		title: "Payment Type Not Selected."}, function(){
+			return false;
+		});
+	}
+	else if(($('#trans_id').val() == "")){
+		swal({
+		title: "Payment ID Not Filled."}, function(){
+			return false;
+		});
+	}
+	else if($('#description').val() == ""){
+		swal({
+		title: "Description Not Filled."}, function(){
+			return false;
+		});
+
+	}
+	else{
+		swal({
 		title: "Enter The Administrative Password.",
 		type: "input",
 		inputType: "password",
@@ -253,7 +276,7 @@ function askForPassword (){
 			$('#password').val(typedPassword);
 			recordTransaction();
 		});
-			
+	}		
 }
 
 function cartCodes(){
