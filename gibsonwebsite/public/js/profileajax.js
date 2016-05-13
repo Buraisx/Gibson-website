@@ -71,9 +71,8 @@ function load_profile(){
 	$('#profile').contents().remove();
 	var nav = '';
 	nav += '<hr>';
+	nav += '	<div class="col-sm-4 usersidebarmargin">';
 	nav += '	<div id="sidebar-wrapper">';
-	nav += '	<br>';
-	nav += '	<br>';
     nav += '        <ul class="sidebar-nav nav-stacked" id="menu">';
     nav += '        <li class="active"><a class="menucolour" href="#personalinfo" data-toggle="tab"><i class="fa fa-user"></i> Personal Information</a></li>';
     if(user_info.user.student==1)
@@ -82,11 +81,11 @@ function load_profile(){
     }
     nav += '        <li><a class="menucolour" href="#emergencyinfo" data-toggle="tab"><i class="fa fa-users"></i> Emergency Contacts</a></li>';
     nav += '        <li><a class="menucolour" href="#changepass" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a></li>';
-	// Edit Info temporarily disabled
-	// nav += '        <li><a class="menucolour" href="#editinfo" data-toggle="tab"><i class="fa fa-pencil"></i> Edit Information</a>';
     nav += '        </li>';
     nav += '    </ul>';
     nav += '	</div>';
+    nav += '	</div>';
+
 
     var profileinfo='';
     profileinfo+='		<div class="tab-content">';

@@ -18,11 +18,12 @@ function controlpanel (dropdown_info) {
     var csrfmeta = $("meta[name=_csrf]");
     var nav = '';
     nav+='                <hr>';
-    nav+='                <div class="col-sm-4 sidebarmargin">';
+    nav+='                <div class="col-sm-4 adminsidebarmargin">';
     nav+='                    <div id="sidebar-wrapper">';
     nav+='                        <ul class="sidebar-nav nav-stacked" id="menu">';
     nav+='                        <li class="active"><a class="menucolour" href="#adduser" data-toggle="tab"><i class="fa fa-user-plus"></i> Add New User</a></li>';
     nav+='                        <li><a class="menucolour" href="#addlimiteduser" data-toggle="tab"><i class="fa fa-user"></i> Add Limited User</a></li>';
+    nav+='                        <li><a class="menucolour" href="#upgradeuser" data-toggle="tab"><i class="fa fa-user-plus"></i> Upgrade User</a></li>';
     nav+='                        <li><a class="menucolour" href="#addusertocourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add User To Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#addcourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add Course</a></li>';
 	nav+='                        <li><a class="menucolour" href="#managetags" data-toggle="tab"><i class="fa fa-tags"></i> Manage Tags</a></li>'
@@ -361,6 +362,93 @@ function controlpanel (dropdown_info) {
     limiteduser+='                        </div>';
     limiteduser+='                    </div>';
 
+    // Upgrade user's tab
+    var upgradeuser='';
+    upgradeuser+='<div class="tab-pane" id="upgradeuser">';
+    upgradeuser+='    <div id="page-content-wrapper" class="container-fluid xyz">';
+    upgradeuser+='        <form action = "/enroll" class="enroll-form" method = "post" role = "form">';
+    //upgradeuser+='        <form name="upgrade-user-form" action = "/volunteer/addupgrade" method = "post" role = "form" id= "upgrade-user-form">';
+    upgradeuser+='        <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
+    upgradeuser+='        <div id="upgrade-user-carousel" class="carousel slide" data-ride="carousel" data-interval="false">';
+    upgradeuser+='            <div class="carousel-inner" role="listbox">';
+    upgradeuser+='                <div class="item active">';
+    upgradeuser+='                    <div class = "step-container"><!--panel div-->';
+    upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+    upgradeuser+='                            <div class = "panel-heading" id="step1">';
+    upgradeuser+='                                <h3 class = "text-center">Step 1: Search For User</h2>';
+    upgradeuser+='                            </div>';
+    upgradeuser+='                            <div class = "panel-body">';
+    upgradeuser+='                                <div class = "row">';
+    upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-9">';
+    upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
+    upgradeuser+='                                        <span id = "checkemail"></span>';
+    upgradeuser+='                                        <input class = "form-control reqIn" type="text" name ="email" id="email" placeholder = "Search Email" onchange="displayUser(this.value);" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+    upgradeuser+='                                        <!--Character restrictions-->';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                                <div class = "panel panel-default steppanel col-sm-offset-1 col-sm-9" id="user-info"><!-- panel start-->';
+    upgradeuser+='                                    <div  class = "row">';
+    upgradeuser+='                                        <!-- show user info -->';
+    upgradeuser+='                                        <div class= "col-sm-offset-1">';
+    upgradeuser+='                                            <p id="user-id"></p>';
+    upgradeuser+='                                            <p id="user-email"></p>';
+    upgradeuser+='                                            <p id="user-fname"></p>';
+    upgradeuser+='                                            <p id="user-lname"></p>';
+    upgradeuser+='                                        </div>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                                <!-- Next Button -->';
+    upgradeuser+='                                <div class = "row">';
+    upgradeuser+='                                    <div class = "col-sm-offset-7 col-sm-5">';
+    upgradeuser+='                                        <button type = "button" class = "btn btn-success topage2 next-button next-hidden" href="#upgrade-user-carousel" data-slide="next" id="next-step1" disabled>Next&rarr;</button>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                </div>   ';
+    upgradeuser+='                            </div> <!--panel body-->';
+    upgradeuser+='                        </div><!--panel default-->';
+    upgradeuser+='                    </div><!-- step container -->';
+    upgradeuser+='                </div><!-- item active -->';
+    upgradeuser+='                <!-- step2 -->';
+    upgradeuser+='                <div class="item">';
+    upgradeuser+='                    <div class = "step-container"><!--panel div-->';
+    upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+    upgradeuser+='                            <div class = "panel-heading" id="step2">';
+    upgradeuser+='                                <h3 class = "text-center">Step 2: Select Courses</h2>';
+    upgradeuser+='                            </div>';
+    upgradeuser+='                            <div class = "panel-body">';
+    // The first name and last name input
+    upgradeuser+='                                <div class = "row">';
+    upgradeuser+='                                    <div class = "form-group col-sm-5 col-sm-offset-1">';
+    upgradeuser+='                                        <label><span class="requiredasterisk">*</span>First Name:</label>';
+    upgradeuser+='                                        <input type = "text" class = "form-control reqIn" name = "upgrade_fname" id = "upgrade_fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+">';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                    <div class = "form-group col-sm-5">';
+    upgradeuser+='                                        <label><span class="requiredasterisk">*</span>Last Name:</label>';
+    upgradeuser+='                                        <input type = "text" class = "form-control reqIn" name = "upgrade_lname" id = "upgrade_lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+">';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                </div>';
+
+    /* Put input forms here */
+
+    upgradeuser+='                                <!-- Next Button -->';
+    upgradeuser+='                                <div class = "row">';
+    upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-1">';
+    upgradeuser+='                                        <button type = "button" class = "btn btn-info" href="#upgrade-user-carousel" data-slide="prev" id="prev-step1">&larr;&nbsp;Back</button>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-6">';
+    upgradeuser+='                                        <button type = "button" class = "btn btn-success topage3 next-button" href="#upgrade-user-carousel" data-slide="next" id="next-step2" onclick="clearAndAdd();"disabled>Next&rarr;</button>';
+    //upgradeuser+='                                        <button type = "button" class = "btn btn-success  enroll-submit"  onclick ="askForPassword();"> Submit</button>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                            </div> <!-- panel body-->';
+    upgradeuser+='                        </div> <!-- panel default -->';
+    upgradeuser+='                    </div><!-- step2 container -->';
+    upgradeuser+='                </div><!-- item -->';
+    upgradeuser+='            </div><!-- carousel-inner -->';
+    upgradeuser+='        </div><!-- upgrade-user-carousel -->';
+    upgradeuser+='        </form>';
+    upgradeuser+='    </div>';
+    upgradeuser+='</div> <!-- upgradeuser -->';
+
     //Add User To Course tab
     var addusertocourse='';
     addusertocourse+='                    <div class="tab-pane" id="addusertocourse">';
@@ -415,16 +503,17 @@ function controlpanel (dropdown_info) {
     addcourse+='                            <button type = "button" class= "btn btn-default" id = "removelanguage" onClick="removeLanguages()" disabled>Remove Language</button>';
 
     //The Target Audience input
-    addcourse+='                    <div class = "row">';
-    addcourse+='                        <div class = "form-group col-sm-8">';
-    addcourse+='                            <label class = "targetmargin"><span class="requiredasterisk">*</span>Target Audience:</label>';
-    addcourse+='                            <input type = "text" class = "form-control" name = "addtarget" id = "addtarget" required>';
+    addcourse+='                    <div class="row">';
+    addcourse+='                        <div class="form-group col-sm-8">';
+    addcourse+='                            <label class="targetmargin"><span class="requiredasterisk">*</span>Target Audience:</label>';
+    addcourse+='                            <input type="text" class = "form-control" name="addtarget" id="addtarget" required>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
 
     // Choose course tags
-    addcourse+='                     <div id = "tag-selection">'
-    addcourse+='                        <label>Course Tags:</label>';
+    addcourse+='                     <div id="tag-selection">'
+    addcourse+='                         <label>Course Tags:</label>';
+    addcourse+='                         <div class="tag-selection-list">';
     // Lists all tags in the db, 3 per row
     for (var i = 0; i < dropdown_info.course_categories.length; i++) {
         var curr_tag = dropdown_info.course_categories[i].category_string;
@@ -447,11 +536,7 @@ function controlpanel (dropdown_info) {
     else {
         addcourse+='<p class="smalltext">There are no tags. Create new tags by going to Manage Tags.</p>';
     }
-    // // Add new tags
-    // addcourse+='                        <span id="tag0"></span>';
-    // // Buttons to add or remove new tag input boxes
-    // addcourse+='                        <button type = "button" class= "btn btn-default" id = "addnewtag" onClick="addTag()">Add a Custom Tag</button>';
-    // addcourse+='                        <button type = "button" class= "btn btn-default" id = "removenewtag" onClick="removeTag()" disabled>Remove a Tag</button>';
+    addcourse+='                         </div> <!-- tag-selection-list-->';
     addcourse+='                    </div> <!-- tag-selection -->';
 
     //The Description Box
@@ -697,6 +782,7 @@ function controlpanel (dropdown_info) {
 
     controlpanel+=adduser;
     controlpanel+=limiteduser;
+    controlpanel+=upgradeuser;
     controlpanel+=addusertocourse;
     controlpanel+=addcourse;
 	controlpanel+=managetags;

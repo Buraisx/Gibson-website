@@ -149,8 +149,8 @@
                                     <div class="form-group col-sm-8">
                                         <label class="control-label"><span class="requiredasterisk">*</span>Payment Type:</label>
                                         <span id = "checkPaymentType"></span>
-                                        <select class = "form-control reqIn" name ="payment_method" id="payment_method" placeholder = "Enter Payment Type">
-                                            <option value="" disabled selected>Please Select</option>
+                                        <select class = "form-control reqIn" name ="payment_method" id="payment_method" placeholder = "Enter Payment Type" required>
+                                            <option value="" selected>Please Select</option>
                                             <option value="CASH"> CASH </option>
                                             <option value="CREDIT"> CREDIT </option>
                                             <option value="DEBIT"> DEBIT </option>
@@ -163,7 +163,7 @@
                                     <div class="form-group col-sm-8">
                                         <label class="control-label"><span class="requiredasterisk">*</span>Payment ID:</label>
                                         <span id = "checkPaymentID"></span>
-                                        <input class = "form-control reqIn" type="text" name ="trans_id" id="trans_id" placeholder = "Enter The Payer's Paypal ID">
+                                        <input class = "form-control" type="text" name ="trans_id" id="trans_id" value = "" placeholder = "Enter The Payer's Paypal ID" required>
                                         <input  type="text" name ="user_id" id="user_id" hidden>
                                     </div>
                                 </div>
@@ -175,7 +175,7 @@
                                         </div>
                                         <div class ="row">
                                             <div class =" col-sm-6">
-                                                <input class = "form-control reqIn" type="text" name ="first_name" id="first_name" value = "" placeholder = "Enter First Name">
+                                                <input class = "form-control" type="text" name ="first_name" id="first_name" value = "" placeholder = "Enter First Name">
                                             </div>
                                             <div class =" col-sm-2">
                                                 <button type ="button" class =" btn btn-info enroll-toggle" id="autofill" onclick="toggleFields()"> AutoFill </button>
@@ -187,7 +187,7 @@
                                     <div class="form-group col-sm-4">
                                         <label class="control-label">Last Name:</label>
                                         <span id = "checkLastName"></span>
-                                        <input class = "form-control reqIn" type="text" name ="last_name" id="last_name" value = "" placeholder = "Enter Last Name">
+                                        <input class = "form-control" type="text" name ="last_name" id="last_name" value = "" placeholder = "Enter Last Name">
                                     </div>
                                 </div>
 
@@ -195,7 +195,7 @@
                                     <div class="form-group col-sm-8">
                                         <label class="control-label"><span class="requiredasterisk">*</span>Description:</label>
                                         <span id = "checkDescription"></span>
-                                        <textarea rows="4" cols="50" class = "form-control reqIn" name ="description" id="description" placeholder="Enter a Description of the Transaction."></textarea>
+                                        <textarea rows="4" cols="50" class = "form-control" name ="description" id="description" placeholder="Enter a Description of the Transaction."></textarea>
                                         <input type="text" name ="password" id="password" value = "" hidden>
                                     </div>
                                 </div>                                

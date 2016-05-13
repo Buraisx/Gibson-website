@@ -13,21 +13,21 @@
         <div class = "container centered">
             <input type="hidden" id="_csrf" value="<%= csrfToken %>">
             <div class = "row">
-                <button type = "button" class = "btn btn-default col-sm-offset-5 col-sm-2" id = "tags-edit" onclick="editMode();">Edit Tags</button>
-            </div>
-            <div class = "row">
-                <div class = "col-sm-offset-2 col-sm-10 panel panel-default">
+                <div class = "panel panel-default">
                     <div class="panel-body">
                         <h3>Course Tags</h3>
                         <div class = "row">
+                            <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editMode();">Edit Tags</button>
+                        </div>
+                        <div class = "row" style ="margin-top:10px;">
                             <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
                                 <input type="text" class="form-control" id="tags-search" placeholder="Add a tag to the course." style="display:none;"></input>
                             </form>
                             <button type = "button" class = "btn btn-default col-sm-2" id = "tags-add" style="display:none;" onclick="addTag();">Add</button>
                         </div>
-                        <hr id="tags-search-divider" style="display:none;">
+                        <hr id="tags-search-divider">
                         <div class = "row">
-                            <ul id="tags-sortable" class = "panel panel-default col-sm-6"></ul>
+                            <div id="tags-sortable" class = "panel panel-default"></div>
                         </div>
                    </div>
                 </div>
