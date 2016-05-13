@@ -248,7 +248,7 @@ router.post('/volunteer/adduser', function(req, res){
                     else{
                         next(null);
                     }
-                }
+                },
 
                 // STARTING TRANSACTION
                 function(next){
