@@ -768,3 +768,15 @@ div[class*="banner"]{
   *border-right-width: 2px;
   *border-bottom-width: 2px;
 }
+
+.course_tag{
+    border-spacing: 6px;
+    padding: 4px 10px;
+    display:inline-block;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #C9D0D0 !important;
+    border-style: solid;
+    border-width: 1px;
+}
