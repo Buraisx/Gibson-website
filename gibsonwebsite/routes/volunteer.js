@@ -231,6 +231,25 @@ router.post('/volunteer/adduser', function(req, res){
             // BIG BOSS WANTS WATERFALL, SO GRAVITY ASSISTED FUNCTIONS
             async.waterfall([
 
+                // VALIDATING INPUT
+                function(next){
+                    if (req.body.username === null || req.body.username == "" ||
+                        req.body.password === null || req.body.password == "" ||
+                        req.body.gender === null || req.body.gender == "" ||
+                        req.body.address === null || req.body.address == "" ||
+                        req.body.apt === null || req.body.apt == "" ||
+                        req.body.city === null || req.body.city == "" ||
+                        req.body.postal_code === null || req.body.postal_code == "" ||){
+                        return next({no: 400, msg:'Bad input'});
+                        }
+                    else if (req.body.age_group_id === null || req.body.province === null){
+                        return next({no: 400, msg:'Bad input'});
+                    }
+                    else{
+                        next(null);
+                    }
+                }
+
                 // STARTING TRANSACTION
                 function(next){
                     con.query('START TRANSACTION;', function(err, results){
