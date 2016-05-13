@@ -18,7 +18,7 @@ function controlpanel (dropdown_info) {
     var csrfmeta = $("meta[name=_csrf]");
     var nav = '';
     nav+='                <hr>';
-    nav+='                <div class="col-sm-4 sidebarmargin">';
+    nav+='                <div class="col-sm-4 adminsidebarmargin">';
     nav+='                    <div id="sidebar-wrapper">';
     nav+='                        <ul class="sidebar-nav nav-stacked" id="menu">';
     nav+='                        <li class="active"><a class="menucolour" href="#adduser" data-toggle="tab"><i class="fa fa-user-plus"></i> Add New User</a></li>';
