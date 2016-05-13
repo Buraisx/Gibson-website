@@ -400,6 +400,31 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
     });
 });
 
+router.post('/staff/portal/detailedcourse/updateTags',function(req, res, next){
+    var sql = "UPDATE gibson.course SET categories = JSON_ARRAY(?) WHERE course_id = ?;";
+    var inserts = [JSON.parse(req.body.categories), Number(req.body.course_id)];
+    sql = mysql.format(sql, inserts);
+    connection.getConnection(function (err, con){
+        if(err){
+            console.log(err);
+            res.status(500).send();
+        }
+        else{
+            console.log('here');
+            con.query(sql, function (err, results){
+                con.release();
+                if(err){
+                    console.log(err);
+                    res.status(500).send();
+                }
+                else{
+                    res.status(200).send();
+                }
+            });
+        }
+    });
+});
+
 // ROUTE FOR VALIDATING INFORMATION WHILE ADDING COURSE.
 router.post('/staff/portal/validateCourse', function(req, res){
     async.waterfall([
