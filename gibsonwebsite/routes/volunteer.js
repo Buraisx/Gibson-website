@@ -258,8 +258,6 @@ router.post('/volunteer/adduser', function(req, res){
                     newUser.lname = req.body.lname;
                     newUser.fname = req.body.fname;
                     newUser.age_group_id = req.body.age_group_id;
-                    console.log(newUser.age_group_id);
-                    console.log(req.body.age_group_id);
                    // newUser.birth_date = req.body.birth_date;
                     newUser.gender = req.body.gender;
                     newUser.address = req.body.address;
@@ -376,12 +374,12 @@ router.post('/volunteer/adduser', function(req, res){
             ],
 
             // FINAL FUNCTION -> HANDLES ERRORS
-            function(err){
-                if(err){
+            function(error){
+                if(error){
                     con.query('ROLLBACK;', function(err, results){
                         con.release();
-                        console.log('volunteer.js: ' +err.msg +'; /volunteer/adduser');
-                        res.status(err.no).send('UNABLE TO ADD USER.');
+                        console.log('volunteer.js: ' +error.msg +'; /volunteer/adduser');
+                        res.status(error.no).send('UNABLE TO ADD USER.');
                     });
                 }
                 else{
