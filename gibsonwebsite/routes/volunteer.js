@@ -231,6 +231,25 @@ router.post('/volunteer/adduser', function(req, res){
             // BIG BOSS WANTS WATERFALL, SO GRAVITY ASSISTED FUNCTIONS
             async.waterfall([
 
+                // VALIDATING INPUT
+                function(next){
+                    if (req.body.username === null || req.body.username == "" ||
+                        req.body.password === null || req.body.password == "" ||
+                        req.body.gender === null || req.body.gender == "" ||
+                        req.body.address === null || req.body.address == "" ||
+                        req.body.apt === null || req.body.apt == "" ||
+                        req.body.city === null || req.body.city == "" ||
+                        req.body.postal_code === null || req.body.postal_code == ""){
+                        return next({no: 400, msg:'Bad input'});
+                        }
+                    else if (req.body.age_group_id === null || req.body.province === null){
+                        return next({no: 400, msg:'Bad input'});
+                    }
+                    else{
+                        next(null);
+                    }
+                },
+
                 // STARTING TRANSACTION
                 function(next){
                     con.query('START TRANSACTION;', function(err, results){
@@ -245,6 +264,11 @@ router.post('/volunteer/adduser', function(req, res){
 
                 // INSERTING USER INTO PERMANENT TABLE
                 function(next){
+
+                    for(var i in req.body){
+                        req.body[i] = sanitizer.sanitize(req.body[i]);
+                    }
+
                     var newUser = {
                       username:null, password:null, lname:null, fname:null, age_group_id:null, gender:null,
                       address:null, unit_no:null, city:null, province_id:null, postal_code:null,
@@ -258,8 +282,6 @@ router.post('/volunteer/adduser', function(req, res){
                     newUser.lname = req.body.lname;
                     newUser.fname = req.body.fname;
                     newUser.age_group_id = req.body.age_group_id;
-                    console.log(newUser.age_group_id);
-                    console.log(req.body.age_group_id);
                    // newUser.birth_date = req.body.birth_date;
                     newUser.gender = req.body.gender;
                     newUser.address = req.body.address;
@@ -376,12 +398,12 @@ router.post('/volunteer/adduser', function(req, res){
             ],
 
             // FINAL FUNCTION -> HANDLES ERRORS
-            function(err){
-                if(err){
+            function(error){
+                if(error){
                     con.query('ROLLBACK;', function(err, results){
                         con.release();
-                        console.log('volunteer.js: ' +err.msg +'; /volunteer/adduser');
-                        res.status(err.no).send('UNABLE TO ADD USER.');
+                        console.log('volunteer.js: ' +error.msg +'; /volunteer/adduser');
+                        res.status(error.no).send('UNABLE TO ADD USER.');
                     });
                 }
                 else{
