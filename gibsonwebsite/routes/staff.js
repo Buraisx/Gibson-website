@@ -348,7 +348,7 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                                     console.log(results);
                                     callback(null, results[0]);
                                 }
-                            }); 
+                            });
                         },
                         function (course, callback){
                             var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix WHERE category_id IN (?);";
@@ -587,7 +587,7 @@ router.post('/staff/portal/removeTag', function(req, res){
 
                 // QUERY FOR COURSE TAGS
                 function(next){
-                    con.query('SELECT course_id, course_tags FROM gibson.course;', function(err, results){
+                    con.query('SELECT course_id, categories FROM gibson.course;', function(err, results){
                         if(err){
                             return next({msg: 'Error querying for course tags'});
                         }
@@ -628,7 +628,7 @@ router.post('/staff/portal/removeTag', function(req, res){
                     for (i = 0; i < course_count; i++){
 
                         // RESETTING VALUES AT EACH ITERATION
-                        array1 = JSON.parse(all_tags[i].course_tags);
+                        array1 = JSON.parse(all_tags[i].categories);
                         length1 = array1.length;
                         difference = [];
 
@@ -642,7 +642,7 @@ router.post('/staff/portal/removeTag', function(req, res){
 
                         // GENERATING QUERY
                         if(difference.length < length1){
-                            query += mysql.format('UPDATE gibson.course SET course_tags = JSON_ARRAY(?) WHERE course_id = ?;\n', [difference, all_tags[i].course_id]);
+                            query += mysql.format('UPDATE gibson.course SET categories = JSON_ARRAY(?) WHERE course_id = ?;\n', [difference, all_tags[i].course_id]);
                         }
                     }
                     query = query.slice(0, -1);
