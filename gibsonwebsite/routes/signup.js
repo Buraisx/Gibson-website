@@ -157,8 +157,7 @@ router.post('/signup/username', function(req, res, next){
 		con.query(mysql.format(sql, inserts), function(err, results){
 			con.release();
 			if(err){
-				res.send(401);
-				return err;
+				res.status(500).send();
 			}
 
 			else{
@@ -184,8 +183,7 @@ router.post('/signup/email', function(req, res, next){
 		con.query(mysql.format(sql, inserts), function(err, results){
 			con.release();
 			if(err){
-				res.send(401);
-				return err;
+				res.status(500).send();
 			}
 
 			else{

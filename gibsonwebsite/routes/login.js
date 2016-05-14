@@ -42,9 +42,6 @@ function updateOrCreate (user, cb){
 //login
 router.post('/login', passport.authenticate('local-login',{
 	session: false,
-	//successRedirect: '/user/profile'
-	//failureRedirect: '/login'	// Return to login when fail, and flash error
-
 }), token.generateToken, token.respond, token.volunteerRespond, token.staffRespond, token.adminRespond, token.sendInfo, redirect);
 
 // REDIRECT FOR LOGIN

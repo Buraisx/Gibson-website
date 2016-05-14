@@ -16,8 +16,7 @@ router.get('/invoice', function(req, res, next){
   connection.getConnection(function(err, con){
     if (err){
 			console.log("invoice.js: cannot get connection");
-			res.send(400, 'Connection Failed');
-			return err;
+			res.status(500).send();
 		}
     else{
 

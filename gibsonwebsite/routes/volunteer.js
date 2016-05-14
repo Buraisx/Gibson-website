@@ -15,7 +15,7 @@ router.get('/volunteer/portal', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('volunteer.js: Error getting connection; /volunteer/portal');
-            res.status(500);
+            res.status(500).send();
         }
         else{
             //Run Queries in Parallel
@@ -656,7 +656,7 @@ router.get('/volunteer/portal/courses', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log("adminqueries.js: Cannot get connection");
-            return err;
+            res.status(500).send();
         }
 
         con.query(sql, function(err, results){
@@ -664,7 +664,7 @@ router.get('/volunteer/portal/courses', function(req, res){
 
             if(err){
                 console.log("volunteer.js: Query error for finding courses");
-                return err;
+                res.status(500).send();
             }
             else if(!results.length){
                 console.log("volunteer.js: No courses found!");

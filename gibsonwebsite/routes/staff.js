@@ -18,7 +18,7 @@ router.get('/staff/portal', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('staff.js: Error getting connection; /volunteer/portal');
-            res.status(500);
+            res.status(500).send();
         }
         else{
             //Run Queries in Parallel
@@ -161,7 +161,7 @@ router.post('/staff/portal/edit/personalinfo', function(req, res){
             if(err){
                 con.release();
                 console.log('staff.js: Cannot get the user profile.');
-                return err;
+                res.status(500).send();
             }
             else if(results.length === 0){
                 con.release();
@@ -776,7 +776,7 @@ router.post('/staff/portal/addCourse', function(req, res){
         if(err){
             con.release();
             console.log("adminqueries.js: cannot get connection");
-            return err;
+            res.status(500).send();
         }
 
         async.waterfall([
@@ -819,8 +819,7 @@ router.post('/staff/portal/addCourse', function(req, res){
                 con.query("ROLLBACK;", function(err, results){
                     con.release();
                     console.log("adminqueries.js: Rollbacked because " + err);
-					res.end();
-                    return err;
+					res.status(500).send();
                 });
             }
 

@@ -14,7 +14,7 @@ router.post('/forgotusername', function(req,res){
 	connection.getConnection(function(err,con){
 		if (err){
       console.log('forgotcredentials.js: Error connecting to the DB.');
-      return err;
+      res.status(500).send();
     }
 
     // LOOK FOR THE USERNAME CORRESPONDING TO THE EMAIL
@@ -26,7 +26,7 @@ router.post('/forgotusername', function(req,res){
      con.release();
 
       if(err){
-      	return (new Error("forgotcredentials.js: Query error for forgot username"));
+      	res.status(500).send();
       }
       else if (!results.length){
         res.status(404).send("Username does not exist.");
@@ -56,7 +56,7 @@ router.post('/forgotpassword', function(req,res,next){
 	connection.getConnection(function(err,con){
 		if (err){
       console.log('forgotcredentials.js: Error connecting to the DB.');
-      return err;
+      res.status(500).send();
     }
     else{
       // LOOK FOR THE EMAIl CORRESPONDING TO THE USER
@@ -68,12 +68,11 @@ router.post('/forgotpassword', function(req,res,next){
       	con.release();
 
       	if(err){
-      		return (new Error("forgotcredentials.js: Query error for forgot password"));
+      		res.status(500).send();
       	}
       	else if (!results.length){
 
           res.status(404).send("No email with this username found.");
-      		//return (new Error("forgotcredentials.js: No email with this username found."));
       	}
         else{
           //send user the email with the password

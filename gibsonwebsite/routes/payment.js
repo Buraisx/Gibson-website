@@ -45,12 +45,10 @@ router.get('/payment/paypal', function(req, res, next){
   connection.getConnection(function(err, con){
     if (err){
 			console.log("payment.js: cannot get connection");
-			res.send(400, 'Connection Failed');
-			return err;
+      res.status(500).send();
 		}
-
-    // BIG BOSS WANTS WATERFALL, SO GRAVITY ASSISTED FUNCTIONS:
-    async.waterfall([
+    else{
+      async.waterfall([
 
       // VALIDATING COURSE INFO:
       function(next){
@@ -144,6 +142,7 @@ router.get('/payment/paypal', function(req, res, next){
           //---------------------------------------//
         }
       });
+    }
   });
 });
 
@@ -157,8 +156,7 @@ router.get('/payment/execute', function(req,res,next){
   connection.getConnection(function(err, con){
     if (err){
       console.log("payment.js: cannot get connection");
-      res.send(400, 'Connection Failed');
-      return err;
+      res.status(500).send();
     }
     else{
 

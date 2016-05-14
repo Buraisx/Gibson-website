@@ -27,7 +27,7 @@ router.post('/enroll/search/user', function (req, res, next){
     if(err) {
       con.release();
       console.log("cannot get connection");
-      return err;
+      res.status(500).send();
     }
 
     con.query(sql, function(err, results){
@@ -58,7 +58,7 @@ router.get('/enroll/courses', function (req, res, next){
     if(err) {
       con.release();
       console.log("cannot get connection");
-      return err;
+      res.status(500).send();
     }
 
     con.query(sql, function (err, courses){
@@ -89,8 +89,7 @@ router.post('/enroll/courses', function (req, res, next){
   connection.getConnection(function (err, con){
     if(err){
       console.log('enroll.js: Error connecting to database.');
-      res.status(401).send();
-      return err;
+      res.status(500).send();
     }
     
     else{
@@ -114,7 +113,6 @@ router.post('/enroll/courses', function (req, res, next){
           if(err){
             console.log("enroll.js: Could not get selected courses");
             res.status(404).send();
-            return err;
           }
 
           else{
@@ -138,7 +136,7 @@ router.post('/enroll', function (req, res, next){
     if(err) {
       con.release();
       console.log("enroll.js: Cannot get connection.");
-      return err;
+      res.status(500).send();
     }
 
     else{

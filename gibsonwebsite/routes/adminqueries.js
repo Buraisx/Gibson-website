@@ -16,7 +16,7 @@ router.get('/admin/portal', function(req, res){
     connection.getConnection(function(err, con){
         if(err){
             console.log('adminqueries.js: Error getting connection; /volunteer/portal');
-            res.status(500);
+           res.status(500).send();
         }
         else{
             //Run Queries in Parallel
@@ -48,7 +48,5 @@ router.get('/admin/portal', function(req, res){
         }
     });
 });
-
-// It's very roomy in here LOL.
 
 module.exports = router;

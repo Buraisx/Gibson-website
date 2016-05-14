@@ -32,7 +32,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 
 			if(err){
 				console.log("user.js: Cannot get connection to the database.");
-				return err;
+				res.status(500).send();
 			}
 			else{
 
@@ -44,13 +44,13 @@ router.post('/user/profile/changepassword', function(req, res, next){
 					if(err){
 						con.release();
 						console.log("Cannot query the user's password");
-						return err;
+						res.status(500).send();
 
 					}
 					else if(!userPassword.length){
 						con.release();
 						console.log("Password for the user does not exist");
-						return (new Error("Password for the user does not exist"));
+						res.status(404).send();
 					}
 					else{
 
@@ -64,13 +64,13 @@ router.post('/user/profile/changepassword', function(req, res, next){
 									if(err){
 										con.release();
 										console.log("Could not query to change the password");
-										return err;
+										res.status(500).send();
 									}
 									else {
 										con.query(mysql.format("SELECT username FROM gibson.user WHERE user_id = ?", [decode.id]), function(err, results){
 											con.release();
 											if(err){
-												return (err);
+												res.status(500).send();
 											}
 											else{
 												res.send(results);
@@ -83,7 +83,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 						else {
 							con.release();
 							console.log("Current Password entered is incorrect.");
-							return (new Error("Current Password entered is incorrect."));
+							res.status(403).send();
 						}
 					}
 				});
@@ -92,7 +92,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 	}
 	else{
 		console.log("New password and confirm password is not the same.");
-		return err;
+		res.status(401).send();
 	}
 });
 
@@ -104,7 +104,7 @@ router.get('/user/profile/info', function(req, res, next) {
 		if(err){
 			connection.end();
 			console.log("user.js: Cannot get connection to the database.");
-			return err;
+			res.status(500).send();
 		}
 
 		else{
@@ -124,7 +124,7 @@ router.get('/user/profile/info', function(req, res, next) {
 
 						else if(!results.length){
 							console.log("No user found.");
-							return (new Error("No user found."));
+							return next(new Error("No user found."));
 
 						}
 
@@ -148,6 +148,7 @@ router.get('/user/profile/info', function(req, res, next) {
 
 						else if(!results.length){
 							console.log("No contacts found.");
+
 						}
 
 						response.emergency_contacts = results;
@@ -204,16 +205,18 @@ router.get('/user/profile/info', function(req, res, next) {
 					var insert = decode.id;
 					sql = mysql.format(sql, insert);
 					con.query(sql, function(err, results){
-						if (err || results.length == 0) {
+						if (err) {
 							console.log("user.js: Failed to query for age group info");
 							console.log(sql);
 							return next(err);
 						}
-						else {
-							var groupname = results[0].age_group_name + ' (' + results[0].age_group_description + ')';
-							response.user_age_group = groupname;
+						else if(results.length == 0){
+							console.log("user.js: No age group found");
 						}
-
+						
+						var groupname = results[0].age_group_name + ' (' + results[0].age_group_description + ')';
+						response.user_age_group = groupname;
+				
 						next(null);
 					});
 				}
@@ -221,9 +224,12 @@ router.get('/user/profile/info', function(req, res, next) {
 				function(err){
 					con.release();
 					if(err){
-						return err;
+						res.status(500).send();
 					}
-					res.send(response);
+					else{
+						res.send(response);
+
+					}
 				}
 			);
 		}
@@ -250,7 +256,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 		if(err){
 			con.release();
 			console.log("cannot get connection");
-			return err;
+			res.status(500).send();
 		}
 
 		con.query(nonRegCourses, function(err, results){
@@ -258,7 +264,7 @@ router.get('/user/profile/courses', function(req, res, callback) {
 
 			if(err){
 				console.log("Query error for finding courses");
-				return err;
+				res.status(500).send();
 			}
 
 			//check if there is a user with the info
@@ -283,7 +289,7 @@ router.get('/user/tags', function(req, res){
 
             if(err){
                 console.log("users.js: Cannot get a list of tags");
-                return err;
+                res.status(500).send();
             }
 
             else if (!results.length){
@@ -305,7 +311,7 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 		if(err){
 			con.release();
 			console.log("cannot get connection");
-			return err;
+			res.status(500).send();
 		}
 
 		con.query(sql, function(err, results){
@@ -313,7 +319,7 @@ router.get('/user/profile/schedule', function(req, res, callback) {
 
 			if(err){
 				console.log("Query error for finding user course schedule");
-				return err;
+				res.status(500).send();
 			}
 
 			//check if there is a user with the info
@@ -344,8 +350,7 @@ router.post('/register', function(req, res, next){
 		if (err){
 			con.release();
 			console.log("cannot get connection");
-			res.send(400, 'Connection Failed');
-			return err;
+			res.status(500).send();
 		}
 		async.waterfall([
 			function(next){
@@ -416,24 +421,6 @@ router.post('/register', function(req, res, next){
 
 						next(null, courseCart);
 					}
-
-
-					// var query_register = "INSERT INTO gibson.user_course (user_id, course_id, enroll_date, original_price, actual_price, paid, start_date, end_date, status, notes) SELECT  ?, ?, NOW(), default_fee, default_fee, 1, start_date, end_date, ?, ? FROM gibson.course WHERE course_id = ?";
-					// inserts = [decode.id, course_id, 'Enrolled', 'Registered for course ID ' + course_id, course_id];
-					// query_register = mysql.format(query_register, inserts);
-					//
-					// con.query(query_register, function(err, reg_res){
-					// 	if (err){
-					// 		console.log('Error occured during registration query');
-					// 		//res.send(400, 'Registration failed.');
-					// 		return next(err);
-					// 	}
-					//
-					// 	else{
-					// 		next(null, {message: "Registration Complete!"});
-					// 	}
-					//
-					// });
 				});
 
 			}],
@@ -442,7 +429,6 @@ router.post('/register', function(req, res, next){
 
 				if(err){
 					res.status(400).send('Failed to signup course!');
-					return err;
 				}
 
 				res.clearCookie('cart');
@@ -791,7 +777,7 @@ router.post('/user/profile/edit', function(req, res, next){
 	connection.getConnection(function(err, con){
 		if (err){
 			console.log('users.js: Unable to get connection; user/profile/edit');
-			return err;
+			res.status(500).send();
 		}
 		else{
 
@@ -800,7 +786,7 @@ router.post('/user/profile/edit', function(req, res, next){
 				if(err){
 					con.release();
 					console.log('users.js: Unable to query for user_id; user/profile/edit');
-					return err;
+					res.status(500).send();
 				}
 				else{
 					var userId = results[0].user_id;
@@ -810,7 +796,7 @@ router.post('/user/profile/edit', function(req, res, next){
 						if(err){
 							con.release();
 							console.log('user.js: Error starting transaction; user/profile/edit');
-							return err;
+							res.status(500).send();
 						}
 						else{
 
@@ -826,7 +812,7 @@ router.post('/user/profile/edit', function(req, res, next){
 									con.query('ROLLBACK;', function(err, results){
 										con.release();
 										console.log('user.js: Error updating profile information.; user/profile/edit');
-										return err;
+										res.status(500).send();
 									});
 								}
 								else{
@@ -842,7 +828,7 @@ router.post('/user/profile/edit', function(req, res, next){
 											con.query('ROLLBACK;', function(err, results){
 												con.release();
 												console.log('user.js: Error updating student information.; user/profile/edit');
-												return err;
+												res.status(500).send();
 											});
 										}
 										else{
@@ -933,15 +919,13 @@ router.post('/user/profile/history', function(req, res, next){
 	connection.getConnection(function(err, con){
 		if(err){
 			console.log('users.js: Could not connect to DB');
-			res.send(401);
-			return err;
+			res.status(500).send();
 		}
 		con.query(sql, function(err, results){
 			con.release();
 			if(err){
 				console.log('users.js: Could not get transaction history for user:' + decode.id);
-				res.send(401);
-				return err;
+				res.status(500).send();
 			}
 			else{
 				res.send(results);

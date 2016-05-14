@@ -17,7 +17,7 @@ router.get('/cart/view', function(req, res, next){
   connection.getConnection(function(err, con){
     if(err){
       console.log('cart.js: Error connecting to database.');
-      return err;
+      res.status(500).send();
     }
     else{
       // CART IS NOT EMPTY
