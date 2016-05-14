@@ -571,10 +571,10 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                            </div>';
 		upgradeuser+='                            <div class = "row">';
 		upgradeuser+='                                <div class = "col-sm-offset-1 col-sm-5">';
-		upgradeuser+='                                    <button type = "button" class = "btn btn-warning " href="#myCarousel"  data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>';
+		upgradeuser+='                                    <button type = "button" class = "btn btn-warning " href="#upgrade-user-carousel"  data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>';
 		upgradeuser+='                                </div>';
 		upgradeuser+='                                <div class = "col-sm-offset-3 col-sm-2">';
-		upgradeuser+='                                    <button type = "button" class = "btn btn-success next-button" href="#myCarousel" data-slide="next">Next&nbsp;&nbsp; &nbsp; &rarr;</button>';
+		upgradeuser+='                                    <button type = "button" class = "btn btn-success next-button" href="#upgrade-user-carousel" data-slide="next">Next&nbsp;&nbsp; &nbsp; &rarr;</button>';
 		upgradeuser+='                                </div>';
 		upgradeuser+='                            </div>';
 		upgradeuser+='                        </div><!--panelbody-->';
