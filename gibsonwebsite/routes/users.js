@@ -213,10 +213,10 @@ router.get('/user/profile/info', function(req, res, next) {
 						else if(results.length == 0){
 							console.log("user.js: No age group found");
 						}
-						
+
 						var groupname = results[0].age_group_name + ' (' + results[0].age_group_description + ')';
 						response.user_age_group = groupname;
-				
+
 						next(null);
 					});
 				}
@@ -953,14 +953,14 @@ router.get('/user/listfiller', function(req, res){
                     });
                 },
                 age_group_list: function(next){
-                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;";
                     con.query(sql, function (err, results){
 						response.age_groups = results;
                         next(err, results);
                     });
                 },
                 course_categories_list: function(next){
-                    var sql = "SELECT category_id, category_string FROM gibson.category_matrix;"
+                    var sql = "SELECT category_id, category_string FROM gibson.category_matrix;";
                     con.query(sql, function (err, results){
 						response.course_categories = results;
                         next(err, results);

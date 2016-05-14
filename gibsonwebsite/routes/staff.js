@@ -30,7 +30,7 @@ router.get('/staff/portal', function(req, res){
                     });
                 },
                 age_group_list: function(next){
-                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;"
+                    var sql = "SELECT age_group_id, age_group_name, age_group_description FROM gibson.age_group;";
                     con.query(sql, function (err, results){
                         next(err, results);
                     });
@@ -428,6 +428,33 @@ router.post('/staff/portal/detailedcourse/updateTags',function(req, res, next){
 // ROUTE FOR VALIDATING INFORMATION WHILE ADDING COURSE.
 router.post('/staff/portal/validateCourse', function(req, res){
     async.waterfall([
+
+        //Check if selected courses is in the database
+        function(next){
+            connection.getConnection(function(err, con){
+                if(err){
+                    console.log('staff.js: Error connecting to database; /staff/portal/validateCourse');
+                    res.status(500).send('Internal Server Error');
+                }
+                else{
+                    var selectedTags = JSON.parse(req.body.selectedtags);
+                    var query = mysql.format('SELECT COUNT(*) AS tag_count FROM gibson.category_matrix WHERE category_id IN (?);', [selectedTags]);
+
+                    con.query(query, function(err, results){
+                        if(err && selectedTags.length > 0){
+                            return next(new Error('Error counting course tags.'), null);
+                        }
+                        else if(results[0].tag_count != selectedTags.length){
+                            return next(new Error('One or more of the selected tags does not exist.'), null);
+                        }
+                        else{
+                            next();
+                        }
+                    });
+                }
+            });
+        },
+
         //Check Database for duplicate course codes and course names
         function (next){
 			if (req.body.course_name==null || req.body.course_name=='') {
@@ -752,6 +779,13 @@ router.post('/staff/portal/addCourse', function(req, res){
 	course_days_dml = createCourseDaysDML(course_days);
     adhoc_days_dml = createAdhocDaysDML(adhoc_days);
 
+    var selectedTags = JSON.parse(req.body.selectedtags);
+    var categories = [];
+
+    for(var i = 0; i < selectedTags.length; i++){
+        categories.push(Number(selectedTags[i]));
+    }
+
     var inserts = [
         req.body.addcoursecode,
         req.body.addcoursename,
@@ -765,6 +799,7 @@ router.post('/staff/portal/addCourse', function(req, res){
         req.body.addtarget,
         req.body.adddescription,
         req.body.instructor_bio,
+        categories,
         req.body.notes
     ];
 

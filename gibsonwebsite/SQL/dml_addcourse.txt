@@ -1,18 +1,19 @@
-INSERT INTO gibson.course 
-(course_code, 
- course_name, 
- instructor_username, 
- instructor_name, 
- default_fee, 
- course_limit, 
- payment_period_id, 
- start_date, 
- end_date, 
- course_interval, 
- course_language, 
- course_days, 
- course_target, 
+INSERT INTO gibson.course
+(course_code,
+ course_name,
+ instructor_username,
+ instructor_name,
+ default_fee,
+ course_limit,
+ payment_period_id,
+ start_date,
+ end_date,
+ course_interval,
+ course_language,
+ course_days,
+ course_target,
  course_description,
- instructor_bio, 
- notes) 
- VALUES (?,?,?,?,?,?,NULL,?,?,?,language_dml,course_days_dml,?,?,?,?);
+ instructor_bio,
+ categories,
+ notes)
+ VALUES (?,?,?,?,?,?,NULL,?,?,?,language_dml,course_days_dml,?,?,?,JSON_ARRAY(?),?);

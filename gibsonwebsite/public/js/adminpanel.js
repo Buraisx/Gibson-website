@@ -26,7 +26,7 @@ function controlpanel (dropdown_info) {
     nav+='                        <li><a class="menucolour" href="#upgradeuser" data-toggle="tab"><i class="fa fa-caret-square-o-up "></i> Upgrade User</a></li>';
     nav+='                        <li><a class="menucolour" href="#addusertocourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add User To Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#addcourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add Course</a></li>';
-	  nav+='                        <li><a class="menucolour" href="#managetags" data-toggle="tab"><i class="fa fa-tags"></i> Manage Tags</a></li>'
+	nav+='                        <li><a class="menucolour" href="#managetags" data-toggle="tab"><i class="fa fa-tags"></i> Manage Tags</a></li>';
     nav+='                        <li><a class="menucolour" href="#modifycourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#modifyuser" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify User Info</a></li>';
     nav+='                        <li><a class="menucolour" href="#scheduleevent" data-toggle="tab"><i class="fa fa-calendar-plus-o"></i> Schedule Event</a></li>';
@@ -650,7 +650,7 @@ function controlpanel (dropdown_info) {
     addcourse+='                    </div>';
 
     // Choose course tags
-    addcourse+='                     <div id="tag-selection">'
+    addcourse+='                     <div id="tag-selection">';
     addcourse+='                         <label>Course Tags:</label>';
     addcourse+='                         <div class="tag-selection-list">';
     // Lists all tags in the db, 3 per row
@@ -662,7 +662,7 @@ function controlpanel (dropdown_info) {
             addcourse+='                        <div class = "row">';
         }
         addcourse+='                        <div class = "col-sm-3">';
-        addcourse+='                            <input type="checkbox" name="tags" value="' + curr_tag + '"> ' + curr_tag;
+        addcourse+='                            <input type="checkbox" name="tags" id="admin-addcourse-tag-' +i +'" value="' + dropdown_info.course_categories[i].category_id + '"> ' + curr_tag;
         addcourse+='                        </div>';
         // Ends the row if 3 tags have been listed in the row AND this is not the final tag
         if (((i+1) % 3 == 0) && i != dropdown_info.course_categories.length - 1) {
@@ -1336,8 +1336,18 @@ function validateCourse(){
     var scheduled_days = addSchedule();
     var adhoc_days = addAdhoc();
 
+	var i = 0;
+	var selectedTags = [];
+	while($('#admin-addcourse-tag-'+i).val()){
+		if($('#admin-addcourse-tag-'+i).is(':checked')){
+			selectedTags.push($('#admin-addcourse-tag-'+i).val());
+		}
+		i++;
+	}
+
     //$("#courseform").slideToggle();
     $.post("/staff/portal/validateCourse",{
+		"selectedtags": JSON.stringify(selectedTags),
         "course_name": $('#addcoursename').val(),
         "course_code": $('#addcoursecode').val(),
         "addcost":$('#addcost').val(),
@@ -1375,7 +1385,17 @@ function submitCourse(){
     var scheduled_days = addSchedule();
     var adhoc_days = addAdhoc();
 
+	var i = 0;
+	var selectedTags = [];
+	while($('#admin-addcourse-tag-'+i).val()){
+		if($('#admin-addcourse-tag-'+i).is(':checked')){
+			selectedTags.push($('#admin-addcourse-tag-'+i).val());
+		}
+		i++;
+	}
+
     $.post("/staff/portal/addCourse",{
+		"selectedtags": JSON.stringify(selectedTags),
         "addcoursecode":$('#addcoursecode').val(),
         "addcoursename":$('#addcoursename').val(),
         "addcost":$('#addcost').val(),
@@ -1515,13 +1535,13 @@ function removeTag(){
 		swal({
 			title: 'Tags removed successfully!',
 			type: 'success'
-		})
+		});
 	})
 	.fail(function(res){
 		swal({
 			title: 'Failed to remove tags!',
 			type: 'error'
-		})
+		});
 	});
 }
 
