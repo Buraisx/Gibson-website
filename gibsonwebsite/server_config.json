@@ -9,6 +9,15 @@
     "multipleStatements": true,
     "port": 3306
   },
+    "db_badconfig": {
+    "connectionLimit": 10,
+    "host": "99.99.99.99",
+    "user": "root123",
+    "password": "makiforlife13",
+    "database": "gibson",
+    "multipleStatements": true,
+    "port": 9999
+  },
 
   "jwt": {
     "issuer": "https://www.105gibson.com",
