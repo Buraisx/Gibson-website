@@ -381,6 +381,33 @@ function load_controlpanel(){
 
     $('#controlpanel').append(nav);
     $('#controlpanel').append(controlpanel);
+
+    //Enable Tooltip
+    $("[data-toggle='tooltip']").tooltip();
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    //Check inputs before clicking Next
+ $('.btn-success').click(function (){ 
+        var count = 0;
+        var butparents = $(this).parent().parent().parent();
+        console.log(butparents);
+        butparents.find('input.reqIn').each(function (){
+            if ($.trim($(this).val()).length == 0)
+            {   
+                count ++;
+                console.log(count);
+                $('.btn-success').parent().parent().parent().find('.btn-success').removeAttr('data-slide');
+                $(this).attr('data-toggle', 'tooltip');
+                $(this).attr('title', 'Please fill this in.');
+                $(this).attr('data-placement','bottom');
+                $(this).tooltip('show');
+            }
+        });
+        if(count == 0)
+        {
+            butparents.find('.btn-success').attr('data-slide', 'next');
+        }
+    });
+ 
     //ON JSON APPEND COMPLETE ATTACH FADE IN ANIMATION
     }).done(function(){
         $( "#sidebar-wrapper" ).tabs({
