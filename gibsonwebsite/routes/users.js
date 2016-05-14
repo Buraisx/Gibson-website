@@ -29,7 +29,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 	if(req.body.newpass == req.body.confirmnewpass){
 
 		connection.getConnection(function(err, con){
-
+			
 			if(err){
 				console.log("user.js: Cannot get connection to the database.");
 				res.status(500).send();

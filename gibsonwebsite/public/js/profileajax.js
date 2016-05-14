@@ -1664,6 +1664,12 @@ function changepassword(){
 			password: $('#password').val(),
 			_csrf: $('#_csrf').val()
 		});
+	})
+	.fail(function(res){
+		swal({
+			title: "Failed to change password. Please try again later.",
+			type: "error"
+		});
 	});
 }
 
