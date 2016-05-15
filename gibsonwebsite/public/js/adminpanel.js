@@ -689,7 +689,7 @@ function controlpanel (dropdown_info) {
     //The Notes Box
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-8">';
-    addcourse+='                            <label><span class="requiredasterisk">*</span>Notes:</label>';
+    addcourse+='                            <label>Notes:</label>';
     addcourse+='                            <textarea class = "form-control" rows = "4" name = "course_notes" id = "course_notes"></textarea>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
@@ -697,19 +697,19 @@ function controlpanel (dropdown_info) {
     //The Instructor's name and username input
     addcourse+='                   <div class = "row">';
     addcourse+='                       <div class = "form-group col-sm-4">';
-    addcourse+='                           <label><span class="requiredasterisk">*</span>Instructor\'s Name:</label>';
-    addcourse+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name" required>';
+    addcourse+='                           <label>Instructor\'s Name:</label>';
+    addcourse+='                            <input type = "text" class = "form-control" name = "instructor_name" id = "instructor_name">';
     addcourse+='                       </div>';
     addcourse+='                       <div class = "form-group col-sm-4">';
-    addcourse+='                           <label><span class="requiredasterisk">*</span>Instructor\'s Username:</label>';
-    addcourse+='                            <input type = "text" class = "form-control" name = "instructor_username" id = "instructor_username" required>';
+    addcourse+='                           <label>Instructor\'s Username:</label>';
+    addcourse+='                            <input type = "text" class = "form-control" name = "instructor_username" id = "instructor_username">';
     addcourse+='                       </div>';
     addcourse+='                   </div>';
 
     //The Instructor Biography box
     addcourse+='                    <div class = "row">';
     addcourse+='                        <div class = "form-group col-sm-8">';
-    addcourse+='                            <label><span class="requiredasterisk">*</span>Instructor Biography:</label>';
+    addcourse+='                            <label>Instructor Biography:</label>';
     addcourse+='                            <textarea class = "form-control" rows = "6" name = "instructor_bio" id = "instructor_bio"></textarea>';
     addcourse+='                        </div>';
     addcourse+='                    </div>';
@@ -751,7 +751,7 @@ function controlpanel (dropdown_info) {
     //Add Course's days and time
     addcourse+='                    <div class = "row" name="day0" id="day0">';  //Cannot be delete tag for reference
     addcourse+='                        <div>';
-    addcourse+='                         <label class="form-group col-sm-4">Course Days:</label>';
+    addcourse+='                         <label class="form-group col-sm-4"><span class="requiredasterisk">*</span>Course Days:</label>';
     addcourse+='                         <label class="form-group col-sm-2">Start Time:</label>';
     addcourse+='                         <label class="form-group col-sm-2">End Time:</label><br>';
     addcourse+='                        </div>';
@@ -792,7 +792,7 @@ function controlpanel (dropdown_info) {
     //add hoc days
     addcourse+='                    <div class = "row" name="adhoc0" id="adhoc0">';
     addcourse+='                     <div>';
-    addcourse+='                         <label class = "form-group col-sm-4">Ad-Hoc Days:</label>';
+    addcourse+='                         <label class = "form-group col-sm-4"><span class="requiredasterisk">*</span>Ad-Hoc Days:</label>';
     addcourse+='                         <label class = "form-group col-sm-2">Start Time:</label>';
     addcourse+='                         <label class = "form-group col-sm-2">End Time:</label>';
     addcourse+='                     </div>';
@@ -1005,20 +1005,6 @@ function controlpanel (dropdown_info) {
                 // sanitize/escape symbols
             },
             adddescription: {
-                required: true
-                // sanitize
-            },
-            instructor_name: {
-                required: true,
-                regex: "^[\\w'. \-]+$", // Alphanumeric and '.- and space
-                maxlength: 64
-                // also sanitize
-            },
-            instructor_username: {
-                maxlength: 15,
-                regex: "^\\w+$"
-            },
-            instructor_bio: {
                 required: true
                 // sanitize
             },
@@ -1355,13 +1341,9 @@ function validateCourse(){
         "languages": languages,
         "addtarget": $('#addtarget').val(),
         "adddescription":$('#adddescription').val(),
-        "instructor_name":$('#instructor_name').val(),
-        "instructor_username":$('#instructor_username').val(),
-        "instructor_bio":$('#instructor_bio').val(),
         "addstartdate":$('#addstartdate').val(),
         "addenddate":$('#addenddate').val(),
         "addinterval":$('#addinterval:checked').val(),
-        "notes":$('#course_notes').val(),
         "course_days": scheduled_days,
         "adhoc_days": adhoc_days,
         "_csrf": $('#_csrf').val()
