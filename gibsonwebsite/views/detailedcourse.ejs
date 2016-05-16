@@ -11,16 +11,48 @@
 <body>
     <div class="page-wrap static-background">
         <section class="container rcorners">
-            <input type="hidden" id="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" id="_csrf" value="<%= csrfToken %>">   
 
-            <!-- Course information -->
-            <section id="course_information">
+            <!-- Details Section -->
+            <section class="col-sm-offset-1">
+                
+                <!-- Course Header -->
+                <div class="row">
+                    <h2 class="col-sm-6" id="course-name"></h2>
+                    <hr class="col-sm-10">
+                <div>
 
-            </section>
+                <!-- VOLUNTEER+ ONLY Course List of Enrolled Users -->
+                <div class="row" id="course-enrollment">
+                    <h3 class="col-sm-6">Class Enrollment</h3>
+                    <div class="col-sm-10">
+                        <table class="table table-bordered" id="course-usertable">
+                        </table>
+                    </div>
+                </div>
 
-            <!-- Course Tags -->
-            <section>
-                <div class="panel-body">
+                <!-- DESCRIPTION -->
+                <div class="row" id="course-description">
+                    <h3 class ="col-sm-6">Description</h3>
+                    <div class = "col-sm-10">
+                        <p id="course-desc-target"></p>
+                        <p id="course-desc-language"></p>
+                        <p id="course-desc-text"></p>
+                        <p id="course-desc-cost"></p>
+                    </div>
+                </div>
+
+                <!-- SCHEDULE -->
+                <div class="row" id="course-schedule">
+                    <h3 class = "col-sm-6">Schedule</h3>
+                    <div class = "col-sm-10">
+                        <p id="course-schedule-daterange"></p>
+                        <table class="table table-bordered" id="course-schedule-datetable">
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel-body col-sm-10">
                     <h3>Course Tags</h3>
                     <div class = "row">
                         <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editMode();">Edit Tags</button>

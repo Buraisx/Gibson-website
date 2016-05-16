@@ -339,7 +339,7 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                 function (next){
                     async.waterfall([
                         function (callback){
-                            var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, start_date, end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
+                            var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, DATE_FORMAT(start_date, '%M %D, %Y') start_date, DATE_FORMAT(end_date, '%M %D, %Y') end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
                             con.query(sql,[req.query.course], function (err, results){
                                 if(err){
                                     return callback(err, null);
@@ -381,7 +381,30 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                             next(null, results);
                         }
                     });
-                }],
+                },
+                function (next){
+                    var sql = "SELECT u.username,u.fname,u.lname,u.gender,u.address,u.primary_phone,u.primary_extension,u.secondary_phone,u.secondary_extension,u.email FROM gibson.user u INNER JOIN gibson.user_course uc ON u.user_id = uc.user_id WHERE uc.course_id = ?;";
+                    con.query(sql, [req.query.course], function (err, results){
+                        if(err){
+                            return next(err, null);
+                        }
+                        else{
+                            next(null, results);
+                        }
+                    });
+                },
+                function (next){
+                    var sql = "SELECT DATE_FORMAT(cd.date, '%d') as day, DATE_FORMAT(cd.date, '%M') as month, TIME_FORMAT(cd.start_time, '%h:%i %p') as start_time, TIME_FORMAT(cd.end_time, '%h:%i %p') as end_time FROM gibson.course_days cd INNER JOIN gibson.course c ON c.course_id = cd.course_id WHERE cd.course_id = ?;";
+                    con.query(sql, [req.query.course], function (err, results){
+                        if(err){
+                            return next(err, null);
+                        }
+                        else{
+                            next(null, results);
+                        }
+                    });
+                }
+                ],
                 function (err, results){
                     con.release();
                     if(err){
