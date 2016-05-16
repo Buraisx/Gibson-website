@@ -16,6 +16,8 @@ function checkPass()
     var pass2 = document.getElementById('passwordhashed');
     //Store the Confimation Message Object
     var message = document.getElementById('confirmpass');
+	//Get next button for enabling/disabling
+	var nextBtn = document.getElementById('nextToPage2');
     // For change password form
     var passwordentered = false;
     //Colour red and green
@@ -34,6 +36,7 @@ function checkPass()
             if(message != null) {
                 message.style.color = greenColor;
                 message.innerHTML = "<strong>OK!</strong>"
+				nextBtn.disabled = false;
             }
         } else {
             if (pass1.value != pass2.value) {
@@ -42,6 +45,7 @@ function checkPass()
                 if(message != null) {
                     message.style.color = redColor;
                     message.innerHTML = "<strong>Passwords do not match!</strong>";
+					nextBtn.disabled = true;
                 }
             }
             else {
@@ -60,6 +64,7 @@ function checkPass()
                         message.innerHTML = "<strong>Password must include at least 1 letter and 1 number.</strong>";
                     }
                 }
+				nextBtn.disabled = true;
             }
         }
         passwordentered = true;
