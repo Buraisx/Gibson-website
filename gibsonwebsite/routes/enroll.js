@@ -13,10 +13,10 @@ var bcrypt = require('bcrypt-nodejs');
 router.get('/enroll', function (req, res, next){
 
   res.render('enroll', { title: "Enroll a Student"});
-  
+
 });
 
-//search for the user's information given the email 
+//search for the user's information given the email
 router.post('/enroll/search/user', function (req, res, next){
 
   var sql = "SELECT user_id, email, fname, lname FROM gibson.user WHERE email = ?;";
@@ -39,11 +39,11 @@ router.post('/enroll/search/user', function (req, res, next){
             //check if there is a user with the info
       if(!results.length) {
         console.log("enroll.js: No User");
-        res.status(404).send(); 
+        res.status(404).send();
       }
       //send all course info to client
       else{
-        res.status(200).send(results);  
+        res.status(200).send(results);
       }
     });
   });
@@ -73,7 +73,6 @@ router.get('/enroll/courses', function (req, res, next){
         res.status(404).send();
       }
       else{
-        console.log(courses);
         res.status(200).send(courses);
       }
     });
@@ -91,7 +90,7 @@ router.post('/enroll/courses', function (req, res, next){
       console.log('enroll.js: Error connecting to database.');
       res.status(500).send();
     }
-    
+
     else{
       if(!selected_courses.length){
         //EMPTY LIST
@@ -116,7 +115,6 @@ router.post('/enroll/courses', function (req, res, next){
           }
 
           else{
-            console.log(results);
             res.status(200).send(results);
           }
         });
@@ -158,7 +156,7 @@ router.post('/enroll', function (req, res, next){
               console.log('enroll.js: Bad password given.');
               return next({errno:401, msg:"Bad Password!"}, null);
             }
-            
+
             else{
 
               next(null, req.body.user_id, req.body.email, req.body.trans_id, req.body.payment_method, req.body.first_name, req.body.last_name, JSON.parse(req.body.item_list), req.body.total, 'CAD', '0.00', req.body.description, con, next);
@@ -168,7 +166,7 @@ router.post('/enroll', function (req, res, next){
 
         //Enrollment
         function (id, email, trans_id, payment_method, first_name, last_name, item_list, total, currency, tax, description, con, done){
-          enroll(id, email, trans_id, payment_method, first_name, last_name, item_list, total, currency, tax, description, con, done);  
+          enroll(id, email, trans_id, payment_method, first_name, last_name, item_list, total, currency, tax, description, con, done);
         }
       ],
       function (msg, results){
@@ -177,9 +175,9 @@ router.post('/enroll', function (req, res, next){
           console.log("enroll.js: " + msg.msg);
           res.status(msg.errno).send();
         }
-      }); 
+      });
     }
-  }); 
+  });
 });
 
 router.get('/enrollSuccess', function (req, res, next){
@@ -193,7 +191,7 @@ router.get('/enrollSuccess', function (req, res, next){
 //============================================================
 function enroll(id, email, trans_id, payment_method, first_name, last_name, item_list, total, currency, tax, description, con, done){
   async.waterfall([
-    
+
       //Start Transaction
       function (next){
         con.query('START TRANSACTION;', function(err, results){
@@ -217,12 +215,11 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
             return next(new Error("Cannot add transaction to database."), null);
           }
           else{
-            console.log(results.insertId);
             next(null, results.insertId);
           }
         });
       },
-      
+
       //Insert all enrollments of each course into the database
       function (insertId, next){
         async.map(item_list, function (item, callback){
@@ -234,8 +231,8 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
                 callback({errno:500, message:"payment.js: Cannot enroll user into courses"},null);
               }
               else{
-                callback(null);  
-              }        
+                callback(null);
+              }
             });
         }, function (err, results){
             if(err){
@@ -245,11 +242,11 @@ function enroll(id, email, trans_id, payment_method, first_name, last_name, item
               return next(null, null);
             }
         });
-      } 
+      }
     ], function (err, results){
       if(err){
         con.query('ROLLBACK;', function(err, results){
-          return done({errno: 500, msg: 'Error accepting $' + total + ' transaction.'}, null); 
+          return done({errno: 500, msg: 'Error accepting $' + total + ' transaction.'}, null);
         });
       }
       else{
@@ -273,4 +270,3 @@ module.exports = {
     router: router,
     enroll: enroll
 }
-

@@ -29,7 +29,7 @@ router.post('/user/profile/changepassword', function(req, res, next){
 	if(req.body.newpass == req.body.confirmnewpass){
 
 		connection.getConnection(function(err, con){
-			
+
 			if(err){
 				console.log("user.js: Cannot get connection to the database.");
 				res.status(500).send();
@@ -207,7 +207,6 @@ router.get('/user/profile/info', function(req, res, next) {
 					con.query(sql, function(err, results){
 						if (err) {
 							console.log("user.js: Failed to query for age group info");
-							console.log(sql);
 							return next(err);
 						}
 						else if(results.length == 0){

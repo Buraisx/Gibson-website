@@ -345,17 +345,14 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                                     return callback(err, null);
                                 }
                                 else{
-                                    console.log(results);
                                     callback(null, results[0]);
                                 }
                             });
                         },
                         function (course, callback){
                             var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix WHERE category_id IN (?);";
-                            console.log(course.categories);
                             var inserts = [JSON.parse(course.categories)];
                             sql = mysql.format(sql, inserts);
-                            console.log(sql);
                             con.query(sql, function (err, results){
                                 if(err){
                                     return callback (err, null, null);
@@ -392,7 +389,6 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                         res.status(500).send();
                     }
                     else{
-                        console.log(results);
                         res.status(200).send(results);
                     }
             });
@@ -410,7 +406,6 @@ router.post('/staff/portal/detailedcourse/updateTags',function(req, res, next){
             res.status(500).send();
         }
         else{
-            console.log('here');
             con.query(sql, function (err, results){
                 con.release();
                 if(err){
