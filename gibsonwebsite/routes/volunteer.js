@@ -233,16 +233,20 @@ router.post('/volunteer/adduser', function(req, res){
 
                 // VALIDATING INPUT
                 function(next){
-                    if (req.body.username === null || req.body.username == "" ||
-                        req.body.password === null || req.body.password == "" ||
-                        req.body.gender === null || req.body.gender == "" ||
-                        req.body.address === null || req.body.address == "" ||
-                        req.body.apt === null || req.body.apt == "" ||
-                        req.body.city === null || req.body.city == "" ||
-                        req.body.postal_code === null || req.body.postal_code == ""){
-                        return next({no: 400, msg:'Bad input'});
+                    if (req.body.username == "" ||
+                        req.body.password == "" ||
+                        req.body.gender == "" ||
+                        req.body.address == "" ||
+                        req.body.city == "" ||
+                        req.body.postal_code == "" ||
+                        req.body.province == "" ||
+                        req.body.emergencyfname1 == "" ||
+                        req.body.emergencylname1 == "" ||
+                        req.body.relationship1 == "" ||
+                        req.body.ephone1 == ""){
+                            return next({no: 400, msg:'Bad input'});
                         }
-                    else if (req.body.age_group_id === null || req.body.province === null){
+                    else if (req.body.student == "1" && (req.body.schoolname == "" || req.body.grade == "")){
                         return next({no: 400, msg:'Bad input'});
                     }
                     else{
