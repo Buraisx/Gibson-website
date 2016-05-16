@@ -595,10 +595,10 @@ function listEnrolled(course_id, index){
 			studentslist+='    <thead>';
 			studentslist+='        <caption class = "tablecaption"><strong>Enrolled Students</strong></caption>';
 			studentslist+='        <tr class = "tableheader">';
-			studentslist+='            <th class = "test">Name</th class = "test">';
-			studentslist+='            <th class = "test">Username</th class = "test">';
-			studentslist+='            <th class = "test">User ID</th class = "test">';
-			studentslist+='            <th class = "test">Email</th>';
+			studentslist+='            <th>Name</th>';
+			studentslist+='            <th>Username</th>';
+			studentslist+='            <th>User ID</th>';
+			studentslist+='            <th>Email</th>';
 			studentslist+='        </tr>';
 			studentslist+='    </thead>';
 			studentslist+='    <tbody>';
