@@ -38,6 +38,7 @@ $(document).ready(function(){
     //checks for captcha
     $('#btnsubmit').click(function(){
       //  $('#frm').submit(function(){
+            grecaptcha.reset();
             $(document).find('#dimmer').css("display","block");
             $(document).find('.g-recaptcha').css("display","block");
         //    return false;
@@ -57,6 +58,7 @@ $(document).ready(function(){
         var butparents = $(this).parent().parent().parent();
 
         butparents.find('input.reqIn').each(function (){
+            escapeHtml(this.id);
             if ($.trim($(this).val()).length == 0)
             {   
                 count ++;
@@ -141,11 +143,3 @@ function progress(percent, $element)
     var progressBarWidth = percent * $element.width() / 100;
     $element.find('div').animate({ width: progressBarWidth }, 500);
 }
-function loadCaptcha()
-{
-
-}
-/*function recaptchacallback()
-{
-   document.getElementById('frm').submit();
-}*/
