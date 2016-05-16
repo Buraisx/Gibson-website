@@ -464,6 +464,32 @@ router.post('/volunteer/addlimited', function(req, res){
 });
 
 
+// ROUTE FOR SEARCHING A LIMITED USER
+router.post('/volunteer/search/limiteduser', function(req, res){
+
+    //GETTING CONNECTION
+    connection.getConnection(function(err, con){
+
+        var query = 'SELECT user_id, lname, fname, primary_phone, primary_extension, email FROM gibson.user WHERE email = ? AND type = "LIMITED";';
+        query = mysql.format(query, [req.body.email]);
+
+        con.query(query, function(err, results){
+            if(err){
+                console.log('volunteer.js: Unable to find limited user; /volunteer/search/limiteduser');
+                res.status(400).send('Cannot find limited user.');
+            }
+            else if (!results.length){
+                console.log('volunteer.js: Unable to find limited user; /volunteer/search/limiteduser');
+                res.status(400).send('Cannot find limited user.');
+            }
+            else{
+                res.status(200).send(results[0]);
+            }
+        });
+    });
+});
+
+
 // ROUTE FOR CONVERTING A LIMITED USER TO A REGULAR USER
 router.post('/volunteer/convertlimited', function(req, res){
 

@@ -1,8 +1,3 @@
-//List users on page ready
-$("a[href$='#profile']").ready(function(){
-	listusers();
-});
-
 //List users on Click
 $("a[href$='#profile']").click(function(){
 	listusers();

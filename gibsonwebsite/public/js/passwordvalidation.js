@@ -23,7 +23,7 @@ function checkPass()
     //Colour red and green
     var greenColor = "#85FF89";
     var redColor = "#FF6262";
-    //Compare the values in the password field 
+    //Compare the values in the password field
     //and the confirmation field when
     // 1. pass2's been changed to non-empty or
     // 2. the message's been changed (i.e., pass2's been

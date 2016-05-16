@@ -1,18 +1,3 @@
-//List users on page ready
-
-
-
-$("a[href$='#controlPanel']").ready(function(){
-	jQuery.getJSON('/user/listfiller', function(req){
-		dropdown_info = {provinces: req.provinces, age_groups: req.age_groups, course_categories: req.course_categories};
-		controlpanel(dropdown_info);
-	});
-});
-
-
-// AGE GROUP AND PROVINCE BOTH PROVIDE ID. USE age_group: $('#age_group option:selected').val() TO GET THE VALUE (SIMILAR FOR PROVINCE)
-
-
 function controlpanel (dropdown_info) {
 
     var csrfmeta = $("meta[name=_csrf]");
@@ -30,7 +15,6 @@ function controlpanel (dropdown_info) {
     nav+='                        <li><a class="menucolour" href="#modifycourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#modifyuser" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify User Info</a></li>';
     nav+='                        <li><a class="menucolour" href="#scheduleevent" data-toggle="tab"><i class="fa fa-calendar-plus-o"></i> Schedule Event</a></li>';
-    nav+='                        <li><a class="menucolour" href="#changerank" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Change User Rank</a></li>';
     nav+='                        </ul>';
     nav+='                    </div>';
     nav+='                </div>';
@@ -362,232 +346,232 @@ function controlpanel (dropdown_info) {
     limiteduser+='                        </div>';
     limiteduser+='                    </div>';
 
-	// Upgrade user's tab
-	var upgradeuser='';
-	upgradeuser+='<div class="tab-pane" id="upgradeuser">';
-	upgradeuser+='    <div id="page-content-wrapper" class="container-fluid xyz">';
-	upgradeuser+='        <form action = "/enroll" class="enroll-form" method = "post" role = "form">';
-	//upgradeuser+='        <form name="upgrade-user-form" action = "/volunteer/addupgrade" method = "post" role = "form" id= "upgrade-user-form">';
-	upgradeuser+='        <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
-	upgradeuser+='        <div id="upgrade-user-carousel" class="carousel slide" data-ride="carousel" data-interval="false">';
-	upgradeuser+='            <div class="carousel-inner" role="listbox">';
+		// Upgrade user's tab
+		var upgradeuser='';
+		upgradeuser+='<div class="tab-pane" id="upgradeuser">';
+		upgradeuser+='    <div id="page-content-wrapper" class="container-fluid xyz">';
+		upgradeuser+='        <form action = "/enroll" class="enroll-form" method = "post" role = "form">';
+		//upgradeuser+='        <form name="upgrade-user-form" action = "/volunteer/addupgrade" method = "post" role = "form" id= "upgrade-user-form">';
+		upgradeuser+='        <input type="hidden" name="_csrf" value="' + csrfmeta.attr("content") + '" id="_csrf">';
+		upgradeuser+='        <div id="upgrade-user-carousel" class="carousel slide" data-ride="carousel" data-interval="false">';
+		upgradeuser+='            <div class="carousel-inner" role="listbox">';
 
-	// Step 1: Search For User
-	upgradeuser+='                <div class="item active"> <!-- first item -->';
-	upgradeuser+='                    <div class = "step-container"><!--panel div-->';
-	upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
-	upgradeuser+='                            <div class = "panel-heading" id="step1">';
-	upgradeuser+='                                <h3 class = "text-center">Step 1: Search For User</h3>';
-	upgradeuser+='                            </div>';
-	upgradeuser+='                            <div class = "panel-body">';
-	upgradeuser+='                                <div class = "row">';
-	upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-9">';
-	upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-	upgradeuser+='                                        <span id = "checkemail"></span>';
-	upgradeuser+='                                        <input class = "form-control reqIn" type="text" name ="searchlimited-email" id="searchlimited-email" placeholder = "Search Email">';
-	upgradeuser+='                                        <button type="button" class="btn btn-primary" onclick="searchUser();">Search</button>';
-	upgradeuser+='                                        <!--Character restrictions-->';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "panel panel-default steppanel col-sm-offset-1 col-sm-9" id="user-info"><!-- panel start-->';
-	upgradeuser+='                                    <div  class = "row">';
-	upgradeuser+='                                        <!-- show user info -->';
-	upgradeuser+='                                        <div class= "col-sm-offset-1">';
-	upgradeuser+='                                            <p id="limiteduser-status"></p>';
-	upgradeuser+='                                            <p id="limiteduser-line-1"></p>';
-	upgradeuser+='                                            <p id="limiteduser-line-2"></p>';
-	upgradeuser+='                                            <p id="limiteduser-line-3"></p>';
-	upgradeuser+='                                        </div>';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <!-- Next Button -->';
-	upgradeuser+='                                <div class = "row">';
-	upgradeuser+='                                    <div class = "col-sm-offset-8 col-sm-5">';
-	upgradeuser+='                                        <button type = "button" class = "btn btn-success topage2 next-button next-hidden" href="#upgrade-user-carousel" data-slide="next" id="next-step1" disabled>Next&rarr;</button>';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>   ';
-	upgradeuser+='                            </div> <!--panel body-->';
-	upgradeuser+='                        </div><!--panel default-->';
-	upgradeuser+='                    </div><!-- step container -->';
-	upgradeuser+='                </div><!-- item active -->';
+		// Step 1: Search For User
+		upgradeuser+='                <div class="item active"> <!-- first item -->';
+		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
+		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+		upgradeuser+='                            <div class = "panel-heading" id="step1">';
+		upgradeuser+='                                <h3 class = "text-center">Step 1: Search For User</h3>';
+		upgradeuser+='                            </div>';
+		upgradeuser+='                            <div class = "panel-body">';
+		upgradeuser+='                                <div class = "row">';
+		upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-9">';
+		upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
+		upgradeuser+='                                        <span id = "checkemail"></span>';
+		upgradeuser+='                                        <input class = "form-control reqIn" type="text" name ="searchlimited-email" id="searchlimited-email" placeholder = "Search Email">';
+        upgradeuser+='                                        <button type="button" class="btn btn-primary" onclick="searchUser();">Search</button>';
+		upgradeuser+='                                        <!--Character restrictions-->';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "panel panel-default steppanel col-sm-offset-1 col-sm-9" id="user-info"><!-- panel start-->';
+		upgradeuser+='                                    <div  class = "row">';
+		upgradeuser+='                                        <!-- show user info -->';
+		upgradeuser+='                                        <div class= "col-sm-offset-1">';
+		upgradeuser+='                                            <p id="limiteduser-status"></p>';
+		upgradeuser+='                                            <p id="limiteduser-line-1"></p>';
+		upgradeuser+='                                            <p id="limiteduser-line-2"></p>';
+		upgradeuser+='                                            <p id="limiteduser-line-3"></p>';
+		upgradeuser+='                                        </div>';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <!-- Next Button -->';
+		upgradeuser+='                                <div class = "row">';
+		upgradeuser+='                                    <div class = "col-sm-offset-8 col-sm-5">';
+		upgradeuser+='                                        <button type = "button" class = "btn btn-success topage2 next-button next-hidden" href="#upgrade-user-carousel" data-slide="next" id="next-step1" disabled>Next&rarr;</button>';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>   ';
+		upgradeuser+='                            </div> <!--panel body-->';
+		upgradeuser+='                        </div><!--panel default-->';
+		upgradeuser+='                    </div><!-- step container -->';
+		upgradeuser+='                </div><!-- item active -->';
 
-	// Step 2: Account Creation
-	upgradeuser+='                <!-- step2 -->';
-	upgradeuser+='                <div class="item">';
-	upgradeuser+='                    <div class = "step-container"><!--panel div-->';
-	upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
-	upgradeuser+='                            <div class = "panel-heading" id="step2">';
-	upgradeuser+='                                <h3 class = "text-center">Step 2: Account Creation</h3>';
-	upgradeuser+='                            </div>';
-	upgradeuser+='                            <div class = "panel-body">';
-	// Input username
-	upgradeuser+='                                <div class = "row">';
-	upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-10">';
-	upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Username:</label>';
-	upgradeuser+='                                        <span id = "confirmuser"></span>';
-	upgradeuser+='                                        <input class = "form-control reqIn" type="text" name ="upgradeuser-username" id="upgradeuser-username" placeholder = "Enter Username" onchange="delayUsername();" required pattern="\w{3,16}">';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	//Input Password
-	upgradeuser+='                                <div class = "row">';
-	upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-5">';
-	upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Password:</label>';
-	upgradeuser+='                                        <input type="password" class = "form-control reqIn" name = "upgradeuser-password" id="upgradeuser-password" placeholder="Enter Password"  onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                    <div class="form-group col-sm-5">';
-	upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Confirm Password:</label>';
-	upgradeuser+='                                        <input type="password" class = "form-control reqIn" name = "upgradeuser-passwordhashed" id="upgradeuser-passwordhashed" placeholder="Re-enter Password" onkeyup="checkPass(); return false;" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "row">';
-	upgradeuser+='                                    <div class = "col-sm-offset-1 col-sm-10">';
-	upgradeuser+='                                        <span id="confirmpass" class="confirmpass"></span>';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "row">';
-	upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-10">';
-	upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-	upgradeuser+='                                        <input class = "form-control reqIn" type="email" name = "upgradeuser-email" id="upgradeuser-email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <!-- Next Button -->';
-	upgradeuser+='                                <div class = "row">';
-	upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-1">';
-	upgradeuser+='                                        <button type = "button" class = "btn btn-info" href="#upgrade-user-carousel" data-slide="prev" id="prev-step1">&larr;&nbsp;Back</button>';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-6">';
-	upgradeuser+='                                        <button type = "button" class = "btn btn-success topage3 next-button" href="#upgrade-user-carousel" data-slide="next" id="next-step2">Next&rarr;</button>';
-	//upgradeuser+='                                        <button type = "button" class = "btn btn-success  enroll-submit"  onclick ="askForPassword();"> Submit</button>';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div> <!-- panel body-->';
-	upgradeuser+='                        </div> <!-- panel default -->';
-	upgradeuser+='                    </div><!-- step2 container -->';
-	upgradeuser+='                </div><!-- second item end -->';
+		// Step 2: Account Creation
+		upgradeuser+='                <!-- step2 -->';
+		upgradeuser+='                <div class="item">';
+		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
+		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+		upgradeuser+='                            <div class = "panel-heading" id="step2">';
+		upgradeuser+='                                <h3 class = "text-center">Step 2: Account Creation</h3>';
+		upgradeuser+='                            </div>';
+		upgradeuser+='                            <div class = "panel-body">';
+		// Input username
+		upgradeuser+='                                <div class = "row">';
+		upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-10">';
+		upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Username:</label>';
+		upgradeuser+='                                        <span id = "confirmuser"></span>';
+		upgradeuser+='                                        <input class = "form-control reqIn" type="text" name ="upgradeuser-username" id="upgradeuser-username" placeholder = "Enter Username" onchange="delayUsername();" required pattern="\w{3,16}">';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		//Input Password
+		upgradeuser+='                                <div class = "row">';
+		upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-5">';
+		upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Password:</label>';
+		upgradeuser+='                                        <input type="password" class = "form-control reqIn" name = "upgradeuser-password" id="upgradeuser-password" placeholder="Enter Password"  onkeyup="checkPass(); return false;" minlength= "6" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                    <div class="form-group col-sm-5">';
+		upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Confirm Password:</label>';
+		upgradeuser+='                                        <input type="password" class = "form-control reqIn" name = "upgradeuser-passwordhashed" id="upgradeuser-passwordhashed" placeholder="Re-enter Password" onkeyup="checkPass(); return false;" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "row">';
+		upgradeuser+='                                    <div class = "col-sm-offset-1 col-sm-10">';
+		upgradeuser+='                                        <span id="confirmpass" class="confirmpass"></span>';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "row">';
+		upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-10">';
+		upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
+		upgradeuser+='                                        <input class = "form-control reqIn" type="email" name = "upgradeuser-email" id="upgradeuser-email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <!-- Next Button -->';
+		upgradeuser+='                                <div class = "row">';
+		upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-1">';
+		upgradeuser+='                                        <button type = "button" class = "btn btn-info" href="#upgrade-user-carousel" data-slide="prev" id="prev-step1">&larr;&nbsp;Back</button>';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-6">';
+		upgradeuser+='                                        <button type = "button" class = "btn btn-success topage3 next-button" href="#upgrade-user-carousel" data-slide="next" id="next-step2">Next&rarr;</button>';
+		//upgradeuser+='                                        <button type = "button" class = "btn btn-success  enroll-submit"  onclick ="askForPassword();"> Submit</button>';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div> <!-- panel body-->';
+		upgradeuser+='                        </div> <!-- panel default -->';
+		upgradeuser+='                    </div><!-- step2 container -->';
+		upgradeuser+='                </div><!-- second item end -->';
 
-	// Step 3: User Information
-	upgradeuser+='                <div class = "item"><!--third item-->';
-	upgradeuser+='                    <div class = "panel panel-default signuppanel"><!-- panel start-->';
-	upgradeuser+='                        <div class = "panel-heading" id="signup2">';
-	upgradeuser+='                            <h3 class = "text-center">Step 3: User Information</h3>';
-	upgradeuser+='                        </div>';
-	upgradeuser+='                        <div class = "panel-body">';
-	upgradeuser+='                            <div class = "row">';
-	upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-5">';
-	upgradeuser+='                                    <label><span class="requiredasterisk">*</span>First Name:</label>';
-	upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-fname" id = "upgradeuser-fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "form-group col-sm-5">';
-	upgradeuser+='                                    <label><span class="requiredasterisk">*</span>Last Name:</label>';
-	upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-lname" id = "upgradeuser-lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div>';
-	//Input Age
-	upgradeuser+='                            <div class = "row">';
-	upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-5">';
-	upgradeuser+='                                    <label><span class="requiredasterisk">*</span>Age Group:</label>';
-	upgradeuser+='                                    <select class = "form-control" name = "age_group" id = "age_group" placeholder="Age Group">';
-	upgradeuser+='                                        <option value="" disabled selected>Please Select</option>';
-	for (var i = 0; i < dropdown_info.age_groups.length; i++) {
-					//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
-			upgradeuser+='            <option';
-			upgradeuser+=' value=' + dropdown_info.age_groups[i].age_group_id;
-			upgradeuser+='>' + dropdown_info.age_groups[i].age_group_description + '</option>';
-	}
-	upgradeuser+='                                    </select>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "form-group col-sm-5">';
-	upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Gender:</label>';
-	upgradeuser+='                                    <select class = "form-control" name = "upgradeuser-gender" id = "upgradeuser-gender" placeholder="Gender" required>';
-	upgradeuser+='                                        <option value="" disabled selected>Please Select</option>';
-	upgradeuser+='                                        <option value = "Male">Male</option>';
-	upgradeuser+='                                        <option value = "Female">Female</option>';
-	upgradeuser+='                                        <option value = "Other">Other</option>';
-	upgradeuser+='                                    </select>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div>';
-	upgradeuser+='                            <div class = "row">';
-	upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-7">';
-	upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Address:</label>';
-	upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-address" id = "upgradeuser-address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity(\'Invalid address.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "form-group col-sm-3">';
-	upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Postal Code:</label>';
-	upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-postal_code" id="upgradeuser-postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity(\'Invalid postal code.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div>';
-	// Address
-	upgradeuser+='                            <div class = "row">';
-	upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-3">';
-	upgradeuser+='                                    <label class = "control-label">Apt/Unit#:</label>';
-	upgradeuser+='                                    <input type = "number" class = "form-control" name = "upgradeuser-apt" id = "upgradeuser-apt" max="6">';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "form-group col-sm-3">';
-	upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>City:</label>';
-	upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-city" id = "upgradeuser-city" required pattern="[a-zA-Z. ]+" oninvalid="setCustomValidity(\'Invalid city.\')" onchange="try{setCustomValidity("")}catch(e){}">';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "form-group col-sm-4">';
-	upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Province:</label>';
-	upgradeuser+='                                    <select class = "form-control" name = "upgradeuser-province" id = "upgradeuser-province" placeholder="Province">';
-	upgradeuser+='                                        <option value="" disabled selected>Please Select</option>';
-	for (var i = 0; i < dropdown_info.provinces.length; i++) {
-					//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
-			upgradeuser+='            <option';
-			upgradeuser+=' value=' + dropdown_info.provinces[i].province_id;
-			upgradeuser+='>' + dropdown_info.provinces[i].prov_abb + '</option>';
-	}
-	upgradeuser+='                                    </select>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div>';
-	// Student and notification checkboxes
-	upgradeuser+='                            <div class = "row">';
-	upgradeuser+='                                <div class = "col-sm-offset-1  col-sm-4">';
-	upgradeuser+='                                    <label for="student"><input type="checkbox" id="upgradeuser-student" name = "upgradeuser-student" onclick="studentcheckbox();"> I am a student.</label>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class="col-sm-6" id="signup-notifications">';
-	upgradeuser+='                                    <label><input type="checkbox" id="upgradeuser-send_notifications" name = "upgradeuser-send_notifications"> Signup for email newsletters.</label>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div>';
-	upgradeuser+='                            <div id="student_info" class="hidden">';
-	upgradeuser+='                                <div class="row">';
-	upgradeuser+='                                    <div class = "form-group col-sm-offset-1 col-sm-5">';
-	upgradeuser+='                                        <label><span class="requiredasterisk">*</span>School Name:</label>';
-	upgradeuser+='                                        <input type = "text" class = "form-control " class="required" name = "upgradeuser-schoolname" id = "upgradeuser-schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                    <div class = "form-group col-sm-5">';
-	upgradeuser+='                                        <label><span class="requiredasterisk">*</span>Grade:</label>';
-	upgradeuser+='                                        <input type = "text" class = "form-control" class="required" name = "upgradeuser-grade" id = "upgradeuser-grade" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class="row">';
-	upgradeuser+='                                    <div class = "form-group col-sm-offset-1 col-sm-5">';
-	upgradeuser+='                                        <label>Major:</label>';
-	upgradeuser+='                                        <input type = "text" class = "form-control" name = "upgradeuser-major" id = "upgradeuser-major" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                    <div class = "form-group col-sm-5">';
-	upgradeuser+='                                        <label>ESL Level (if applicable):</label>';
-	upgradeuser+='                                        <input type = "text" class = "form-control" name = "upgradeuser-esl" id = "upgradeuser-esl" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
-	upgradeuser+='                                    </div>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div>';
-	upgradeuser+='                            <div class = "row">';
-	upgradeuser+='                                <div class = "col-sm-offset-1 col-sm-5">';
-	upgradeuser+='                                    <button type = "button" class = "btn btn-warning " href="#upgrade-user-carousel"  data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                                <div class = "col-sm-offset-3 col-sm-2">';
-	upgradeuser+='                                    <button type = "button" class = "btn btn-success next-button" href="#upgrade-user-carousel" data-slide="next">Next&nbsp;&nbsp; &nbsp; &rarr;</button>';
-	upgradeuser+='                                </div>';
-	upgradeuser+='                            </div>';
-	upgradeuser+='                        </div><!--panelbody-->';
-	upgradeuser+='                    </div><!--panel-default-->';
-	upgradeuser+='                </div><!--third item end-->';
+		// Step 3: User Information
+		upgradeuser+='                <div class = "item"><!--third item-->';
+		upgradeuser+='                    <div class = "panel panel-default signuppanel"><!-- panel start-->';
+		upgradeuser+='                        <div class = "panel-heading" id="signup2">';
+		upgradeuser+='                            <h3 class = "text-center">Step 3: User Information</h3>';
+		upgradeuser+='                        </div>';
+		upgradeuser+='                        <div class = "panel-body">';
+		upgradeuser+='                            <div class = "row">';
+		upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-5">';
+		upgradeuser+='                                    <label><span class="requiredasterisk">*</span>First Name:</label>';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-fname" id = "upgradeuser-fname" placeholder="eg. Bob" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "form-group col-sm-5">';
+		upgradeuser+='                                    <label><span class="requiredasterisk">*</span>Last Name:</label>';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-lname" id = "upgradeuser-lname" placeholder="eg. Smith" required pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div>';
+		//Input Age
+		upgradeuser+='                            <div class = "row">';
+		upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-5">';
+		upgradeuser+='                                    <label><span class="requiredasterisk">*</span>Age Group:</label>';
+		upgradeuser+='                                    <select class = "form-control" name = "age_group" id = "age_group" placeholder="Age Group">';
+		upgradeuser+='                                        <option value="" disabled selected>Please Select</option>';
+		for (var i = 0; i < dropdown_info.age_groups.length; i++) {
+						//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+				upgradeuser+='            <option';
+				upgradeuser+=' value=' + dropdown_info.age_groups[i].age_group_id;
+				upgradeuser+='>' + dropdown_info.age_groups[i].age_group_description + '</option>';
+		}
+		upgradeuser+='                                    </select>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "form-group col-sm-5">';
+		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Gender:</label>';
+		upgradeuser+='                                    <select class = "form-control" name = "upgradeuser-gender" id = "upgradeuser-gender" placeholder="Gender" required>';
+		upgradeuser+='                                        <option value="" disabled selected>Please Select</option>';
+		upgradeuser+='                                        <option value = "Male">Male</option>';
+		upgradeuser+='                                        <option value = "Female">Female</option>';
+		upgradeuser+='                                        <option value = "Other">Other</option>';
+		upgradeuser+='                                    </select>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div>';
+		upgradeuser+='                            <div class = "row">';
+		upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-7">';
+		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Address:</label>';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-address" id = "upgradeuser-address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity(\'Invalid address.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "form-group col-sm-3">';
+		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Postal Code:</label>';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-postal_code" id="upgradeuser-postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity(\'Invalid postal code.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div>';
+		// Address
+		upgradeuser+='                            <div class = "row">';
+		upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-3">';
+		upgradeuser+='                                    <label class = "control-label">Apt/Unit#:</label>';
+		upgradeuser+='                                    <input type = "number" class = "form-control" name = "upgradeuser-apt" id = "upgradeuser-apt" max="6">';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "form-group col-sm-3">';
+		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>City:</label>';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-city" id = "upgradeuser-city" required pattern="[a-zA-Z. ]+" oninvalid="setCustomValidity(\'Invalid city.\')" onchange="try{setCustomValidity("")}catch(e){}">';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "form-group col-sm-4">';
+		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Province:</label>';
+		upgradeuser+='                                    <select class = "form-control" name = "upgradeuser-province" id = "upgradeuser-province" placeholder="Province">';
+		upgradeuser+='                                        <option value="" disabled selected>Please Select</option>';
+		for (var i = 0; i < dropdown_info.provinces.length; i++) {
+						//editinfo+='                <option value="user_info.provinces_list[i].province_id"';
+				upgradeuser+='            <option';
+				upgradeuser+=' value=' + dropdown_info.provinces[i].province_id;
+				upgradeuser+='>' + dropdown_info.provinces[i].prov_abb + '</option>';
+		}
+		upgradeuser+='                                    </select>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div>';
+		// Student and notification checkboxes
+		upgradeuser+='                            <div class = "row">';
+		upgradeuser+='                                <div class = "col-sm-offset-1  col-sm-4">';
+		upgradeuser+='                                    <label for="student"><input type="checkbox" id="upgradeuser-student" name = "upgradeuser-student" onclick="studentcheckbox();"> I am a student.</label>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class="col-sm-6" id="signup-notifications">';
+		upgradeuser+='                                    <label><input type="checkbox" id="upgradeuser-send_notifications" name = "upgradeuser-send_notifications"> Signup for email newsletters.</label>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div>';
+		upgradeuser+='                            <div id="student_info" class="hidden">';
+		upgradeuser+='                                <div class="row">';
+		upgradeuser+='                                    <div class = "form-group col-sm-offset-1 col-sm-5">';
+		upgradeuser+='                                        <label><span class="requiredasterisk">*</span>School Name:</label>';
+		upgradeuser+='                                        <input type = "text" class = "form-control " class="required" name = "upgradeuser-schoolname" id = "upgradeuser-schoolname" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                    <div class = "form-group col-sm-5">';
+		upgradeuser+='                                        <label><span class="requiredasterisk">*</span>Grade:</label>';
+		upgradeuser+='                                        <input type = "text" class = "form-control" class="required" name = "upgradeuser-grade" id = "upgradeuser-grade" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class="row">';
+		upgradeuser+='                                    <div class = "form-group col-sm-offset-1 col-sm-5">';
+		upgradeuser+='                                        <label>Major:</label>';
+		upgradeuser+='                                        <input type = "text" class = "form-control" name = "upgradeuser-major" id = "upgradeuser-major" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                    <div class = "form-group col-sm-5">';
+		upgradeuser+='                                        <label>ESL Level (if applicable):</label>';
+		upgradeuser+='                                        <input type = "text" class = "form-control" name = "upgradeuser-esl" id = "upgradeuser-esl" pattern="[a-zA-Z0-9. ]+"><!--Character restrictions-->';
+		upgradeuser+='                                    </div>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div>';
+		upgradeuser+='                            <div class = "row">';
+		upgradeuser+='                                <div class = "col-sm-offset-1 col-sm-5">';
+		upgradeuser+='                                    <button type = "button" class = "btn btn-warning " href="#upgrade-user-carousel"  data-slide="prev" >&larr; &nbsp;&nbsp; &nbsp; Back </button>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                                <div class = "col-sm-offset-3 col-sm-2">';
+		upgradeuser+='                                    <button type = "button" class = "btn btn-success next-button" href="#upgrade-user-carousel" data-slide="next">Next&nbsp;&nbsp; &nbsp; &rarr;</button>';
+		upgradeuser+='                                </div>';
+		upgradeuser+='                            </div>';
+		upgradeuser+='                        </div><!--panelbody-->';
+		upgradeuser+='                    </div><!--panel-default-->';
+		upgradeuser+='                </div><!--third item end-->';
 
 
-	upgradeuser+='            </div><!-- carousel-inner -->';
-	upgradeuser+='        </div><!-- upgrade-user-carousel -->';
-	upgradeuser+='        </form>';
-	upgradeuser+='    </div>';
-	upgradeuser+='</div> <!-- upgradeuser -->';
+		upgradeuser+='            </div><!-- carousel-inner -->';
+		upgradeuser+='        </div><!-- upgrade-user-carousel -->';
+		upgradeuser+='        </form>';
+		upgradeuser+='    </div>';
+		upgradeuser+='</div> <!-- upgradeuser -->';
 
     //Add User To Course tab
     var addusertocourse='';
@@ -910,16 +894,6 @@ function controlpanel (dropdown_info) {
     scheduleevent+='                    </div>';
     scheduleevent+='                </div>';
 
-    //Change rank tab
-    var changerank='';
-    changerank+='                    <div class="tab-pane" id="changerank">';
-    changerank+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
-    changerank+='                            <h3>Change User Rank</h3>';
-    changerank+='                            <p>Please click here to change a user\'s rank.</p>';
-    changerank+='                            <button type = "button" class= "btn btn-success">Change</button>';
-    changerank+='                        </div>';
-    changerank+='                    </div>';
-
     controlpanel+=adduser;
     controlpanel+=limiteduser;
     controlpanel+=upgradeuser;
@@ -929,7 +903,6 @@ function controlpanel (dropdown_info) {
     controlpanel+=modifycourse;
     controlpanel+=modifyuser;
     controlpanel+=scheduleevent;
-    controlpanel+=changerank;
 
     //Submit Tab
     controlpanel+='                   </div>';   //closing tab div
@@ -1057,6 +1030,7 @@ function controlpanel (dropdown_info) {
         }
     });
 }
+
 function trueOrFalse(arg){
     if (arg) return 1;
     return 0;
@@ -1588,6 +1562,30 @@ function manageTags(){
 
 		$("#managetags").append(html);
 	});
+}
+
+function makeEvent(){
+  $.post('/staff/portal/addEvent', {
+    _csrf: $('#_csrf').val(),
+    startdate: $('#startdate').val(),
+    enddate: $('#enddate').val(),
+    message: $('#message').val(),
+    eventtype: $('#eventtype').val()
+  })
+  .done(function(res){
+    swal({
+			title: "Event Created",
+			text: $('#eventtype').val() +" event created.",
+			type: "success"
+		});
+  })
+  .fail(function(res){
+    swal({
+			title: "Event Creation Failed",
+			text: "Fail to create " +$('#eventtype').val() +" event.",
+			type: "error"
+		});
+  });
 }
 
 function clearUserData(){
