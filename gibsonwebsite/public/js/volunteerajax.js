@@ -386,13 +386,13 @@ function load_controlpanel(){
     $("[data-toggle='tooltip']").tooltip();
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
     //Check inputs before clicking Next
- $('.btn-success').click(function (){ 
+ $('.btn-success').click(function (){
         var count = 0;
         var butparents = $(this).parent().parent().parent();
         console.log(butparents);
         butparents.find('input.reqIn').each(function (){
             if ($.trim($(this).val()).length == 0)
-            {   
+            {
                 count ++;
                 console.log(count);
                 $('.btn-success').parent().parent().parent().find('.btn-success').removeAttr('data-slide');
@@ -407,7 +407,7 @@ function load_controlpanel(){
             butparents.find('.btn-success').attr('data-slide', 'next');
         }
     });
- 
+
     //ON JSON APPEND COMPLETE ATTACH FADE IN ANIMATION
     }).done(function(){
         $( "#sidebar-wrapper" ).tabs({
@@ -603,6 +603,7 @@ function filterCourses(searchText){
 	//var searchTerms = searchText.toLowerCase().split(' ');
 	var filteredCourses = [];
 	var coursesFilteredByTags = [];
+	var categories;
 	var match = false;
 
 	// FILTERTING COURSES BY TAGS
@@ -611,8 +612,14 @@ function filterCourses(searchText){
 	}
 	else{
 		for(var i = 0; i < allAvailableCourses.length; i++){
+
+			categories = JSON.parse(allAvailableCourses[i].categories);
+
 			for (var j = 0; j < checkedBoxes.length; j++){
-				if(allAvailableCourses[i].categories.indexOf(checkedBoxes[j]) != -1){
+				if (categories == null){
+					break;
+				}
+				else if(categories.indexOf(checkedBoxes[j]) != -1){
 					coursesFilteredByTags.push(allAvailableCourses[i]);
 					break;
 				}
@@ -651,78 +658,23 @@ function filterCourses(searchText){
 
 	showFilteredCourses(filteredCourses, searchText, checkedBoxes);
 }
-function trueOrFalse(arg){
-    if (arg) return 1;
-    return 0;
-}
-function addUserAccount(){
-    
-$.post("/volunteer/adduser", {
-        _csrf: $('#_csrf').val(),
-        username: $('#username').val(),
-      password: $('#password').val(),
-      email: $('#email').val(),
-        fname: $('#fname').val(),
-        lname: $('#lname').val(),
-      //birth_date: $('#datepicker').val(),
-      age_group_id: $('#age_group').val(),
-      gender: $('#gender').val(),
-      address: $('#address').val(),
-      postal_code: $('#postal_code').val(),
-      apt: $('#apt').val(),
-      city: $('#city').val(),
-      province: $('#province').val(),
-      send_notifications: trueOrFalse($('#send_notifications').is(':checked')),
-      student: trueOrFalse($('#student').is(':checked')),
-      schoolname: $('#schoolname').val(),
-      grade: $('#grade').val(),
-        major: $('#major').val(),
-        esl: $('#esl').val(),
-        primary_phone: $('#primary_phone').val(),
-        secondary_phone: $('#secondary_phone').val(),
-      primary_extension: $('#primary_extension').val(),
-      secondary_extension: $('#secondary_extension').val(),
-        emergencyfname1: $('#emergencyfname1').val(),
-        emergencyfname2: $('#emergencyfname2').val(),
-        emergencyfname3: $('#emergencyfname3').val(),
-        emergencylname1: $('#emergencylname1').val(),
-        emergencylname2: $('#emergencylname2').val(),
-        emergencylname3: $('#emergencylname3').val(),
-        relationship1: $('#relationship1').val(),
-        relationship2: $('#relationship2').val(),
-        relationship3: $('#relationship3').val(),
-        ephone1: $('#ephone1').val(),
-        ephone2: $('#ephone2').val(),
-        ephone3: $('#ephone3').val(),
-        ephoneext1: $('#ephoneext').val(),
-        ephoneext2: $('#ephoneext2').val(),
-        ephoneext3: $('#ephoneext3').val()
-    })
-    .done(function (res){
-            swal({
-                title: "User Created.",
-                type: "success"
-            });
-    })
-    .fail(function (err){
-        swal({
-            title: 'User was not added.',
-            type: 'error'
-        });
-    });
-}
 
-function updateCheckboxArray(searchText, categoryId){
-	var index = checkedBoxes.indexOf(categoryId);
 
-	if(index === -1){ //NOT FOUND -> ADD
-		checkedBoxes.push(categoryId);
-	}
-	else{ //FOUND -> DELETE
-		checkedBoxes.splice(index, 1);
+function updateCheckboxArray(searchText){
+
+	checkedBoxes = [];
+	var i = 0;
+
+	while($('#checkbox-tag-id-'+i).val()){
+
+		if($('#checkbox-tag-id-'+i).is(':checked')){
+			checkedBoxes.push(Number($('#checkbox-tag-id-'+i).val()));
+		}
+
+		i++;
 	}
 
-	filterCourses(searchText);
+	filterCourses($('#searchText').val());
 }
 
 
@@ -745,10 +697,10 @@ function showFilteredCourses(data, searchText, searchTags){
 		}
 
 		if (isChecked){
-			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')" checked=""> ' +allTags[i].category_string +'</label></div>');
+			checkBoxesHTML.push('<div><label><input type="checkbox" id="checkbox-tag-id-'+i+'" onclick="updateCheckboxArray()" checked="" value="'+allTags[i].category_id +'"> ' +allTags[i].category_string +'</label></div>');
 		}
 		else{
-			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')"> ' +allTags[i].category_string +'</label></div>');
+			checkBoxesHTML.push('<div><label><input type="checkbox" id="checkbox-tag-id-'+i+'" onclick="updateCheckboxArray()" value="'+allTags[i].category_id +'"> ' +allTags[i].category_string +'</label></div>');
 		}
 	}
 
@@ -1521,4 +1473,65 @@ function addAdhoc(){
 	}
 
 	return adhoc_days;
+}
+
+function trueOrFalse(arg){
+    if (arg) return 1;
+    return 0;
+}
+function addUserAccount(){
+
+$.post("/volunteer/adduser", {
+        _csrf: $('#_csrf').val(),
+        username: $('#username').val(),
+      password: $('#password').val(),
+      email: $('#email').val(),
+        fname: $('#fname').val(),
+        lname: $('#lname').val(),
+      //birth_date: $('#datepicker').val(),
+      age_group_id: $('#age_group').val(),
+      gender: $('#gender').val(),
+      address: $('#address').val(),
+      postal_code: $('#postal_code').val(),
+      apt: $('#apt').val(),
+      city: $('#city').val(),
+      province: $('#province').val(),
+      send_notifications: trueOrFalse($('#send_notifications').is(':checked')),
+      student: trueOrFalse($('#student').is(':checked')),
+      schoolname: $('#schoolname').val(),
+      grade: $('#grade').val(),
+        major: $('#major').val(),
+        esl: $('#esl').val(),
+        primary_phone: $('#primary_phone').val(),
+        secondary_phone: $('#secondary_phone').val(),
+      primary_extension: $('#primary_extension').val(),
+      secondary_extension: $('#secondary_extension').val(),
+        emergencyfname1: $('#emergencyfname1').val(),
+        emergencyfname2: $('#emergencyfname2').val(),
+        emergencyfname3: $('#emergencyfname3').val(),
+        emergencylname1: $('#emergencylname1').val(),
+        emergencylname2: $('#emergencylname2').val(),
+        emergencylname3: $('#emergencylname3').val(),
+        relationship1: $('#relationship1').val(),
+        relationship2: $('#relationship2').val(),
+        relationship3: $('#relationship3').val(),
+        ephone1: $('#ephone1').val(),
+        ephone2: $('#ephone2').val(),
+        ephone3: $('#ephone3').val(),
+        ephoneext1: $('#ephoneext').val(),
+        ephoneext2: $('#ephoneext2').val(),
+        ephoneext3: $('#ephoneext3').val()
+    })
+    .done(function (res){
+            swal({
+                title: "User Created.",
+                type: "success"
+            });
+    })
+    .fail(function (err){
+        swal({
+            title: 'User was not added.',
+            type: 'error'
+        });
+    });
 }

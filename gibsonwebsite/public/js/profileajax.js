@@ -1241,6 +1241,7 @@ function filterCourses(searchText){
 	//var searchTerms = searchText.toLowerCase().split(' ');
 	var filteredCourses = [];
 	var coursesFilteredByTags = [];
+	var categories;
 	var match = false;
 
 	// FILTERTING COURSES BY TAGS
@@ -1249,8 +1250,14 @@ function filterCourses(searchText){
 	}
 	else{
 		for(var i = 0; i < allAvailableCourses.length; i++){
+
+			categories = JSON.parse(allAvailableCourses[i].categories);
+
 			for (var j = 0; j < checkedBoxes.length; j++){
-				if(allAvailableCourses[i].categories.indexOf(checkedBoxes[j]) != -1){
+				if (categories == null){
+					break;
+				}
+				else if(categories.indexOf(checkedBoxes[j]) != -1){
 					coursesFilteredByTags.push(allAvailableCourses[i]);
 					break;
 				}
@@ -1290,18 +1297,24 @@ function filterCourses(searchText){
 	showFilteredCourses(filteredCourses, searchText, checkedBoxes);
 }
 
-function updateCheckboxArray(searchText, categoryId){
-	var index = checkedBoxes.indexOf(categoryId);
 
-	if(index === -1){ //NOT FOUND -> ADD
-		checkedBoxes.push(categoryId);
-	}
-	else{ //FOUND -> DELETE
-		checkedBoxes.splice(index, 1);
+function updateCheckboxArray(searchText){
+
+	checkedBoxes = [];
+	var i = 0;
+
+	while($('#checkbox-tag-id-'+i).val()){
+
+		if($('#checkbox-tag-id-'+i).is(':checked')){
+			checkedBoxes.push(Number($('#checkbox-tag-id-'+i).val()));
+		}
+
+		i++;
 	}
 
-	filterCourses(searchText);
+	filterCourses($('#searchText').val());
 }
+
 
 //Display list of registerable courses
 // Actually displaying courses.
@@ -1322,10 +1335,10 @@ function showFilteredCourses(data, searchText, searchTags){
 		}
 
 		if (isChecked){
-			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')" checked=""> ' +allTags[i].category_string +'</label></div>');
+			checkBoxesHTML.push('<div><label><input type="checkbox" id="checkbox-tag-id-'+i+'" onclick="updateCheckboxArray()" checked="" value="'+allTags[i].category_id +'"> ' +allTags[i].category_string +'</label></div>');
 		}
 		else{
-			checkBoxesHTML.push('<div><label><input type="checkbox" onclick="updateCheckboxArray(searchText.value, '+allTags[i].category_id +')"> ' +allTags[i].category_string +'</label></div>');
+			checkBoxesHTML.push('<div><label><input type="checkbox" id="checkbox-tag-id-'+i+'" onclick="updateCheckboxArray()" value="'+allTags[i].category_id +'"> ' +allTags[i].category_string +'</label></div>');
 		}
 	}
 
