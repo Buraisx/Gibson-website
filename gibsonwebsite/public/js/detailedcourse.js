@@ -32,6 +32,7 @@ function getCourseTags() {
 		listEnrolled(data[2]);
 		showDescription(data[0].course);
 		showSchedule(data[0].course, data[3]);
+		showInstructor(data[0].course);
 	});
 }
 
@@ -108,7 +109,8 @@ function showSchedule(data_course, data_schedule){
 	var schedule =data_schedule;
 	var schedule_table="";
 
-	$('#course-schedule-daterange').text ( data_course.start_date + " to " + data_course.end_date); 
+	$('#course-schedule-daterange').text ( data_course.start_date + " to " + data_course.end_date);
+	$('#course-schedule-interval').text ( data_course.course_interval + " classes" ); 
 
 	if(schedule != null && schedule.length){
 		schedule_table+='    <thead>';
@@ -131,6 +133,14 @@ function showSchedule(data_course, data_schedule){
 		//Apply to HTML
 		$("#course-schedule-datetable").append(schedule_table);
 	}
+}
+//*****************************
+
+//***FILL IN INSTRUCTOR INFORMATION ***//
+function showInstructor(data){
+	$('#course-instructor-name').text ( data.instructor_name );
+	$('#course-instructor-desc').text ( data.instructor_bio ); 
+
 }
 
 //===============================================================
