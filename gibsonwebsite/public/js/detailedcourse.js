@@ -135,6 +135,7 @@ function showSchedule(data_course, data_schedule){
 	}
 	else{
 		$("#course-schedule-scroller").hide();
+		$("#course-schedule-scroller").after("<p>There are currently no scheduled course days.</p>");
 	}
 }
 //*****************************
@@ -191,7 +192,7 @@ function updateCourseTagsList(data){
 
 	//Generate Draggable list of course's tags
 	for(var i = 0; i < data.length; i++){
-		course_tags.append('<div class="panel-heading course_tag" value=' + data[i].category_id + '>' + data[i].category_string + '</div>');
+		course_tags.append('<div class="panel-heading course_tag" value=' + data[i].category_id + '><span>' + data[i].category_string + ' </span><a>&#10006;</a></div>');
 	}
 }
 //*********************************************
@@ -237,8 +238,21 @@ function editMode(){
 	$('#tags-search').show();
 	$('#tags-search-divider').show();
 	$('#tags-add').show();
+	$('#tags-commit').show();
+
+	$('#tags-edit').hide();
 }
 //*************************
+
+//*** GO INTO READ MODE ***//
+function readModeTags(){
+	$('#tags-edit').show();
+
+	$('#tags-search').hide();
+	$('#tags-search-divider').hide();
+	$('#tags-add').hide();
+	$('#tags-commit').hide();
+}
 
 
 //*** Pine Notify ****//
@@ -260,4 +274,8 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function hello(){
+	console.log("hello");
 }
