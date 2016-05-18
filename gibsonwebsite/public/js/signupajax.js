@@ -40,7 +40,7 @@ function checkemail(){
         checkThisEmail = $('#email').val();
     }
     else if($('#limited_email').val()) {
-        checkThisEmail = $('#email').val();
+        checkThisEmail = $('#limited_email').val();
     }
     else if ($('#adduser-email').val()){
         checkThisEmail = $('#adduser-email').val();
