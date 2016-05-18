@@ -4,83 +4,73 @@ var delay = 0;
 //
 //Check username availability
 function checkusername(){
-      $.post("/signup/username", {
-            _csrf: $('#_csrf').val(),
-            username: $('#username').val()
-      })
-      .done(function (res){
 
-            if(!res){
-                swal({
-                  title: "Username already taken.",
-                  type: "error"
-                });
-            }
-      })
-      .fail(function (err){
-            console.log('Bad username');
-      });
+    var checkThisUsername;
+
+    if($('#username').val()){
+        checkThisUsername = $('#username').val();
+    }
+    else if($('#adduser-username').val()){
+        checkThisUsername = $('#adduser-username').val();
+    }
+
+    $.post("/signup/username", {
+        _csrf: $('#_csrf').val(),
+        username: checkThisUsername
+    })
+    .done(function (res){
+        if(!res){
+            swal({
+            title: "Username already taken.",
+            type: "error"
+            });
+        }
+    })
+    .fail(function (err){
+        console.log('Bad username');
+    });
 }
 
 //check email availability
 function checkemail(){
 
+    var checkThisEmail;
+
     if($('#email').val()){
-        $.post("/signup/email", {
-              _csrf: $('#_csrf').val(),
-              email: $('#email').val()
-        })
-        .done(function (res){
-              if(!res){
-                  swal({
-                    title: "Email already taken.",
-                    type: "error"
-                  });
-              }
-        })
-        .fail(function (err){
-              console.log('Bad email');
-        });
+        checkThisEmail = $('#email').val();
     }
     else if($('#limited_email').val()) {
-        $.post("/signup/email", {
-              _csrf: $('#_csrf').val(),
-              email: $('#limited_email').val()
-        })
-        .done(function (res){
-              if(!res){
-                  swal({
-                    title: "Email already taken.",
-                    type: "error"
-                  });
-              }
-        })
-        .fail(function (err){
-              console.log('Bad email');
-        });
+        checkThisEmail = $('#email').val();
+    }
+    else if ($('#adduser-email').val()){
+        checkThisEmail = $('#adduser-email').val();
     }
 
+    $.post("/signup/email", {
+          _csrf: $('#_csrf').val(),
+          email: checkThisEmail
+    })
+    .done(function (res){
+          if(!res){
+              swal({
+                title: "Email already taken.",
+                type: "error"
+              });
+          }
+    })
+    .fail(function (err){
+          console.log('Bad email');
+    });
 }
 
 function delayUsername(){
-
-      clearTimeout(typingTimer);
-
-      if($('#username').val()){
-            typingTimer = setTimeout(checkusername, delay);
-      }
-
-
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(checkusername, delay);
 }
 
 function delayEmail(){
-
-      clearTimeout(typingTimer);
-
-      if($('#email').val() || $('#limited_email').val()){
-            typingTimer = setTimeout(checkemail, delay);
-      }
-
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(checkemail, delay);
 }
 
 function trueOrFalse(arg){

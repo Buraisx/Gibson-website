@@ -56,7 +56,7 @@ function load_controlpanel(){
     adduser+='                        <div class="form-group col-sm-offset-1 col-sm-10">';
     adduser+='                            <label class="control-label"><span class="requiredasterisk">*</span>Username:</label>';
     adduser+='                            <span id = "confirmuser"></span>';
-    adduser+='                            <input class = "form-control reqIn" type="text" name ="username" id="username" placeholder = "Enter Username" required pattern="\w{3,16}">';
+    adduser+='                            <input class = "form-control reqIn" type="text" name ="adduser-username" id="adduser-username" onchange="delayUsername();" placeholder = "Enter Username" required pattern="\w{3,16}">';
     adduser+='                        </div>';
     adduser+='                    </div>';
     //Input Password
@@ -78,7 +78,7 @@ function load_controlpanel(){
     adduser+='                    <div class = "row">';
     adduser+='                        <div class="form-group col-sm-offset-1 col-sm-10">';
     adduser+='                            <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-    adduser+='                            <input class = "form-control reqIn" type="email" name = "email" id="email" placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+    adduser+='                            <input class = "form-control reqIn" type="email" name = "adduser-email" id="adduser-email" placeholder="Enter email" onchange="delayEmail();" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
     adduser+='                        </div>';
     adduser+='                    </div>';
     adduser+='                    <div class = "row">';
