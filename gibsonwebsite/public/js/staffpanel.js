@@ -579,7 +579,7 @@ function controlpanel (dropdown_info) {
     addusertocourse+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
     addusertocourse+='                            <h3>Add User To Course</h3>';
     addusertocourse+='                            <p>Please click here to add a user to a course.</p>';
-    addusertocourse+='                            <button type = "button" class= "btn btn-success">Add User</button>';
+    addusertocourse+='                            <button type = "button" onclick="window.location=\'/enroll\';" class= "btn btn-success">Add User</button>';
     addusertocourse+='                        </div>';
     addusertocourse+='                    </div>';
 
@@ -916,12 +916,10 @@ function controlpanel (dropdown_info) {
  $('.btn-success').click(function (){
         var count = 0;
         var butparents = $(this).parent().parent().parent();
-        console.log(butparents);
         butparents.find('input.reqIn').each(function (){
             if ($.trim($(this).val()).length == 0)
             {
                 count ++;
-                console.log(count);
                 $('.btn-success').parent().parent().parent().find('.btn-success').removeAttr('data-slide');
                 $(this).attr('data-toggle', 'tooltip');
                 $(this).attr('title', 'Please fill this in.');

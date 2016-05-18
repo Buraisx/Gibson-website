@@ -595,7 +595,7 @@ function controlpanel (dropdown_info) {
     addusertocourse+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
     addusertocourse+='                            <h3>Add User To Course</h3>';
     addusertocourse+='                            <p>Please click here to add a user to a course.</p>';
-    addusertocourse+='                            <button type = "button" class= "btn btn-success">Add User</button>';
+    addusertocourse+='                            <button type = "button" onclick="window.location=\'/enroll\';" class= "btn btn-success">Add User</button>';
     addusertocourse+='                        </div>';
     addusertocourse+='                    </div>';
 
