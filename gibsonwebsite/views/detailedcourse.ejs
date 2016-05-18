@@ -37,7 +37,7 @@
                 <!-- VOLUNTEER+ ONLY Course List of Enrolled Users -->
                 <section class="tab-pane" id="course-enrollment">
                     <h3 class="col-sm-6">Class Enrollment</h3>
-                    <div class="col-sm-10" class="tablescroller">
+                    <div class="col-sm-10" class="tablescroller" id="course-enrollment-scroller">
                         <table class="table table-bordered" id="course-usertable">
                         </table>
                     </div>
@@ -60,7 +60,7 @@
                     <div class = "col-sm-10">
                         <p id="course-schedule-daterange"></p>
                         <p id="course-schedule-interval"></p>
-                        <div class="tablescroller">
+                        <div class="tablescroller" id="course-schedule-scroller">
                         <table class="table table-bordered" id="course-schedule-datetable">
                         </table>
                         </div>
@@ -76,20 +76,22 @@
                     </div>
                 </section>
 
-                <section class="tab-pane col-sm-10" id="course-tags">
-                    <h3>Course Tags</h3>
-                    <div class = "row">
-                        <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editMode();">Edit Tags</button>
-                    </div>
-                    <div class = "row" style ="margin-top:10px;">
-                        <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
-                            <input type="text" class="form-control" id="tags-search" placeholder="Add a tag to the course." style="display:none;"></input>
-                        </form>
-                        <button type = "button" class = "btn btn-default col-sm-2" id = "tags-add" style="display:none;" onclick="addTag();">Add</button>
-                    </div>
-                    <hr id="tags-search-divider">
-                    <div class = "row">
-                        <div id="tags-sortable" class = "panel panel-default"></div>
+                <section class="tab-pane" id="course-tags">
+                    <h3 class = "col-sm-6">Course Tags</h3>
+                    <div class = "col-sm-10">
+                        <div class = "row">
+                            <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editMode();">Edit Tags</button>
+                        </div>
+                        <div class = "row" style ="margin-top:10px;">
+                            <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
+                                <input type="text" class="form-control" id="tags-search" placeholder="Add a tag to the course." style="display:none;"></input>
+                            </form>
+                            <button type = "button" class = "btn btn-default col-sm-2" id = "tags-add" style="display:none;" onclick="addTag();">Add</button>
+                        </div>
+                        <hr id="tags-search-divider">
+                        <div class = "row">
+                            <div id="tags-sortable" class = "panel panel-default"></div>
+                        </div>
                     </div>
                </section>
             </div>
