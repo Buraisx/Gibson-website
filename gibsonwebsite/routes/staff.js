@@ -400,7 +400,7 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                     });
                 },
                 function (next){
-                    var sql = "SELECT DATE_FORMAT(cd.date, '%d') as day, DATE_FORMAT(cd.date, '%M') as month, TIME_FORMAT(cd.start_time, '%h:%i %p') as start_time, TIME_FORMAT(cd.end_time, '%h:%i %p') as end_time FROM gibson.course_days cd INNER JOIN gibson.course c ON c.course_id = cd.course_id WHERE cd.course_id = ?;";
+                    var sql = "SELECT DATE_FORMAT(cd.date, '%W') as day_of_week, DATE_FORMAT(cd.date, '%d') as date, DATE_FORMAT(cd.date, '%M') as month, TIME_FORMAT(cd.start_time, '%h:%i %p') as start_time, TIME_FORMAT(cd.end_time, '%h:%i %p') as end_time FROM gibson.course_days cd INNER JOIN gibson.course c ON c.course_id = cd.course_id WHERE cd.course_id = ?;";
                     con.query(sql, [req.query.course], function (err, results){
                         if(err){
                             return next(err, null);

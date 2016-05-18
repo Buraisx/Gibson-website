@@ -115,7 +115,8 @@ function showSchedule(data_course, data_schedule){
 	if(schedule != null && schedule.length){
 		schedule_table+='    <thead>';
 		schedule_table+='        <tr class = "tableheader">';
-		schedule_table+='            <th>Day</th>';
+		schedule_table+='            <th>Day of Week</th>';
+		schedule_table+='            <th>Date</th>';
 		schedule_table+='            <th>Month</th >';
 		schedule_table+='            <th>Time</th>';
 		schedule_table+='        </tr>';
@@ -124,7 +125,8 @@ function showSchedule(data_course, data_schedule){
 
 		for(var i = 0; i < schedule.length; i++){
 			schedule_table+='        <tr>';
-			schedule_table+='            <td>' + schedule[i].day + '</td>';
+			schedule_table+='            <td>' + schedule[i].day_of_week + '</td>';
+			schedule_table+='            <td>' + schedule[i].date + '</td>';
 			schedule_table+='            <td>' + schedule[i].month + '</td>';
 			schedule_table+='            <td>' + schedule[i].start_time + " - " + schedule[i].end_time + '</td>';
 			schedule_table+='        </tr>';
