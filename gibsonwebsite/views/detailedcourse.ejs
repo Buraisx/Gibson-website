@@ -80,7 +80,7 @@
                     <h3 class = "col-sm-6">Course Tags</h3>
                     <div class = "col-sm-10">
                         <div class = "row">
-                            <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editMode();">Edit Tags</button>
+                            <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editModeTags();">Edit Tags</button>
                         </div>
                         <div class = "row" style ="margin-top:10px;">
                             <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
@@ -93,7 +93,8 @@
                             <div id="tags-sortable" class = "panel panel-default"></div>
                         </div>
                         <div class="row">
-                            <button type = "button" class = "btn btn-default" id = "tags-commit" onclick="hello();readModeTags();" style="display:none">Save</button>
+                            <button type = "button" class = "btn btn-default" id = "tags-commit" onclick="commitTags();readModeTags();" style="display:none">Save</button>
+                            <button type = "button" class = "btn btn-default" id = "tags-cancel" onclick="cancelCommitTags();readModeTags();" style="display:none">Cancel</button>
                         </div>
                     </div>
                </section>

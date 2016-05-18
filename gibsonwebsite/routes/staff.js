@@ -352,15 +352,21 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
                         function (course, callback){
                             var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix WHERE category_id IN (?);";
                             var inserts = [JSON.parse(course.categories)];
-                            sql = mysql.format(sql, inserts);
-                            con.query(sql, function (err, results){
-                                if(err){
-                                    return callback (err, null, null);
-                                }
-                                else{
-                                    callback (null, course, results);
-                                }
-                            });
+
+                            if(inserts[0].length === 0 || inserts[0] === null){
+                                 callback (null, course, []);
+                            }
+                            else{
+                                sql = mysql.format(sql, inserts);
+                                con.query(sql, function (err, results){
+                                    if(err){
+                                        return callback (err, null, null);
+                                    }
+                                    else{
+                                        callback (null, course, results);
+                                    }
+                                });
+                            }
                         }
                         ],function (err, course, results){
                            if(err){

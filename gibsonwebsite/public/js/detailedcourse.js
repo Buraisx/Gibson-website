@@ -9,10 +9,10 @@ $(function() {
 	});
 });
 
-$(document).ready(getCourseTags());
+$(document).ready(getCourse());
 
 
-function getCourseTags() {
+function getCourse() {
 	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
 		TAG_LIST = data[1];
 		COURSE_TAG_LIST = data[0].categories;
@@ -192,41 +192,84 @@ function updateCourseTagsList(data){
 
 	//Generate Draggable list of course's tags
 	for(var i = 0; i < data.length; i++){
-		course_tags.append('<div class="panel-heading course_tag" value=' + data[i].category_id + '><span>' + data[i].category_string + ' </span><a>&#10006;</a></div>');
+		course_tags.append('<div class="panel-heading course_tag"><span>' + data[i].category_string + ' </span><a id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')" style="display:none;">&#10006;</a></div>');
 	}
 }
 //*********************************************
 
-//*** ADD TAG TO COURSE TAGS (ALSO UPDATES FRONT END DISPLAY) ***//
+//*** ADD TAG TO COURSE TAGS (NO COMMIT) ***//
 function addTag(){
-	var list_ids=[];
 	var category_string = $('#tags-search').val();
 
 	for(var i = 0; i < TAG_LIST.length; i++){
 		if(TAG_LIST[i].category_string === category_string){
 			COURSE_TAG_LIST.push(TAG_LIST[i]);
 
-			//*** GENERATE LIST OF IDS ***//
-			for(var i = 0; i < COURSE_TAG_LIST.length; i++){
-				list_ids.push(COURSE_TAG_LIST[i].category_id);
-			}
-
-			//*** UPDATE COURSE TAGS IN DATABASE ***//
-			$.post('/staff/portal/detailedcourse/updateTags',{
-				categories: JSON.stringify(list_ids),
-				course_id: getParameterByName('course'),
-				_csrf: $('#_csrf').val()
-			}).done(function (res){
-				updateCourseTagsList(COURSE_TAG_LIST);
-			}).fail(function (){
-				console.log('ERROR ADDING COURSE TAG!');
-			});
-
+			$('#tags-search').val('');
+			updateCourseTagsList(COURSE_TAG_LIST);
 			break;
 		}
 	}
 }
 //***************************************************************
+
+//*** REMOVE TAG FROM COURSE TAGS (NO COMMIT) ***//
+function removeTag(tag_id){
+	var UPDATED_TAG_LIST=[];
+
+	for(var i = 0; i < COURSE_TAG_LIST.length; i++){
+		if(COURSE_TAG_LIST[i].category_id != tag_id){
+			UPDATED_TAG_LIST.push(COURSE_TAG_LIST[i]);
+		}	
+	}
+
+	COURSE_TAG_LIST = UPDATED_TAG_LIST;
+	updateCourseTagsList(COURSE_TAG_LIST);
+}
+
+//*** COMMIT TAGS TO DB (AND UPDATES FRONT END) ***//
+function commitTags(){
+	var list_ids=[];
+
+	//*** GENERATE LIST OF IDS ***//
+	for(var i = 0; i < COURSE_TAG_LIST.length; i++){
+		list_ids.push(COURSE_TAG_LIST[i].category_id);
+	}
+
+	//*** UPDATE COURSE TAGS IN DATABASE ***//
+	$.post('/staff/portal/detailedcourse/updateTags',{
+		categories: JSON.stringify(list_ids),
+		course_id: getParameterByName('course'),
+		_csrf: $('#_csrf').val()
+	}).done(function (res){
+		updateCourseTagsList(COURSE_TAG_LIST);
+		updateAutoCompleteList(TAG_LIST);
+	}).fail(function (){
+		console.log('ERROR ADDING COURSE TAG!');
+	});
+}
+
+//*** UNDO CHANGES TO DB (AND UPDATES FRONT END) ***//
+function cancelCommitTags(){
+	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
+		TAG_LIST = data[1];
+		COURSE_TAG_LIST = data[0].categories;
+
+		//***// 
+		//data[0].course holds all the course info
+		//data[0].categories holds a list of course categories
+		//data[1] holds a list of all existing category types
+		//data[2] holds list of users enrolled to the course
+		//data[3] holds course schedule
+		//***//
+		updateAutoCompleteList(TAG_LIST);
+		updateCourseTagsList(COURSE_TAG_LIST);
+	});	
+}
+//****************************************************
+
+//***************************************************************
+
 
 //===============================================================
 //===============================================================
@@ -234,11 +277,16 @@ function addTag(){
 
 
 //*** GO INTO EDIT MODE ***//
-function editMode(){
+function editModeTags(){
 	$('#tags-search').show();
 	$('#tags-search-divider').show();
 	$('#tags-add').show();
 	$('#tags-commit').show();
+	$('#tags-cancel').show();
+
+	for(var i = 0; i < COURSE_TAG_LIST.length; i++){
+		$('#tag-remove-' + COURSE_TAG_LIST[i].category_id).show();
+	}
 
 	$('#tags-edit').hide();
 }
@@ -252,8 +300,12 @@ function readModeTags(){
 	$('#tags-search-divider').hide();
 	$('#tags-add').hide();
 	$('#tags-commit').hide();
-}
+	$('#tags-cancel').hide();
 
+	for(var i = 0; i < COURSE_TAG_LIST.length; i++){
+		$('#tag-remove-'+ COURSE_TAG_LIST[i].category_id).hide();
+	}
+}
 
 //*** Pine Notify ****//
 function addedTag(){
@@ -274,8 +326,4 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-function hello(){
-	console.log("hello");
 }
