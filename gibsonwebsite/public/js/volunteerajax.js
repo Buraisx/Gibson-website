@@ -367,7 +367,7 @@ function load_controlpanel(){
     addusertocourse+='                        <div id="page-content-wrapper" class="container-fluid xyz">';
     addusertocourse+='                            <h3>Add User To Course</h3>';
     addusertocourse+='                            <p>Please click here to add a user to a course.</p>';
-    addusertocourse+='                            <button type = "button" class= "btn btn-success">Add User</button>';
+    addusertocourse+='                            <button type = "button" onclick="window.location=\'/enroll\';" class= "btn btn-success">Add User</button>';
     addusertocourse+='                        </div>';
     addusertocourse+='                    </div>';
 
@@ -389,12 +389,10 @@ function load_controlpanel(){
  $('.btn-success').click(function (){
         var count = 0;
         var butparents = $(this).parent().parent().parent();
-        console.log(butparents);
         butparents.find('input.reqIn').each(function (){
             if ($.trim($(this).val()).length == 0)
             {
                 count ++;
-                console.log(count);
                 $('.btn-success').parent().parent().parent().find('.btn-success').removeAttr('data-slide');
                 $(this).attr('data-toggle', 'tooltip');
                 $(this).attr('title', 'Please fill this in.');
@@ -1483,9 +1481,9 @@ function addUserAccount(){
 
 $.post("/volunteer/adduser", {
         _csrf: $('#_csrf').val(),
-        username: $('#username').val(),
+        username: $('#adduser-username').val(),
       password: $('#password').val(),
-      email: $('#email').val(),
+      email: $('#adduser-email').val(),
         fname: $('#fname').val(),
         lname: $('#lname').val(),
       //birth_date: $('#datepicker').val(),
@@ -1518,7 +1516,7 @@ $.post("/volunteer/adduser", {
         ephone1: $('#ephone1').val(),
         ephone2: $('#ephone2').val(),
         ephone3: $('#ephone3').val(),
-        ephoneext1: $('#ephoneext').val(),
+        ephoneext1: $('#ephoneext1').val(),
         ephoneext2: $('#ephoneext2').val(),
         ephoneext3: $('#ephoneext3').val()
     })

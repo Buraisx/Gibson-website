@@ -790,3 +790,7 @@ div[class*="banner"]{
     height:250px;
     overflow:auto;
 }
+
+.defaultmouse{
+    cursor:default;
+}

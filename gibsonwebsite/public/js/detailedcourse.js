@@ -192,7 +192,7 @@ function updateCourseTagsList(data){
 
 	//Generate Draggable list of course's tags
 	for(var i = 0; i < data.length; i++){
-		course_tags.append('<div class="panel-heading course_tag"><span>' + data[i].category_string + ' </span><a id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')" style="display:none;">&#10006;</a></div>');
+		course_tags.append('<div class="panel-heading course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')" style="display:none;">&#10006;</a></div>');
 	}
 }
 //*********************************************
