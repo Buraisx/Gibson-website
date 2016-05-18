@@ -188,7 +188,7 @@ function updateCourseTagsList(data){
 
 	//Generate Draggable list of course's tags
 	for(var i = 0; i < data.length; i++){
-		course_tags.append('<div class="panel-heading course_tag" value=' + data[i].category_id + '><div>' + data[i].category_string + '</div>');
+		course_tags.append('<div class="panel-heading course_tag" value=' + data[i].category_id + '>' + data[i].category_string + '</div>');
 	}
 }
 //*********************************************

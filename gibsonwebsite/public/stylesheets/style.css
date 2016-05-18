@@ -769,6 +769,7 @@ div[class*="banner"]{
   *border-bottom-width: 2px;
 }
 
+/** Detailed Courses PAGE **/
 .course_tag{
     border-spacing: 6px;
     padding: 4px 10px;
@@ -779,4 +780,13 @@ div[class*="banner"]{
     background-color: #C9D0D0 !important;
     border-style: solid;
     border-width: 1px;
+}
+
+.detailedcoursesidebarmargin {
+    position: fixed;
+    float: left;
+}
+.tablescroller{
+    height:250px;
+    overflow:auto;
 }

@@ -6,6 +6,7 @@
 <head>
     <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="/js/detailedcourse.js"></script>
+    <link href="/css/simple-sidebar.css" rel="stylesheet">
 </head>
 
 <body>
@@ -13,9 +14,20 @@
         <section class="container rcorners">
             <input type="hidden" id="_csrf" value="<%= csrfToken %>">   
 
+            <div class="col-sm-4 detailedcoursesidebarmargin">
+                <div id="sidebar-wrapper">
+                    <ul class="sidebar-nav nav-stacked" id="menu">
+                        <li><a class="menucolour" href="#course-enrollment" data-toggle="tab"><i class="fa fa-user"></i>Enrollment</a></li>
+                        <li><a class="menucolour" href="#course-description" data-toggle="tab"><i class="fa fa-caret-square-o-up "></i>Description</a></li>
+                        <li><a class="menucolour" href="#course-schedule" data-toggle="tab"><i class="fa fa-plus-square-o"></i>Schedule</a></li>
+                        <li><a class="menucolour" href="#course-instructor" data-toggle="tab"><i class="fa fa-plus-square-o"></i>Instructor</a></li>
+                        <li><a class="menucolour" href="#course-tags" data-toggle="tab"><i class="fa fa-tags"></i>Manage Tags</a></li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- Details Section -->
-            <section class="col-sm-offset-1">
-                
+            <div class="col-sm-offset-2">
                 <!-- Course Header -->
                 <div class="row">
                     <h2 class="col-sm-10" id="course-name"></h2>
@@ -25,7 +37,7 @@
                 <!-- VOLUNTEER+ ONLY Course List of Enrolled Users -->
                 <div class="row" id="course-enrollment">
                     <h3 class="col-sm-6">Class Enrollment</h3>
-                    <div class="col-sm-10">
+                    <div class="col-sm-10" class="tablescroller">
                         <table class="table table-bordered" id="course-usertable">
                         </table>
                     </div>
@@ -48,8 +60,10 @@
                     <div class = "col-sm-10">
                         <p id="course-schedule-daterange"></p>
                         <p id="course-schedule-interval"></p>
+                        <div class="tablescroller">
                         <table class="table table-bordered" id="course-schedule-datetable">
                         </table>
+                        </div>
                     </div>
                 </div>
 
@@ -62,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="panel-body col-sm-10">
+                <div class="panel-body col-sm-10" id="course-tags">
                     <h3>Course Tags</h3>
                     <div class = "row">
                         <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editMode();">Edit Tags</button>
@@ -78,7 +92,7 @@
                         <div id="tags-sortable" class = "panel panel-default"></div>
                     </div>
                </div>
-            </section>
+            </div>
         </section>
     </div>
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
