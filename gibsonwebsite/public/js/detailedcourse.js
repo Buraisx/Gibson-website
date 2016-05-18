@@ -133,6 +133,9 @@ function showSchedule(data_course, data_schedule){
 		//Apply to HTML
 		$("#course-schedule-datetable").append(schedule_table);
 	}
+	else{
+		$("#course-schedule-scroller").hide();
+	}
 }
 //*****************************
 
