@@ -350,7 +350,7 @@ router.post('/volunteer/adduser', function(req, res){
                     // GENERATING THE INSERT QUERY
                     var insertEmContacts = '';
                     for (var ecnum = 0; ecnum < emContacts.length; ecnum++){
-                      insertEmContacts += mysql.format('INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone, contact_phone_extension) VALUES(?, ?, ?, ?, ?,?); ', emContacts[ecnum]);
+                      insertEmContacts += mysql.format('INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone, contact_phone_extension) VALUES(?, ?, ?, ?, ?, ?); ', emContacts[ecnum]);
                     }
 
                     con.query(insertEmContacts, function(err, results){
