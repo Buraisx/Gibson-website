@@ -943,12 +943,10 @@ function controlpanel (dropdown_info) {
  $('.btn-success').click(function (){
         var count = 0;
         var butparents = $(this).parent().parent().parent();
-        console.log(butparents);
         butparents.find('input.reqIn').each(function (){
             if ($.trim($(this).val()).length == 0)
             {
                 count ++;
-                console.log(count);
                 $('.btn-success').parent().parent().parent().find('.btn-success').removeAttr('data-slide');
                 $(this).attr('data-toggle', 'tooltip');
                 $(this).attr('title', 'Please fill this in.');
