@@ -77,11 +77,8 @@
                 </section>
 
                 <section class="tab-pane" id="course-tags">
-                    <h3 class = "col-sm-6">Course Tags</h3>
+                    <h3 class = "col-sm-6">Course Tags<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick="editModeTags();"></i></h3>
                     <div class = "col-sm-10">
-                        <div class = "row">
-                            <button type = "button" class = "btn btn-default" id = "tags-edit" onclick="editModeTags();">Edit Tags</button>
-                        </div>
                         <div class = "row" style ="margin-top:10px;">
                             <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
                                 <input type="text" class="form-control" id="tags-search" placeholder="Add a tag to the course." style="display:none;"></input>

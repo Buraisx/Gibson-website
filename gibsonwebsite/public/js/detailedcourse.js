@@ -25,7 +25,7 @@ function getCourse() {
 		//data[3] holds course schedule
 		//***//
 		updateAutoCompleteList(TAG_LIST);
-		updateCourseTagsList(COURSE_TAG_LIST);
+		updateCourseTagsList(COURSE_TAG_LIST, false);
 
 		//UPDATE THE PAGE DATA
 		showHeader(data[0].course);
@@ -188,14 +188,23 @@ function updateAutoCompleteList(data){
 //*********************************************
 
 //*** UPDATE THE COURSE'S DISPLAY TAG LIST ***//
-function updateCourseTagsList(data){
+function updateCourseTagsList(data, isDisplay){
 	var course_tags = $('#tags-sortable');
 	course_tags.empty();
 
-	//Generate Draggable list of course's tags
-	for(var i = 0; i < data.length; i++){
-		course_tags.append('<div class="panel-heading course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')" style="display:none;">&#10006;</a></div>');
+
+	if(isDisplay){
+		//Generate Draggable list of course's tags (NOT HIDDEN)
+		for(var i = 0; i < data.length; i++){
+			course_tags.append('<div class="panel-heading course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a class="editinfobutton" id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')">&#10006;</a></div>');
+		}
 	}
+	else{
+		//Generate Draggable list of course's tags (HIDDEN)
+		for(var i = 0; i < data.length; i++){
+			course_tags.append('<div class="panel-heading course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a class="editinfobutton" id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')" style="display:none;">&#10006;</a></div>');
+		}
+	}	
 }
 //*********************************************
 
@@ -208,7 +217,7 @@ function addTag(){
 			COURSE_TAG_LIST.push(TAG_LIST[i]);
 
 			$('#tags-search').val('');
-			updateCourseTagsList(COURSE_TAG_LIST);
+			updateCourseTagsList(COURSE_TAG_LIST, true);
 			break;
 		}
 	}
@@ -226,7 +235,7 @@ function removeTag(tag_id){
 	}
 
 	COURSE_TAG_LIST = UPDATED_TAG_LIST;
-	updateCourseTagsList(COURSE_TAG_LIST);
+	updateCourseTagsList(COURSE_TAG_LIST, true);
 }
 
 //*** COMMIT TAGS TO DB (AND UPDATES FRONT END) ***//
@@ -244,7 +253,7 @@ function commitTags(){
 		course_id: getParameterByName('course'),
 		_csrf: $('#_csrf').val()
 	}).done(function (res){
-		updateCourseTagsList(COURSE_TAG_LIST);
+		updateCourseTagsList(COURSE_TAG_LIST, false);
 		updateAutoCompleteList(TAG_LIST);
 	}).fail(function (){
 		console.log('ERROR ADDING COURSE TAG!');
@@ -259,13 +268,13 @@ function cancelCommitTags(){
 
 		//***// 
 		//data[0].course holds all the course info
-		//data[0].categories holds a list of course categories
+		//data[0].categories holds a list of course categories	
 		//data[1] holds a list of all existing category types
 		//data[2] holds list of users enrolled to the course
 		//data[3] holds course schedule
 		//***//
 		updateAutoCompleteList(TAG_LIST);
-		updateCourseTagsList(COURSE_TAG_LIST);
+		updateCourseTagsList(COURSE_TAG_LIST, false);
 	});	
 }
 //****************************************************
