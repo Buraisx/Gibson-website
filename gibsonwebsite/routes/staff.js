@@ -449,28 +449,33 @@ router.post('/staff/portal/validateCourse', function(req, res){
 
         //Check if selected courses is in the database
         function(next){
-            connection.getConnection(function(err, con){
-                if(err){
-                    console.log('staff.js: Error connecting to database; /staff/portal/validateCourse');
-                    res.status(500).send('Internal Server Error');
-                }
-                else{
-                    var selectedTags = JSON.parse(req.body.selectedtags);
-                    var query = mysql.format('SELECT COUNT(*) AS tag_count FROM gibson.category_matrix WHERE category_id IN (?);', [selectedTags]);
+            if(JSON.parse(req.body.selectedtags).length === 0){
+                next();
+            }
+            else{
+                connection.getConnection(function(err, con){
+                    if(err){
+                        console.log('staff.js: Error connecting to database; /staff/portal/validateCourse');
+                        res.status(500).send('Internal Server Error');
+                    }
+                    else{
+                        var selectedTags = JSON.parse(req.body.selectedtags);
+                        var query = mysql.format('SELECT COUNT(*) AS tag_count FROM gibson.category_matrix WHERE category_id IN (?);', [selectedTags]);
 
-                    con.query(query, function(err, results){
-                        if(err && selectedTags.length > 0){
-                            return next(new Error('Error counting course tags.'), null);
-                        }
-                        else if(results[0].tag_count != selectedTags.length){
-                            return next(new Error('One or more of the selected tags does not exist.'), null);
-                        }
-                        else{
-                            next();
-                        }
-                    });
-                }
-            });
+                        con.query(query, function(err, results){
+                            if(err && selectedTags.length > 0){
+                                return next(new Error('Error counting course tags.'), null);
+                            }
+                            else if(results[0].tag_count != selectedTags.length){
+                                return next(new Error('One or more of the selected tags does not exist.'), null);
+                            }
+                            else{
+                                next();
+                            }
+                        });
+                    }
+                });
+            }
         },
 
         //Check Database for duplicate course codes and course names
