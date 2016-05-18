@@ -379,7 +379,7 @@ router.post('/volunteer/adduser', function(req, res){
                         studentInfo.major = req.body.major;
                         studentInfo.esl_level = req.body.esl;
 
-                        var createStudent = 'INSERT INTO gibson.temp_student (user_id, school_name, grade, major, esl_level)';
+                        var createStudent = 'INSERT INTO gibson.student (user_id, school_name, grade, major, esl_level)';
                         createStudent += 'VALUES (?,?,?,?,?);';
                         var student_values = [
                             studentInfo.user_id, studentInfo.school_name, studentInfo.grade,
