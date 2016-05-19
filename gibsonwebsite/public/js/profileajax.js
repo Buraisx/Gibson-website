@@ -1170,10 +1170,6 @@ function editcontactsinfo() {
 			editinfo+='                <p>Phone: </p>';
 			editinfo+='            </label>';
 			editinfo+='            <input type = "text" class = "form-control col-sm-3" name =  "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="\w+">';
-			editinfo+='            <label class="editfieldname col-sm-12">';
-			editinfo+='                <p>Extension: </p>';
-			editinfo+='            </label>';
-			editinfo+='            <input type = "text" class = "form-control col-sm-1" name =  "ephoneextension' + i + '" id = "ephoneextension' + i + '" maxlength="16" pattern="\w+">';
 			editinfo+='        </div>';
 			editinfo+='        <div class="form-group col-sm-5">';
 			editinfo+='            <label class="editfieldname col-sm-12">';

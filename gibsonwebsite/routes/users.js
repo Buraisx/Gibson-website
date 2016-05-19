@@ -733,13 +733,15 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 								query += mysql.format('UPDATE gibson.emergency_contact SET user_id=?, lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? WHERE contact_id = ?;', newContacts[i]);
 							}
 							else{
-								newContacts[i].pop();
+								//newContacts[i].pop(); (NOT SURE WHAT THIS IS SUPPOSED TO DO)
 								query += mysql.format('INSERT INTO gibson.emergency_contact (user_id, lname, fname, relationship, contact_phone, contact_phone_extension) VALUES(?, ?, ?, ?, ?, ?);', newContacts[i]);
 							}
 						}
 
 						con.query(query, function(err, results){
 							if(err){
+								console.log(query);
+								console.log(err);
 								return next({msg: 'Error in case 3'});
 							}
 							else{
@@ -752,7 +754,7 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 
 			// FINAL FUNCTION -> HANDLES ERROR/SUCCESS
 			function(error){
-				if(err){
+				if(error){
 					con.query('ROLLBACK;', function(err, results){
 						console.log('users.js: ' +error.msg +'; /user/profile/edit/emegencyinfo');
 						con.release();
