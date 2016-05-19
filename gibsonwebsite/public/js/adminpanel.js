@@ -26,7 +26,7 @@ function controlpanel (dropdown_info) {
     nav+='                        <li><a class="menucolour" href="#upgradeuser" data-toggle="tab"><i class="fa fa-caret-square-o-up "></i> Upgrade User</a></li>';
     nav+='                        <li><a class="menucolour" href="#addusertocourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add User To Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#addcourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Add Course</a></li>';
-	nav+='                        <li><a class="menucolour" href="#managetags" data-toggle="tab"><i class="fa fa-tags"></i> Manage Tags</a></li>';
+	  nav+='                        <li><a class="menucolour" href="#managetags" data-toggle="tab"><i class="fa fa-tags"></i> Manage Tags</a></li>';
     nav+='                        <li><a class="menucolour" href="#modifycourse" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify Course</a></li>';
     nav+='                        <li><a class="menucolour" href="#modifyuser" data-toggle="tab"><i class="fa fa-plus-square-o"></i> Modify User Info</a></li>';
     nav+='                        <li><a class="menucolour" href="#scheduleevent" data-toggle="tab"><i class="fa fa-calendar-plus-o"></i> Schedule Event</a></li>';
