@@ -36,21 +36,17 @@ $(document).ready(function(){
     });
 
     //checks for captcha
-    $('#btnsubmit').click(function(){
-      //  $('#frm').submit(function(){
+   /* $('#btnsubmit').click(function(){
             grecaptcha.reset();
             $(document).find('#dimmer').css("display","block");
             $(document).find('.g-recaptcha').css("display","block");
-        //    return false;
-      //  });
-    });
+    });*/
+    //clicking on dim section will cancel captcha
     $('#dimmer').click(function(){
         $(document).find('#dimmer').css("display","none");
         $(document).find('.g-recaptcha').css("display","none");
     });
-   /* $('#frm').submit(function(e){
-    return false;
-    });*/
+  
 
     //CHECK EVERY TEXTBOX FILLED IN
     $('.btn-success').click(function (){ 
@@ -69,10 +65,30 @@ $(document).ready(function(){
                 $(this).tooltip('show');
             }
         });
-        if(count == 0)
-        {
-            butparents.find('.btn-success').attr('data-slide', 'next');
+        var i = 1;
+            // Iterates through every contact, checking if they're visible
+            while($("#contact" + i).is(":visible")) {
+            i++;
         }
+       
+        if (this.id == "btnsubmit")
+        {   
+
+            if((count == 8 && i==2)||(count ==4 && i==3)|| (count ==0 &&i==4))
+            {
+                grecaptcha.reset();
+                $(document).find('#dimmer').css("display","block");
+                $(document).find('.g-recaptcha').css("display","block");
+            }
+        }
+        else
+        {
+            if(count == 0)
+            {
+                butparents.find('.btn-success').attr('data-slide', 'next');
+            }
+        }
+       
     });
 
 });//END
