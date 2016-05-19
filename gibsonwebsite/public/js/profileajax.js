@@ -1705,16 +1705,28 @@ function deletecontact(contactno) {
 			// Gets the contact_id of the contact to be deleted
 			jQuery.getJSON("/user/profile/info", function(user_info){
 				var contact_id = user_info.emergency_contacts[contactno-1].contact_id;
-			});
-			//// POST
-			//// do this on success:
-			swal({
-				title: "Contact removed.",
-				text: '(but not really)',
-				type: "success"
-			});
 
+				//// POST
+				$.post('/user/profile/edit/removeecontact',{
+					"contact_id": contact_id,
+					_csrf: $('#_csrf').val()
+				
+				//// do this on success:
+				}).done(function(res){
+					$("#contact"+contactno).find('input').each(function(){
+						$(this).val("");
+					});
+					swal({
+						title: "Contact removed.",
+						text: '(but not really)',
+						type: "success"
+					});
 
+				//// do this on failure:	
+				}).fail(function(){
+					console.log("Failed to remove contact");
+				});
+			});
 		}
 	});
 	}

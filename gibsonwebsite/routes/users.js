@@ -772,6 +772,28 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 	});
 });
 
+router.post('/user/profile/edit/removeecontact', function(req, res, next){
+	var sql = "DELETE FROM gibson.emergency_contact WHERE contact_id = ?;";
+	var insert = [req.body.contact_id];
+
+	connection.getConnection(function(err, con){
+		if(err){
+			console.log('users.js: Unable to get connection; user/profile/edit/removeecontact');
+			res.status(500).send();
+		}
+		else{
+			con.query(sql, insert, function(err, results){
+				if(err){
+					console.log('users.js: Could not remove e-contact:'+ req.body.contact_id);
+					res.status(500).send();
+				}
+				else{
+					res.status(200).send();
+				}
+			});
+		}
+	});
+});
 
 router.post('/user/profile/edit', function(req, res, next){
 	// GETTING CONNECTION
