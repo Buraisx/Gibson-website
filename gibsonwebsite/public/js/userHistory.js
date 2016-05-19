@@ -8,7 +8,6 @@ function load_history(){
 		query_limit: 20,
 		_csrf: $('#_csrf').val()
 	}).done(function(res){
-		console.log(res);
 		$('#account-history').contents().remove();
 		var history = '';
 		var i;
@@ -21,8 +20,9 @@ function load_history(){
 			history+='        <tr class = "tableheader">';
 			history+='            <th>Date</th>';
 			history+='            <th>Payer</th>';
-			history+='            <th>State</th>';
-			history+='            <th>PayPal Payment ID</th>';
+			//history+='            <th>State</th>';
+			history+='            <th>Payment Type</th>';
+			history+='            <th>Transaction ID</th>';
 			history+='            <th class = "col-sm-4">Description</th>';
 			// history+='            <th>Paypal ID</th>';
 			history+='            <th>Total</th>';
@@ -35,8 +35,9 @@ function load_history(){
 				history+='        <tr class="transaction-info">';
 				history+='            <td>' + date + '</td>';
 				history+='            <td>' + res[i].payer_first_name + ' ' + res[i].payer_last_name + '</td>';
-				history+='            <td>' + state + '</td>';
-				history+='            <td>' + res[i].paypal_id + '</td>';
+				//history+='            <td>' + state + '</td>';
+				history+='            <td>' + res[i].payment_method + '</td>';
+				history+='            <td>' + emptyIfUndefined(res[i].payment_id) + '</td>';
 				history+='            <td>' + res[i].description + '</td>';
 				//history+='            <td>' + res[i].transaction_id + '</td>';
 				history+='            <td>' + "$ " + res[i].total.toFixed(2) + '</td>';
@@ -52,4 +53,13 @@ function load_history(){
 		}
 		$('#account-history').append(history);
 	});
+}
+
+function emptyIfUndefined(value){
+	if(value == null){
+		return "";
+	}
+	else{
+		return value;
+	}
 }

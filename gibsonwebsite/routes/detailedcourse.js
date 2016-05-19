@@ -77,12 +77,12 @@ router.get('/detailedcourse/data', function (req, res, next){
                         }
                     });
                 },
-                //*** STAFF+ ONLY FUNCTION ***//
+                //*** Volunteer+ ONLY FUNCTION ***//
                 function (next){
                     var sql = "SELECT u.username,u.fname,u.lname,u.gender,u.address,u.primary_phone,u.primary_extension,u.secondary_phone,u.secondary_extension,u.email FROM gibson.user u INNER JOIN gibson.user_course uc ON u.user_id = uc.user_id WHERE uc.course_id = ?;";
-                    var decoded = jwt.decode(req.cookies.staff);
+                    var decoded = jwt.decode(req.cookies.volunteer);
 
-                    if(decoded != null && decoded.rank >= 3){
+                    if(decoded != null && decoded.rank >= 2){
                         con.query(sql, [req.query.course], function (err, results){
                             if(err){
                                 return next(err, null);
