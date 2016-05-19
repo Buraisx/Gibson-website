@@ -425,6 +425,29 @@ router.get('/staff/portal/detailedcourse/data', function (req, res, next){
     });
 });
 
+router.post('/staff/portal/detailedcourse/updateDescription', function(req, res, next){
+    var sql = "UPDATE gibson.course SET default_fee = ?, course_target = ?, course_description = ? WHERE course_id = ?;";
+    var inserts = [sanitizer.sanitize(req.body.default_fee), sanitizer.sanitize(req.body.course_target), sanitizer.sanitize(req.body.course_description), sanitizer.sanitize(req.body.course_id)];
+    connection.getConnection(function (err, con){
+        if(err){
+            console.log(err);
+            res.status(500).send();
+        }
+        else{
+            con.query(sql, inserts, function (err, results){
+                con.release();
+                if(err){
+                    console.log(err);
+                    res.status(500).send();
+                }
+                else{
+                    res.status(200).send("Course information has been updated!");
+                }
+            });
+        }
+    });
+});
+
 router.post('/staff/portal/detailedcourse/updateTags',function(req, res, next){
     var sql = "UPDATE gibson.course SET categories = JSON_ARRAY(?) WHERE course_id = ?;";
     var inserts = [Array.from(new Set(JSON.parse(req.body.categories))), Number(req.body.course_id)];

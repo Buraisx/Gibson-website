@@ -36,7 +36,7 @@
 
                 <!-- VOLUNTEER+ ONLY Course List of Enrolled Users -->
                 <section class="tab-pane" id="course-enrollment">
-                    <h3 class="col-sm-6">Class Enrollment</h3>
+                    <h3 class="col-sm-10" id="course-enrollment-header">Class Enrollment</h3>
                     <div class="col-sm-10" class="tablescroller" id="course-enrollment-scroller">
                         <table class="table table-bordered" id="course-usertable">
                         </table>
@@ -45,8 +45,8 @@
 
                 <!-- DESCRIPTION -->
                 <section class="tab-pane" id="course-description">
-                    <h3 class ="col-sm-6">Description</h3>
-                    <div class = "col-sm-10">
+                    <h3 class ="col-sm-10" id="course-description-header">Description</h3>
+                    <div class = "col-sm-10" id="course-description-content">
                         <p id="course-desc-target"></p>
                         <p id="course-desc-language"></p>
                         <p id="course-desc-text"></p>
@@ -56,8 +56,8 @@
 
                 <!-- SCHEDULE -->
                 <section class="tab-pane" id="course-schedule">
-                    <h3 class = "col-sm-6">Schedule</h3>
-                    <div class = "col-sm-10">
+                    <h3 class = "col-sm-10" id="course-schedule-header">Schedule</h3>
+                    <div class = "col-sm-10" id="course-schedule-content">
                         <p id="course-schedule-daterange"></p>
                         <p id="course-schedule-interval"></p>
                         <div class="tablescroller" id="course-schedule-scroller">
@@ -69,16 +69,16 @@
 
                 <!-- INSTRUCTOR INFORMATION -->
                 <section class="tab-pane" id="course-instructor">
-                    <h3 class = "col-sm-6">Instructor</h3>
-                    <div class = "col-sm-10">
+                    <h3 class = "col-sm-10" id="course-instructor-header">Instructor</h3>
+                    <div class = "col-sm-10" id="course-instructor-content">
                         <p id="course-instructor-name"></p>
                         <p id="course-instructor-desc"></p>
                     </div>
                 </section>
 
                 <section class="tab-pane" id="course-tags">
-                    <h3 class = "col-sm-6">Course Tags<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick="editModeTags();"></i></h3>
-                    <div class = "col-sm-10">
+                    <h3 class = "col-sm-10" id="course-tags-header">Course Tags</h3>
+                    <div class = "col-sm-10" id="course-tags-content">
                         <div class = "row" style ="margin-top:10px;">
                             <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
                                 <input type="text" class="form-control" id="tags-search" placeholder="Add a tag to the course." style="display:none;"></input>

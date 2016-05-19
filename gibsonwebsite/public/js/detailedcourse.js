@@ -11,7 +11,6 @@ $(function() {
 
 $(document).ready(getCourse());
 
-
 function getCourse() {
 	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
 		TAG_LIST = data[1];
@@ -28,13 +27,19 @@ function getCourse() {
 		updateCourseTagsList(COURSE_TAG_LIST, false);
 
 		//UPDATE THE PAGE DATA
-		showHeader(data[0].course);
 		listEnrolled(data[2]);
+		showHeader(data[0].course);
 		showDescription(data[0].course);
 		showSchedule(data[0].course, data[3]);
 		showInstructor(data[0].course);
+
+		//STAFF+ STUFF
+		if(getRank() >= 3){
+			addEditButtons();
+		}
 	});
 }
+
 
 //======================================================
 //======================================================
@@ -85,8 +90,11 @@ function showDescription(data){
 	var languages="";
 	var language_set = JSON.parse(data.course_language);
 
-	if(data.default_fee != null && data.default_fee != "")
+	if(data.default_fee != null && data.default_fee != ""){
 		$("#course-desc-cost").text( "Cost: $" + data.default_fee.toFixed(2) );
+		$("#course-desc-cost").val( data.default_fee );
+	}
+		
 
 	if(data.course_target != null && data.course_target != "")
 		$("#course-desc-target").text( "Course Target: " + data.course_target );
@@ -149,15 +157,89 @@ function showInstructor(data){
 
 }
 
+
 //===============================================================
+//===============================================================
+//======STAFF+ FUNCTIONS=========================================
 //===============================================================
 //===============================================================
 
+//*** ADD EDIT GLYPHS ***//
+function addEditButtons(){
+	$('#course-description-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick="editModeDescription();"></i>');
+	//$('#course-schedule-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick=";"></i>'); //*** CANNOT MODIFY SCHEDULE FOR NOW
+	$('#course-instructor-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick=";"></i>');
+	$('#course-tags-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick="editModeTags();"></i>');
+}
 
 //======================================================
+//======= MANAGE DESCRIPTION ===========================
+//======================================================
+function editModeDescription(){
+	var descForm = "";
+	$('#course-description-content').hide();
+	descForm+='<form role="form" method="post" id="course-description-form" onsubmit="commitDescription();return false">';
+	descForm+='	<div class="form-group col-sm-8">';
+	descForm+=' 	<label for="commit-target">Course Target:</label>';
+	descForm+='		<input class="form-control" type="text" name="target" id="commit-target"></input>';
+	descForm+=' </div>';
+	descForm+='	<div class="form-group col-sm-8">';
+	descForm+=' 	<label for="commit-desc">Course Description:</label>';
+	descForm+='		<textarea class="form-control" type="text" name="desc" id="commit-desc"></textarea>';
+	descForm+=' </div>';
+	descForm+='	<div class="form-group col-sm-8">';
+	descForm+=' 	<label for="commit-desc">Course Cost:</label>';
+	descForm+='		<input class="form-control" type="number" name="cost" id="commit-cost"></input>';
+	descForm+=' </div>';
+	descForm+='	<div class="col-sm-6">';
+	descForm+='		<button class="btn btn-default" type="submit">Save</button>';
+	descForm+='		<button class="btn btn-default" type="button" onclick="readModeDescription();">Cancel</button>';
+	descForm+='	</div>';
+	descForm+='</form>';
+
+	if(!$('#course-description-form').length){
+		$('#course-description-content').after(descForm);
+		$('#commit-target').val($('#course-desc-target').text());
+		$('#commit-desc').val($('#course-desc-text').text());
+		$('#commit-cost').val($('#course-desc-cost').val());
+	}
+}
+
+function readModeDescription(){
+	$('#course-description-content').show();
+	$('#course-description-form').remove();
+}
+
+function commitDescription(){
+	$.post('/staff/portal/detailedcourse/updateDescription', {
+		default_fee: $('#commit-cost').val(),
+		course_target: $('#commit-target').val(),
+		course_description: $('#commit-desc').val(),
+		course_id: getParameterByName('course'),
+		_csrf: $('#_csrf').val()
+	}).done(function(res){
+		console.log(res);
+		updateDescription();
+		readModeDescription();
+	}).fail(function(){
+		console.log('ERROR');
+	});
+}
+
+function updateDescription(){
+	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
+		//***// 
+		//data[0].course holds all the course info
+		//data[0].categories holds a list of course categories	
+		//data[1] holds a list of all existing category types
+		//data[2] holds list of users enrolled to the course
+		//data[3] holds course schedule
+		//***//
+		showDescription(data[0].course);
+	});	
+}
 //======================================================
 //======= MANAGE COURSE TAGS ===========================
-//======================================================
 //======================================================
 
 //*** UPDATE THE AUTO COMPLETION LIST DROPDOWN***//
@@ -279,15 +361,7 @@ function cancelCommitTags(){
 }
 //****************************************************
 
-//***************************************************************
-
-
-//===============================================================
-//===============================================================
-//===============================================================
-
-
-//*** GO INTO EDIT MODE ***//
+//*** GO INTO EDIT MODE TAGS ***//
 function editModeTags(){
 	$('#tags-search').show();
 	$('#tags-search-divider').show();
@@ -303,7 +377,7 @@ function editModeTags(){
 }
 //*************************
 
-//*** GO INTO READ MODE ***//
+//*** GO INTO READ MODE TAGS ***//
 function readModeTags(){
 	$('#tags-edit').show();
 
@@ -317,6 +391,11 @@ function readModeTags(){
 		$('#tag-remove-'+ COURSE_TAG_LIST[i].category_id).hide();
 	}
 }
+
+
+//========================================================
+//========MISC FUNCTIONS==================================
+//========================================================
 
 //*** Pine Notify ****//
 function addedTag(){
@@ -337,4 +416,16 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function getRank(){
+	var rank = getCookie('user_info');
+	if (rank != null) {
+		rank = unescape(rank).substring(2);
+		
+		return JSON.parse(rank).rank;
+	}
+	else{
+		return 0;
+	}
 }
