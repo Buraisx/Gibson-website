@@ -131,9 +131,94 @@ router.post('/signup', function(req, res, next) {
 			//res.redirect('/signup');
 		}
 	});
-} ,passport.authenticate('local-signup', {
+}, signup_validate, passport.authenticate('local-signup', {
 	session: false
 }),token.generateOneUse, email.signupConfEmail , redirect);
+	
+	
+// One-stop validation for new user signup
+function signup_validate(req, res, next){
+	console.log("validating");
+	
+	// Check username, e-mail, postal code against regex 
+	var usernameRegex = new RegExp(/^(\w{3,16})$/);
+	var emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+	var pcodeRegex = new RegExp(/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/);
+	
+	//if (req.body.username.length < 3 || req.body.username.length > 16){
+	if (!usernameRegex.test(req.body.username)){
+		console.log("Bad username" + req.body.username);
+		res.status(400).send("Username should be between 3 to 16 characters long");
+		return;
+	}
+	
+	if (!emailRegex.test(req.body.email)){
+		console.log("Bad E-mail");
+		res.status(400).send("Bad E-mail format");
+		return;
+	}
+
+	if (!pcodeRegex.test(req.body.postal_code)){
+		console.log("Bad postal code");
+		res.status(400).send("Bad Postal Code format");
+		return;
+	}
+	
+	// Checking username and e-mail not taken (double-checking)
+	connection.getConnection(function(err, con){
+		if (err){
+			console.log("signup.js: signup_validate cannot get connection");
+			con.release();
+			return err;
+		}
+		var sql = "SELECT COUNT(*) AS count FROM gibson.user WHERE username = ?";
+		var inserts = req.body.username;
+		
+		con.query(mysql.format(sql, inserts), function(err, numUsers){
+			if (err){
+			console.log("signup.js: signup_validation failed to query for username check");
+			con.release();
+			return err;
+			}
+			if (numUsers[0].count) {
+				console.log("Username already taken");
+				res.status(400).send("Username already taken");
+				return new Error("Username already taken");
+			}
+			else {
+				// Only check e-mail if username is ok
+				sql = "SELECT COUNT (*) AS count FROM gibson.user WHERE email = ?";
+				inserts = req.body.email;
+				
+				con.query(mysql.format(sql, inserts), function(err, numEmail){
+					if (err){
+						console.log("signup.js: signup_validation failed to query for email check");
+						con.release();
+						return err;
+					}
+					if (numEmail[0].count){
+						console.log("E-mail associated with another account");
+						res.status(400).send("E-mail associated with another account");
+						return new Error("E-mail associated with another account");
+					}
+				});
+			}
+		});
+		con.release();
+	});
+	
+	// Checking dropdowns, since attribute required doesn't work
+	var dropdowns = ['age_group_id', 'gender', 'province'];
+	for (var i = 0; i < dropdowns.length; i++){
+		if (req.body[dropdowns[i]] == ""){
+			console.log(dropdowns[i] + " has no value selected");
+			res.status(400).send(dropdowns[i] + " has no value selected");
+			return new Error(dropdowns[i] + " has no value selected");
+		}
+	}
+
+	next();
+}
 
 // REDIRECT FOR SIGNUP PAGE
 function redirect(req, res){
