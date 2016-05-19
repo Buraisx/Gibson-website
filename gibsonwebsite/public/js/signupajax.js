@@ -143,8 +143,10 @@ function signup() {
             window.location.href = res.redirect_url;
 	})
 	.fail(function (err){
+		//console.log("hi " + err.responseText);
 		swal({
             title: 'Signup Failed',
+			text: err.responseText,
             type: 'error'
         });
 	});
