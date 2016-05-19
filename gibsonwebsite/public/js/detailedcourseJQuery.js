@@ -12,7 +12,7 @@ $(function() {
 $(document).ready(getCourse());
 
 function getCourse() {
-	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
+	jQuery.getJSON("/detailedcourse/data",{course: getParameterByName('course')}, function(data){
 		TAG_LIST = data[1];
 		COURSE_TAG_LIST = data[0].categories;
 
@@ -211,7 +211,7 @@ function readModeDescription(){
 }
 
 function commitDescription(){
-	$.post('/staff/portal/detailedcourse/updateDescription', {
+	$.post('/detailedcourse/updateDescription', {
 		default_fee: $('#commit-cost').val(),
 		course_target: $('#commit-target').val(),
 		course_description: $('#commit-desc').val(),
@@ -227,7 +227,7 @@ function commitDescription(){
 }
 
 function updateDescription(){
-	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
+	jQuery.getJSON("/detailedcourse/data",{course: getParameterByName('course')}, function(data){
 		//***// 
 		//data[0].course holds all the course info
 		//data[0].categories holds a list of course categories	
@@ -279,7 +279,7 @@ function readModeInstructor(){
 }
 
 function commitInstructor(){
-	$.post('/staff/portal/detailedcourse/updateInstructor', {
+	$.post('/detailedcourse/updateInstructor', {
 		instructor_name: $('#commit-name').val(),
 		instructor_username: $('#commit-username').val(),
 		instructor_bio: $('#commit-inst').val(),
@@ -295,7 +295,7 @@ function commitInstructor(){
 }
 
 function updateInstructor(){
-	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
+	jQuery.getJSON("/detailedcourse/data",{course: getParameterByName('course')}, function(data){
 		//***// 
 		//data[0].course holds all the course info
 		//data[0].categories holds a list of course categories	
@@ -399,7 +399,7 @@ function commitTags(){
 	}
 
 	//*** UPDATE COURSE TAGS IN DATABASE ***//
-	$.post('/staff/portal/detailedcourse/updateTags',{
+	$.post('/detailedcourse/updateTags',{
 		categories: JSON.stringify(list_ids),
 		course_id: getParameterByName('course'),
 		_csrf: $('#_csrf').val()
@@ -413,7 +413,7 @@ function commitTags(){
 
 //*** UNDO CHANGES TO DB (AND UPDATES FRONT END) ***//
 function cancelCommitTags(){
-	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
+	jQuery.getJSON("/detailedcourse/data",{course: getParameterByName('course')}, function(data){
 		TAG_LIST = data[1];
 		COURSE_TAG_LIST = data[0].categories;
 

@@ -1496,6 +1496,7 @@ function showFilteredCourses(data, searchText, searchTags){
 		courses += '            		<div class="col-sm-7 addbutton">';
 		courses += '            			<button type="button" class="btn btn-default course-submit btn-success" onclick="register(this)" id="submit" value="' + data[i].course_id +'">Add to Cart</button>';
 		courses += '            		</div>';
+		courses += '					<a href="/detailedcourse?course='+ data[i].course_id +'" <button type="button" class="btn btn-success"> Detailed Course Page</button></a>';
 		courses += '       			</div>';
 
 
@@ -1641,7 +1642,7 @@ function listschedule(){
                 }
             }
             schedule += '        </div>';
-
+            schedule += '		<a href="/detailedcourse?course='+ data[i].course_id +'" <button type="button" class="btn btn-success"> Detailed Course Page</button></a>';
 
 			schedule += '               </div>';
             schedule += '               </div>';

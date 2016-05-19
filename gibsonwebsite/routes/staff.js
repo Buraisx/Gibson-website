@@ -323,109 +323,7 @@ router.post('/staff/portal/edit/studentinfo', function(req, res){
     });
 });
 
-//ROUTE FOR VIEWING DETAILED COURSE
-router.get('/staff/portal/detailedcourse', function (req, res, next){
-    res.render('detailedcourse', { title: 'Staff Portal'});
-});
-
-//GET COURSE DATA TO DISPLAY
-router.get('/staff/portal/detailedcourse/data', function (req, res, next){
-    connection.getConnection(function (err, con){
-        if(err){
-            res.status(500).send();
-        }
-        else{
-            async.parallel([
-                function (next){
-                    async.waterfall([
-                        function (callback){
-                            var sql = "SELECT course_id, course_code, course_name, instructor_username, instructor_name, default_fee, course_limit, DATE_FORMAT(start_date, '%M %D, %Y') start_date, DATE_FORMAT(end_date, '%M %D, %Y') end_date, course_interval, course_language, course_days, course_target, course_description, instructor_bio, categories, notes FROM gibson.course WHERE course_id = ?;";
-                            con.query(sql,[req.query.course], function (err, results){
-                                if(err){
-                                    return callback(err, null);
-                                }
-                                else{
-                                    callback(null, results[0]);
-                                }
-                            });
-                        },
-                        function (course, callback){
-                            var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix WHERE category_id IN (?);";
-                            var inserts = [JSON.parse(course.categories)];
-
-                            if(inserts[0].length === 0 || inserts[0] === null){
-                                 callback (null, course, []);
-                            }
-                            else{
-                                sql = mysql.format(sql, inserts);
-                                con.query(sql, function (err, results){
-                                    if(err){
-                                        return callback (err, null, null);
-                                    }
-                                    else{
-                                        callback (null, course, results);
-                                    }
-                                });
-                            }
-                        }
-                        ],function (err, course, results){
-                           if(err){
-                                return next(err, null);
-                           }
-                           else{
-                                next(null, {course:course, categories:results});
-                           }
-                    });
-                },
-                function (next){
-                    var sql = "SELECT category_id, category_string, category_type FROM gibson.category_matrix;"
-                    con.query(sql, function (err, results){
-                        if(err){
-                            return next(err, null);
-                        }
-                        else{
-                            next(null, results);
-                        }
-                    });
-                },
-                function (next){
-                    var sql = "SELECT u.username,u.fname,u.lname,u.gender,u.address,u.primary_phone,u.primary_extension,u.secondary_phone,u.secondary_extension,u.email FROM gibson.user u INNER JOIN gibson.user_course uc ON u.user_id = uc.user_id WHERE uc.course_id = ?;";
-                    con.query(sql, [req.query.course], function (err, results){
-                        if(err){
-                            return next(err, null);
-                        }
-                        else{
-                            next(null, results);
-                        }
-                    });
-                },
-                function (next){
-                    var sql = "SELECT DATE_FORMAT(cd.date, '%W') as day_of_week, DATE_FORMAT(cd.date, '%d') as date, DATE_FORMAT(cd.date, '%M') as month, TIME_FORMAT(cd.start_time, '%h:%i %p') as start_time, TIME_FORMAT(cd.end_time, '%h:%i %p') as end_time FROM gibson.course_days cd INNER JOIN gibson.course c ON c.course_id = cd.course_id WHERE cd.course_id = ?;";
-                    con.query(sql, [req.query.course], function (err, results){
-                        if(err){
-                            return next(err, null);
-                        }
-                        else{
-                            next(null, results);
-                        }
-                    });
-                }
-                ],
-                function (err, results){
-                    con.release();
-                    if(err){
-                        console.log(err);
-                        res.status(500).send();
-                    }
-                    else{
-                        res.status(200).send(results);
-                    }
-            });
-        }
-    });
-});
-
-router.post('/staff/portal/detailedcourse/updateDescription', function(req, res, next){
+router.post('/detailedcourse/updateDescription', function(req, res, next){
     var sql = "UPDATE gibson.course SET default_fee = ?, course_target = ?, course_description = ? WHERE course_id = ?;";
     var inserts = [sanitizer.sanitize(req.body.default_fee), sanitizer.sanitize(req.body.course_target), sanitizer.sanitize(req.body.course_description), sanitizer.sanitize(req.body.course_id)];
     connection.getConnection(function (err, con){
@@ -448,7 +346,7 @@ router.post('/staff/portal/detailedcourse/updateDescription', function(req, res,
     });
 });
 
-router.post('/staff/portal/detailedcourse/updateInstructor', function(req, res, next){
+router.post('/detailedcourse/updateInstructor', function(req, res, next){
     var sql = "UPDATE gibson.course SET instructor_name = ?, instructor_username = ?, instructor_bio = ? WHERE course_id = ?;";
     var inserts = [ sanitizer.sanitize(req.body.instructor_name), 
                     sanitizer.sanitize(req.body.instructor_username), 
@@ -474,7 +372,7 @@ router.post('/staff/portal/detailedcourse/updateInstructor', function(req, res, 
     });
 });
 
-router.post('/staff/portal/detailedcourse/updateTags',function(req, res, next){
+router.post('/detailedcourse/updateTags',function(req, res, next){
     var sql = "UPDATE gibson.course SET categories = JSON_ARRAY(?) WHERE course_id = ?;";
     var inserts = [Array.from(new Set(JSON.parse(req.body.categories))), Number(req.body.course_id)];
     sql = mysql.format(sql, inserts);

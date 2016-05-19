@@ -17,6 +17,7 @@ var config = require('./server_config');
 var whitelist = require('./public_res/whitelist');
 var connection = require('./mysqlpool');
 var enroll = require('./routes/enroll').router;
+var detailedCourse = require('./routes/detailedcourse');
 
 
 //CSRF Protection
@@ -340,6 +341,7 @@ app.use('/', users);
 app.use('/', cart);
 app.use('/', payment);
 app.use('/', invoice);
+app.use('/', detailedCourse);
 
 // ==========================================================
 // ===↑↑↑↑↑ NO VOLUNTEER AUTHENTICATION NEEDED ABOVE ↑↑↑↑↑===
