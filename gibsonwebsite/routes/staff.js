@@ -448,6 +448,32 @@ router.post('/staff/portal/detailedcourse/updateDescription', function(req, res,
     });
 });
 
+router.post('/staff/portal/detailedcourse/updateInstructor', function(req, res, next){
+    var sql = "UPDATE gibson.course SET instructor_name = ?, instructor_username = ?, instructor_bio = ? WHERE course_id = ?;";
+    var inserts = [ sanitizer.sanitize(req.body.instructor_name), 
+                    sanitizer.sanitize(req.body.instructor_username), 
+                    sanitizer.sanitize(req.body.instructor_bio), 
+                    sanitizer.sanitize(req.body.course_id) ];
+    connection.getConnection(function (err, con){
+        if(err){
+            console.log(err);
+            res.status(500).send();
+        }
+        else{
+            con.query(sql, inserts, function (err, results){
+                con.release();
+                if(err){
+                    console.log(err);
+                    res.status(500).send();
+                }
+                else{
+                    res.status(200).send("Instructor information has been updated!");
+                }
+            });
+        }
+    });
+});
+
 router.post('/staff/portal/detailedcourse/updateTags',function(req, res, next){
     var sql = "UPDATE gibson.course SET categories = JSON_ARRAY(?) WHERE course_id = ?;";
     var inserts = [Array.from(new Set(JSON.parse(req.body.categories))), Number(req.body.course_id)];

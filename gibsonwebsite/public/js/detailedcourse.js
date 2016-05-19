@@ -168,7 +168,7 @@ function showInstructor(data){
 function addEditButtons(){
 	$('#course-description-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick="editModeDescription();"></i>');
 	//$('#course-schedule-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick=";"></i>'); //*** CANNOT MODIFY SCHEDULE FOR NOW
-	$('#course-instructor-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick=";"></i>');
+	$('#course-instructor-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick="editModeInstructor();"></i>');
 	$('#course-tags-header').append('<i class="fa fa-pencil-square-o fa-lg pull-right editinfobutton" onclick="editModeTags();"></i>');
 }
 
@@ -238,6 +238,75 @@ function updateDescription(){
 		showDescription(data[0].course);
 	});	
 }
+
+//======================================================
+//======= MANAGE INSTRUCTOR INFO =======================
+//======================================================
+
+function editModeInstructor(){
+	var instForm="";
+	$('#course-instructor-content').hide();
+
+	instForm+='<form role="form" method="post" id="course-instructor-form" onsubmit="commitInstructor();return false">';
+	instForm+='	<div class="form-group col-sm-8">';
+	instForm+=' 	<label for="commit-target">Instructor Name:</label>';
+	instForm+='		<input class="form-control" type="text" name="name" id="commit-name"></input>';
+	instForm+=' </div>';
+	instForm+='	<div class="form-group col-sm-8">';
+	instForm+=' 	<label for="commit-target">Instructor Username:</label>';
+	instForm+='		<input class="form-control" type="text" name="username" id="commit-username"></input>';
+	instForm+=' </div>';
+	instForm+='	<div class="form-group col-sm-8">';
+	instForm+=' 	<label for="commit-desc">Instructor Description:</label>';
+	instForm+='		<textarea class="form-control" type="text" name="desc" id="commit-inst"></textarea>';
+	instForm+=' </div>';
+	instForm+='	<div class="col-sm-6">';
+	instForm+='		<button class="btn btn-default" type="submit">Save</button>';
+	instForm+='		<button class="btn btn-default" type="button" onclick="readModeInstructor();">Cancel</button>';
+	instForm+='	</div>';
+	instForm+="</form>";
+
+	if(!$('#course-instructor-form').length){
+		$('#course-instructor-content').after(instForm);
+		$('#commit-name').val( $('#course-instructor-name').text() );
+		$('#commit-inst').val( $('#course-instructor-desc').text() );
+	}
+}
+
+function readModeInstructor(){
+	$('#course-instructor-content').show();
+	$('#course-instructor-form').remove();
+}
+
+function commitInstructor(){
+	$.post('/staff/portal/detailedcourse/updateInstructor', {
+		instructor_name: $('#commit-name').val(),
+		instructor_username: $('#commit-username').val(),
+		instructor_bio: $('#commit-inst').val(),
+		course_id: getParameterByName('course'),
+		_csrf: $('#_csrf').val()
+	}).done(function(res){
+		console.log(res);
+		updateInstructor();
+		readModeInstructor();
+	}).fail(function(){
+		console.log('ERROR');
+	});
+}
+
+function updateInstructor(){
+	jQuery.getJSON("/staff/portal/detailedcourse/data",{course: getParameterByName('course')}, function(data){
+		//***// 
+		//data[0].course holds all the course info
+		//data[0].categories holds a list of course categories	
+		//data[1] holds a list of all existing category types
+		//data[2] holds list of users enrolled to the course
+		//data[3] holds course schedule
+		//***//
+		showInstructor(data[0].course);
+	});	
+}
+
 //======================================================
 //======= MANAGE COURSE TAGS ===========================
 //======================================================
