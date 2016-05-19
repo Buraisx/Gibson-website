@@ -140,6 +140,42 @@ router.post('/signup', function(req, res, next) {
 function signup_validate(req, res, next){
 	console.log("validating");
 	
+	// For Loop Counter
+	var i;
+	
+	// Double-checking for required input (Includes dropdowns)
+	var required = ['username', 
+					'password', 
+					'email', 
+					'fname', 
+					'lname', 
+					'age_group_id', 
+					'gender', 
+					'address', 
+					'postal_code', 
+					'city',
+					'province'];
+					
+	var readable_required = ['Username',
+							'Password',
+							'E-mail', 
+							'First name', 
+							'Last name', 
+							'Age Group',
+							'Gender', 
+							'Address', 
+							'Postal Code', 
+							'City', 
+							'Province'];
+					
+	for (i = 0; i < required.length; i++){
+		if (!req.body[required[i]] || req.body[required[i]] == ""){
+			console.log(required[i] + " has no value entered / selected");
+			res.status(400).send(readable_required[i] + " has no value entered / selected");
+			return new Error(readable_required[i] + " has no value entered / selected");
+		}
+	}
+	
 	// Check username, e-mail, postal code against regex 
 	var usernameRegex = new RegExp(/^(\w{3,16})$/);
 	var emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -207,16 +243,6 @@ function signup_validate(req, res, next){
 		con.release();
 	});
 	
-	// Checking dropdowns, since attribute required doesn't work
-	var dropdowns = ['age_group_id', 'gender', 'province'];
-	for (var i = 0; i < dropdowns.length; i++){
-		if (req.body[dropdowns[i]] == ""){
-			console.log(dropdowns[i] + " has no value selected");
-			res.status(400).send(dropdowns[i] + " has no value selected");
-			return new Error(dropdowns[i] + " has no value selected");
-		}
-	}
-
 	next();
 }
 
