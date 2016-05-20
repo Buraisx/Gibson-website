@@ -1697,21 +1697,23 @@ function makeEvent(){
 
 function clearUserData(){
     $('#next-step1').prop("disabled", true);
-	$('#limiteduser-status').text('User not found.');
+	  $('#limiteduser-status').text('User not found.');
     $('#limiteduser-status').css('color', 'red');
-	$('#limiteduser-line-1').empty();
-	$('#limiteduser-line-2').empty();
-	$('#limiteduser-line-3').empty();
+	  $('#limiteduser-line-1').empty();
+	  $('#limiteduser-line-2').empty();
+	  $('#limiteduser-line-3').empty();
     $('#upgradeuser-lname').val('');
     $('#upgradeuser-fname').val('');
     $('#upgradeuser-email').val('');
+    $('#upgradeuser-primary-phone').val('');
+    $('#upgradeuser-primary-extension').val('');
 }
 
 function fillUserData(user_data){
-	$('#limiteduser-status').text('Match Found:');
+    $('#limiteduser-status').text('Match Found:');
     $('#limiteduser-status').css('color', 'green');
-	$('#limiteduser-line-1').text('Name:  ' +user_data.lname +', ' +user_data.fname);
-	$('#limiteduser-line-2').text('Email: ' +user_data.email);
+	  $('#limiteduser-line-1').text('Name:  ' +user_data.lname +', ' +user_data.fname);
+	  $('#limiteduser-line-2').text('Email: ' +user_data.email);
 
 
     if(user_data.primary_extension){
@@ -1726,7 +1728,7 @@ function fillUserData(user_data){
     $('#upgradeuser-email').val(user_data.email);
     $('#upgradeuser-primary-phone').val(user_data.primary_phone);
     $('#upgradeuser-primary-extension').val(user_data.primary_extension);
-	$('#next-step1').removeProp("disabled");
+	  $('#next-step1').removeProp("disabled");
 }
 
 function searchUser(){
