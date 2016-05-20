@@ -6,9 +6,14 @@ body{
 }
 
 section {
-    padding: 0;
+    padding-top: 0px;
+    padding-bottom: 300px;
 }
 
+/* italic styling for text */
+p.italic {
+    font-style: italic;
+}
 /* BACKGROUND STYLING - The following section includes all syling using for backgrounds */
 
 

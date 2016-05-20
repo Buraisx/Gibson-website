@@ -91,20 +91,20 @@ function showDescription(data){
 	var language_set = JSON.parse(data.course_language);
 
 	if(data.default_fee != null && data.default_fee != ""){
-		$("#course-desc-cost").text( "Cost: $" + data.default_fee.toFixed(2) );
+		$("#course-desc-cost").text( "$" + data.default_fee.toFixed(2) );
 		$("#course-desc-cost").val( data.default_fee );
 	}
 		
 
 	if(data.course_target != null && data.course_target != "")
-		$("#course-desc-target").text( "Course Target: " + data.course_target );
+		$("#course-desc-target").text(data.course_target );
 	
 	if(language_set.length){
 		for(var i = 0; i < language_set.length; i++){
 			languages+=language_set[i] + ", ";
 		}
 		languages=languages.slice(0, -2);
-		$("#course-desc-language").text( "Offered Languages: " + languages );
+		$("#course-desc-language").text(languages );
 	}
 
 	if(data.course_description != null && data.course_description != "")
@@ -192,8 +192,8 @@ function editModeDescription(){
 	descForm+='		<input class="form-control" type="number" name="cost" id="commit-cost"></input>';
 	descForm+=' </div>';
 	descForm+='	<div class="col-sm-6">';
-	descForm+='		<button class="btn btn-default" type="submit">Save</button>';
-	descForm+='		<button class="btn btn-default" type="button" onclick="readModeDescription();">Cancel</button>';
+	descForm+='		<button class="btn btn-default btn-success" type="submit">Save</button>';
+	descForm+='		<button class="btn btn-default btn-danger" type="button" onclick="readModeDescription();">Cancel</button>';
 	descForm+='	</div>';
 	descForm+='</form>';
 
@@ -261,8 +261,8 @@ function editModeInstructor(){
 	instForm+='		<textarea class="form-control" type="text" name="desc" id="commit-inst"></textarea>';
 	instForm+=' </div>';
 	instForm+='	<div class="col-sm-6">';
-	instForm+='		<button class="btn btn-default" type="submit">Save</button>';
-	instForm+='		<button class="btn btn-default" type="button" onclick="readModeInstructor();">Cancel</button>';
+	instForm+='		<button class="btn btn-default btn-success" type="submit">Save</button>';
+	instForm+='		<button class="btn btn-default btn-danger" type="button" onclick="readModeInstructor();">Cancel</button>';
 	instForm+='	</div>';
 	instForm+="</form>";
 
