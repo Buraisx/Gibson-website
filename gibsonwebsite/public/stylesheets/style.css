@@ -5,6 +5,10 @@ body{
 	background-color: transparent;
 }
 
+section {
+    padding: 0;
+}
+
 /* BACKGROUND STYLING - The following section includes all syling using for backgrounds */
 
 
@@ -790,33 +794,6 @@ div[class*="banner"]{
 .tablescroller{
     width: 650px;
     height: 250px;
-}
-
-table {
-        width: 100%;
-    }
-
-thead, tbody, tr, td, th { display: block; }
-
-tr:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
-}
-
-thead th {
-    height: 30px;
-}
-
-tbody {
-    height: 200px;
-    overflow-y: auto;
-}
-
-tbody td, thead th {
-    width: 25%;
-    float: left;
 }
 
 .defaultmouse{
