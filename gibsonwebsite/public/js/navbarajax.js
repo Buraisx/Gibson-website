@@ -19,7 +19,7 @@ $(document).ready(function(){
 			userdisplay += '	<li><a href="/admin/portal">Admin Portal</a></li>';
 		}
 		if (rank == 3) {
-			userdisplay += '	<li><a href="/admin/profile">Staff Menu</a></li>'; //link needs to be add for the staff
+			userdisplay += '	<li><a href="/staff/portal">Staff Portal</a></li>';
 		}
 		if (rank == 2) {
 			userdisplay += '	<li><a href="/volunteer/portal">Volunteer Menu</a></li>';
@@ -48,7 +48,7 @@ $('#cart').on('cookieUpdate', function(){
 });
 
 function getAlert(){
-	var alert = getCookie('gibson_alert'); 
+	var alert = getCookie('gibson_alert');
 	var alert_type;
 	var banner='';
 
@@ -56,7 +56,7 @@ function getAlert(){
 	$('.banner-event').remove();
 
 	if(alert != null){
-		alert = unescape(alert).substring(2);	
+		alert = unescape(alert).substring(2);
 		alert = JSON.parse(alert);
 
 		for(var i = 0; i < alert.length; i++){
@@ -81,7 +81,7 @@ function getAlert(){
 		}
 		$('#navbar-standard').after(banner);
 	}
-	
+
 }
 
 // Get number of courses
