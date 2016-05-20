@@ -1640,7 +1640,7 @@ function manageTags(){
 
 		var html='';
 		html+='						<div id="page-content-wrapper" class="container-fluid xyz">';
-	    html+='							<h3>Manage Tags</h3>';
+	  html+='							<h3>Manage Tags</h3>';
 		html+='							<br>';
 		html+='							<h4>Add a Tag:</h4>';
 		html+='							<div class="row">';
@@ -1691,12 +1691,11 @@ function manageTags(){
 		html+='									<button class="col-sm-3 btn btn-warning" id="admin-managetags-remove-button" type="button" onclick="removeTag();">Remove Selected</button>';
 		html+='								</div>';
 		html+='							</div>';
-	    html+='						</div>'; // page-content-wrapper
+	  html+='						</div>'; // page-content-wrapper
 
 		$("#managetags").append(html);
 	});
 }
-
 function clearUserData(){
     $('#next-step1').prop("disabled", true);
 	  $('#limiteduser-status').text('User not found.');
@@ -1712,11 +1711,10 @@ function clearUserData(){
 }
 
 function fillUserData(user_data){
-		$('#limiteduser-status').text('Match Found:');
-		$('#limiteduser-status').css('color', 'green');
-		$('#limiteduser-line-1').text('Name:  ' +user_data.lname +', ' +user_data.fname);
-		$('#limiteduser-line-2').text('Email: ' +user_data.email);
-
+    $('#limiteduser-status').text('Match Found:');
+    $('#limiteduser-status').css('color', 'green');
+	  $('#limiteduser-line-1').text('Name:  ' +user_data.lname +', ' +user_data.fname);
+	  $('#limiteduser-line-2').text('Email: ' +user_data.email);
 
     if(user_data.primary_extension){
         $('#limiteduser-line-3').text('Phone: ' +user_data.primary_phone +' ext. ' +user_data.primary_extension);
@@ -1725,7 +1723,7 @@ function fillUserData(user_data){
         $('#limiteduser-line-3').text('Phone: ' +user_data.primary_phone);
     }
 
-		$('#upgradeuser-lname').val(user_data.lname);
+    $('#upgradeuser-lname').val(user_data.lname);
     $('#upgradeuser-fname').val(user_data.fname);
     $('#upgradeuser-email').val(user_data.email);
     $('#upgradeuser-primary-phone').val(user_data.primary_phone);

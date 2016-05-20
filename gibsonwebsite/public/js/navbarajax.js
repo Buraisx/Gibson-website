@@ -22,7 +22,7 @@ $(document).ready(function(){
 			userdisplay += '	<li><a href="/staff/portal">Staff Portal</a></li>';
 		}
 		if (rank == 2) {
-			userdisplay += '	<li><a href="/volunteer/portal">Volunteer Menu</a></li>';
+			userdisplay += '	<li><a href="/volunteer/portal">Volunteer Portal</a></li>';
 		}
 		userdisplay += '	<li><a href="/logout">Logout</a></li>';
 		userdisplay += '</ul>';
