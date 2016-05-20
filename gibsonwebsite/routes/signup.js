@@ -176,6 +176,47 @@ function signup_validate(req, res, next){
 		}
 	}
 	
+	// If student check the relevant required fields
+	// IDK how to test regex against school name
+	if (req.body.student){
+		if (req.body.schoolname == ""){
+			console.log("School name has no value entered");
+			res.status(400).send("School name has no value entered / selected");
+			return new Error("School name has no value entered / selected");
+		}
+		if (req.body.grade == ""){
+			console.log("Grade has no value entered / selected");
+			res.status(400).send("Grade has no value entered / selected");
+			return new Error("Grade has no value entered / selected");
+		}
+	}
+	
+	// Check Emergency contact: first one must be complete
+	// Not doing regex checks
+	if (!(req.body.emergencyfname1 && req.body.emergencylname1 && relationship1 && req.body.ephone1 && req.body.ephoneextension1)){
+		console.log("First emergency contact info incomplete");
+		res.status(400).send("Complete the first emergency contact's information");
+		return new Error("Complete the first emergency contact's information");
+	}
+	// second and third must be complete only if at least 1 field is filled
+	// i.e. If there's at least 1 field filled, then warn to complete the rest
+	if (!(req.body.emergencyfname2 || req.body.emergencylname2 || relationship2 || req.body.ephone2 || req.body.ephoneextension2)){
+		if (!(req.body.emergencyfname2 && req.body.emergencylname2 && relationship2 && req.body.ephone2 && req.body.ephoneextension2)){
+			console.log("Emergency contact 2's info is incomplete");
+			res.status(400).send("Emergency contact 2's info is incomplete");
+			return new Error("Emergency contact 2's info is incomplete");
+		}
+	}
+	
+	if (!(req.body.emergencyfname3 || req.body.emergencylname3 || relationship3 || req.body.ephone3 || req.body.ephoneextension3)){
+		if (!(req.body.emergencyfname3 && req.body.emergencylname3 && relationship3 && req.body.ephone3 && req.body.ephoneextension3)){
+			console.log("Emergency contact 3's info is incomplete");
+			res.status(400).send("Emergency contact 3's info is incomplete");
+			return new Error("Emergency contact 3's info is incomplete");
+		}
+	}
+	
+
 	// Check username, e-mail, postal code against regex 
 	var usernameRegex = new RegExp(/^(\w{3,16})$/);
 	var emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
