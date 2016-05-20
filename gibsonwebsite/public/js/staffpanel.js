@@ -61,7 +61,7 @@ function controlpanel (dropdown_info) {
     adduser+='                    <div class = "row">';
     adduser+='                        <div class="form-group col-sm-offset-1 col-sm-10">';
     adduser+='                            <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-    adduser+='                            <input class = "form-control reqIn" type="email" name = "adduser-email" id="adduser-email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+    adduser+='                            <input class = "form-control reqIn" type="email" name = "adduser-email" id="adduser-email" onchange ="delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
     adduser+='                        </div>';
     adduser+='                    </div>';
     adduser+='                    <div class = "row">';
@@ -115,11 +115,11 @@ function controlpanel (dropdown_info) {
     adduser+='                    <div class = "row">';
     adduser+='                        <div class = "form-group col-sm-offset-1 col-sm-7">';
     adduser+='                            <label class = "control-label"><span class="requiredasterisk">*</span>Address:</label>';
-    adduser+='                            <input type = "text" class = "form-control reqIn" name = "address" id = "address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity(\'Invalid address.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    adduser+='                            <input type = "text" class = "form-control reqIn" name = "address" id = "address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity(\'Invalid address.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     adduser+='                        </div>';
     adduser+='                        <div class = "form-group col-sm-3">';
     adduser+='                            <label class = "control-label"><span class="requiredasterisk">*</span>Postal Code:</label>';
-    adduser+='                            <input type = "text" class = "form-control reqIn" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity(\'Invalid postal code.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    adduser+='                            <input type = "text" class = "form-control reqIn" name = "postal_code" id="postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity(\'Invalid postal code.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     adduser+='                        </div>';
     adduser+='                    </div>';
     adduser+='                    <div class = "row">';
@@ -129,7 +129,7 @@ function controlpanel (dropdown_info) {
     adduser+='                        </div>';
     adduser+='                        <div class = "form-group col-sm-3">';
     adduser+='                            <label class = "control-label"><span class="requiredasterisk">*</span>City:</label>';
-    adduser+='                            <input type = "text" class = "form-control reqIn" name = "city" id = "city" required pattern="[a-zA-Z. ]+" oninvalid="setCustomValidity(\'Invalid city.\')" onchange="try{setCustomValidity("")}catch(e){}">';
+    adduser+='                            <input type = "text" class = "form-control reqIn" name = "city" id = "city" required pattern="[a-zA-Z. ]+" oninvalid="setCustomValidity(\'Invalid city.\')" onchange="try{setCustomValidity(\'\')}catch(e){}">';
     adduser+='                        </div>';
     adduser+='                        <div class = "form-group col-sm-4">';
     adduser+='                            <label class = "control-label"><span class="requiredasterisk">*</span>Province:</label>';
@@ -196,19 +196,19 @@ function controlpanel (dropdown_info) {
     adduser+='                            <div class = "row">';
     adduser+='                                <div class = "form-group col-sm-offset-1 col-sm-3 stoppaddingright">';
     adduser+='                                    <label class = "control-label">Phone (Home):</label>';
-    adduser+='                                    <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    adduser+='                                    <input class = "form-control" type = "text" name = "primary_phone" id = "primary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     adduser+='                                </div>';
     adduser+='                                <div class = "col-sm-2 stoppaddingleft">';
     adduser+='                                    <label class = "control-label">Ext:</label>';
-    adduser+='                                    <input class = "form-control" type = "text" name = "primary_extension" id = "primary_extension" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    adduser+='                                    <input class = "form-control" type = "text" name = "primary_extension" id = "primary_extension" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     adduser+='                                </div>';
     adduser+='                                <div class = "form-group col-sm-3 stoppaddingright">';
     adduser+='                                        <label class = "control-label">Phone (Cell):</label>';
-    adduser+='                                    <input class = "form-control" type = "text" name = "secondary_phone" id = "secondary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    adduser+='                                    <input class = "form-control" type = "text" name = "secondary_phone" id = "secondary_phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     adduser+='                                </div>';
     adduser+='                                <div class = "form-group col-sm-2 stoppaddingleft">';
     adduser+='                                    <label class = "control-label">Ext:</label>';
-    adduser+='                                    <input class = "form-control" type = "text" name = "secondary_extension" id = "secondary_extension" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    adduser+='                                    <input class = "form-control" type = "text" name = "secondary_extension" id = "secondary_extension" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     adduser+='                                </div>';
     adduser+='                            </div>';
     //emergency contacts
@@ -221,7 +221,7 @@ function controlpanel (dropdown_info) {
         adduser+='<div id = "contact' + i + '"';
         if (i==1)
         {
-            adduser +='class = "col-sm-offset-1"';
+            adduser+='class = "col-sm-offset-1"';
         }
         if (i != 1) {
 
@@ -237,7 +237,7 @@ function controlpanel (dropdown_info) {
         adduser+='    <div class="row">';
         adduser+='        <div class = "form-group col-sm-5">';
         adduser+='            <label><span class="requiredasterisk">*</span>First Name:</label>';
-        adduser+='            <input type = "text" class = "form-control reqIn required" name = "emergencyfname' + i + '" id = "emergencyfname' + i + '" placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity("Invalid name.")" onchange="try{setCustomValidity("")}catch(e){}"';
+        adduser+='            <input type = "text" class = "form-control reqIn required" name = "emergencyfname' + i + '" id = "emergencyfname' + i + '" placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity("Invalid name.")" onchange="try{setCustomValidity(\'\')}catch(e){}"';
         if (i == 1) {
             adduser+='required';
         }
@@ -245,7 +245,7 @@ function controlpanel (dropdown_info) {
         adduser+='        </div>';
         adduser+='        <div class = "form-group col-sm-5">';
         adduser+='            <label><span class="requiredasterisk">*</span>Last Name:</label>';
-        adduser+='            <input type = "text" class = "form-control reqIn required" name = "emergencylname' + i + '" id = "emergencylname' + i + '" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity("Invalid name.")" onchange="try{setCustomValidity("")}catch(e){}"';
+        adduser+='            <input type = "text" class = "form-control reqIn required" name = "emergencylname' + i + '" id = "emergencylname' + i + '" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity("Invalid name.")" onchange="try{setCustomValidity(\'\')}catch(e){}"';
         if (i == 1) {
             adduser+=' required';
         }
@@ -263,7 +263,7 @@ function controlpanel (dropdown_info) {
         adduser+='        </div>';
         adduser+='        <div class = "form-group col-sm-3 stoppaddingright">';
         adduser+='            <label><span class="requiredasterisk">*</span>Phone:</label>';
-        adduser+='            <input type = "text" class = "form-control reqIn required" name = "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity("")}catch(e){}"';
+        adduser+='            <input type = "text" class = "form-control reqIn required" name = "ephone' + i + '" id = "ephone' + i + '" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity(\'\')}catch(e){}"';
         if (i == 1) {
             adduser+=' required';
         }
@@ -271,7 +271,7 @@ function controlpanel (dropdown_info) {
         adduser+='        </div>';
         adduser+='        <div class = "form-group col-sm-2 stoppaddingleft">';
         adduser+='            <label class="control-label">Ext.</label>';
-        adduser+='            <input type="text" class="form-control" type="text" name="ephoneext' + i + '" id="ephoneext' + i + '" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity("")}catch(e){}">';
+        adduser+='            <input type="text" class="form-control" type="text" name="ephoneext' + i + '" id="ephoneext' + i + '" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity(\'\')}catch(e){}">';
         adduser+='        </div>';
         adduser+='    </div>';
         adduser+='</div>';
@@ -288,8 +288,8 @@ function controlpanel (dropdown_info) {
     adduser+='                                    <div class = "col-sm-offset-1 col-sm-5">';
     adduser+='                                        <button type = "button" class = "btn btn-warning " id="back" href="#myCarousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>';
     adduser+='                                    </div> ';
-    adduser+='                                    <div class = "register-button col-sm-5">';
-    adduser+='                                        <button type = "button" class = "btn btn-success" name="btnsubmit" onclick="addUserAccount()" id="btnsubmit">Complete Signup</button>';
+    adduser+='                                    <div class = "register-button col-sm-offset-1 col-sm-5">';
+    adduser+='                                        <button type = "button" class = "btn btn-success signupsubmit" name="btnsubmit" onclick="addUserAccount()" id="btnsubmit">Complete Signup</button>';
     adduser+='                                    </div>';
     adduser+='                                </div>';
     adduser+='                         </div><!--panelbody-->';
@@ -324,15 +324,15 @@ function controlpanel (dropdown_info) {
     limiteduser+='                            <div class = "row">';
     limiteduser+='                                <div class="form-group col-sm-5">';
     limiteduser+='                                    <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-    limiteduser+='                                    <input class = "form-control reqIn" type="email" name = "limited_email" id="limited_email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+    limiteduser+='                                    <input class = "form-control reqIn" type="email" name = "limited_email" id="limited_email" onchange ="delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
     limiteduser+='                                </div>';
     limiteduser+='                                <div class = "form-group col-sm-3 stoppaddingright">';
     limiteduser+='                                    <label class = "control-label">Phone:</label>';
-    limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_phone" id = "limited_primary_phone" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_phone" id = "limited_primary_phone" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     limiteduser+='                                </div>';
     limiteduser+='                                <div class = "form-group col-sm-2 stoppaddingleft">';
     limiteduser+='                                    <label class = "control-label">Ext:</label>';
-    limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_extension" id = "limited_primary_extension" maxlength="6" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid Extension.")" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+    limiteduser+='                                    <input class = "form-control" type = "text" name = "limited_primary_extension" id = "limited_primary_extension" maxlength="6" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid Extension.")" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
     limiteduser+='                                </div>';
     limiteduser+='                            </div>';
 
@@ -360,8 +360,8 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                <div class="item active"> <!-- first item -->';
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
 		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
-		upgradeuser+='                            <div class = "panel-heading" id="step1">';
-		upgradeuser+='                                <h3 class = "text-center">Step 1: Search For User</h3>';
+		upgradeuser+='                            <div class = "panel-heading" id="upgrade1">';
+		upgradeuser+='                                <h3 class = "text-center">Search For User</h3>';
 		upgradeuser+='                            </div>';
 		upgradeuser+='                            <div class = "panel-body">';
 		upgradeuser+='                                <div class = "row">';
@@ -369,7 +369,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
 		upgradeuser+='                                        <span id = "checkemail"></span>';
 		upgradeuser+='                                        <input class = "form-control reqIn" type="text" name ="searchlimited-email" id="searchlimited-email" placeholder = "Search Email">';
-        upgradeuser+='                                        <button type="button" class="btn btn-primary" onclick="searchUser();">Search</button>';
+    upgradeuser+='                                        <button type="button" class="btn btn-primary" onclick="searchUser();">Search</button>';
 		upgradeuser+='                                        <!--Character restrictions-->';
 		upgradeuser+='                                    </div>';
 		upgradeuser+='                                </div>';
@@ -386,7 +386,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                                </div>';
 		upgradeuser+='                                <!-- Next Button -->';
 		upgradeuser+='                                <div class = "row">';
-		upgradeuser+='                                    <div class = "col-sm-offset-8 col-sm-5">';
+		upgradeuser+='                                    <div class = "col-sm-offset-5 col-sm-5">';
 		upgradeuser+='                                        <button type = "button" class = "btn btn-success topage2 next-button next-hidden" href="#upgrade-user-carousel" data-slide="next" id="next-step1" disabled>Next&rarr;</button>';
 		upgradeuser+='                                    </div>';
 		upgradeuser+='                                </div>   ';
@@ -400,8 +400,8 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                <div class="item">';
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
 		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
-		upgradeuser+='                            <div class = "panel-heading" id="step2">';
-		upgradeuser+='                                <h3 class = "text-center">Step 2: Account Creation</h3>';
+		upgradeuser+='                            <div class = "panel-heading" id="upgrade2">';
+		upgradeuser+='                                <h3 class = "text-center">Account Creation</h3>';
 		upgradeuser+='                            </div>';
 		upgradeuser+='                            <div class = "panel-body">';
 		// Input username
@@ -431,17 +431,17 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                                <div class = "row">';
 		upgradeuser+='                                    <div class="form-group col-sm-offset-1 col-sm-10">';
 		upgradeuser+='                                        <label class="control-label"><span class="requiredasterisk">*</span>Email:</label>';
-		upgradeuser+='                                        <input class = "form-control reqIn" type="email" name = "upgradeuser-email" id="upgradeuser-email" onchange =" delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
+		upgradeuser+='                                        <input class = "form-control reqIn" type="email" name = "upgradeuser-email" id="upgradeuser-email" onchange ="delayEmail();"placeholder="Enter email" required pattern="[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b">';
 		upgradeuser+='                                    </div>';
 		upgradeuser+='                                </div>';
 		upgradeuser+='                                <!-- Next Button -->';
 		upgradeuser+='                                <div class = "row">';
 		upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-1">';
-		upgradeuser+='                                        <button type = "button" class = "btn btn-info" href="#upgrade-user-carousel" data-slide="prev" id="prev-step1">&larr;&nbsp;Back</button>';
+		upgradeuser+='                                        <button type = "button" class = "btn btn-warning" href="#upgrade-user-carousel" data-slide="prev">&larr;&nbsp;Back</button>';
 		upgradeuser+='                                    </div>';
 		upgradeuser+='                                    <div class = "col-sm-2 col-sm-offset-6">';
-		upgradeuser+='                                        <button type = "button" class = "btn btn-success topage3 next-button" href="#upgrade-user-carousel" data-slide="next" id="next-step2">Next&rarr;</button>';
-		//upgradeuser+='                                        <button type = "button" class = "btn btn-success  enroll-submit"  onclick ="askForPassword();"> Submit</button>';
+		upgradeuser+='                                        <button type = "button" class = "btn btn-success topage3 next-button" href="#upgrade-user-carousel" data-slide="next">Next&rarr;</button>';
+		//upgradeuser+='                                        <button type = "button" class = "btn btn-success enroll-submit"  onclick ="askForPassword();"> Submit</button>';
 		upgradeuser+='                                    </div>';
 		upgradeuser+='                                </div>';
 		upgradeuser+='                            </div> <!-- panel body-->';
@@ -452,8 +452,8 @@ function controlpanel (dropdown_info) {
 		// Step 3: User Information
 		upgradeuser+='                <div class = "item"><!--third item-->';
 		upgradeuser+='                    <div class = "panel panel-default signuppanel"><!-- panel start-->';
-		upgradeuser+='                        <div class = "panel-heading" id="signup2">';
-		upgradeuser+='                            <h3 class = "text-center">Step 3: User Information</h3>';
+		upgradeuser+='                        <div class = "panel-heading" id="upgrade3">';
+		upgradeuser+='                            <h3 class = "text-center">User Information</h3>';
 		upgradeuser+='                        </div>';
 		upgradeuser+='                        <div class = "panel-body">';
 		upgradeuser+='                            <div class = "row">';
@@ -493,11 +493,11 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                            <div class = "row">';
 		upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-7">';
 		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Address:</label>';
-		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-address" id = "upgradeuser-address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity(\'Invalid address.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-address" id = "upgradeuser-address" required pattern="^[a-zA-Z0-9._ ]*$" oninvalid="setCustomValidity(\'Invalid address.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
 		upgradeuser+='                                </div>';
 		upgradeuser+='                                <div class = "form-group col-sm-3">';
 		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Postal Code:</label>';
-		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-postal_code" id="upgradeuser-postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity(\'Invalid postal code.\')" onchange="try{setCustomValidity("")}catch(e){}"><!--Character restrictions-->';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-postal_code" id="upgradeuser-postal_code" minlength="6" maxlength="7" placeholder="eg. A1A1A1" required pattern="^[a-zA-Z]{1}\d{1}[a-zA-Z]{1} *\d{1}[a-zA-Z]{1}\d{1}$" oninvalid="setCustomValidity(\'Invalid postal code.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
 		upgradeuser+='                                </div>';
 		upgradeuser+='                            </div>';
 		// Address
@@ -508,7 +508,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                                </div>';
 		upgradeuser+='                                <div class = "form-group col-sm-3">';
 		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>City:</label>';
-		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-city" id = "upgradeuser-city" required pattern="[a-zA-Z. ]+" oninvalid="setCustomValidity(\'Invalid city.\')" onchange="try{setCustomValidity("")}catch(e){}">';
+		upgradeuser+='                                    <input type = "text" class = "form-control reqIn" name = "upgradeuser-city" id = "upgradeuser-city" required pattern="[a-zA-Z. ]+" oninvalid="setCustomValidity(\'Invalid city.\')" onchange="try{setCustomValidity(\'\')}catch(e){}">';
 		upgradeuser+='                                </div>';
 		upgradeuser+='                                <div class = "form-group col-sm-4">';
 		upgradeuser+='                                    <label class = "control-label"><span class="requiredasterisk">*</span>Province:</label>';
@@ -566,7 +566,116 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                    </div><!--panel-default-->';
 		upgradeuser+='                </div><!--third item end-->';
 
+    // Step 4: Contact Info
+    upgradeuser+='                <div class = "item"><!--fourth item-->';
+    upgradeuser+='                    <div class = "panel panel-default signuppanel"><!-- panel start-->';
+    upgradeuser+='                       <div class = "panel-heading" id="upgrade4">';
+    upgradeuser+='                           <h2 class = "text-center">Contact Info</h2>';
+    upgradeuser+='                       </div>';
+    upgradeuser+='                        <div class = "panel-body">';
+    // Input phonenumber
+    upgradeuser+='                            <div class = "row">';
+    upgradeuser+='                                <div class = "form-group col-sm-offset-1 col-sm-3 stoppaddingright">';
+    upgradeuser+='                                    <label class = "control-label">Phone (Home):</label>';
+    upgradeuser+='                                    <input class = "form-control" type = "text" name = "primary-phone" id = "upgradeuser-primary-phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                                <div class = "col-sm-2 stoppaddingleft">';
+    upgradeuser+='                                    <label class = "control-label">Ext:</label>';
+    upgradeuser+='                                    <input class = "form-control" type = "text" name = "primary-extension" id = "upgradeuser-primary-extension" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                                <div class = "form-group col-sm-3 stoppaddingright">';
+    upgradeuser+='                                        <label class = "control-label">Phone (Cell):</label>';
+    upgradeuser+='                                    <input class = "form-control" type = "text" name = "secondary-phone" id = "upgradeuser-secondary-phone" maxlength="16" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid phone number.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                                <div class = "form-group col-sm-2 stoppaddingleft">';
+    upgradeuser+='                                    <label class = "control-label">Ext:</label>';
+    upgradeuser+='                                    <input class = "form-control" type = "text" name = "secondary-extension" id = "upgradeuser-secondary-extension" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity(\'\')}catch(e){}"><!--Character restrictions-->';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                            </div>';
+    // Emergency contacts
+    upgradeuser+='                            <div class = "row">';
+    upgradeuser+='                               <div class = "col-sm-offset-1 col-sm-5">';
+    upgradeuser+='                                    <h4>Emergency Contacts <span class = "normalfont">(Minimum 1)</span></h4>';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                            </div>';
+    for(var i=1; i <= 3; i++) {
+        upgradeuser+='<div id = "upgradeuser-contact' + i + '"';
+        if (i==1)
+        {
+            upgradeuser+='class = "col-sm-offset-1"';
+        }
+        if (i != 1) {
 
+            upgradeuser+=' class = "col-sm-offset-1 hidden"';
+
+        }
+        upgradeuser+='>';
+        upgradeuser+='    <div class = "row">';
+        upgradeuser+='        <div class = "col-sm-5">';
+        upgradeuser+='            <label>Emergency Contact ' + i + ':</label>';
+        upgradeuser+='        </div>';
+        upgradeuser+='    </div>';
+        upgradeuser+='    <div class="row">';
+        upgradeuser+='        <div class = "form-group col-sm-5">';
+        upgradeuser+='            <label><span class="requiredasterisk">*</span>First Name:</label>';
+        upgradeuser+='            <input type = "text" class = "form-control reqIn required" name = "upgradeuser-emergencyfname' + i + '" id = "upgradeuser-emergencyfname' + i + '" placeholder= "eg. Alice" pattern= "[a-zA-Z0-9. ]+" oninvalid="setCustomValidity("Invalid name.")" onchange="try{setCustomValidity(\'\')}catch(e){}"';
+        if (i == 1) {
+            upgradeuser+='required';
+        }
+        upgradeuser+='>';
+        upgradeuser+='        </div>';
+        upgradeuser+='        <div class = "form-group col-sm-5">';
+        upgradeuser+='            <label><span class="requiredasterisk">*</span>Last Name:</label>';
+        upgradeuser+='            <input type = "text" class = "form-control reqIn required" name = "upgradeuser-emergencylname' + i + '" id = "upgradeuser-emergencylname' + i + '" placeholder="eg. Smith" pattern="[a-zA-Z0-9. ]+" oninvalid="setCustomValidity("Invalid name.")" onchange="try{setCustomValidity(\'\')}catch(e){}"';
+        if (i == 1) {
+            upgradeuser+=' required';
+        }
+        upgradeuser+='>';
+        upgradeuser+='        </div>';
+        upgradeuser+='    </div>';
+        upgradeuser+='    <div class="row">';
+        upgradeuser+='        <div class = "form-group col-sm-5">';
+        upgradeuser+='            <label><span class="requiredasterisk">*</span>Relationship:</label>';
+        upgradeuser+='            <input type = "text" class = "form-control reqIn required" name = "upgradeuser-relationship' + i + '" id = "upgradeuser-relationship' + i + '" pattern="[a-zA-Z0-9. ]+"';
+        if (i == 1) {
+            upgradeuser+=' required';
+        }
+        upgradeuser+='>';
+        upgradeuser+='        </div>';
+        upgradeuser+='        <div class = "form-group col-sm-3 stoppaddingright">';
+        upgradeuser+='            <label><span class="requiredasterisk">*</span>Phone:</label>';
+        upgradeuser+='            <input type = "text" class = "form-control reqIn required" name = "upgradeuser-ephone' + i + '" id = "upgradeuser-ephone' + i + '" maxlength="16" pattern="[+]?[1]?[\\s-]?[0-9]{3}[\\s-]?[0-9]{3}[\\s-]?[0-9]{4}" oninvalid="setCustomValidity("Invalid phone number.")" onchange="try{setCustomValidity(\'\')}catch(e){}"';
+        if (i == 1) {
+            upgradeuser+=' required';
+        }
+        upgradeuser+='>';
+        upgradeuser+='        </div>';
+        upgradeuser+='        <div class = "form-group col-sm-2 stoppaddingleft">';
+        upgradeuser+='            <label class="control-label">Ext.</label>';
+        upgradeuser+='            <input type="text" class="form-control" type="text" name="upgradeuser-ephoneext' + i + '" id="upgradeuser-ephoneext' + i + '" maxlength="6" pattern="[+]?[1]?[\s-]?[0-9]{3}[\s-]?[0-9]{3}[\s-]?[0-9]{4}" oninvalid="setCustomValidity(\'Invalid Extension.\')" onchange="try{setCustomValidity(\'\')}catch(e){}">';
+        upgradeuser+='        </div>';
+        upgradeuser+='    </div>';
+        upgradeuser+='</div>';
+    }
+    upgradeuser+='                                <div class="row">';
+    upgradeuser+='                                    <div class = "col-sm-offset-1 col-sm-5">';
+    upgradeuser+='                                        <button type = "button" class= "btn btn-info" onclick="addcontact(\'upgradeuser-\')" id = "upgradeuser-addbutton">Add another contact</button>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                    <div class = "col-sm-5">';
+    upgradeuser+='                                        <button type = "button" class= "btn btn-info hidden btnedit" onclick="removecontact(\'upgradeuser-\')" id = "upgradeuser-removebutton">Remove a contact</button>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                <div class = "row signupbuttons">';
+    upgradeuser+='                                    <div class = "col-sm-offset-1 col-sm-5">';
+    upgradeuser+='                                        <button type = "button" class = "btn btn-warning" href="#upgrade-user-carousel" data-slide="prev">&larr; &nbsp;&nbsp; &nbsp; Back </button>';
+    upgradeuser+='                                    </div> ';
+    upgradeuser+='                                    <div class = "register-button col-sm-offset-1 col-sm-5">';
+    upgradeuser+='                                        <button type = "button" class = "btn btn-success signupsubmit" name="btnsubmit" onclick="addUserAccount()" id="upgradeuser-btnsubmit">Upgrade User</button>';
+    upgradeuser+='                                    </div>';
+    upgradeuser+='                                </div>';
+    upgradeuser+='                         </div><!--panelbody-->';
+    upgradeuser+='                    </div><!--panel-default-->';
+    upgradeuser+='                </div><!--fourth item end-->'; // End of Step 4: Contact Info
 		upgradeuser+='            </div><!-- carousel-inner -->';
 		upgradeuser+='        </div><!-- upgrade-user-carousel -->';
 		upgradeuser+='        </form>';
@@ -1615,7 +1724,8 @@ function fillUserData(user_data){
     $('#upgradeuser-lname').val(user_data.lname);
     $('#upgradeuser-fname').val(user_data.fname);
     $('#upgradeuser-email').val(user_data.email);
-
+    $('#upgradeuser-primary-phone').val(user_data.primary_phone);
+    $('#upgradeuser-primary-extension').val(user_data.primary_extension);
 	$('#next-step1').removeProp("disabled");
 }
 
