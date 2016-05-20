@@ -361,7 +361,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
 		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
 		upgradeuser+='                            <div class = "panel-heading" id="upgrade1">';
-		upgradeuser+='                                <h3 class = "text-center">Search For User</h3>';
+		upgradeuser+='                                <h2 class = "text-center">Search For User</h2>';
 		upgradeuser+='                            </div>';
 		upgradeuser+='                            <div class = "panel-body">';
 		upgradeuser+='                                <div class = "row">';
@@ -401,7 +401,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
 		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
 		upgradeuser+='                            <div class = "panel-heading" id="upgrade2">';
-		upgradeuser+='                                <h3 class = "text-center">Account Creation</h3>';
+		upgradeuser+='                                <h2 class = "text-center">Account Creation</h2>';
 		upgradeuser+='                            </div>';
 		upgradeuser+='                            <div class = "panel-body">';
 		// Input username
@@ -453,7 +453,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                <div class = "item"><!--third item-->';
 		upgradeuser+='                    <div class = "panel panel-default signuppanel"><!-- panel start-->';
 		upgradeuser+='                        <div class = "panel-heading" id="upgrade3">';
-		upgradeuser+='                            <h3 class = "text-center">User Information</h3>';
+		upgradeuser+='                            <h2 class = "text-center">User Information</h2>';
 		upgradeuser+='                        </div>';
 		upgradeuser+='                        <div class = "panel-body">';
 		upgradeuser+='                            <div class = "row">';
