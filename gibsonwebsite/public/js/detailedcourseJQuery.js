@@ -347,13 +347,13 @@ function updateCourseTagsList(data, isDisplay){
 	if(isDisplay){
 		//Generate Draggable list of course's tags (NOT HIDDEN)
 		for(var i = 0; i < data.length; i++){
-			course_tags.append('<div class="panel-heading course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a class="editinfobutton" id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')">&#10006;</a></div>');
+			course_tags.append('<div class="roundcorners course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a class="editinfobutton" id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')">&#10006;</a></div>');
 		}
 	}
 	else{
 		//Generate Draggable list of course's tags (HIDDEN)
 		for(var i = 0; i < data.length; i++){
-			course_tags.append('<div class="panel-heading course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a class="editinfobutton" id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')" style="display:none;">&#10006;</a></div>');
+			course_tags.append('<div class="roundcorners course_tag defaultmouse"><span>' + data[i].category_string + ' </span><a class="editinfobutton" id="tag-remove-'+ data[i].category_id +'" onclick="removeTag('+ data[i].category_id +')" style="display:none;">&#10006;</a></div>');
 		}
 	}	
 }

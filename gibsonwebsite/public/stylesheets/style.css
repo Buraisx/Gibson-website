@@ -774,7 +774,8 @@ div[class*="banner"]{
     border-spacing: 6px;
     padding: 4px 10px;
     display:inline-block;
-    margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: #C9D0D0 !important;
@@ -820,4 +821,16 @@ tbody td, thead th {
 
 .defaultmouse{
     cursor:default;
+}
+
+/** Tag box **/
+.tagbox{
+    border: 1px solid rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.roundcorners {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 5px;
 }
