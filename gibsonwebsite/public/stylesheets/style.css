@@ -9,6 +9,10 @@ section {
     padding: 0;
 }
 
+/* italic styling for text */
+p.italic {
+    font-style: italic;
+}
 /* BACKGROUND STYLING - The following section includes all syling using for backgrounds */
 
 

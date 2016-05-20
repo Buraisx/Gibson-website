@@ -49,10 +49,10 @@
                 <section class="tab-pane" id="course-description">
                     <h3 class ="col-sm-10" id="course-description-header">Description</h3>
                     <div class = "col-sm-10" id="course-description-content">
-                        <p id="course-desc-target"></p>
-                        <p id="course-desc-language"></p>
-                        <p id="course-desc-text"></p>
-                        <p id="course-desc-cost"></p>
+                        <p><span class="fieldname">Course Target: </span><span id="course-desc-target" class="fieldval"></p>
+                        <p><span class="fieldname">Offered Languages: </span><span id="course-desc-language" class="fieldval"></p>
+                        <p><span id="course-desc-text" class="fieldval"></p>
+                        <p><span class="fieldname">Cost: </span><span id="course-desc-cost" class="fieldval"></p>
                     </div>
                 </section>
                 <hr class="col-sm-10">
@@ -61,8 +61,8 @@
                 <section class="tab-pane" id="course-schedule">
                     <h3 class = "col-sm-10 detailcoloursection" id="course-schedule-header">Schedule</h3>
                     <div class = "col-sm-10" id="course-schedule-content">
-                        <p id="course-schedule-daterange"></p>
-                        <p id="course-schedule-interval"></p>
+                        <p class="italic fieldval" id="course-schedule-daterange"></p>
+                        <p class="italic" id="course-schedule-interval"></p>
                         <div class="tablescroller" id="course-schedule-scroller">
                             <table class="table table-striped" id="course-schedule-datetable">
                             </table>
@@ -75,8 +75,8 @@
                 <section class="tab-pane" id="course-instructor">
                     <h3 class = "col-sm-10" id="course-instructor-header">Instructor</h3>
                     <div class = "col-sm-10" id="course-instructor-content">
-                        <p id="course-instructor-name"></p>
-                        <p id="course-instructor-desc"></p>
+                        <p><span class="fieldname">Instructor Name: </span><span id="course-instructor-name" class="fieldval"></p>
+                        <p><span class="fieldname">Instructor Description: </span><span id="course-instructor-desc" class="fieldval"></p>
                     </div>
                 </section>
                 <hr class="col-sm-10">
@@ -88,15 +88,15 @@
                             <form class="form-horizontal col-sm-6" role="form" onsubmit="return false">
                                 <input type="text" class="form-control" id="tags-search" placeholder="Add a tag to the course." style="display:none;"></input>
                             </form>
-                            <button type = "button" class = "btn btn-default col-sm-2" id = "tags-add" style="display:none;" onclick="addTag();">Add</button>
+                            <button type = "button" class = "btn btn-default btn-primary col-sm-2" id = "tags-add" style="display:none;" onclick="addTag();">Add</button>
                         </div>
                         <hr id="tags-search-divider" style="display:none;">
                         <div class = "row">
                             <div id="tags-sortable" class = "tagbox"></div>
                         </div>
                         <div class="row">
-                            <button type = "button" class = "btn btn-default" id = "tags-commit" onclick="commitTags();readModeTags();" style="display:none">Save</button>
-                            <button type = "button" class = "btn btn-default" id = "tags-cancel" onclick="cancelCommitTags();readModeTags();" style="display:none">Cancel</button>
+                            <button type = "button" class = "btn btn-default btn-success" id = "tags-commit" onclick="commitTags();readModeTags();" style="display:none">Save</button>
+                            <button type = "button" class = "btn btn-default btn-danger" id = "tags-cancel" onclick="cancelCommitTags();readModeTags();" style="display:none">Cancel</button>
                         </div>
                     </div>
                </section>
