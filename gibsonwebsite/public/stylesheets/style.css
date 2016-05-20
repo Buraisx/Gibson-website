@@ -514,7 +514,7 @@ hr {
 }
 
 .tag-selection-list {
-    height: 250px;
+    height: 150px;
     overflow-x: hidden;
     overflow-y: auto;
 }

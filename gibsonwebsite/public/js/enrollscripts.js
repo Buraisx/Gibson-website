@@ -8,24 +8,54 @@ var cartTotal;
 
 //-- search for user with the email in the database and dropdown the information of the user if exists --//
 function clearUserData(){
-	$('#user-info').hide("slow", function(){
-		$('#user-id').empty();
-		$('#user-email').empty();
-		$('#user-fname').empty();
-		$('#user-lname').empty();
-	});
+    $('#next-step1').prop("disabled", true);
+	  $('#limiteduser-status').text('User not found.');
+    $('#limiteduser-status').css('color', 'red');
+	  $('#limiteduser-line-1').empty();
+	  $('#limiteduser-line-2').empty();
+	  $('#limiteduser-line-3').empty();
+    $('#upgradeuser-lname').val('');
+    $('#upgradeuser-fname').val('');
+    $('#upgradeuser-email').val('');
+    $('#upgradeuser-primary-phone').val('');
+    $('#upgradeuser-primary-extension').val('');
 }
-
 
 function fillUserData(user_data){
-	$('#user-id').text(user_data[0].user_id);
-	$('#user-email').text(user_data[0].email);
-	$('#user-fname').text(user_data[0].fname);
-	$('#user-lname').text(user_data[0].lname);
-	$('#user-info').show("slow");
-	$('#next-step1').removeProp("disabled");
-	$('#next-step1').show("slow");
+    $('#limiteduser-status').text('Match Found:');
+    $('#limiteduser-status').css('color', 'green');
+	  $('#limiteduser-line-1').text('Name:  ' +user_data.lname +', ' +user_data.fname);
+	  $('#limiteduser-line-2').text('Email: ' +user_data.email);
+
+    if(user_data.primary_extension){
+        $('#limiteduser-line-3').text('Phone: ' +user_data.primary_phone +' ext. ' +user_data.primary_extension);
+    }
+    else{
+        $('#limiteduser-line-3').text('Phone: ' +user_data.primary_phone);
+    }
+
+    $('#upgradeuser-lname').val(user_data.lname);
+    $('#upgradeuser-fname').val(user_data.fname);
+    $('#upgradeuser-email').val(user_data.email);
+    $('#upgradeuser-primary-phone').val(user_data.primary_phone);
+    $('#upgradeuser-primary-extension').val(user_data.primary_extension);
+	  $('#next-step1').removeProp("disabled");
 }
+
+function searchUser(){
+    $.post('/volunteer/search/limiteduser', {
+        _csrf: $('#_csrf').val(),
+        email: $('#searchlimited-email').val()
+    })
+    .done(function(res){
+        clearUserData();
+		fillUserData(res);
+    })
+    .fail(function(res){
+        clearUserData();
+    })
+}
+
 
 function displayUser(email){
 	$.post("/enroll/search/user", {
@@ -76,7 +106,7 @@ function atLeastOneCourseChecked (){
 
 	for(var i = 0; i <courses.length; i++){
 		if($('#'+courses[i].sku).is(':checked')){
-			
+
 			//move checked course to the right div
 			$('#selectedcourselist').append($('#course'+[i]).clone());
 			$('#course'+[i]).remove();
@@ -88,12 +118,12 @@ function atLeastOneCourseChecked (){
 
 		//move unchecked course to the left div if in the right div
 		else if ((!$('#'+courses[i].sku).is(':checked')) && ($('#'+courses[i].sku).parents('#selectedcourselist').length == 1)){
-			
+
 			var contents = $('#course'+[i]);
 			$('#course'+[i]).remove();
 			$('#courselist').append(contents);
 			//$('#courselist').append('<div> hi </div>');
-			
+
 		}
 	}
 
@@ -110,7 +140,7 @@ function loadCourses(){
 		console.log("Loaded courses.");
 		courses = res;
 		var courselists = '';
-	
+
 		for(var i = 0; i < res.length; i++){
 			courselists += '<div id="course'+ [i] +'" class="row">';
 			courselists += '<div>';
@@ -134,7 +164,7 @@ function load_cart(){
 
         var cart_empty = true;
 
-        
+
 
 		for(var i = 0; i < cartCourses.length; i++){
 			cart_total += cartCourses[i].default_fee;
@@ -198,7 +228,7 @@ function clearCart(){
 
 //-- confirmation alert to tell the payer to pay the payment right now --//
 function confirmationAlert(){
-	swal({  
+	swal({
 		title: "Please Pay The Transaction."
     });
 
@@ -240,7 +270,7 @@ function toggleFields(){
 	}
 	else{
 		clearFields();
-	}	
+	}
 }
 
 //-- prompt volunteer/admin/staff for password in order to record the transaction --
@@ -270,13 +300,13 @@ function askForPassword (){
 		title: "Enter The Administrative Password.",
 		type: "input",
 		inputType: "password",
-		animation: "slide-from-top",   
+		animation: "slide-from-top",
 		inputPlaceholder: "Password"},
 		function(typedPassword){
 			$('#password').val(typedPassword);
 			recordTransaction();
 		});
-	}		
+	}
 }
 
 function cartCodes(){

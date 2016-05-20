@@ -375,7 +375,7 @@ function controlpanel (dropdown_info) {
 		// Step 1: Search For User
 		upgradeuser+='                <div class="item active"> <!-- first item -->';
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
-		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+		upgradeuser+='                        <div class = "panel panel-default steppanel"><!-- panel start-->';
 		upgradeuser+='                            <div class = "panel-heading" id="upgrade1">';
 		upgradeuser+='                                <h2 class = "text-center">Search For User</h2>';
 		upgradeuser+='                            </div>';
@@ -415,7 +415,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                <!-- step2 -->';
 		upgradeuser+='                <div class="item">';
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
-		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+		upgradeuser+='                        <div class = "panel panel-default steppanel"><!-- panel start-->';
 		upgradeuser+='                            <div class = "panel-heading" id="upgrade2">';
 		upgradeuser+='                                <h2 class = "text-center">Account Creation</h2>';
 		upgradeuser+='                            </div>';
@@ -1695,52 +1695,4 @@ function manageTags(){
 
 		$("#managetags").append(html);
 	});
-}
-function clearUserData(){
-    $('#next-step1').prop("disabled", true);
-	  $('#limiteduser-status').text('User not found.');
-    $('#limiteduser-status').css('color', 'red');
-	  $('#limiteduser-line-1').empty();
-	  $('#limiteduser-line-2').empty();
-	  $('#limiteduser-line-3').empty();
-    $('#upgradeuser-lname').val('');
-    $('#upgradeuser-fname').val('');
-    $('#upgradeuser-email').val('');
-    $('#upgradeuser-primary-phone').val('');
-    $('#upgradeuser-primary-extension').val('');
-}
-
-function fillUserData(user_data){
-    $('#limiteduser-status').text('Match Found:');
-    $('#limiteduser-status').css('color', 'green');
-	  $('#limiteduser-line-1').text('Name:  ' +user_data.lname +', ' +user_data.fname);
-	  $('#limiteduser-line-2').text('Email: ' +user_data.email);
-
-    if(user_data.primary_extension){
-        $('#limiteduser-line-3').text('Phone: ' +user_data.primary_phone +' ext. ' +user_data.primary_extension);
-    }
-    else{
-        $('#limiteduser-line-3').text('Phone: ' +user_data.primary_phone);
-    }
-
-    $('#upgradeuser-lname').val(user_data.lname);
-    $('#upgradeuser-fname').val(user_data.fname);
-    $('#upgradeuser-email').val(user_data.email);
-    $('#upgradeuser-primary-phone').val(user_data.primary_phone);
-    $('#upgradeuser-primary-extension').val(user_data.primary_extension);
-	  $('#next-step1').removeProp("disabled");
-}
-
-function searchUser(){
-    $.post('/volunteer/search/limiteduser', {
-        _csrf: $('#_csrf').val(),
-        email: $('#searchlimited-email').val()
-    })
-    .done(function(res){
-        clearUserData();
-		fillUserData(res);
-    })
-    .fail(function(res){
-        clearUserData();
-    })
 }

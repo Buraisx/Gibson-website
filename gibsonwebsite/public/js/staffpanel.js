@@ -359,7 +359,7 @@ function controlpanel (dropdown_info) {
 		// Step 1: Search For User
 		upgradeuser+='                <div class="item active"> <!-- first item -->';
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
-		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+		upgradeuser+='                        <div class = "panel panel-default steppanel"><!-- panel start-->';
 		upgradeuser+='                            <div class = "panel-heading" id="upgrade1">';
 		upgradeuser+='                                <h2 class = "text-center">Search For User</h2>';
 		upgradeuser+='                            </div>';
@@ -399,7 +399,7 @@ function controlpanel (dropdown_info) {
 		upgradeuser+='                <!-- step2 -->';
 		upgradeuser+='                <div class="item">';
 		upgradeuser+='                    <div class = "step-container"><!--panel div-->';
-		upgradeuser+='                        <div class = "panel panel-default shadowy steppanel"><!-- panel start-->';
+		upgradeuser+='                        <div class = "panel panel-default steppanel"><!-- panel start-->';
 		upgradeuser+='                            <div class = "panel-heading" id="upgrade2">';
 		upgradeuser+='                                <h2 class = "text-center">Account Creation</h2>';
 		upgradeuser+='                            </div>';
