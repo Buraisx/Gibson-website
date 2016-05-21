@@ -149,29 +149,42 @@ function usernameReminder(email, username, next){
       return err;
     }
     else{
-      // CREATE TEMPLATE BASE SENDER FUNCTION
-      var sendReminder = transport.templateSender({
-        subject: 'Account Information',
-        text: data,
-      },
-      {
-        from: '105 Gibson Centre <' +config.transport.auth.user +'>'
-      });
 
-      // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
-      sendReminder({
-        to: email,
-      },
-      {
-        username: username,
-      },
-      function(err, info){
-        if (err){
-          console.log('auto_email.js: Error sending username reminder.');
-          return err;
-        }
-        //next();
-      });
+        var plain = data;
+
+        fs.readFile('../gibsonwebsite/email_templates/username_reminder/html.html', 'utf-8', function(err, data){
+          if(err){
+            console.log('auto_email.js: Cannot read html.html for usernameReminder');
+            return err;
+          }
+          else{
+              var styled = data;
+
+              // CREATE TEMPLATE BASE SENDER FUNCTION
+              var sendReminder = transport.templateSender({
+                subject: 'Account Information',
+                text: data,
+                html: styled
+              },
+              {
+                from: '105 Gibson Centre <' +config.transport.auth.user +'>'
+              });
+
+              // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
+              sendReminder({
+                to: email,
+              },
+              {
+                username: username,
+              },
+              function(err, info){
+                if (err){
+                  console.log('auto_email.js: Error sending username reminder.');
+                  return err;
+                }
+              });
+          }
+        });
     }
   });
 }
@@ -186,32 +199,43 @@ function forgotpassword(email, username, token, next){
     }
     else{
 
-      //var plain = data;
+        var plain = data;
 
-      // CREATE TEMPLATE BASE SENDER FUNCTION
-      var sendForgotPassword = transport.templateSender({
-        subject: 'Forgotten Password',
-        text: data
-      },
-      {
-        from: '105 Gibson Centre <' +config.transport.auth.user +'>'
-      });
+        fs.readFile('../gibsonwebsite/email_templates/forgot_password/html.html', 'utf-8', function(err, data){
+          if(err){
+            console.log('auto_email.js: Cannot read html.html for forgot password.');
+            return err;
+          }
+          else{
+              var styled = data;
 
-      // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
-      sendForgotPassword({
-        to: email,
-      },
-      {
-        username: username,
-        domain: config.domains[0],
-        token: token
-      },
-      function(err, info){
-        if (err){
-          console.log('auto_email.js: Error sending forgot password email.');
-          return err;
-        }
-      });
+              // CREATE TEMPLATE BASE SENDER FUNCTION
+              var sendForgotPassword = transport.templateSender({
+                subject: 'Account Recovery',
+                text: data,
+                html: styled
+              },
+              {
+                from: '105 Gibson Centre <' +config.transport.auth.user +'>'
+              });
+
+              // USING TEMPLATE BASE SENDER FUNCTION TO SEND AN EMAIL
+              sendForgotPassword({
+                to: email,
+              },
+              {
+                username: username,
+                domain: config.domains[0],
+                token: token
+              },
+              function(err, info){
+                if (err){
+                  console.log('auto_email.js: Error sending forgot password email.');
+                  return err;
+                }
+              });
+          }
+        });
     }
   });
 }
