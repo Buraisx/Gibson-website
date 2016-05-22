@@ -29,6 +29,7 @@ function getCourse() {
 		//UPDATE THE PAGE DATA
 		listEnrolled(data[2]);
 		showHeader(data[0].course);
+		showSidebar();
 		showDescription(data[0].course);
 		showSchedule(data[0].course, data[3]);
 		showInstructor(data[0].course);
@@ -49,6 +50,23 @@ function getCourse() {
 //*** ADD COURSE CODE/NAME HEADER***//
 function showHeader(data){
 	$("#course-name").text ( data.course_code + " - " + data.course_name);
+}
+//**********************************
+
+//*** ADD SIDEBAR***//
+function showSidebar(){
+	var addSidebar = '';
+
+	if(getRank() >= 3){
+		addSidebar+='<li><a class="menucolour" href="#course-enrollment" data-toggle="tab"><i class="fa fa-user"></i>Enrollment</a></li>';
+	}
+	addSidebar+='<li><a class="menucolour" href="#course-description" data-toggle="tab"><i class="fa fa-info-circle"></i>Description</a></li>';
+	addSidebar+='<li><a class="menucolour" href="#course-schedule" data-toggle="tab"><i class="fa fa-calendar"></i>Schedule</a></li>';
+	addSidebar+='<li><a class="menucolour" href="#course-instructor" data-toggle="tab"><i class="fa fa-user"></i>Instructor</a></li>';
+	addSidebar+='<li><a class="menucolour" href="#course-tags" data-toggle="tab"><i class="fa fa-tags"></i>Manage Tags</a></li>';
+
+	//Apply to html
+	$("#menu").append(addSidebar);
 }
 //**********************************
 
