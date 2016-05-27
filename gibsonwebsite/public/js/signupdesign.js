@@ -17,14 +17,12 @@ $(document).ready(function(){
     $('#student').click(function(){
         if(document.getElementById('student').checked)
         {
-            console.log('student true')
             $('#schoolname').addClass('reqIn');
             $('#grade').addClass('reqIn');
             $('#myCarousel').animate({height: 1000});
         }
         else
         {
-            console.log('student false')
             $('#schoolname').removeClass('reqIn');
             $('#grade').removeClass('reqIn');
             $('#myCarousel').animate({height: 700});
@@ -46,17 +44,17 @@ $(document).ready(function(){
         $(document).find('#dimmer').css("display","none");
         $(document).find('.g-recaptcha').css("display","none");
     });
-  
+
 
     //CHECK EVERY TEXTBOX FILLED IN
-    $('.btn-success').click(function (){ 
+    $('.btn-success').click(function (){
         var count = 0;
         var butparents = $(this).parent().parent().parent();
 
         butparents.find('input.reqIn').each(function (){
             escapeHtml(this.id);
             if ($.trim($(this).val()).length == 0)
-            {   
+            {
                 count ++;
                 $('.btn-success').parent().parent().parent().find('.btn-success').removeAttr('data-slide');
                 $(this).attr('data-toggle', 'tooltip');
@@ -70,9 +68,9 @@ $(document).ready(function(){
             while($("#contact" + i).is(":visible")) {
             i++;
         }
-       
+
         if (this.id == "btnsubmit")
-        {   
+        {
 
             if((count == 8 && i==2)||(count ==4 && i==3)|| (count ==0 &&i==4))
             {
@@ -88,7 +86,7 @@ $(document).ready(function(){
                 butparents.find('.btn-success').attr('data-slide', 'next');
             }
         }
-       
+
     });
 
 });//END
@@ -154,7 +152,7 @@ function getContactInfoHeight() {
     return 700 + ECONTACTHEIGHT*(contacts-1);
 }
 
-function progress(percent, $element) 
+function progress(percent, $element)
 {
     var progressBarWidth = percent * $element.width() / 100;
     $element.find('div').animate({ width: progressBarWidth }, 500);
