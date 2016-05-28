@@ -647,6 +647,36 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 									[user_id, sanitizer.sanitize(req.body.emergencylname1), sanitizer.sanitize(req.body.emergencyfname1), sanitizer.sanitize(req.body.relationship1), sanitizer.sanitize(req.body.ephone1).replace(/\D+/g, ''), sanitizer.sanitize(req.body.ephoneext1).replace(/\D+/g, '')]
 								];
 							}
+							// Check only 1st contact for any empty
+							for (var i = 0; i < newContacts[0].length; i++){
+								if (!newContacts[0][i] || newContacts[0][i] == ""){
+									return next({msg: "Your first emergency contact info must be complete and correct"});
+								}
+							}
+							
+							// Check others for empty only if >1 field is filled
+							for (var i = 1; i < newContacts.length; i++){
+								// partially_done: false if 1st field not filled, true otherwise
+								var partially_done = false;
+								if (newContacts[i][1]){
+									partially_done = true;
+								}
+								/* Explanation: IF the first field is filled, THEN if any other field is not filled, then it's partially complete and we warn (aka return error).
+								 * Otherwise, IF the first field is NOT filled, THEN if any other field is filled, then it's partially complete and we warn.
+								 * Here's the problem: IF NONE of the fields are filled, the for loop goes through and we make an empty contact (#2 or #3).
+								*/
+								for (var j = 2; j < newContacts[i].length; j++){
+									if (partially_done){
+										if (!newContacts[i][j] || newContacts[i][j] == ""){
+											return next({msg: "Additional emergency contacts incomplete"});
+										}
+									}
+									else if (newContacts[i][j]) {
+										return next({msg: "Additional emergency contacts incomplete"});
+									}
+								}
+								// Maybe TODO: remove completely empty array from newContacts (no longer a contact)
+							}
 
 							next(null, results, newContacts);
 						}
@@ -678,12 +708,12 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 							if(i < newContacts.length){
 								newContacts[i].push(records[i].contact_id);
 								query += mysql.format('UPDATE gibson.emergency_contact SET user_id=?, lname=?, fname=?, relationship=?, contact_phone=?, contact_phone_extension=? WHERE contact_id = ?;', newContacts[i]);
+								
 							}
 							else{
-								query += mysql.format('DELETE FROM gibson.emergency_contact WHERE contact_id = ?', [records[i]]);
+								query += mysql.format('DELETE FROM gibson.emergency_contact WHERE contact_id = ?;', [records[i].contact_id]);
 							}
 						}
-
 						con.query(query, function(err, results){
 							if(err){
 								return next({msg: 'Error in case 1'});
@@ -756,7 +786,7 @@ router.post('/user/profile/edit/emergencyinfo', function(req, res){
 			function(error){
 				if(error){
 					con.query('ROLLBACK;', function(err, results){
-						console.log('users.js: ' +error.msg +'; /user/profile/edit/emegencyinfo');
+						console.log('users.js: ' +error.msg +'; /user/profile/edit/emergencyinfo');
 						con.release();
 						res.status(500).send('Error updating emergency contact(s).');
 					});
